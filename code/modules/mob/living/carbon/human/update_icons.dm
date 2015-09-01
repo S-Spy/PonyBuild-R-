@@ -918,7 +918,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	var/icon/ICON
 
 	if(species.tail)
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
+		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
 			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 			if(species.name == "Unicorn")
@@ -934,7 +934,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(species.flags)
 		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
 		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		ICON.Blend(p_tail, ICON_OVERLAY)
+		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
+		else 		ICON = p_tail
 
 	overlays_standing[TAIL_LAYER] = image(ICON)
 

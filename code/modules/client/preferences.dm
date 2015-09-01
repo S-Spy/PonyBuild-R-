@@ -443,7 +443,7 @@ datum/preferences
 	dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td>__</td></tr></table></font><br>"
 
 	dat += "<br><b>Magic Aura Color:</b> "
-	dat += "<a href='?_src_=prefs;preference=aura;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td>__</td></tr></table></font>"
+	dat += "<a href='?_src_=prefs;preference=aura;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td>__</td></tr></table></font><br>"
 
 	dat += "<br><br>"
 
