@@ -92,7 +92,7 @@
 
 	src.icon_state = src.icon_closed
 	src.opened = 0
-
+	if(istype(src, /obj/structure/closet/groowe))	src.welded = 1
 	playsound(src.loc, close_sound, 15, 1, -3)
 	density = 1
 	return 1
@@ -363,3 +363,35 @@
 	var/shake_dir = pick(-1, 1)
 	animate(src, transform=turn(matrix(), 8*shake_dir), pixel_x=init_px + 2*shake_dir, time=1)
 	animate(transform=null, pixel_x=init_px, time=6, easing=ELASTIC_EASING)
+
+/obj/structure/closet/groowe
+	name = "groowe"
+	desc = "It's a groowe. R.I.P."
+	icon = 'icons/obj/cemetery.dmi'
+	icon_state = "groowe"
+	density = 0
+	welded = 1
+	icon_closed = "groowe"
+	icon_opened = "grooweopen"
+	wall_mounted = 1 //never solid (You can always pass over it)
+	health = 1000
+
+/obj/structure/closet/groowe/attackby(obj/item/weapon/W as obj, mob/user as mob)
+	if(src.opened)
+		if(W.loc != user) // This should stop mounted modules ending up outside the module.
+			return
+		if(istype(W, /obj/item/weapon/shovel))
+			src.toggle(user)      //act like they were dragged onto the closet
+		else
+			usr.drop_item()
+			if(W)
+				W.loc = src.loc
+	else if(istype(W, /obj/item/weapon/shovel))
+		src.toggle(user)
+		src.update_icon()
+		for(var/mob/M in viewers(src))
+			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+	return
+
+/obj/structure/closet/groowe/attack_hand(mob/user as mob)
+	src.add_fingerprint(user)

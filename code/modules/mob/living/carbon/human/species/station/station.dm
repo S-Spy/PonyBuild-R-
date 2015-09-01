@@ -11,9 +11,7 @@
 	worlds tumultous at best."
 
 	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_ptail | HAS_EYE_COLOR
-
 	brute_mod = 0.9
-	total_health = 120
 
 
 /datum/species/unicorn
@@ -27,6 +25,7 @@
 	primitive = /mob/living/carbon/monkey/unicorn
 	//darksight = 3
 	//gluttonous = 1
+	slowdown = -1
 
 	blurb = "A heavily reptillian species, Unicorn (or 'Sinta as they call themselves) hail from the \
 	Uuosa-Eso system, which roughly translates to 'burning mother'.<br/><br/>Coming from a harsh, radioactive \
@@ -71,8 +70,9 @@
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
 	//unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	//darksight = 8
-	//slowdown = -1
-	//brute_mod = 1.2
+	slowdown = 1
+	brute_mod = 1.2
+	burn_mod = 1.2
 
 	blurb = "The Pegasus race is a species of feline-like bipeds hailing from the planet of Ahdomai in the \
 	S'randarr system. They have been brought up into the space age by the ponys and Skrell, and have been \
@@ -157,7 +157,7 @@
 		)
 
 	warning_low_pressure = 50
-	hazard_low_pressure = -1
+	hazard_low_pressure = 1
 
 	cold_level_1 = 50
 	cold_level_2 = -1
