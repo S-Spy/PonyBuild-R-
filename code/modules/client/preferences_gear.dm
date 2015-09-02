@@ -8,19 +8,30 @@ var/global/list/uspell_datums = list()
 		set name = "Strong light"
 		set desc = "Strong light about you"
 		if(switch_ulight == 0)
-			SetLuminosity(luminosity+4)
+			SetLuminosity(luminosity+3)
 			switch_ulight = 1
 			spawn(150)
 				if(switch_ulight == 1)
-					SetLuminosity(luminosity-4)
+					SetLuminosity(luminosity-3)
 					switch_ulight = 0
+					update_tail_showing()
 		else
-			SetLuminosity(luminosity-4)
+			SetLuminosity(luminosity-3)
 			switch_ulight = 0
 		update_tail_showing()
 
 	clean(var/mob/living/carbon/pony/P in view(1))
 	health_analyse(var/mob/living/carbon/M in view(1))
+
+/mob/living/carbon/pony/proc/update_unicirn_verbs()
+	for(var/datum/spells/S in uspell_datums)
+		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name) && species.name != "Unicorn")
+			verbs -= S.spell_verb
+			world << "delete"
+		else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name) && species.name == "Unicorn")
+			verbs += S.spell_verb
+			world << "add"
+		world << "0"
 
 
 

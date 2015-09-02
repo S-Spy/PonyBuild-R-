@@ -916,9 +916,9 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
 	overlays_standing[TAIL_LAYER] = null
 	var/icon/ICON
-
 	if(species.tail)
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
+		update_unicirn_verbs()
+		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
 			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 			if(species.name == "Unicorn")
@@ -926,15 +926,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 					var/icon/aura = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = "unicorn_light")
 					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 					ICON.Blend(aura, ICON_OVERLAY)
-		if(species.name == "Unicorn")
-			for(var/datum/spells/S in unicorn_spells)
-				if(!verbs.Find(S.spell_verb))	verbs += S.spell_verb
 	//Pony tail
 	var/datum/sprite_accessory/ptailstyle = ptail[ptail_style]
 	if(species.flags)
 		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
 		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		ICON.Blend(p_tail, ICON_OVERLAY)
+		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
+		else 		ICON = p_tail
 
 	overlays_standing[TAIL_LAYER] = image(ICON)
 
