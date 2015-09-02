@@ -5,4 +5,5 @@ Thumbs.db
 *.rsc
 *.lk
 *.backup
+*.dmb
 data/
