@@ -158,6 +158,9 @@
 	mineralType = "metal"
 	hardness = 3
 
+/obj/structure/mineral_door/oldstone
+	mineralType = "oldstone"
+
 /obj/structure/mineral_door/silver
 	mineralType = "silver"
 	hardness = 3
@@ -240,6 +243,9 @@
 			for(var/i = 1, i <= oreAmount, i++)
 				new/obj/item/stack/sheet/wood(get_turf(src))
 		del(src)
+
+/obj/structure/mineral_door/wood/oldwood
+	mineralType = "oldwood"
 
 /obj/structure/mineral_door/resin
 	mineralType = "resin"
