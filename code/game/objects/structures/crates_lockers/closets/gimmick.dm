@@ -5,6 +5,19 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+/obj/structure/closet/cabinet/toilet
+	name = "toilet"
+	desc = "This is... Toilet?"
+	update_icon()
+		..()
+		if(icon_state == icon_closed)
+			var/list/LIST = list()
+			for(var/obj/structure/closet/cabinet/toilet/T in world)
+				LIST += T
+			if(prob(20))
+				var/obj/structure/closet/cabinet/toilet/T = LIST[rand(1, LIST.len)]
+				T.content = src.content
+
 /obj/structure/closet/cabinet/update_icon()
 	if(!opened)
 		icon_state = icon_closed

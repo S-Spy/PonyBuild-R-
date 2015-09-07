@@ -1,12 +1,19 @@
 var/global/list/gear_datums = list()
 var/global/list/uspell_datums = list()
 
+
+/obj/item/weapon/light_spark
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "light"
+	alpha = 200
+
+
 /mob/living/carbon/pony/var/tmp/switch_ulight=0
 /mob/living/carbon/pony/verb
-	slight()
-		set category = "Spells"
+	strong_light()
+		set category = "Unicorn Spells"
 		set name = "Strong light"
-		set desc = "Strong light about you"
+		set desc = "Strong light about you."
 		if(switch_ulight == 0)
 			SetLuminosity(luminosity+3)
 			switch_ulight = 1
@@ -20,19 +27,248 @@ var/global/list/uspell_datums = list()
 			switch_ulight = 0
 		update_tail_showing()
 
-	clean(var/mob/living/carbon/pony/P in view(1))
-	health_analyse(var/mob/living/carbon/M in view(1))
+	light()
+		set category = "Unicorn Spells"
+		set name = "Light"
+		set desc = "Light about you."
+		if(switch_ulight == 0)
+			SetLuminosity(luminosity+1)
+			switch_ulight = 1
+			spawn(400)
+				if(switch_ulight == 1)
+					SetLuminosity(luminosity-1)
+					switch_ulight = 0
+					update_tail_showing()
+		else
+			SetLuminosity(luminosity-1)
+			switch_ulight = 0
+		update_tail_showing()
 
-/mob/living/carbon/pony/proc/update_unicirn_verbs()
-	for(var/datum/spells/S in uspell_datums)
-		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name) && species.name != "Unicorn")
-			verbs -= S.spell_verb
-			world << "delete"
-		else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name) && species.name == "Unicorn")
-			verbs += S.spell_verb
-			world << "add"
-		world << "0"
+	clean()
+		set name = "Cleaner"
+		set desc = "Cleaning you."
+		set category = "Unicorn Spells"
+		var/obj/item/weapon/reagent_containers/spray/cleaner/H = new/obj/item/weapon/reagent_containers/spray/cleaner
+		H.Spray_at(usr, usr, 1)
+		del H
 
+	health_scan(var/mob/living/carbon/M in view(1))
+		set name = "Health scan"
+		set desc = "Analogy of using health analyzer."
+		set category = "Unicorn Spells"
+		if(M != usr)
+			var/obj/item/device/healthanalyzer/H = new/obj/item/device/healthanalyzer
+			H.attack(M, usr)
+			del H
+
+	cyber_scan(var/mob/living/carbon/M in view(1))
+		set name = "Cyber scan"
+		set desc = "Analogy of using cyber analyzer."
+		set category = "Unicorn Spells"
+		if(M != usr)
+			var/obj/item/device/robotanalyzer/H = new/obj/item/device/robotanalyzer
+			H.attack(M, usr)
+			del H
+
+	tele_glass()
+		set name = "Telekinetic glass"
+		set desc = "Liquid telekinesis."
+		set category = "Unicorn"
+		var/obj/item/weapon/reagent_containers/glass/G = new/obj/item/weapon/reagent_containers/glass
+		var/icon/I = G.icon
+		I.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
+		G.icon = I
+		G.alpha = 100
+		G.Move(locate(x, y, z))
+		UnarmedAttack(G)
+		spawn(500)
+			var/obj/O = locate(G)
+			G.afterattack(G, usr, 1)
+			spawn(6)	del G
+
+	dist_light()
+		set name = "Distance light"
+		set desc = "Beam of light."
+		set category = "Unicorn"
+		var/obj/item/weapon/light_spark/L = new/obj/item/weapon/light_spark
+		var/icon/I = L.icon
+		I.Blend(rgb(r_aura, g_aura, b_aura))
+		L.icon = I
+		L.Move(locate(x, y, z))
+
+
+	hair_transform(var/mob/living/carbon/pony/P in view(1))
+		set name = "Morph"
+		set desc = "Transform you hair's."
+		set category = "Unicorn"
+		var/list/valid_hair = list()
+		var/list/valid_facial = list()
+		var/list/valid_tail = list()
+		for(var/path in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
+			var/datum/sprite_accessory/hair/H = new path()
+			if(gender == MALE && H.gender == FEMALE)	continue
+			if(gender == FEMALE && H.gender == MALE)	continue
+			if(!(species.name in H.species_allowed))	continue
+			valid_hair += H.name
+		for(var/path in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/facial_hair)
+			var/datum/sprite_accessory/facial_hair/H = new path()
+			if(gender == MALE && H.gender == FEMALE)	continue
+			if(gender == FEMALE && H.gender == MALE)	continue
+			if(!(species.name in H.species_allowed))	continue
+			valid_hair += H.name
+		for(var/path in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
+			var/datum/sprite_accessory/ptail/H = new path()
+			if(gender == MALE && H.gender == FEMALE)	continue
+			if(gender == FEMALE && H.gender == MALE)	continue
+			if(!(species.name in H.species_allowed))	continue
+			valid_hair += H.name
+
+		f_style = pick(valid_facial)
+		h_style = pick(valid_hair)
+		ptail_style = pick(valid_tail)
+		regenerate_icons()
+
+
+	hot()
+		set name = "Heating"
+		set desc = "Heating food, ponies and you."
+		set category = "Unicorn"
+		var/list/Li = list()
+		for(var/atom/A in view(1))
+			if(istype(A, /obj/item/weapon/reagent_containers/food/snacks) || istype(A, /mob/living/carbon))
+				Li += A
+		if(Li.len == 0)	return
+		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+
+
+	concentration()
+		set name = "High concentration"
+		set desc = "Very high concentration for strong telekinesis."
+		set category = "Unicorn"
+
+	fruit_transform(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in view(1))
+		set name = "Organic transformation"
+		set desc = "Banana to potato, yeah."
+		set category = "Unicorn"
+
+	cold(var/mob/living/carbon/pony/P in view(1))
+		set name = "Cooling"
+		set desc = "Cooling ponies for... what?."
+		set category = "Unicorn"
+
+	blood_dam(var/mob/living/carbon/pony/P in view(1))
+		set name = "Heel bleeding"
+		set desc = "Analogy of bandages."
+		set category = "Unicorn"
+
+	notpain(var/mob/living/carbon/pony/P in view(1))
+		set name = "Pain relief"
+		set desc = "Analogy of tramadol power's."
+		set category = "Unicorn"
+		P.reagents.add_reagent("tramadol", 3)
+		P.reagents.add_reagent("adrenalin", 1)
+
+	light_heel(var/mob/living/carbon/P in view(1))
+		set name = "Light heel"
+		set desc = "Little heel ponies."
+		set category = "Unicorn"
+
+	organ_scan(var/mob/living/carbon/pony/P in view(1))
+		set name = "Orhan analyze"
+		set desc = "Analogy of using organ analyzer."
+		set category = "Unicorn"
+
+	crowbar()
+		set name = "Telekinetic crowbar"
+		set desc = "Use telekinesis as crowbar."
+		set category = "Unicorn"
+
+	screwdriver()
+		set name = "Telekinetic screwdriver"
+		set desc = "Use telekinesis as screwdriver."
+		set category = "Unicorn"
+
+	cut()
+		set name = "Telekinetic cut"
+		set desc = "Use telekinesis as cut."
+		set category = "Unicorn"
+
+	brush()
+		set name = "Telekinetic brush"
+		set desc = "Analogy of archeology brush."
+		set category = "Unicorn"
+
+	teleport()
+		set name = "Teleport"
+		set desc = "Teleportation to old record."
+		set category = "Unicorn"
+		var/list/Li = list("Record", "Teleport")
+		var/target = input(usr, "Choose mod your teleportation", "Mod")  as null|anything in Li
+
+	mag_boots()
+		set name = "Telekinetic Anchoring"
+		set desc = "Analogy of mag boots."
+		set category = "Unicorn"
+
+	cell_power()
+		set name = "Charge of power"
+		set desc = "Charging APC, robot's etc."
+		set category = "Unicorn"
+		var/list/Li = list()
+		for(var/atom/A in view(2))
+			if(istype(A, /obj/machinery/power/apc) || istype(A, /obj/item/weapon/cell) || isrobot(A))
+				Li += A
+		if(Li.len == 0)	return
+		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+
+	welding()
+		set name = "Welding heating"
+		set desc = "Analogy of welding tool by manipulationg with aura."
+		set category = "Unicorn"
+
+	hoofcufs()
+		set name = "Telekinetic hoofcufs"
+		set desc = "Analogy of hoofcufs."
+		set category = "Unicorn"
+
+	disarm(var/mob/living/carbon/pony/P in view(1))
+		set name = "Flash disarm"
+		set desc = "Fast disarm."
+		set category = "Unicorn"
+
+	light_grenade()
+		set name = "Flash"
+		set desc = "Ligh grenade."
+		set category = "Unicorn"
+
+	glue(var/mob/living/carbon/P in view(4))
+		set name = "Live telekinesis"
+		set desc = "Slowdown ponies."
+		set category = "Unicorn"
+
+	party_shield()
+		set name = "Body shield"
+		set desc = "Strong armor about you body."
+		set category = "Unicorn"
+
+	hoof_shield()
+		set name = "Shield"
+		set desc = "Analogy of SWAT shield."
+		set category = "Unicorn"
+
+/mob/living/carbon/pony/proc/update_unicorn_verbs()
+	for(var/type in typesof(/datum/spells)-/datum/spells)
+		var/datum/spells/S = new type()
+		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))
+			if(S.allowed_roles && S.allowed_roles.len > 0)
+				if(!S.allowed_roles.Find(job))
+					verbs -= S.spell_verb
+			else
+				verbs -= S.spell_verb
+		else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name))
+			if(S.allowed_roles && S.allowed_roles.len > 0)
+				if(S.allowed_roles.Find(job))	verbs += S.spell_verb
+			else	verbs += S.spell_verb
 
 
 /hook/startup/proc/populate_gear_list()
@@ -84,7 +320,7 @@ var/global/list/uspell_datums = list()
 /datum/spells
 	var/spell_name
 	var/verb/spell_verb
-	var/cost = 1
+	var/cost
 	var/list/allowed_roles
 	var/color
 
@@ -102,14 +338,197 @@ var/global/list/uspell_datums = list()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/datum/spells/slight
+/datum/spells/light
+	spell_name = "Light"
+	spell_verb = /mob/living/carbon/pony/verb/light
+	cost = 0
+
+/datum/spells/strong_light
 	spell_name = "Strong Light"
-	spell_verb = /mob/living/carbon/pony/verb/slight
+	cost = 1
+	spell_verb = /mob/living/carbon/pony/verb/strong_light
 
+/datum/spells/tele_glass
+	spell_name = "Tele Glass"
+	spell_verb = /mob/living/carbon/pony/verb/tele_glass
+	cost = 1
 
+/datum/spells/dist_light
+	spell_name = "Distance Light"
+	spell_verb = /mob/living/carbon/pony/verb/dist_light
+	cost = 1
 
+/datum/spells/morph
+	spell_name = "Morph"
+	spell_verb = /mob/living/carbon/pony/verb/hair_transform
+	cost = 1
 
+/datum/spells/clean
+	spell_name = "Cleaner"
+	spell_verb = /mob/living/carbon/pony/verb/clean
+	cost = 2
 
+/datum/spells/hot
+	spell_name = "Hot Aura"
+	spell_verb = /mob/living/carbon/pony/verb/hot
+	cost = 2
+
+/datum/spells/concentration
+	spell_name = "High Tele-Concentration "
+	spell_verb = /mob/living/carbon/pony/verb/concentration
+	cost = 3
+
+/datum/spells/fruit_transform
+	spell_name = "Fruit Transformation"
+	spell_verb = /mob/living/carbon/pony/verb/fruit_transform
+	cost = 3
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/datum/spells/health_scan
+	spell_name = "Health Scan"
+	spell_verb = /mob/living/carbon/pony/verb/health_scan
+	cost = 1
+	color = "\blue\[MED]"
+	allowed_roles = list("Chemist","Virologist","Chief Medical Officer", "Medical Doctor", "Geneticist", "Paramedic", "Xenobiologist")
+
+/datum/spells/cold
+	spell_name = "Cold Aura"
+	spell_verb = /mob/living/carbon/pony/verb/cold
+	cost = 1
+	color = "\blue\[MED]"
+	allowed_roles = list("Chemist","Virologist","Chief Medical Officer", "Medical Doctor", "Geneticist", "Paramedic", "Xenobiologist")
+
+/datum/spells/blood_dam
+	spell_name = "Blood Stop"
+	spell_verb = /mob/living/carbon/pony/verb/blood_dam
+	cost = 2
+	color = "\blue\[MED]"
+	allowed_roles = list("Chemist","Virologist","Chief Medical Officer", "Medical Doctor", "Geneticist", "Paramedic", "Xenobiologist")
+
+/datum/spells/notpain
+	spell_name = "Neurotroph"
+	spell_verb = /mob/living/carbon/pony/verb/notpain
+	cost = 2
+	color = "\blue\[MED]"
+	allowed_roles = list("Chemist","Virologist","Chief Medical Officer", "Medical Doctor", "Geneticist", "Paramedic", "Xenobiologist")
+
+/datum/spells/light_heel
+	spell_name = "Light Heel"
+	spell_verb = /mob/living/carbon/pony/verb/light_heel
+	cost = 3
+	color = "\blue\[MED]"
+	allowed_roles = list("Chemist","Virologist","Chief Medical Officer", "Medical Doctor", "Geneticist", "Paramedic", "Xenobiologist")
+
+/datum/spells/organ_scan
+	spell_name = "Organ Scanner"
+	spell_verb = /mob/living/carbon/pony/verb/organ_scan
+	cost = 2
+	color = "\blue\[Head-MED]"
+	allowed_roles = list("Chief Medical Officer")
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/datum/spells/crowbar
+	spell_name = "Tele Crowbar"
+	spell_verb = /mob/living/carbon/pony/verb/crowbar
+	cost = 1
+	color = "\yellow-phiolet\[SCI+ENG]"
+	allowed_roles = list("Station Engineer","Chief Engineer","Atmospheric Technician", "Roboticist", "Scientist", "Research Director", "Xenobiologist")
+
+/datum/spells/screwdriver
+	spell_name = "Tele Screwdriver"
+	spell_verb = /mob/living/carbon/pony/verb/screwdriver
+	cost = 1
+	color = "\yellow-phiolet\[SCI+ENG]"
+	allowed_roles = list("Station Engineer","Chief Engineer","Atmospheric Technician", "Roboticist", "Scientist", "Research Director", "Xenobiologist")
+
+/datum/spells/cut
+	spell_name = "Tele Cut"
+	spell_verb = /mob/living/carbon/pony/verb/cut
+	cost = 1
+	color = "\yellow-phiolet\[SCI+ENG]"
+	allowed_roles = list("Station Engineer","Chief Engineer","Atmospheric Technician", "Roboticist", "Scientist", "Research Director", "Xenobiologist")
+
+/datum/spells/cyber_scan
+	spell_name = "Cyber Scanner"
+	spell_verb = /mob/living/carbon/pony/verb/cyber_scan
+	cost = 1
+	color = "\[SCI]"
+	allowed_roles = list("Roboticist", "Scientist", "Research Director", "Xenobiologist")
+
+/datum/spells/brush
+	spell_name = "Archeology Brush"
+	spell_verb = /mob/living/carbon/pony/verb/brush
+	cost = 2
+	color = "\[SCI]"
+	allowed_roles = list("Roboticist", "Scientist", "Research Director", "Xenobiologist", "Shaft Miner")
+
+/datum/spells/teleport
+	spell_name = "Teleport"
+	spell_verb = /mob/living/carbon/pony/verb/teleport
+	cost = 3
+	color = "\[Head-SCI]"
+	allowed_roles = list("Research Director")
+	//////////////////////////////////////////////////////////////////////
+/datum/spells/mag_boots
+	spell_name = "Magnet Telekinesys"
+	spell_verb = /mob/living/carbon/pony/verb/mag_boots
+	cost = 2
+	color = "\yellow\[ENG]"
+	allowed_roles = list("Station Engineer","Chief Engineer","Atmospheric Technician")
+
+/datum/spells/cell_power
+	spell_name = "Charge of Power"
+	spell_verb = /mob/living/carbon/pony/verb/cell_power
+	cost = 3
+	color = "\yellow\[ENG-SCI]"
+	allowed_roles = list("Station Engineer","Chief Engineer","Atmospheric Technician", "Research Director", "Roboticist", "Scientist")
+
+/datum/spells/welding
+	spell_name = "Welding Aura"
+	spell_verb = /mob/living/carbon/pony/verb/welding
+	cost = 3
+	color = "\yellow\[Head-ENG]"
+	allowed_roles = list("Chief Engineer")
+	////////////////////////////////////////////////////////////////////////
+/datum/spells/hoofcufs
+	spell_name = "Tele Hoofcufs"
+	spell_verb = /mob/living/carbon/pony/verb/hoofcufs
+	cost = 1
+	color = "\red\[SEC]"
+	allowed_roles = list("Security Officer","Warden","Detective", "Head of Security", "Head of Personnal", "Captain")
+
+/datum/spells/light_grenade
+	spell_name = "Light Grenade"
+	spell_verb = /mob/living/carbon/pony/verb/light_grenade
+	cost = 1
+	color = "\red\[SEC]"
+	allowed_roles = list("Security Officer","Warden","Detective", "Head of Security", "Head of Personnal", "Captain")
+
+/datum/spells/disarm
+	spell_name = "Flash Disarm"
+	spell_verb = /mob/living/carbon/pony/verb/disarm
+	cost = 2
+	color = "\red\[SEC]"
+	allowed_roles = list("Security Officer","Warden","Detective", "Head of Security", "Head of Personnal", "Captain")
+
+/datum/spells/glue
+	spell_name = "Live Telekinesis"
+	spell_verb = /mob/living/carbon/pony/verb/glue
+	cost = 2
+	color = "\red\[SEC]"
+	allowed_roles = list("Security Officer","Warden","Detective", "Head of Security", "Head of Personnal", "Captain")
+
+/datum/spells/party_shield
+	spell_name = "Party Shield"
+	spell_verb = /mob/living/carbon/pony/verb/party_shield
+	cost = 3
+	color = "\red\[SEC]"
+	allowed_roles = list("Security Officer","Warden","Detective", "Head of Security", "Head of Personnal", "Captain")
+
+/datum/spells/hoof_shield
+	spell_name = "Hoof Shield"
+	spell_verb = /mob/living/carbon/pony/verb/hoof_shield
+	cost = 3
+	color = "\red\[head-SEC]"
+	allowed_roles = list("Head of Security")
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

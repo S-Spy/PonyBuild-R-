@@ -8,7 +8,7 @@
 	possible_transfer_amounts = null
 	volume = 50 //Sets the default container amount for all food items.
 	var/filling_color = "#FFFFFF" //Used by sandwiches.
-
+	var/heating = 0
 	var/list/center_of_mass = list() // Used for table placement
 
 /obj/item/weapon/reagent_containers/food/New()
@@ -34,5 +34,18 @@
 		pixel_x = (CELLSIZE * (0.5 + cell_x)) - center_of_mass["x"]
 		pixel_y = (CELLSIZE * (0.5 + cell_y)) - center_of_mass["y"]
 
+/obj/item/weapon/reagent_container/food/proc/heat(var/temperature=3)
+	if(temperature < 0)	temperature = 0
+	if(temperature > 4)	temperature = 4
+	if(temperature == 4)
+		var/obj/machinery/microwave/M = new/obj/machinery/microwave
+		M.Move(locate(x,y,z))
+		src = M.fail()
+		del M
+		return
+	//Вычисление начального нутримента по температуре
+
+
 #undef CELLS
 #undef CELLSIZE
+
