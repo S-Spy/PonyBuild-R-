@@ -16,7 +16,7 @@
 				LIST += T
 			if(prob(20))
 				var/obj/structure/closet/cabinet/toilet/T = LIST[rand(1, LIST.len)]
-				T.content = src.content
+				T.contents = src.contents
 
 /obj/structure/closet/cabinet/update_icon()
 	if(!opened)
