@@ -7,8 +7,18 @@ var/global/list/uspell_datums = list()
 	icon_state = "light"
 	alpha = 200
 
+/*
+Общая система заклинаний:
+  Куллдаун после деактивации
+  Трата сытности на попытку активации заклинания и его поддержание
+  Шанс успеха исходя из сложности и концентрации
+  Долгосрочные заклинания имеют максимум времени действия
+  Одновременно может действовать только одно долгосрочное заклинание
+*/
 
-/mob/living/carbon/pony/var/tmp/switch_ulight=0
+
+/mob/living/carbon/pony/var/tmp/switch_ulight = 0
+/mob/living/carbon/pony/var/tmp/record_loc
 /mob/living/carbon/pony/verb
 	strong_light()
 		set category = "Unicorn Spells"
@@ -130,15 +140,18 @@ var/global/list/uspell_datums = list()
 
 
 	hot()
-		set name = "Heating"
+		set name = "Heat"
 		set desc = "Heating food, ponies and you."
 		set category = "Unicorn"
 		var/list/Li = list()
 		for(var/atom/A in view(1))
-			if(istype(A, /obj/item/weapon/reagent_containers/food/snacks) || istype(A, /mob/living/carbon))
+			if(istype(A, /obj/item/weapon/reagent_containers/food) || istype(A, /mob/living/carbon/pony))
 				Li += A
 		if(Li.len == 0)	return
 		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		if(target in view(1))
+			if(istype(target, /obj/item/weapon/reagent_containers/food))	target:heat_food(target:heating+1)
+			else	target:bodytemperature += 5
 
 
 	concentration()
@@ -150,16 +163,21 @@ var/global/list/uspell_datums = list()
 		set name = "Organic transformation"
 		set desc = "Banana to potato, yeah."
 		set category = "Unicorn"
+		G = new(G.loc, pick("chili", "potato", "tomato", "apple", "banana", "mushrooms", "plumphelmet", "towercap", "harebells", "poppies", "sunflowers", "grapes", "peanut", "cabbage", "corn", "carrot", "whitebeet", "watermelon", "pumpkin", "lime", "lemon", "orange", "ambrosia"))
 
 	cold(var/mob/living/carbon/pony/P in view(1))
 		set name = "Cooling"
 		set desc = "Cooling ponies for... what?."
 		set category = "Unicorn"
+		P.bodytemperature -= 10
 
 	blood_dam(var/mob/living/carbon/pony/P in view(1))
 		set name = "Heel bleeding"
 		set desc = "Analogy of bandages."
 		set category = "Unicorn"
+		var/obj/item/stack/medical/bruise_pack/B = new/obj/item/stack/medical/bruise_pack
+		B.attack(P, usr)
+		del B
 
 	notpain(var/mob/living/carbon/pony/P in view(1))
 		set name = "Pain relief"
@@ -168,35 +186,59 @@ var/global/list/uspell_datums = list()
 		P.reagents.add_reagent("tramadol", 3)
 		P.reagents.add_reagent("adrenalin", 1)
 
-	light_heel(var/mob/living/carbon/P in view(1))
+	light_heel(var/mob/living/carbon/P in view(1))//Можно добавить настройку для аликорнов
 		set name = "Light heel"
 		set desc = "Little heel ponies."
 		set category = "Unicorn"
+		P.apply_damages(-5, -5)
 
 	organ_scan(var/mob/living/carbon/pony/P in view(1))
-		set name = "Orhan analyze"
+		set name = "Organ analyze"
 		set desc = "Analogy of using organ analyzer."
 		set category = "Unicorn"
+
+
 
 	crowbar()
 		set name = "Telekinetic crowbar"
 		set desc = "Use telekinesis as crowbar."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/crowbar/C = new/obj/item/weapon/crowbar
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+			spawn(2000)	del C
+
 
 	screwdriver()
 		set name = "Telekinetic screwdriver"
 		set desc = "Use telekinesis as screwdriver."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/screwdriver/C = new/obj/item/weapon/screwdriver
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+			spawn(2000)	del C
 
 	cut()
 		set name = "Telekinetic cut"
 		set desc = "Use telekinesis as cut."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/wirecutters/C = new/obj/item/weapon/wirecutters
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+			spawn(2000)	del C
 
 	brush()
 		set name = "Telekinetic brush"
 		set desc = "Analogy of archeology brush."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/pickaxe/brush/C = new/obj/item/weapon/pickaxe/brush
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+			spawn(2000)	del C
 
 	teleport()
 		set name = "Teleport"
@@ -204,6 +246,9 @@ var/global/list/uspell_datums = list()
 		set category = "Unicorn"
 		var/list/Li = list("Record", "Teleport")
 		var/target = input(usr, "Choose mod your teleportation", "Mod")  as null|anything in Li
+		if(target == "Record")	record_loc = loc
+		else if(record_loc)	Move(locate(record_loc))
+		else usr << "Nope." //Тут функция отказа
 
 	mag_boots()
 		set name = "Telekinetic Anchoring"
@@ -216,10 +261,12 @@ var/global/list/uspell_datums = list()
 		set category = "Unicorn"
 		var/list/Li = list()
 		for(var/atom/A in view(2))
-			if(istype(A, /obj/machinery/power/apc) || istype(A, /obj/item/weapon/cell) || isrobot(A))
-				Li += A
+			if(istype(A, /obj/machinery/power/apc) || istype(A, /obj/item/weapon/cell) || ismob(A))
+				if(istype(A, /obj/item/weapon/cell)) Li += A
+				else for(var/obj/item/weapon/cell/C in A.contents) Li += C
 		if(Li.len == 0)	return
 		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		//target.charge += min(500, target)
 
 	welding()
 		set name = "Welding heating"
