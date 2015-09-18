@@ -21,7 +21,7 @@ var/global/list/uspell_datums = list()
 /mob/living/carbon/pony/var/tmp/record_loc
 /mob/living/carbon/pony/verb
 	strong_light()
-		set category = "Unicorn Spells"
+		set category = "Unicorn"
 		set name = "Strong light"
 		set desc = "Strong light about you."
 		if(switch_ulight == 0)
@@ -38,7 +38,7 @@ var/global/list/uspell_datums = list()
 		update_tail_showing()
 
 	light()
-		set category = "Unicorn Spells"
+		set category = "Unicorn"
 		set name = "Light"
 		set desc = "Light about you."
 		if(switch_ulight == 0)
@@ -57,7 +57,7 @@ var/global/list/uspell_datums = list()
 	clean()
 		set name = "Cleaner"
 		set desc = "Cleaning you."
-		set category = "Unicorn Spells"
+		set category = "Unicorn"
 		var/obj/item/weapon/reagent_containers/spray/cleaner/H = new/obj/item/weapon/reagent_containers/spray/cleaner
 		H.Spray_at(usr, usr, 1)
 		del H
@@ -65,7 +65,7 @@ var/global/list/uspell_datums = list()
 	health_scan(var/mob/living/carbon/M in view(1))
 		set name = "Health scan"
 		set desc = "Analogy of using health analyzer."
-		set category = "Unicorn Spells"
+		set category = "Unicorn"
 		if(M != usr)
 			var/obj/item/device/healthanalyzer/H = new/obj/item/device/healthanalyzer
 			H.attack(M, usr)
@@ -74,7 +74,7 @@ var/global/list/uspell_datums = list()
 	cyber_scan(var/mob/living/carbon/M in view(1))
 		set name = "Cyber scan"
 		set desc = "Analogy of using cyber analyzer."
-		set category = "Unicorn Spells"
+		set category = "Unicorn"
 		if(M != usr)
 			var/obj/item/device/robotanalyzer/H = new/obj/item/device/robotanalyzer
 			H.attack(M, usr)
@@ -167,7 +167,7 @@ var/global/list/uspell_datums = list()
 
 	cold(var/mob/living/carbon/pony/P in view(1))
 		set name = "Cooling"
-		set desc = "Cooling ponies for... what?."
+		set desc = "Makes ponies 20% cooler... Khm, colder."
 		set category = "Unicorn"
 		P.bodytemperature -= 10
 
@@ -181,7 +181,7 @@ var/global/list/uspell_datums = list()
 
 	notpain(var/mob/living/carbon/pony/P in view(1))
 		set name = "Pain relief"
-		set desc = "Analogy of tramadol power's."
+		set desc = "Easing of pain."
 		set category = "Unicorn"
 		P.reagents.add_reagent("tramadol", 3)
 		P.reagents.add_reagent("adrenalin", 1)
@@ -196,8 +196,6 @@ var/global/list/uspell_datums = list()
 		set name = "Organ analyze"
 		set desc = "Analogy of using organ analyzer."
 		set category = "Unicorn"
-
-
 
 	crowbar()
 		set name = "Telekinetic crowbar"
@@ -265,18 +263,27 @@ var/global/list/uspell_datums = list()
 				if(istype(A, /obj/item/weapon/cell)) Li += A
 				else for(var/obj/item/weapon/cell/C in A.contents) Li += C
 		if(Li.len == 0)	return
-		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
-		//target.charge += min(500, target)
+		var/obj/item/weapon/cell/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		target.charge += min(500, target)
 
 	welding()
 		set name = "Welding heating"
-		set desc = "Analogy of welding tool by manipulationg with aura."
+		set desc = "Unweld this wall. Right now."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/weldingtool/C = new/obj/item/weapon/weldingtool
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+			spawn(2000)	del C
 
 	hoofcufs()
 		set name = "Telekinetic hoofcufs"
 		set desc = "Analogy of hoofcufs."
 		set category = "Unicorn"
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/handcuffs/C = new/obj/item/weapon/handcuffs
+			C.Move(locate(usr))
+			C.attack_hand(usr)
 
 	disarm(var/mob/living/carbon/pony/P in view(1))
 		set name = "Flash disarm"
@@ -287,6 +294,8 @@ var/global/list/uspell_datums = list()
 		set name = "Flash"
 		set desc = "Ligh grenade."
 		set category = "Unicorn"
+		for(var/mob/M in view(3))
+			flick("flash", M)
 
 	glue(var/mob/living/carbon/P in view(4))
 		set name = "Live telekinesis"
