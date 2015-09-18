@@ -7,5 +7,6 @@
 
 # not_a_user - Admin
 S_Spy - Host
-Zorghol - Host
+Zorghol - Head Admin
 Aphimag - Host
+MyGhosst - Guard Admin

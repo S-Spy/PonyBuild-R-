@@ -34,8 +34,8 @@ Mentor                  +MENTOR
 Admin Candidate	+ADMIN
 Trial Admin		+@ +SPAWN +REJUV +VAREDIT +BAN
 Badmin			+@ +POSSESS +BUILDMODE +SERVER +FUN
-Game Admin		+@ +STEALTH +SOUNDS +DEBUG +PERMISSIONS
-Game Master		+EVERYTHING
+Game Master		+@ +STEALTH +SOUNDS +DEBUG +PERMISSIONS
+Guard Admin		+EVERYTHING
 Head Admin		+EVERYTHING
 Retired Admin	+ADMIN +STEALTH
 
