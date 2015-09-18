@@ -10,3 +10,4 @@ S_Spy - Host
 Zorghol - Head Admin
 Aphimag - Host
 MyGhosst - Guard Admin
+Luna Solar - Guard Admin
