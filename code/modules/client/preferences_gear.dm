@@ -14,18 +14,31 @@ var/global/list/uspell_datums = list()
   Ўанс успеха исход€ из сложности и концентрации
   ƒолгосрочные заклинани€ имеют максимум времени действи€
   ќдновременно может действовать только одно долгосрочное заклинание
+  “рата сытности на старте - ќк
+  ќдновременно одно долгосрочное заклинание -
+  ≈сли горит рог и это не то же долгосрочное заклинание, то долгосрочнное заклинание не вызываетс€
+  ≈сли горит рог и активно другое недолгосрочное заклинание, то отказано
+  ≈сли рог не горит или , то записываетс€ номер активированного долгосрочного заклинани€
+
+
+
+
 */
 
 
 /mob/living/carbon/pony/var/tmp/switch_ulight = 0
+/mob/living/carbon/pony/var/tmp/switch_ulight_short = 0
 /mob/living/carbon/pony/var/tmp/record_loc
 /mob/living/carbon/pony/verb
 	strong_light()
 		set category = "Unicorn"
 		set name = "Strong light"
 		set desc = "Strong light about you."
+		if(nutrition < 5) return
+		if(switch_ulight != 1 && switch_ulight != 0)	return
 		if(switch_ulight == 0)
 			SetLuminosity(luminosity+3)
+			nutrition -= 10
 			switch_ulight = 1
 			spawn(150)
 				if(switch_ulight == 1)
@@ -41,8 +54,11 @@ var/global/list/uspell_datums = list()
 		set category = "Unicorn"
 		set name = "Light"
 		set desc = "Light about you."
+		if(nutrition < 5) return
+		if(switch_ulight != 2 && switch_ulight != 0)	return
 		if(switch_ulight == 0)
 			SetLuminosity(luminosity+1)
+			nutrition -= 5
 			switch_ulight = 1
 			spawn(400)
 				if(switch_ulight == 1)
@@ -58,23 +74,52 @@ var/global/list/uspell_datums = list()
 		set name = "Cleaner"
 		set desc = "Cleaning you."
 		set category = "Unicorn"
+		if(switch_ulight_short != 3 && switch_ulight_short != 0)	return
+		if(nutrition < 20) return
+		else nutrition -= 20
+		switch_ulight_short = 3
+		sleep(10)
 		var/obj/item/weapon/reagent_containers/spray/cleaner/H = new/obj/item/weapon/reagent_containers/spray/cleaner
 		H.Spray_at(usr, usr, 1)
 		del H
+		sleep(5)
+		switch_ulight_short = 0
+		sleep(150)
 
-	health_scan(var/mob/living/carbon/M in view(1))
+	health_scan()
 		set name = "Health scan"
 		set desc = "Analogy of using health analyzer."
 		set category = "Unicorn"
+		if(switch_ulight_short != 4 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		switch_ulight_short = 4
+		sleep(10)
+		var/list/mobs = list()
+		for(var/mob/living/carbon/M in view(1))
+			if(M != usr)	mobs += M
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
 		if(M != usr)
+			nutrition -= 10
 			var/obj/item/device/healthanalyzer/H = new/obj/item/device/healthanalyzer
 			H.attack(M, usr)
 			del H
+		sleep(5)
+		switch_ulight_short = 0
+		sleep(250)
 
-	cyber_scan(var/mob/living/carbon/M in view(1))
+	cyber_scan()
 		set name = "Cyber scan"
 		set desc = "Analogy of using cyber analyzer."
 		set category = "Unicorn"
+		if(switch_ulight_short != 5 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
+		switch_ulight_short = 5
+		sleep(10)
+		var/list/mobs = list()
+		for(var/mob/living/carbon/M in view(1))
+			if(M != usr)	mobs += M
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
 		if(M != usr)
 			var/obj/item/device/robotanalyzer/H = new/obj/item/device/robotanalyzer
 			H.attack(M, usr)
@@ -84,6 +129,9 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic glass"
 		set desc = "Liquid telekinesis."
 		set category = "Unicorn"
+		if(nutrition < 5) return
+		if(switch_ulight != 6 && switch_ulight != 0)	return
+		else nutrition -= 5
 		var/obj/item/weapon/reagent_containers/glass/G = new/obj/item/weapon/reagent_containers/glass
 		var/icon/I = G.icon
 		I.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
@@ -92,14 +140,19 @@ var/global/list/uspell_datums = list()
 		G.Move(locate(x, y, z))
 		UnarmedAttack(G)
 		spawn(500)
-			var/obj/O = locate(G)
-			G.afterattack(G, usr, 1)
+			var/obj/O = locate(/obj) in G.loc
+			G.afterattack(O, usr, 1)
 			spawn(6)	del G
 
 	dist_light()
 		set name = "Distance light"
 		set desc = "Beam of light."
 		set category = "Unicorn"
+		if(switch_ulight_short != 7 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
+		switch_ulight_short = 7
+		sleep(10)
 		var/obj/item/weapon/light_spark/L = new/obj/item/weapon/light_spark
 		var/icon/I = L.icon
 		I.Blend(rgb(r_aura, g_aura, b_aura))
@@ -111,6 +164,11 @@ var/global/list/uspell_datums = list()
 		set name = "Morph"
 		set desc = "Transform you hair's."
 		set category = "Unicorn"
+		if(switch_ulight_short != 8 && switch_ulight_short != 0)	return
+		if(nutrition < 20) return
+		else nutrition -= 20
+		switch_ulight_short = 8
+		sleep(10)
 		var/list/valid_hair = list()
 		var/list/valid_facial = list()
 		var/list/valid_tail = list()
@@ -143,12 +201,17 @@ var/global/list/uspell_datums = list()
 		set name = "Heat"
 		set desc = "Heating food, ponies and you."
 		set category = "Unicorn"
+		if(switch_ulight_short != 9 && switch_ulight_short != 0)	return
+		if(nutrition < 20) return
 		var/list/Li = list()
 		for(var/atom/A in view(1))
 			if(istype(A, /obj/item/weapon/reagent_containers/food) || istype(A, /mob/living/carbon/pony))
 				Li += A
 		if(Li.len == 0)	return
 		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		nutrition -= 20
+		switch_ulight_short = 9
+		sleep(10)
 		if(target in view(1))
 			if(istype(target, /obj/item/weapon/reagent_containers/food))	target:heat_food(target:heating+1)
 			else	target:bodytemperature += 5
@@ -158,23 +221,42 @@ var/global/list/uspell_datums = list()
 		set name = "High concentration"
 		set desc = "Very high concentration for strong telekinesis."
 		set category = "Unicorn"
+		if(switch_ulight != 10 && switch_ulight !=0)	return
+		if(nutrition < 15) return
+		else nutrition -= 15
 
 	fruit_transform(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in view(1))
 		set name = "Organic transformation"
 		set desc = "Banana to potato, yeah."
 		set category = "Unicorn"
+		if(switch_ulight_short != 11 && switch_ulight_short != 0)	return
+		if(nutrition < 30) return
+		else nutrition -= 30
+		switch_ulight_short = 11
+		sleep(10)
 		G = new(G.loc, pick("chili", "potato", "tomato", "apple", "banana", "mushrooms", "plumphelmet", "towercap", "harebells", "poppies", "sunflowers", "grapes", "peanut", "cabbage", "corn", "carrot", "whitebeet", "watermelon", "pumpkin", "lime", "lemon", "orange", "ambrosia"))
+		if(prob(50))	del G
 
 	cold(var/mob/living/carbon/pony/P in view(1))
 		set name = "Cooling"
 		set desc = "Makes ponies 20% cooler... Khm, colder."
 		set category = "Unicorn"
+		if(switch_ulight_short != 12 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
+		switch_ulight_short = 12
+		sleep(10)
 		P.bodytemperature -= 10
 
 	blood_dam(var/mob/living/carbon/pony/P in view(1))
 		set name = "Heel bleeding"
 		set desc = "Analogy of bandages."
 		set category = "Unicorn"
+		if(switch_ulight_short != 13 && switch_ulight_short != 0)	return
+		if(nutrition < 20) return
+		else nutrition -= 20
+		switch_ulight_short = 13
+		sleep(10)
 		var/obj/item/stack/medical/bruise_pack/B = new/obj/item/stack/medical/bruise_pack
 		B.attack(P, usr)
 		del B
@@ -183,6 +265,11 @@ var/global/list/uspell_datums = list()
 		set name = "Pain relief"
 		set desc = "Easing of pain."
 		set category = "Unicorn"
+		if(switch_ulight != 14 && switch_ulight != 0)	return
+		if(nutrition < 20) return
+		else nutrition -= 20
+		switch_ulight_short = 14
+		sleep(10)
 		P.reagents.add_reagent("tramadol", 3)
 		P.reagents.add_reagent("adrenalin", 1)
 
@@ -190,18 +277,31 @@ var/global/list/uspell_datums = list()
 		set name = "Light heel"
 		set desc = "Little heel ponies."
 		set category = "Unicorn"
+		if(switch_ulight_short != 15 && switch_ulight_short != 0)	return
+		if(nutrition < 30) return
+		else nutrition -= 30
+		switch_ulight_short = 15
+		sleep(10)
 		P.apply_damages(-5, -5)
 
 	organ_scan(var/mob/living/carbon/pony/P in view(1))
 		set name = "Organ analyze"
 		set desc = "Analogy of using organ analyzer."
 		set category = "Unicorn"
+		if(switch_ulight_short != 16 && switch_ulight_short != 0)	return
+		if(nutrition < 30) return
+		else nutrition -= 30
+		switch_ulight_short = 16
+		sleep(10)
 
 	crowbar()
 		set name = "Telekinetic crowbar"
 		set desc = "Use telekinesis as crowbar."
 		set category = "Unicorn"
+		if(switch_ulight != 17 && switch_ulight != 0)	return
+		if(nutrition < 5) return
 		if(!l_hand || !r_hand)
+			nutrition -= 5
 			var/obj/item/weapon/crowbar/C = new/obj/item/weapon/crowbar
 			C.Move(locate(usr))
 			C.attack_hand(usr)
@@ -212,7 +312,10 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic screwdriver"
 		set desc = "Use telekinesis as screwdriver."
 		set category = "Unicorn"
+		if(switch_ulight != 18 && switch_ulight != 0)	return
+		if(nutrition < 5) return
 		if(!l_hand || !r_hand)
+			nutrition -= 5
 			var/obj/item/weapon/screwdriver/C = new/obj/item/weapon/screwdriver
 			C.Move(locate(usr))
 			C.attack_hand(usr)
@@ -222,7 +325,10 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic cut"
 		set desc = "Use telekinesis as cut."
 		set category = "Unicorn"
+		if(switch_ulight != 19 && switch_ulight != 0)	return
+		if(nutrition < 5) return
 		if(!l_hand || !r_hand)
+			nutrition -= 5
 			var/obj/item/weapon/wirecutters/C = new/obj/item/weapon/wirecutters
 			C.Move(locate(usr))
 			C.attack_hand(usr)
@@ -232,7 +338,10 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic brush"
 		set desc = "Analogy of archeology brush."
 		set category = "Unicorn"
+		if(switch_ulight != 20 && switch_ulight != 0)	return
+		if(nutrition < 10) return
 		if(!l_hand || !r_hand)
+			nutrition -= 10
 			var/obj/item/weapon/pickaxe/brush/C = new/obj/item/weapon/pickaxe/brush
 			C.Move(locate(usr))
 			C.attack_hand(usr)
@@ -242,8 +351,13 @@ var/global/list/uspell_datums = list()
 		set name = "Teleport"
 		set desc = "Teleportation to old record."
 		set category = "Unicorn"
+		if(switch_ulight_short != 21 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
 		var/list/Li = list("Record", "Teleport")
 		var/target = input(usr, "Choose mod your teleportation", "Mod")  as null|anything in Li
+		switch_ulight_short = 21
+		sleep(10)
 		if(target == "Record")	record_loc = loc
 		else if(record_loc)	Move(locate(record_loc))
 		else usr << "Nope." //“ут функци€ отказа
@@ -252,11 +366,16 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic Anchoring"
 		set desc = "Analogy of mag boots."
 		set category = "Unicorn"
+		if(switch_ulight != 22 && switch_ulight != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
 
 	cell_power()
 		set name = "Charge of power"
 		set desc = "Charging APC, robot's etc."
 		set category = "Unicorn"
+		if(switch_ulight_short != 23 && switch_ulight_short != 0)	return
+		if(nutrition < 30) return
 		var/list/Li = list()
 		for(var/atom/A in view(2))
 			if(istype(A, /obj/machinery/power/apc) || istype(A, /obj/item/weapon/cell) || ismob(A))
@@ -264,13 +383,19 @@ var/global/list/uspell_datums = list()
 				else for(var/obj/item/weapon/cell/C in A.contents) Li += C
 		if(Li.len == 0)	return
 		var/obj/item/weapon/cell/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		switch_ulight_short = 23
+		sleep(10)
 		target.charge += min(500, target)
+		nutrition -= 30
 
 	welding()
 		set name = "Welding heating"
 		set desc = "Unweld this wall. Right now."
 		set category = "Unicorn"
+		if(switch_ulight != 24 && switch_ulight != 0)	return
+		if(nutrition < 30) return
 		if(!l_hand || !r_hand)
+			nutrition -= 30
 			var/obj/item/weapon/weldingtool/C = new/obj/item/weapon/weldingtool
 			C.Move(locate(usr))
 			C.attack_hand(usr)
@@ -280,37 +405,82 @@ var/global/list/uspell_datums = list()
 		set name = "Telekinetic hoofcufs"
 		set desc = "Analogy of hoofcufs."
 		set category = "Unicorn"
+		if(switch_ulight != 25 && switch_ulight != 0)	return
+		if(nutrition < 5) return
 		if(!l_hand || !r_hand)
 			var/obj/item/weapon/handcuffs/C = new/obj/item/weapon/handcuffs
 			C.Move(locate(usr))
 			C.attack_hand(usr)
+			nutrition -= 5
 
-	disarm(var/mob/living/carbon/pony/P in view(1))
+	disarm()
 		set name = "Flash disarm"
 		set desc = "Fast disarm."
 		set category = "Unicorn"
+		if(switch_ulight_short != 26 && switch_ulight_short != 0)	return
+		if(nutrition < 20) return
+		var/list/mobs = list()
+		for(var/mob/living/carbon/pony/P in view(1))
+			if(P != usr)	mobs += P
+		var/mob/living/carbon/pony/P = input(usr, "Choose your target", "Target")  as null|anything in mobs
+		P.apply_effect(3, WEAKEN, 0)
+		nutrition -= 20
+		switch_ulight_short = 26
+		sleep(5)
+		switch_ulight_short = 0
+
+
 
 	light_grenade()
 		set name = "Flash"
 		set desc = "Ligh grenade."
 		set category = "Unicorn"
+		if(switch_ulight_short != 27 && switch_ulight_short != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
 		for(var/mob/M in view(3))
 			flick("flash", M)
+		switch_ulight_short = 27
+		sleep(5)
+		switch_ulight_short = 0
+
+
 
 	glue(var/mob/living/carbon/P in view(4))
 		set name = "Live telekinesis"
 		set desc = "Slowdown ponies."
 		set category = "Unicorn"
+		if(switch_ulight != 28 && switch_ulight != 0)	return
+		if(nutrition < 10) return
+		else nutrition -= 10
 
 	party_shield()
 		set name = "Body shield"
 		set desc = "Strong armor about you body."
 		set category = "Unicorn"
+		if(switch_ulight != 29 && switch_ulight != 0)	return
+		if(nutrition < 15) return
+		else nutrition -= 15
+		var/obj/item/clothing/suit/S = locate(/obj/item/clothing/suit) in usr.contents
+		//if(!S)
+		S.armor += list(20, 15, 10, 10, 5, 0, 0)
+		var/icon/I = S.icon
+		I.Blend(rgb(r_aura, g_aura, b_aura))
+		S.icon = I
+		spawn(3000) S.armor -= list(20, 15, 10, 10, 5, 0, 0)
 
 	hoof_shield()
 		set name = "Shield"
 		set desc = "Analogy of SWAT shield."
 		set category = "Unicorn"
+		if(switch_ulight != 30 && switch_ulight != 0)	return
+		if(nutrition < 15) return
+		else nutrition -= 15
+		if(!l_hand || !r_hand)
+			var/obj/item/weapon/shield/riot/C = new/obj/item/weapon/shield/riot
+			C.Move(locate(usr))
+			C.attack_hand(usr)
+
 
 /mob/living/carbon/pony/proc/update_unicorn_verbs()
 	for(var/type in typesof(/datum/spells)-/datum/spells)
