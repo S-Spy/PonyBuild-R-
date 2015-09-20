@@ -877,6 +877,8 @@ var/global/list/uspell_datums = list()
 	for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
 		var/datum/spells/S = new type()//Сам спелл-датум
 		verbs -= S.spell_verb
+		world << S.spell_verb
+		verbs -= /mob/living/carbon/pony/verb/light
 		/*if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))//Если у юзера есть это заклинание-верб, а в списке его заклинаний такого нет, то...
 			if(S.allowed_roles && S.allowed_roles.len > 0)
 				if(!S.allowed_roles.Find(job))
