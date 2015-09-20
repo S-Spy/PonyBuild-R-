@@ -916,8 +916,8 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
 	overlays_standing[TAIL_LAYER] = null
 	var/icon/ICON
+	update_unicorn_verbs()
 	if(species.tail)
-		update_unicorn_verbs()
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
 			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
