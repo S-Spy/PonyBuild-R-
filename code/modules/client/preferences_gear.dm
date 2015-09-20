@@ -874,9 +874,10 @@ var/global/list/uspell_datums = list()
 
 
 /mob/living/carbon/pony/proc/update_unicorn_verbs()
-	for(var/type in typesof(/datum/spells)-/datum/spells)
-		var/datum/spells/S = new type()
-		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))
+	for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
+		var/datum/spells/S = new type()//Сам спелл-датум
+		verbs -= S.spell_verb
+		/*if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))//Если у юзера есть это заклинание-верб, а в списке его заклинаний такого нет, то...
 			if(S.allowed_roles && S.allowed_roles.len > 0)
 				if(!S.allowed_roles.Find(job))
 					verbs -= S.spell_verb
@@ -885,7 +886,7 @@ var/global/list/uspell_datums = list()
 		else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name))
 			if(S.allowed_roles && S.allowed_roles.len > 0)
 				if(S.allowed_roles.Find(job))	verbs += S.spell_verb
-			else	verbs += S.spell_verb
+			else	verbs += S.spell_verb*/
 
 
 /hook/startup/proc/populate_gear_list()
