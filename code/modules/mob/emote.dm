@@ -22,6 +22,7 @@
 
 
 	if (message)
+		message = sanitize_simple(message)
 		log_emote("[name]/[key] : [message]")
 
 		var/list/seeing_obj = list() //For objs that need to see emotes.  You can use see_emote(), which is based off of hear_talk()
