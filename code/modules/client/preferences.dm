@@ -655,10 +655,10 @@ datum/preferences
 	dat += "</small></td>"
 	dat += "</tr>"
 	dat += "</table><center><hr/>"
+	unicorn_spells = list()
 	if(current_species.name == "Unicorn" || current_species.name == "Alicorn")
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
-		unicorn_spells = list()
 
 	var/restricted = 0
 	if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!

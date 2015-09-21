@@ -876,8 +876,9 @@ var/global/list/uspell_datums = list()
 /mob/living/carbon/pony/proc/update_unicorn_verbs()
 	for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
 		var/datum/spells/S = new type()//Сам спелл-датум
+		if(unicorn_spells.Find(S.spell_name))	usr << "[S.spell_name]-good!"
+		if(verbs.Find(S.spell_verb))	usr << "[S.spell_verb]-good!"
 		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))//Если у юзера есть это заклинание-верб, а в списке его заклинаний такого нет, то...
-			world << "Test 1 working"
 			if(S.allowed_roles && S.allowed_roles.len > 0)
 				if(!S.allowed_roles.Find(job))
 					verbs -= S.spell_verb
