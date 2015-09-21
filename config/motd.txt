@@ -1,5 +1,6 @@
-<h1>Welcome to Space Station 13!</h1>
-
--<i>This server is running <a href="http://baystation12.net/">Baystation 12's</a> modification of the <a href="http://ss13.eu/">/tg/station13</a> SS13 code.</i>
+<h1>Welcome to Pony Station!</h1>
 <br><br>
-<strong>Bugtracker:</strong> <a href="http://baystation12.net/forums/viewtopic.php?f=18&t=8185">http://baystation12.net/forums/viewtopic.php?f=18&t=8185</a>
+<strong>Bugtracker:</strong> Skype of Head Developer - arhmint<br>
+We are glad to see you on our server, but is obliged to warn that is the server test. No admins and rules. Build updated regularly.
+<br>
+Poka rabotaet tolko translit
