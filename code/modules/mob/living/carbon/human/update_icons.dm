@@ -934,7 +934,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
 		else 		ICON = p_tail
 
-	overlays_standing[TAIL_LAYER] = image(ICON)
+	overlays_standing[R_HAND_LAYER+0.1] = image(ICON)
 
 	if(update_icons)
 		update_icons()
