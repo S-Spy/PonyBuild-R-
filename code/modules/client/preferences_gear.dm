@@ -25,7 +25,7 @@ var/global/list/uspell_datums = list()
 	var/HPP = health/100
 	var/starving = nutrition/500
 	level = 1/level
-	return round((HPP+starving+level)*33)
+	return 100-round((HPP+starving+level)*33)
 
 /mob/living/carbon/pony/verb
 	strong_light()//OK
@@ -877,6 +877,7 @@ var/global/list/uspell_datums = list()
 	for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
 		var/datum/spells/S = new type()//Сам спелл-датум
 		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))//Если у юзера есть это заклинание-верб, а в списке его заклинаний такого нет, то...
+			world << "Test 1 working"
 			if(S.allowed_roles && S.allowed_roles.len > 0)
 				if(!S.allowed_roles.Find(job))
 					verbs -= S.spell_verb
