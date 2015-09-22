@@ -1,10 +1,10 @@
-/mob/living/simple_animal/pegasus
-	name = "Pegasus"
-	desc = "A cute tiny pegasus."
+/mob/living/simple_animal/lizard
+	name = "Lizard"
+	desc = "A cute tiny lizard."
 	icon = 'icons/mob/critter.dmi'
-	icon_state = "Pegasus"
-	icon_living = "Pegasus"
-	icon_dead = "pegasus-dead"
+	icon_state = "lizard"
+	icon_living = "lizard"
+	icon_dead = "lizard-dead"
 	small = 1
 	speak_emote = list("hisses")
 	health = 5

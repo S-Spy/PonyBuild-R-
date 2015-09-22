@@ -78,9 +78,9 @@
 			max_number = 12
 			vermstring = "mice"
 		if(VERM_pegasusS)
-			spawn_types = list(/mob/living/simple_animal/pegasus)
+			spawn_types = list(/mob/living/simple_animal/lizard)
 			max_number = 6
-			vermstring = "pegasuss"
+			vermstring = "lizards"
 		if(VERM_SPIDERS)
 			spawn_types = list(/obj/effect/spider/spiderling)
 			max_number = 3
