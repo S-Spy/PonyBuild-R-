@@ -893,7 +893,8 @@ var/global/list/uspell_datums = list()
 		//else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name))
 		//	if(S.allowed_roles && S.allowed_roles.len > 0)
 		//		if(S.allowed_roles.Find(job))	verbs += S.spell_verb
-		//	else	verbs += S.spell_verb>*/
+		//	else	verbs += S.spell_verb>
+		*/
 
 
 /hook/startup/proc/populate_gear_list()
