@@ -875,7 +875,10 @@ var/global/list/uspell_datums = list()
 
 /mob/living/carbon/pony/proc/update_unicorn_verbs()
 	for(var/type in typesof(/datum/spells)-/datum/spells)
-	for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
+		var/datum/spells/S = new type()
+		if(!(S.spell_name in unicorn_spells))
+			verbs -= S.spell_verb
+	/*for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
 		var/datum/spells/S = new type()//Сам спелл-датум
 		usr << "[S.spell_name]"
 		usr << "[S.spell_verb]"
@@ -890,7 +893,7 @@ var/global/list/uspell_datums = list()
 		//else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name))
 		//	if(S.allowed_roles && S.allowed_roles.len > 0)
 		//		if(S.allowed_roles.Find(job))	verbs += S.spell_verb
-		//	else	verbs += S.spell_verb
+		//	else	verbs += S.spell_verb>*/
 
 
 /hook/startup/proc/populate_gear_list()
