@@ -878,23 +878,7 @@ var/global/list/uspell_datums = list()
 		var/datum/spells/S = new type()
 		if(!(S.spell_name in unicorn_spells))
 			verbs -= S.spell_verb
-	/*for(var/type in typesof(/datum/spells)-/datum/spells)//Перечисление всех спелло
-		var/datum/spells/S = new type()//Сам спелл-датум
-		usr << "[S.spell_name]"
-		usr << "[S.spell_verb]"
-		if(unicorn_spells.Find(S.spell_name))	usr << "[S.spell_name]-good!"
-		if(S.spell_verb in verbs)	usr << "[S.spell_verb]-good"
-		if(verbs.Find(S.spell_verb) && !unicorn_spells.Find(S.spell_name))//Если у юзера есть это заклинание-верб, а в списке его заклинаний такого нет, то...
-			if(S.allowed_roles && S.allowed_roles.len > 0)
-				if(!S.allowed_roles.Find(job))
-					verbs -= S.spell_verb
-			else
-				verbs -= S.spell_verb
-		//else if(!verbs.Find(S.spell_verb) && unicorn_spells.Find(S.spell_name))
-		//	if(S.allowed_roles && S.allowed_roles.len > 0)
-		//		if(S.allowed_roles.Find(job))	verbs += S.spell_verb
-		//	else	verbs += S.spell_verb>
-		*/
+
 
 
 /hook/startup/proc/populate_gear_list()
