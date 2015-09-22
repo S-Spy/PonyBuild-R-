@@ -60,7 +60,7 @@ datum/preferences
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/ptail_style = "Short Tail"				//ptail type
+	var/ptail_style = "Bald"				//ptail type
 	var/r_ptail = 0						//Face hair color
 	var/g_ptail = 0						//Face hair color
 	var/b_ptail = 0						//Face hair color
