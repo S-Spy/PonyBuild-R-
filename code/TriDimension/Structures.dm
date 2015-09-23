@@ -220,7 +220,7 @@
 					S.connected = src
 					break
 			//Определение типа спрайта
-			if(target.z > z)	icon_state = "ramptop"
+			if(target && target.z > z)	icon_state = "ramptop"
 
 	Bumped(var/atom/movable/M)
 		if(connected && target && istype(src, /obj/multiz/stairs) && locate(/obj/multiz/stairs) in M.loc)

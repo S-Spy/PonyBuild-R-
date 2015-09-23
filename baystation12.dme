@@ -11,6 +11,7 @@
 #define FILE_DIR "icons/48x48"
 #define FILE_DIR "icons/atmos"
 #define FILE_DIR "icons/effects"
+#define FILE_DIR "icons/forum"
 #define FILE_DIR "icons/mecha"
 #define FILE_DIR "icons/misc"
 #define FILE_DIR "icons/mob"
@@ -72,7 +73,9 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
+#include "code\Forum Lib.dm"
 #include "code\global.dm"
+#include "code\HTML Forum.dm"
 #include "code\hub.dm"
 #include "code\names.dm"
 #include "code\setup.dm"

@@ -1,3 +1,15 @@
-"a" = ()
+"a" = (/turf/simulated/floor/bluegrid{icon = 'MyIcons.dmi'; icon_state = "grass"},/area/space)
+"b" = (/turf/simulated/floor/bluegrid{icon = 'MyIcons.dmi'; icon_state = "grass"},/area/space)
 
-(1,1,1, 10,10,1) = {""}
+(1,1,1) = {"
+aaaaaaaaaa
+aaaaaaaaaa
+abaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+"}
