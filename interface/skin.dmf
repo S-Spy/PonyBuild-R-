@@ -218,12 +218,20 @@ macro "hotkeymode"
 		command = ".northwest"
 		is-disabled = false
 	elem 
+		name = "ALT+WEST"
+		command = "westfaceperm"
+		is-disabled = false
+	elem 
 		name = "CTRL+WEST"
 		command = "westface"
 		is-disabled = false
 	elem 
 		name = "WEST+REP"
 		command = ".west"
+		is-disabled = false
+	elem 
+		name = "ALT+NORTH"
+		command = "northfaceperm"
 		is-disabled = false
 	elem 
 		name = "CTRL+NORTH"
@@ -234,6 +242,10 @@ macro "hotkeymode"
 		command = ".north"
 		is-disabled = false
 	elem 
+		name = "ALT+EAST"
+		command = "eastfaceperm"
+		is-disabled = false
+	elem 
 		name = "CTRL+EAST"
 		command = "eastface"
 		is-disabled = false
@@ -242,28 +254,16 @@ macro "hotkeymode"
 		command = ".east"
 		is-disabled = false
 	elem 
+		name = "ALT+SOUTH"
+		command = "southfaceperm"
+		is-disabled = false
+	elem 
 		name = "CTRL+SOUTH"
 		command = "southface"
 		is-disabled = false
 	elem 
 		name = "SOUTH+REP"
 		command = ".south"
-		is-disabled = false
-	elem 
-		name = "ALT+WEST"
-		command = "westfaceperm"
-		is-disabled = false
-	elem 
-		name = "ALT+NORTH"
-		command = "northfaceperm"
-		is-disabled = false
-	elem 
-		name = "ALT+EAST"
-		command = "eastfaceperm"
-		is-disabled = false
-	elem 
-		name = "ALT+SOUTH"
-		command = "southfaceperm"
 		is-disabled = false
 	elem 
 		name = "INSERT"
@@ -1194,6 +1194,73 @@ window "chemdispenser_reagents"
 		text-wrap = false
 		allow-html = false
 		letterbox = true
+
+window "forumwindow"
+	elem "forumwindow"
+		type = MAIN
+		pos = 281,0
+		size = 640x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = false
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = "Browser"
+		titlebar = false
+		statusbar = false
+		can-close = false
+		can-minimize = false
+		can-resize = false
+		is-pane = true
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = ""
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = ""
+		menu = ""
+		on-close = ""
+	elem "browser"
+		type = BROWSER
+		pos = 0,0
+		size = 638x471
+		anchor1 = 0,0
+		anchor2 = 100,100
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		show-history = false
+		show-url = false
+		auto-format = true
+		use-title = false
+		on-show = ".winset\"rpane.infob.is-visible=true?rpane.infob.pos=130,0;rpane.textb.is-visible=true;rpane.browseb.is-visible=true;rpane.browseb.is-checked=true;rpane.rpanewindow.pos=0,30;rpane.rpanewindow.size=0x0;rpane.rpanewindow.left=browserwindow\""
+		on-hide = ".winset\"rpane.infob.is-visible=true?rpane.infob.is-checked=true rpane.infob.pos=65,0 rpane.rpanewindow.left=infowindow:rpane.rpanewindow.left=textwindow rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0\""
 
 window "mainwindow"
 	elem "mainwindow"
