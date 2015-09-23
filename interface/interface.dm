@@ -26,7 +26,7 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	if(!src.Selected_Forum)	src.Selected_Forum = Bug_Reports
+	if(!mob.Selected_Forum)	mob.Selected_Forum = Bug_Reports
 	mob.Display_HTML_Forum()
 	winset(src, null, "rpanewindow.left=browserwindow")
 	/*
