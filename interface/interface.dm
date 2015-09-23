@@ -15,7 +15,7 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
-	Display_HTML_Forum()
+	mob.Display_HTML_Forum()
 	/*
 	if( config.forumurl )
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
