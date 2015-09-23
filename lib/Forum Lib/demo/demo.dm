@@ -25,10 +25,10 @@ var/obj/Forums/Forum/Newbie_Help = new
 
 
 
-mob/Login()
-	..()
-	sleep(1)     //This just ensures that when it first shows you the forum below (since we are doing it in the Login() proc, you wouldn't normally have to make it sleep unless it is within the login proc or a New() proc.), it will show the threads within the forum.
-	src.Selected_Forum = Bug_Reports   //Before calling the next proc, you must ALWAYS make sure this is set, or it will fail.
+//mob/Login()
+//	..()
+//	sleep(1)     //This just ensures that when it first shows you the forum below (since we are doing it in the Login() proc, you wouldn't normally have to make it sleep unless it is within the login proc or a New() proc.), it will show the threads within the forum.
+//	src.Selected_Forum = Bug_Reports   //Before calling the next proc, you must ALWAYS make sure this is set, or it will fail.
 	//src.Display_HTML_Forum()          //Here is how we display the forum set by src.Selected_Forum.
 
 

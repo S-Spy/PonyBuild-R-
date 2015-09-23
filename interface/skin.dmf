@@ -1621,7 +1621,7 @@ window "rpane"
 		on-size = ""
 		text = "Forum"
 		image = ""
-		command = ".winset \"rpanewindow.left=browserwindow\""
+		command = "forum"
 		is-flat = false
 		stretch = false
 		is-checked = false
