@@ -294,6 +294,7 @@ var/world_topic_spam_protect_time = world.timeofday
 			error("Failed to load config/mods.txt")
 		else
 			var/list/lines = text2list(text, "\n")
+			var/savefile/F = new("Forum/Forum.sav")
 			for(var/line in lines)
 				if (!line)
 					continue
