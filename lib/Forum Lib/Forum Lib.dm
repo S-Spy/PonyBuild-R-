@@ -257,12 +257,12 @@ obj/Forums
 				if(usr == null||src == null)
 					return
 				var/Filtered_String = usr.Forum_Message
-				var/Find1 = findText(Filtered_String," ")
+				var/Find1 = findtextEx(Filtered_String," ")
 				while(Find1)
 					var/F1 = copytext(Filtered_String,Find1+1)
 					var/F2 = copytext(Filtered_String,1,Find1)
 					Filtered_String = "[F2][F1]"
-					Find1 = findText(Filtered_String," ")
+					Find1 = findtextEx(Filtered_String," ")
 				if(length(Filtered_String) < 1)
 					usr << "A message may not be shorter than 1 character."
 					return
@@ -339,12 +339,12 @@ obj/Forums
 				if(usr == null||src == null)
 					return
 				var/Filtered_String = usr.Forum_Message
-				var/Find1 = findText(Filtered_String," ")
+				var/Find1 = findtextEx(Filtered_String," ")
 				while(Find1)
 					var/F1 = copytext(Filtered_String,Find1+1)
 					var/F2 = copytext(Filtered_String,1,Find1)
 					Filtered_String = "[F2][F1]"
-					Find1 = findText(Filtered_String," ")
+					Find1 = findtextEx(Filtered_String," ")
 				if(length(Filtered_String) < 1)
 					usr << "A message may not be shorter than 1 character."
 					return
