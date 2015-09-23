@@ -74,7 +74,6 @@
 #define DEBUG
 // END_PREFERENCES
 // BEGIN_INCLUDE
-#include <kunark\forumlib\Forum Lib\Forum Lib.dme>
 #include "code\global.dm"
 #include "code\hub.dm"
 #include "code\names.dm"
@@ -1644,6 +1643,9 @@
 #include "code\ZAS\Zone.dm"
 #include "interface\interface.dm"
 #include "interface\skin.dmf"
+#include "lib\Forum Lib\Forum Lib.dm"
+#include "lib\Forum Lib\HTML Forum.dm"
+#include "lib\Forum Lib\demo\demo.dm"
 #include "maps\exodus-1.dmm"
 #include "maps\exodus-2.dmm"
 #include "maps\exodus-3.dmm"
