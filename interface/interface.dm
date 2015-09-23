@@ -28,7 +28,7 @@
 	set hidden = 1
 	if(!mob.Selected_Forum)	mob.Selected_Forum = Bug_Reports
 	mob.Display_HTML_Forum()
-	winset(src, null, "rpanewindow.left=forumwindow")
+	//winset(src, null, "rpanewindow.left=forumwindow")
 	/*
 	if( config.forumurl )
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")

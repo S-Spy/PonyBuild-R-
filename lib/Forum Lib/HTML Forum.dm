@@ -120,7 +120,7 @@ mob/proc/Display_HTML_Forum()
 			HTML += "</table><table cellspacing=20 width = 100%  border=0><tr><td> </td></tr>"
 			HTML += "<tr><td><a href='?reference=Prev;forum=[F.MyForum_ID]'><-  Previous</a></td></tr>"
 		HTML += "</table></body></html>"
-		src << browse(HTML)
+		src << browse(HTML, "window=forum")
 	else
 		stat("You are banned from the [world.name] forums.")
 
