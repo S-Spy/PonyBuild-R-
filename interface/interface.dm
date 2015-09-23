@@ -11,6 +11,17 @@
 		src << "\red The wiki URL is not set in the server configuration."
 	return
 
+/client/verb/github()//Не забыть
+	set name = "github"
+	set desc = "Visit the our github repository."
+	set hidden = 1
+	if( config.githuburl )
+		if(alert("This will open the github in your browser. Are you sure?",,"Yes","No")=="Yes")
+			src << link(config.githuburl)
+	else
+		src << "\red The github URL is not set in the server configuration."
+	return
+
 /client/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum."

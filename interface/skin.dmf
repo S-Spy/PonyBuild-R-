@@ -253,7 +253,6 @@ macro "hotkeymode"
 		name = "ALT+WEST"
 		command = "westfaceperm"
 		is-disabled = false
-		is-disabled = false
 	elem 
 		name = "ALT+NORTH"
 		command = "northfaceperm"
@@ -902,6 +901,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "eject"
 		type = BUTTON
 		pos = 264,4
@@ -1068,6 +1069,8 @@ window "chemdispenser"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 	elem "child1"
 		type = CHILD
 		pos = 0,40
@@ -1189,6 +1192,8 @@ window "chemdispenser_reagents"
 		keep-aspect = false
 		align = center
 		text-wrap = false
+		allow-html = false
+		letterbox = true
 
 window "mainwindow"
 	elem "mainwindow"
@@ -1540,14 +1545,14 @@ window "rpane"
 		lock = none
 	elem "rulesb"
 		type = BUTTON
-		pos = 278,0
+		pos = 220,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
 		font-family = ""
 		font-size = 0
-		font-style = ""
-		text-color = #000000
+		font-style = "bold"
+		text-color = #990000
 		background-color = none
 		is-visible = true
 		is-disabled = false
@@ -1566,7 +1571,7 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-	elem "changelog"
+	elem "githubb"
 		type = BUTTON
 		pos = 341,0
 		size = 67x16
@@ -1586,9 +1591,9 @@ window "rpane"
 		right-click = false
 		saved-params = "is-checked"
 		on-size = ""
-		text = "Changelog"
+		text = "GitHub"
 		image = ""
-		command = "Changelog"
+		command = "guthub"
 		is-flat = false
 		stretch = false
 		is-checked = false
@@ -1596,7 +1601,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "forumb"
 		type = BUTTON
-		pos = 215,0
+		pos = 128,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
@@ -1616,7 +1621,7 @@ window "rpane"
 		on-size = ""
 		text = "Forum"
 		image = ""
-		command = "forum"
+		command = ".winset \"rpanewindow.left=browserwindow\""
 		is-flat = false
 		stretch = false
 		is-checked = false
@@ -1624,7 +1629,7 @@ window "rpane"
 		button-type = pushbutton
 	elem "wikib"
 		type = BUTTON
-		pos = 152,0
+		pos = 280,0
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
