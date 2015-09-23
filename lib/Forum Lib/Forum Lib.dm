@@ -495,15 +495,20 @@ client/Topic(href,href_list[])
 var/list/Forum_Banned = list()
 var/Forum_First_Admin = 0
 
+world/New()
+	..()
+
+
 mob/Login()
 	..()
+	sleep(1)
 	if(Forum_First_Admin == 0)
 		var/filename = "Forum/Forum.sav"
 		var/savefile/F = new(filename)
 		var/directory = "/Forum/Forum/"
 		F.cd = directory
 		Forum_First_Admin = 1
-		Administrator_Keys = list(src.key)
+		Administrator_Keys += src.key
 		Forum_Master_Key = src.key
 		F["Admin"] << Administrator_Keys
 		F["First"] << Forum_First_Admin

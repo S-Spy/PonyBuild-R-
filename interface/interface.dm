@@ -15,13 +15,15 @@
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = 1
+	src.Display_HTML_Forum()
+	/*
 	if( config.forumurl )
 		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
 			return
 		src << link(config.forumurl)
 	else
 		src << "\red The forum URL is not set in the server configuration."
-	return
+	return*/
 
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()

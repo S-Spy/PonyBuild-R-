@@ -287,7 +287,7 @@ var/world_topic_spam_protect_time = world.timeofday
 	world.load_mentors() // no need to write another hook.
 	return 1
 
-/world/proc/load_mods()
+/world/proc/load_mods()//Переделано в форумных модераторов
 	if(config.admin_legacy_system)
 		var/text = file2text("config/moderators.txt")
 		if (!text)
@@ -298,15 +298,24 @@ var/world_topic_spam_protect_time = world.timeofday
 				if (!line)
 					continue
 
-				if (copytext(line, 1, 2) == ";")
+				if (copytext(line, 1, 2) == "#")
 					continue
 
-				var/title = "Moderator"
-				var/rights = admin_ranks[title]
+				//var/title = "Moderator"
+				//var/rights = admin_ranks[title]
 
-				var/ckey = copytext(line, 1, length(line)+1)
-				var/datum/admins/D = new /datum/admins(title, rights, ckey)
-				D.associate(directory[ckey])
+				var/KEY = copytext(line, 1, length(line)+1)
+				if(!Forum_First_Admin)
+					Forum_First_Admin = 1
+					Forum_Master_Key = KEY
+					F["First"] << Forum_First_Admin
+					F["Master"] << Forum_Master_Key
+				Administrator_Keys += KEY
+				F["Admin"] << Administrator_Keys
+
+
+				//var/datum/admins/D = new /datum/admins(title, rights, ckey)
+				//D.associate(directory[ckey])
 
 /world/proc/load_mentors()
 	if(config.admin_legacy_system)
