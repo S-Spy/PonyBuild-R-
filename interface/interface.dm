@@ -28,7 +28,7 @@
 	set hidden = 1
 	if(!mob.Selected_Parent_Forum)	mob.Selected_Forum = Develope
 	if(!mob.Selected_Forum && mob.Selected_Parent_Forum.Child_Forum)
-		mob.Selected_Forum == mob.Selected_Parent_Forum.Child_Forum
+		mob.Selected_Forum = mob.Selected_Parent_Forum.Child_Forum
 	mob.Display_HTML_Forum()
 	//winset(src, null, "rpanewindow.left=forumwindow")
 	/*
