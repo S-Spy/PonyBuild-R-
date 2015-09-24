@@ -1660,7 +1660,7 @@ window "rpane"
 		on-size = ""
 		text = "GitHub"
 		image = ""
-		command = "guthub"
+		command = "github"
 		is-flat = false
 		stretch = false
 		is-checked = false
