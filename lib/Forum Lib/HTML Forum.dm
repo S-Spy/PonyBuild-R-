@@ -1,6 +1,8 @@
 var/ID_Number = 0
 var/Forum_ID_Number = 0
+mob/var/tmp/obj/Forums/Forum/Selected_Parent_Forum = null
 mob/var/tmp/obj/Forums/Forum/Selected_Forum = null
+mob/var/switch_rus = 0
 
 proc
 	save_ID()
@@ -21,10 +23,19 @@ proc
 				ID_Number = 0
 			if(Forum_ID_Number == null)
 				Forum_ID_Number = 0
-
+proc/onoff_button(var/obj/Forums/Forum/Fg, var/obj/Forums/Forum/Fg_dif)
+	var/HTML
+	if(Fg.Parent_Forum)
+		if(Fg.name == Fg_dif.name)	HTML = "[Fg.name]"
+		else	HTML = "<a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>"
+	else
+		if(Fg.name == Fg_dif.name)	HTML = "<b>[Fg.name]</b>"
+		else	HTML = "<b><a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a></b>"
+	return HTML
 
 mob/proc/Display_HTML_Forum()
 	var/obj/Forums/Forum/F = src.Selected_Forum
+	if(!F)	F = src.Selected_Parent_Forum
 	src << browse_rsc('Closed Thread.dmi',"TheX")
 	src << browse_rsc('New Topic.jpg',"NewTopic")
 	if(!Forum_Banned.Find("[key]"))
@@ -34,19 +45,40 @@ mob/proc/Display_HTML_Forum()
 			if(Fg.Valid_Forum2 == 1)
 				Forum_List += Fg
 		var/Numbero = 0
+		var/tmp/RUS = "RUS"
+		if(src.switch_rus == 0)	RUS = "ENG"
+		HTML += "<b><a href='?reference=SwitchRus;forum=[Fg.MyForum_ID]'>[RUS]</a></b>  <a href='?reference=Update;forum=[Fg.MyForum_ID]'>Update</a>"
 		HTML += "<center>"
+
 		for(var/obj/Forums/Forum/Fg in Forum_List)
+			if(Fg.rus != src.switch_rus || Fg.Parent_Forum)	continue
 			if(Forum_List.len > 1)
 				Numbero++
 				if(Numbero == 1)
-					HTML += "<a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>  -"
+					HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]  -"
 				else if(Numbero < Forum_List.len)
-					HTML += "  <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>  -"
+					HTML += "  [onoff_button(Fg, src.Selected_Parent_Forum)]  -"
 				else
-					HTML += "  <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>"
+					HTML += "  [onoff_button(Fg, src.Selected_Parent_Forum)]"
 			else
 				if(Forum_List.len == 1)
-					HTML += "<a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>"
+					HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]"
+
+		if(src.Selected_Parent_Forum.Child_Forum)
+			HTML += "<br>"
+			for(var/obj/Forums/Forum/Fg in Forum_List)
+				if(Fg.Parent_Forum != src.Selected_Parent_Forum)	continue
+				if(Forum_List.len > 1)
+					Numbero++
+					if(Numbero == 1)
+						HTML += "[onoff_button(Fg, src.Selected_Forum)]  -"
+					else if(Numbero < Forum_List.len)
+						HTML += "  [onoff_button(Fg, src.Selected_Forum)]  -"
+					else
+						HTML += "  [onoff_button(Fg, src.Selected_Forum)]"
+				else
+					if(Forum_List.len == 1)
+						HTML += "[onoff_button(Fg, src.Selected_Forum)]"
 		HTML += "</center><br><br><center><b><font size = +2>[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
@@ -127,6 +159,14 @@ mob/proc/Display_HTML_Forum()
 
 client/Topic(href,href_list[])
 	switch(href_list["reference"])
+		if("Update")
+			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
+			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
+		if("SwitchRus")
+			if(mob.switch_rus == 1)	mob.switch_rus = 0
+			else	mob.switch_rus = 1
+			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
+			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
 		if("ViewForum")
 			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)
@@ -134,8 +174,13 @@ client/Topic(href,href_list[])
 					F = FF
 					break
 			if(F != null)
-				mob.Selected_Forum = F
-				mob.Display_HTML_Forum(mob.Selected_Forum)
+				if(F.Parent_Forum)	mob.Selected_Forum = F//Если есть родитель, значит это подраздел
+				else	//Иначе это главный раздел
+					mob.Selected_Parent_Forum = F
+					mob.Selected_Forum = null
+					if(F.Child_Forum)	mob.Selected_Forum = F.Child_Forum//Если есть дитя, то назначается подфорум
+				if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
+				else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
 		if("Admin")
 			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)

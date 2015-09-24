@@ -42,6 +42,9 @@ obj/Forums
 		var/obj/Forums/Forum/Delete_Message/Forum_Delete
 		var/obj/Forums/Forum/New_Thread/Forum_New_Thread
 		var/list/Forum_Threads = list()
+		var/obj/Forums/Forum/Parent_Forum//Если есть подразделы, необходимо указывать
+		var/obj/Forums/Forum/Child_Forum
+		var/rus = 0
 		var/Valid_Forum = 0
 		var/MyForum_ID = 0
 		var/Valid_Forum2 = 1
