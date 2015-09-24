@@ -1645,7 +1645,7 @@
 #include "interface\skin.dmf"
 #include "lib\Forum Lib\Forum Lib.dm"
 #include "lib\Forum Lib\HTML Forum.dm"
-#include "lib\Forum Lib\demo\demo.dm"
+#include "lib\Forum Lib\demo\setup_forum.dm"
 #include "maps\exodus-1.dmm"
 #include "maps\exodus-2.dmm"
 #include "maps\exodus-3.dmm"
