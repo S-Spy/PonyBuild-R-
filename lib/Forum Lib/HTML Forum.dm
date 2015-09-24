@@ -47,7 +47,7 @@ mob/proc/Display_HTML_Forum()
 		var/Numbero = 0
 		var/tmp/RUS = "RUS"
 		if(src.switch_rus == 0)	RUS = "ENG"
-		HTML += "<b><a href='?reference=SwitchRus;forum=[Fg.MyForum_ID]'>[RUS]</a></b>  <a href='?reference=Update;forum=[Fg.MyForum_ID]'>Update</a>"
+		HTML += "<b><a href='?reference=SwitchRus'>[RUS]</a></b>  <a href='?reference=Update'>Update</a>"
 		HTML += "<center>"
 
 		for(var/obj/Forums/Forum/Fg in Forum_List)

@@ -49,15 +49,15 @@ var/obj/Forums/Forum/Flood_ru = new
 world/New()
 	///////////////////////////////////////////////////////////////////
 	Develope.name = "Developming"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
-	Develope.ParentForum = Develope1
+	Develope.Parent_Forum = Develope1
 
 	Develope1.name = "Idea's"
 	Develope1.desc = ""
-	Develope1.ParentForum = Develope
+	Develope1.Parent_Forum = Develope
 
 	Develope2.name = "Bag Reports"
 	Develope2.desc = ""
-	Develope2.ParentForum = Develope
+	Develope2.Parent_Forum = Develope
 
 	///////////////////////////////
 
@@ -66,15 +66,15 @@ world/New()
 
 	Reports1.name = "Administration"
 	Reports1.desc = "Reports to administrators here."
-	Reports1.ParentForum = Reports
+	Reports1.Parent_Forum = Reports
 
 	Reports2.name = "Unban"
 	Reports2.desc = ""
-	Reports2.ParentForum = Reports
+	Reports2.Parent_Forum = Reports
 
 	Reports3.name = "Ban"
 	Reports3.desc = "Ban him!"
-	Reports3.ParentForum = Reports
+	Reports3.Parent_Forum = Reports
 
 	//////////////////////////////
 
