@@ -17,15 +17,14 @@
 /datum/species/unicorn
 	name = "Unicorn"
 	name_plural = "Unicorn"
-	icobase = 'icons/mob/pony_races/r_pegasus.dmi'
-	deform = 'icons/mob/pony_races/r_def_pegasus.dmi'
+	icobase = 'icons/mob/pony_races/r_unicorn.dmi'
+	deform = 'icons/mob/pony_races/r_def_unicorn.dmi'
 	language = "Sol Common"//"Sinta'unicorn"
 	tail = "unicorn"
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)///datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	primitive = /mob/living/carbon/monkey/unicorn
 	//darksight = 3
 	//gluttonous = 1
-	slowdown = -1
 
 	blurb = "A heavily reptillian species, Unicorn (or 'Sinta as they call themselves) hail from the \
 	Uuosa-Eso system, which roughly translates to 'burning mother'.<br/><br/>Coming from a harsh, radioactive \
@@ -70,7 +69,7 @@
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
 	//unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	//darksight = 8
-	slowdown = 1
+	slowdown = -1
 	brute_mod = 1.2
 	burn_mod = 1.2
 

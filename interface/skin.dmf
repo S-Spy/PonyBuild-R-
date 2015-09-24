@@ -1638,7 +1638,7 @@ window "rpane"
 		is-checked = false
 		group = "rpanemode"
 		button-type = pushbutton
-	elem "githubb"
+	elem "github"
 		type = BUTTON
 		pos = 341,0
 		size = 67x16

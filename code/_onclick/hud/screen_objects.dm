@@ -231,9 +231,16 @@
 					C.hud_used.move_intent.icon_state = "walking"
 					return 1
 				switch(usr.m_intent)
-					if("run")
+					if("fly")
 						usr.m_intent = "walk"
 						usr.hud_used.move_intent.icon_state = "walking"
+					if("run")
+						if(C.species.name == "Earthpony")
+							usr.m_intent = "fly"
+							usr.hud_used.move_intent.icon_state = "flying"
+						else
+							usr.m_intent = "walk"
+							usr.hud_used.move_intent.icon_state = "walking"
 					if("walk")
 						usr.m_intent = "run"
 						usr.hud_used.move_intent.icon_state = "running"

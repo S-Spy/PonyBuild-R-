@@ -67,6 +67,10 @@
 	update_adjacent()
 	..()
 
+/obj/structure/table/Bump()
+	if(ispony(Obstacle) && Obstacle:m_intent == "fly")	Move(locate(src.x, src.y, src.z))
+	..()
+
 /obj/structure/table/update_icon()
 
 	if(health > 100)

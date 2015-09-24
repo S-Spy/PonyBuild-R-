@@ -74,7 +74,7 @@
 
 		if(src.wet)
 
-			if(M.buckled || (src.wet == 1 && M.m_intent == "walk"))
+			if(M.buckled || (src.wet == 1 && (M.m_intent == "walk" || M.m_intent == "fly"))
 				return
 
 			var/slip_dist = 1

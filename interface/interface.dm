@@ -11,7 +11,7 @@
 		src << "\red The wiki URL is not set in the server configuration."
 	return
 
-/client/verb/github()//Не забыть
+/client/verb/github()//Не забыть про чейнжлог
 	set name = "github"
 	set desc = "Visit the our github repository."
 	set hidden = 1
