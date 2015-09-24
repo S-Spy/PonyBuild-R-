@@ -332,7 +332,6 @@ obj/Forums
 <textarea name=ForumMessage rows=20 cols=50></textarea>
 <br>
 <input type=submit value='Post'></center>
-<input type=submit value='Cancel' onclick="ForumMessage=null">
 </body>
 </form>
 </html>

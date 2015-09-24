@@ -63,7 +63,7 @@ world/New()
 	///////////////////////////////
 
 	Reports.name = "Reports"
-	Reports.Child_Forum = Reports
+	Reports.Child_Forum = Reports1
 
 	Reports1.name = "Administration"
 	Reports1.desc = "Reports to administrators here."
