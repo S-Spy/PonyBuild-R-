@@ -76,11 +76,15 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 	LAMP.initialize()
 	if(prob(50))	user.l_hand = LAMP
 	else	user.r_hand = LAMP
+
 	user.SetLuminosity(LAMP.brightness_on)
-	user.ckey = ckey
 	user.regenerate_icons()
 	End
+	var/mob/living/carbon/P = user.home_mob
+	user.ckey = ckey
 	spawn(time)
-		if(user && user.home_mob && !user.home_mob.ckey)
-			user.home_mob.ckey = user.ckey
+		if(user && P && !P.ckey)
+			P.ckey = user.ckey
 			del user
+		else
+			user.silent = 0
