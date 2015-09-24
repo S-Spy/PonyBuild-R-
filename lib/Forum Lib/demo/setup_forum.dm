@@ -51,13 +51,13 @@ world/New()
 	Develope.name = "Developming"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
 	Develope.Parent_Forum = Develope1
 
-	Develope1.name = "Idea's"
-	Develope1.desc = ""
-	Develope1.Parent_Forum = Develope
-
-	Develope2.name = "Bag Reports"
+	Develope2.name = "Idea's"
 	Develope2.desc = ""
 	Develope2.Parent_Forum = Develope
+
+	Develope1.name = "Bag Reports"
+	Develope1.desc = ""
+	Develope1.Parent_Forum = Develope
 
 	///////////////////////////////
 
@@ -99,7 +99,7 @@ world/New()
 	Develope_ru1.rus = 1
 	Develope_ru1.Parent_Forum = Develope_ru
 
-	Develope_ru1.name = "Баги"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
+	Develope_ru2.name = "Баги"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
 	Develope_ru2.desc = "Сообщения о багах. Хороших и плохих"
 	Develope_ru2.rus = 1
 	Develope_ru2.Parent_Forum = Develope_ru

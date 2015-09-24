@@ -59,15 +59,13 @@ mob/proc/Display_HTML_Forum()
 				HTML += "  -  [onoff_button(Fg, src.Selected_Parent_Forum)]"
 		Numbero = 0
 		if(src.Selected_Parent_Forum.Child_Forum)
-			HTML += "<br>"
 			for(var/obj/Forums/Forum/Fg in Forum_List)
 				if(Fg.Parent_Forum != src.Selected_Parent_Forum)	continue
-				if(Forum_List.len > 1)
-					Numbero++
-					if(Numbero == 1)
-						HTML += "[onoff_button(Fg, src.Selected_Forum)]"
-					else
-						HTML += "  -  [onoff_button(Fg, src.Selected_Forum)]"
+				Numbero++
+				if(Numbero == 1)
+					HTML += "<br>[onoff_button(Fg, src.Selected_Forum)]"
+				else
+					HTML += "  -  [onoff_button(Fg, src.Selected_Forum)]"
 		HTML += "</center><br><br><center><b><font size = +2>[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
