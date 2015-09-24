@@ -417,7 +417,7 @@ obj/Forums
 					FM2 = findtext(FM,"\n")
 				if(Using_HTML_Forums == 0)
 					var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
-					usr << browse(FilterMessage)
+					usr << browse(FilterMessage, "window=forum")
 				else
 					var/FilterMessage = "<body bgcolor = #608590 color = red><center><a href='?reference=Back;forum=[Forum_Listing:MyForum_ID]'>Back to [Forum_Listing:name]</a><br><br><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td colspan = 2 valign=middle>[usr.ReplyCheckClosed(Forum_Listing)]</td><td valign=middle align=right>[usr.AdminCheckThread2(Forum_Listing,src)]  [usr.AdminCheckThread(Forum_Listing,src)]</td></td></tr></table>"
 					for(var/obj/Forums/Forum/Message/M in Forum_Messages)
@@ -431,7 +431,7 @@ obj/Forums
 						FilterMessage += "<br><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [M.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [M.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FMr]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td colspan = 2 valign=middle>[usr.ReplyCheckClosed(Forum_Listing)]</td><td valign=middle align=right>[usr.AdminCheckMessage(Forum_Listing,M)]</p></td></td></tr></table>"
 					FilterMessage += "<a href='?reference=Back;forum=[Forum_Listing:MyForum_ID]'>Back to [Forum_Listing:name]</a>"
 					FilterMessage += "</center></body>"
-					usr << browse(FilterMessage)
+					usr << browse(FilterMessage, "window=forum")
 				return
 		Message
 			var/tmp/Forum_Listing
@@ -473,7 +473,7 @@ obj/Forums
 					FM = "[cutfirst]<br>[cutlast]"
 					FM2 = findtext(FM,"\n")
 				var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
-				usr << browse(FilterMessage)
+				usr << browse(FilterMessage, "window=forum")
 				return
 
 mob/var/tmp
