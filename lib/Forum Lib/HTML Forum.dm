@@ -52,18 +52,12 @@ mob/proc/Display_HTML_Forum()
 
 		for(var/obj/Forums/Forum/Fg in Forum_List)
 			if(Fg.rus != src.switch_rus || Fg.Parent_Forum)	continue
-			if(Forum_List.len > 1)
-				Numbero++
-				if(Numbero == 1)
-					HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]  -"
-				else if(Numbero < Forum_List.len)
-					HTML += "  [onoff_button(Fg, src.Selected_Parent_Forum)]  -"
-				else
-					HTML += "  [onoff_button(Fg, src.Selected_Parent_Forum)]"
+			Numbero++
+			if(Numbero == 1)
+				HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]"
 			else
-				if(Forum_List.len == 1)
-					HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]"
-
+				HTML += "  -  [onoff_button(Fg, src.Selected_Parent_Forum)]"
+		Numbero = 0
 		if(src.Selected_Parent_Forum.Child_Forum)
 			HTML += "<br>"
 			for(var/obj/Forums/Forum/Fg in Forum_List)
@@ -71,14 +65,9 @@ mob/proc/Display_HTML_Forum()
 				if(Forum_List.len > 1)
 					Numbero++
 					if(Numbero == 1)
-						HTML += "[onoff_button(Fg, src.Selected_Forum)]  -"
-					else if(Numbero < Forum_List.len)
-						HTML += "  [onoff_button(Fg, src.Selected_Forum)]  -"
-					else
-						HTML += "  [onoff_button(Fg, src.Selected_Forum)]"
-				else
-					if(Forum_List.len == 1)
 						HTML += "[onoff_button(Fg, src.Selected_Forum)]"
+					else
+						HTML += "  -  [onoff_button(Fg, src.Selected_Forum)]"
 		HTML += "</center><br><br><center><b><font size = +2>[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
@@ -163,8 +152,14 @@ client/Topic(href,href_list[])
 			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
 			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
 		if("SwitchRus")
-			if(mob.switch_rus == 1)	mob.switch_rus = 0
-			else	mob.switch_rus = 1
+			if(mob.switch_rus == 1)
+				mob.switch_rus = 0
+				mob.Selected_Parent_Forum = Develope
+				mob.Selected_Forum = Develope1
+			else
+				mob.switch_rus = 1
+				mob.Selected_Parent_Forum = Develope_ru
+				mob.Selected_Forum = Develope_ru1
 			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
 			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
 		if("ViewForum")
