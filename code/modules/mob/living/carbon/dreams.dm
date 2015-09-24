@@ -1,4 +1,3 @@
-mob/living/carbon/var/home_mob
 mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0, var/antagonist = 0)//Странник, зомби, фредди
 	if(number < 1 || number > 6)	number = rand(1, 6)
 	if(time < 1)	time = rand(200, 6000)
@@ -47,7 +46,7 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 		user.ptail_style = usr:ptail_style
 		user.name = name
 		user.voice = name
-		user.flavor_texts = flavor_texts
+		user.flavor_texts = usr:flavor_texts
 		user.flavor_text = flavor_text
 	else
 		user.b_aura = rand(1,250)
@@ -59,12 +58,12 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 		user.b_facial = rand(1, 190)
 		user.g_facial = rand(1, 190)
 		user.r_facial = rand(1, 190)
-		user.b_hair = b_facial
-		user.g_hair = g_facial
-		user.r_hair = r_facial
-		user.b_ptail = b_facial
-		user.g_ptail = g_facial
-		user.r_ptail = r_facial
+		user.b_hair = user.b_facial
+		user.g_hair = user.g_facial
+		user.r_hair = user.r_facial
+		user.b_ptail = user.b_facial
+		user.g_ptail = user.g_facial
+		user.r_ptail = user.r_facial
 		user.b_skin = rand(1, 240)
 		user.g_skin = rand(1, 240)
 		user.r_skin = rand(1, 240)
