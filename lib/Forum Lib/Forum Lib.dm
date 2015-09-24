@@ -255,7 +255,7 @@ obj/Forums
 </html>
 "}
 				usr << browse(Message,"window=Message -- [usr.key];file=null;display=1;clear=0;size=600x500;border=1;can_close=0;can_resize=0;can_minimize=1;titlebar=1")
-				while(usr.Forum_Posting == 1&&usr != null)
+				while(usr.Forum_Posting == 1 && usr != null)
 					sleep(5)
 				if(usr == null||src == null)
 					return
@@ -332,6 +332,7 @@ obj/Forums
 <textarea name=ForumMessage rows=20 cols=50></textarea>
 <br>
 <input type=submit value='Post'></center>
+<input type=submit value='Cancel' onclick="ForumMessage=null">
 </body>
 </form>
 </html>

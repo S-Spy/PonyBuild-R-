@@ -45,8 +45,10 @@ mob/proc/Display_HTML_Forum()
 			if(Fg.Valid_Forum2 == 1)
 				Forum_List += Fg
 		var/Numbero = 0
+
 		var/tmp/RUS = "RUS"
 		if(src.switch_rus == 0)	RUS = "ENG"
+
 		HTML += "<b><a href='?reference=SwitchRus'>[RUS]</a></b>  <a href='?reference=Update'>Update</a>"
 		HTML += "<center>"
 

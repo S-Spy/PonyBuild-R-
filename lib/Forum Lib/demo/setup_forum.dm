@@ -49,7 +49,8 @@ var/obj/Forums/Forum/Flood_ru = new
 world/New()
 	///////////////////////////////////////////////////////////////////
 	Develope.name = "Developming"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
-	Develope.Parent_Forum = Develope1
+	Develope.desc = ""
+	Develope.Child_Forum = Develope1
 
 	Develope2.name = "Idea's"
 	Develope2.desc = ""
@@ -100,7 +101,7 @@ world/New()
 	Develope_ru1.Parent_Forum = Develope_ru
 
 	Develope_ru2.name = "Баги"  //Here we need to set their names manually.  WIth HTML based forums, you set the desc as well.
-	Develope_ru2.desc = "Сообщения о багах. Хороших и плохих"
+	Develope_ru2.desc = "Сообщения о багах. Хороших и плохих."
 	Develope_ru2.rus = 1
 	Develope_ru2.Parent_Forum = Develope_ru
 
@@ -111,17 +112,17 @@ world/New()
 	Reports_ru.Child_Forum = Reports_ru1
 
 	Reports_ru1.name = "Администрация"
-	Reports_ru1.desc = "Просьбы на разбан или жалобы на администратора - здесь."
+	Reports_ru1.desc = "Жалобы на действия администрации."
 	Reports_ru1.rus = 1
 	Reports_ru1.Parent_Forum = Reports_ru
 
 	Reports_ru2.name = "Разбан"
-	Reports_ru2.desc = "Просьбы на разбан или жалобы на администратора - здесь."
+	Reports_ru2.desc = "Если считаете, что вы получили несправедливый бан, то вам сюда."
 	Reports_ru2.rus = 1
 	Reports_ru2.Parent_Forum = Reports_ru
 
 	Reports_ru3.name = "Забанить"
-	Reports_ru3.desc = "Просьбы на разбан или жалобы на администратора - здесь."
+	Reports_ru3.desc = "Кто то нарушил правила и не получил по заслугам? Вам сюда."
 	Reports_ru3.rus = 1
 	Reports_ru3.Parent_Forum = Reports_ru
 
