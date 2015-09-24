@@ -415,7 +415,12 @@
 		usr << "\red You are already sleeping"
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+		if(!usr.home_mob && prob(30))
+			var/t = tand (200, 6000)
+			usr.sleeping = t/10
+			goto_dream(t)
+		else if(usr.home_mob)	goto_dream(2, 1)
+		else	usr.sleeping = 20
 
 /mob/living/carbon/Bump(atom/movable/AM as mob|obj, yes)
 
