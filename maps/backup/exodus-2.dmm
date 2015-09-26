@@ -2150,7 +2150,7 @@
 "Pq" = (/turf/simulated/mineral{opacity = 0},/area/space)
 "Pr" = (/obj/structure/sink/puddle,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
 "Ps" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
-"Pt" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/obj/effect/landmark/dreams/cementery_spider1,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"Pt" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/obj/effect/landmark/cemetery_mob1,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
 "Pu" = (/turf/unsimulated/wall{icon = 'icons/misc/beach.dmi'; icon_state = "seadeep"; name = "water"},/area/space)
 
 (1,1,1) = {"
