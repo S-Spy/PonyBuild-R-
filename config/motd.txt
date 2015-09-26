@@ -1,4 +1,5 @@
 <h1>Welcome to Pony Station!</h1><br>
 <br><strong>Bugtracker:</strong> Skype of Head Developer - arhmint<br>
 <br>We are glad to see you on our server, but is obliged to warn that is the server test. No admins and rules. Build updated regularly.<br>
+Forum working!<br><br>
 <br>Poka rabotaet tolko translit
