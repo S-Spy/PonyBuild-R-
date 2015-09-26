@@ -1898,7 +1898,7 @@
 "Kz" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "dirt-dug"; name = "dirt"; tag = "icon-dirt-dug"},/area/space)
 "KA" = (/turf/simulated/floor/grass{tag = "icon-dirttograss (NORTHEAST)"; icon = 'icons/turf/floors.dmi'; icon_state = "dirttograss"; dir = 5},/area/space)
 "KB" = (/turf/simulated/floor/grass{tag = "icon-dirttograss (NORTH)"; icon = 'icons/turf/floors.dmi'; icon_state = "dirttograss"; dir = 1},/area/space)
-"KC" = (/turf/simulated/wall{tag = "icon-woodwall"; name = "stone wall"; icon = 'icons/walls.dmi'; icon_state = "woodwall"},/area/space)
+"KC" = (/turf/simulated/wall{tag = "icon-woodwall"; name = "stone wall"; icon = 'icons/turf/walls.dmi'; icon_state = "woodwall"},/area/space)
 "KD" = (/obj/structure/girder{climbable = 1; icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall3"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'},/area/space)
 "KE" = (/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'},/area/space)
 "KF" = (/obj/structure/girder{icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall2"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'},/area/space)
