@@ -1,3 +1,6 @@
+mob/living/carbon/pony/dreamer
+
+
 mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0, var/antagonist = 0)//Странник, зомби, фредди
 	if(number < 1 || number > 6)	number = rand(1, 6)
 	if(time < 1)	time = rand(200, 6000)
@@ -85,6 +88,7 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 	spawn(time)
 		if(user && P && !P.ckey)
 			P.ckey = user.ckey
+			P.sleeping = 1
 			del user
 		else
 			user.silent = 0

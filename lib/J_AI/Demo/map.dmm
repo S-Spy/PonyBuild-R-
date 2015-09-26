@@ -1,0 +1,29 @@
+"a" = (/turf/grass,/turf/rock,/area)
+"b" = (/turf/grass,/area)
+"c" = (/turf/grass,/turf/tree,/area)
+"d" = (/mob/Monster/Wolf,/turf/grass,/area)
+"e" = (/obj/ball,/turf/grass,/area)
+"f" = (/mob/Monster/Dog,/turf/grass,/area)
+"g" = (/mob/Monster/Randomguy,/turf/grass,/area)
+"h" = (/mob/Monster/Guard,/turf/grass,/area)
+"i" = (/turf/grass,/turf/start_spot,/area)
+"j" = (/mob/Monster/Deer,/turf/grass,/area)
+"k" = (/mob/Monster/Shop,/turf/grass,/area)
+
+(1,1,1) = {"
+aaaaaabcccccccc
+bbbbbabcbbdbebb
+bbfbbabcbbbbbbb
+bbbbaabcbbbbbbb
+abaaabbcbabbfbb
+bbbbbbbcccbbbbb
+bbbbbbgbbcbbbbb
+bbbbbfbbbbbbbbb
+bbbcbbbbbbcccbb
+bbbbbbbbebbbccc
+bhbbbbbbbbbbbbb
+bbbbbbbbbibbbbb
+bbbbjbbbbbbbbbc
+bbfbbbbcbkbabbb
+bbbbbbbbbbbbbbb
+"}

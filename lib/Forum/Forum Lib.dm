@@ -31,6 +31,7 @@ world/New()
 	save_ID()
 
 
+
 obj/Forums
 	Forum
 		var/obj/Forums/Forum/Next/Forum_Next
@@ -42,9 +43,10 @@ obj/Forums
 		var/obj/Forums/Forum/Delete_Message/Forum_Delete
 		var/obj/Forums/Forum/New_Thread/Forum_New_Thread
 		var/list/Forum_Threads = list()
-		var/obj/Forums/Forum/Parent_Forum//Если есть подразделы, необходимо указывать
-		var/obj/Forums/Forum/Child_Forum
-		var/rus = 0
+		var/obj/Forums/Forum/parent//Если есть подразделы, необходимо указывать
+		var/section
+		var/topic_on = 0
+		var/language = "ENG"
 		var/Valid_Forum = 0
 		var/MyForum_ID = 0
 		var/Valid_Forum2 = 1
@@ -65,6 +67,11 @@ obj/Forums
 			Forum_Prev.Forum_Listing = src
 			Forum_Delete.Forum_Listing = src
 			Forum_New_Thread.Forum_Listing = src
+
+			if(section && parent)	parent = null
+			if(!topic_on && parent)	topic_on = 1
+			if(parent)	language = parent.language
+
 			..()
 			spawn() load_forums()
 		Next

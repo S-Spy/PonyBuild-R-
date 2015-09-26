@@ -417,7 +417,7 @@
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		if(!home_mob && prob(30))
 			var/t = rand(200, 6000)
-			usr.sleeping = t/10
+			usr.sleeping = 20
 			goto_dream(t)
 		else if(home_mob)	goto_dream(2, 1)
 		else	usr.sleeping = 20

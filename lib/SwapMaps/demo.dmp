@@ -1,0 +1,17 @@
+"a" = (/obj/fence,/obj/fence,/turf/ground,/area)
+"b" = (/obj/fence,/turf/ground,/area)
+"c" = (/turf/ground,/area)
+"d" = (/obj/gold,/turf/ground,/area)
+
+(1,1,1) = {"
+abbbbbbbbb
+bccccccccb
+bcdccccdcb
+bccccccccb
+bccccccccb
+bccccccccb
+bccccccccb
+bcdccccdcb
+bccccccccb
+bbbbbbbbbb
+"}

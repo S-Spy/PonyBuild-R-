@@ -1,8 +1,11 @@
 var/ID_Number = 0
 var/Forum_ID_Number = 0
-mob/var/tmp/obj/Forums/Forum/Selected_Parent_Forum = null
 mob/var/tmp/obj/Forums/Forum/Selected_Forum = null
-mob/var/switch_rus = 0
+mob/var/switch_language = "ENG"
+mob/var/tmp/list/closed_sections = list()
+mob/verb/forum()
+	src.Display_HTML_Forum()
+
 
 proc
 	save_ID()
@@ -23,52 +26,63 @@ proc
 				ID_Number = 0
 			if(Forum_ID_Number == null)
 				Forum_ID_Number = 0
-proc/onoff_button(var/obj/Forums/Forum/Fg, var/obj/Forums/Forum/Fg_dif)
-	var/HTML
-	if(Fg.Parent_Forum)
-		if(Fg.name == Fg_dif.name)	HTML = "[Fg.name]"
-		else	HTML = "<a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a>"
-	else
-		if(Fg.name == Fg_dif.name)	HTML = "<b>[Fg.name]</b>"
-		else	HTML = "<b><a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'>[Fg.name]</a></b>"
-	return HTML
 
 mob/proc/Display_HTML_Forum()
-	var/obj/Forums/Forum/F = src.Selected_Forum
-	if(!F)	F = src.Selected_Parent_Forum
 	src << browse_rsc('Closed Thread.dmi',"TheX")
 	src << browse_rsc('New Topic.jpg',"NewTopic")
 	if(!Forum_Banned.Find("[key]"))
 		var/HTML = "<html><body bgcolor=#608590>"
 		var/list/Forum_List = list()
+		var/list/sections = list()
 		for(var/obj/Forums/Forum/Fg in world)
 			if(Fg.Valid_Forum2 == 1)
 				Forum_List += Fg
-		var/Numbero = 0
-
-		var/tmp/RUS = "RUS"
-		if(src.switch_rus == 0)	RUS = "ENG"
-
-		HTML += "<b><a href='?reference=SwitchRus'>[RUS]</a></b>  <a href='?reference=Update'>Update</a>"
-		HTML += "<center>"
-
-		for(var/obj/Forums/Forum/Fg in Forum_List)
-			if(Fg.rus != src.switch_rus || Fg.Parent_Forum)	continue
-			Numbero++
-			if(Numbero == 1)
-				HTML += "[onoff_button(Fg, src.Selected_Parent_Forum)]"
+				if(Fg.section)
+					var/t = 0
+					for(var/obj/Forums/Forum/temp_F in sections)
+						if(Fg.section == temp_F.section)
+							t = 1
+							break
+					if(t)	continue
+					sections += Fg
+		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr /><br>"
+		for(var/obj/Forums/Forum/sect in sections)//Определяем открытость секции
+			if(sect.language != switch_language)	continue
+			if(sect.section in closed_sections)
+				HTML += "<b><head><style>a {text-decoration: none} </style></head><FONT SIZE=+2><a href='?reference=ViewSection;section=[sect.section]'>+</a></FONT>"
+				HTML += " <FONT COLOR=#201040 SIZE=+3>[sect.section]</FONT></b><br>"
 			else
-				HTML += "  -  [onoff_button(Fg, src.Selected_Parent_Forum)]"
-		Numbero = 0
-		if(src.Selected_Parent_Forum.Child_Forum)
-			for(var/obj/Forums/Forum/Fg in Forum_List)
-				if(Fg.Parent_Forum != src.Selected_Parent_Forum)	continue
-				Numbero++
-				if(Numbero == 1)
-					HTML += "<br>[onoff_button(Fg, src.Selected_Forum)]"
-				else
-					HTML += "  -  [onoff_button(Fg, src.Selected_Forum)]"
-		HTML += "</center><br><br><center><b><font size = +2>[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
+				HTML += "<head><style>a {text-decoration: none} </style></head><FONT SIZE=+3><a href='?reference=ViewSection;section=[sect.section]'>-</a></FONT>"
+				HTML += " <b><FONT SIZE=+3>[sect.section]</FONT></b><br>"
+				for(var/obj/Forums/Forum/Fg in Forum_List)
+					if(Fg.language != src.switch_language || Fg.parent || Fg.section != sect.section)	continue
+					HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[Fg.name]</FONT></a><br>"
+					for(var/obj/Forums/Forum/child in Forum_List)
+						if(child.parent == Fg)	HTML += "   <a href='?reference=ViewForum;forum=[child.MyForum_ID]'><FONT SIZE=2>[child.name]</FONT></a>   "
+					HTML += "<br>"
+
+		src << browse(HTML, "window=forum")
+	else
+		alert(usr, "You are banned from the [world.name] forums.")
+
+
+mob/proc/Display_HTML_SubForum()
+	var/obj/Forums/Forum/F = src.Selected_Forum
+	src << browse_rsc('Closed Thread.dmi',"TheX")
+	src << browse_rsc('New Topic.jpg',"NewTopic")
+	if(!Forum_Banned.Find("[key]"))
+		var/list/Forum_List = list()
+		for(var/obj/Forums/Forum/Fg in world)
+			if(Fg.Valid_Forum2 == 1)
+				Forum_List += Fg
+		var/HTML = "<html><body bgcolor=#608590><head><style>a {text-decoration: none} </style></head>"
+		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr />"
+		if(F.section)	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.section]</a>  /  "
+		else	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.parent.section]</a>  /  <a href='?reference=ViewForum;forum=[F.parent.MyForum_ID]'>[F.parent]</a>  /  "
+		HTML += "[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
+		for(var/obj/Forums/Forum/Fg in Forum_List)//Строим форумы
+			if(Fg.parent != F)	continue
+			HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+2><b>[Fg.name]</b></FONT></a><br>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
 		var/max_pages = F.Forum_Threads.len/10
@@ -143,39 +157,33 @@ mob/proc/Display_HTML_Forum()
 		HTML += "</table></body></html>"
 		src << browse(HTML, "window=forum")
 	else
-		stat("You are banned from the [world.name] forums.")
+		alert(usr, "You are banned from the [world.name] forums.")
 
 
 client/Topic(href,href_list[])
 	switch(href_list["reference"])
-		if("Update")
-			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
-			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
-		if("SwitchRus")
-			if(mob.switch_rus == 1)
-				mob.switch_rus = 0
-				mob.Selected_Parent_Forum = Develope
-				mob.Selected_Forum = Develope1
-			else
-				mob.switch_rus = 1
-				mob.Selected_Parent_Forum = Develope_ru
-				mob.Selected_Forum = Develope_ru1
-			if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
-			else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
+		if("update")
+			if(mob.Selected_Forum)	mob.Display_HTML_SubForum()
+			else					mob.Display_HTML_Forum()
+		if("switch_lang")
+			switch(mob.switch_language)
+				if("ENG")	mob.switch_language = "RUS"
+				if("RUS")	mob.switch_language = "ENG"
+			mob.Selected_Forum = null
+			mob.Display_HTML_Forum()
+		if("ViewMain")
+			mob.Selected_Forum = null
+			mob.Display_HTML_Forum()
+		if("ViewSection")
+			if(href_list["section"] in mob.closed_sections)	mob.closed_sections -= href_list["section"]
+			else	mob.closed_sections += href_list["section"]
+			mob.Display_HTML_Forum()
 		if("ViewForum")
-			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)
 				if(text2num(href_list["forum"]) == FF.MyForum_ID)
-					F = FF
+					mob.Selected_Forum = FF
 					break
-			if(F != null)
-				if(F.Parent_Forum)	mob.Selected_Forum = F//Если есть родитель, значит это подраздел
-				else	//Иначе это главный раздел
-					mob.Selected_Parent_Forum = F
-					mob.Selected_Forum = null
-					if(F.Child_Forum)	mob.Selected_Forum = F.Child_Forum//Если есть дитя, то назначается подфорум
-				if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
-				else					mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
+			if(mob.Selected_Forum)	mob.Display_HTML_SubForum()
 		if("Admin")
 			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)
