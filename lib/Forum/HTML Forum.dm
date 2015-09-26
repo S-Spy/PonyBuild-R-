@@ -16,9 +16,9 @@ proc
 		F["ID"] << ID_Number
 		F["Forum_ID"] << Forum_ID_Number
 	load_ID()
-		if(length(file2text("Forum/Forum_IDs.sav")))
-			var/filename = "Forum/Forum_IDs.sav"
-			var/savefile/F = new(filename)
+		if(length(file2text("Forum/Forum_IDs.sav")))//Если есть файл с сейвами
+			var/filename = "Forum/Forum_IDs.sav"//Название файла
+			var/savefile/F = new(filename)//
 			F.cd = "/Forum/Forum/"
 			F["ID"] >> ID_Number
 			F["Forum_ID"] >> Forum_ID_Number
@@ -56,7 +56,7 @@ mob/proc/Display_HTML_Forum()
 				HTML += " <b><FONT SIZE=+3>[sect.section]</FONT></b><br>"
 				for(var/obj/Forums/Forum/Fg in Forum_List)
 					if(Fg.language != src.switch_language || Fg.parent || Fg.section != sect.section)	continue
-					HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[Fg.name]</FONT></a><br>"
+					HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[Fg.name]</FONT></a><br>[Fg.time_update]<br>"
 					for(var/obj/Forums/Forum/child in Forum_List)
 						if(child.parent == Fg)	HTML += "   <a href='?reference=ViewForum;forum=[child.MyForum_ID]'><FONT SIZE=2>[child.name]</FONT></a>   "
 					HTML += "<br>"
@@ -82,7 +82,7 @@ mob/proc/Display_HTML_SubForum()
 		HTML += "[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
 		for(var/obj/Forums/Forum/Fg in Forum_List)//Строим форумы
 			if(Fg.parent != F)	continue
-			HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+2><b>[Fg.name]</b></FONT></a><br>"
+			HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+2><b>[Fg.name]</b></FONT></a><br>[Fg.time_update]<br>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
 		var/max_pages = F.Forum_Threads.len/10
@@ -114,7 +114,9 @@ mob/proc/Display_HTML_SubForum()
 							else
 								MyColor = 1
 								HTML += "<tr bgcolor=#CCCCFF>"
-							HTML += "<td><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[O.name]</a>"
+							HTML += "<td><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[O.name]</a><br>[O.time_update]"
+							//if(F.time_update && text2time(F.time_update) < text2time(O.time_update) || !F.time_update)
+							F.time_update = O.time_update
 							if(O.Forum_Messages.len == 1)
 								HTML += "        [O.Forum_Messages.len] reply"
 							else
@@ -162,23 +164,23 @@ mob/proc/Display_HTML_SubForum()
 
 client/Topic(href,href_list[])
 	switch(href_list["reference"])
-		if("update")
+		if("update")//Обновление страницы
 			if(mob.Selected_Forum)	mob.Display_HTML_SubForum()
 			else					mob.Display_HTML_Forum()
-		if("switch_lang")
+		if("switch_lang")//Переклюение форумов по языку
 			switch(mob.switch_language)
 				if("ENG")	mob.switch_language = "RUS"
 				if("RUS")	mob.switch_language = "ENG"
 			mob.Selected_Forum = null
 			mob.Display_HTML_Forum()
-		if("ViewMain")
+		if("ViewMain")//Возвращение в главное меню
 			mob.Selected_Forum = null
 			mob.Display_HTML_Forum()
-		if("ViewSection")
+		if("ViewSection")//+- Отображения разделов форумов на главной странице
 			if(href_list["section"] in mob.closed_sections)	mob.closed_sections -= href_list["section"]
 			else	mob.closed_sections += href_list["section"]
 			mob.Display_HTML_Forum()
-		if("ViewForum")
+		if("ViewForum")//Переход к содержимому форумов и подфорумов
 			for(var/obj/Forums/Forum/FF in world)
 				if(text2num(href_list["forum"]) == FF.MyForum_ID)
 					mob.Selected_Forum = FF
@@ -224,15 +226,8 @@ client/Topic(href,href_list[])
 					break
 			if(F != null)
 				F.Forum_New_Thread.Click()
-		if("Back")
-			var/obj/Forums/Forum/F
-			for(var/obj/Forums/Forum/FF in world)
-				if(text2num(href_list["forum"]) == FF.MyForum_ID)
-					F = FF
-					break
-			if(F != null)
-				mob.Display_HTML_Forum(F)
-		if("Thread")
+		if("Back")	mob.Display_HTML_SubForum()
+		if("Thread")//Переход в тему по нажатию на ее название
 			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)
 				if(text2num(href_list["forum"]) == FF.MyForum_ID)

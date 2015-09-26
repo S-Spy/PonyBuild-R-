@@ -16,8 +16,8 @@
  \--------------------------------------------------------/
 */
 
-var/list/Administrator_Keys = new/list()
-var/Forum_Master_Key = ""
+var/list/Administrator_Keys = new/list()//Список модераторов
+var/Forum_Master_Key = ""//Имя главного модератора
 var/Using_HTML_Forums = 1
 
 world/New()
@@ -44,6 +44,7 @@ obj/Forums
 		var/obj/Forums/Forum/New_Thread/Forum_New_Thread
 		var/list/Forum_Threads = list()
 		var/obj/Forums/Forum/parent//Если есть подразделы, необходимо указывать
+		var/time_update
 		var/section
 		var/topic_on = 0
 		var/language = "ENG"
@@ -229,16 +230,15 @@ obj/Forums
 							usr.Forum_Posting = 0
 							usr.Forum_Deleting = 0
 				return
-		New_Thread
+		New_Thread//Cоздание темы
 			var/obj/Forums/Forum/Forum_Listing
 			name = "\[New Topic\]"
 			Valid_Forum2 = 0
-			New()
-				return
-			Click()
-				if(Forum_Banned.Find("[usr.key]"))
+			New()	return
+			Click()//При клике на обьект...
+				if(Forum_Banned.Find("[usr.key]"))//От ворот поворот забаненным
 					return
-				if(usr.Forum_Posting == 1)
+				if(usr.Forum_Posting == 1)//
 					return
 				usr.Forum_Posting = 1
 				usr.Forum_Title = ""
@@ -266,30 +266,41 @@ obj/Forums
 					sleep(5)
 				if(usr == null||src == null)
 					return
-				var/Filtered_String = usr.Forum_Message
-				var/Find1 = findtextEx(Filtered_String," ")
-				while(Find1)
-					var/F1 = copytext(Filtered_String,Find1+1)
-					var/F2 = copytext(Filtered_String,1,Find1)
-					Filtered_String = "[F2][F1]"
+				var/Filtered_String = usr.Forum_Message//Извлекается введенный ранее в поле текст
+				var/Find1 = findtextEx(Filtered_String," ")//Находится пробел в сообщении
+				while(Find1)//Сокращаются пробелы для вычисления длины поста
+					Filtered_String = "[copytext(Filtered_String,1,Find1)][copytext(Filtered_String,Find1+1)]"
 					Find1 = findtextEx(Filtered_String," ")
 				if(length(Filtered_String) < 1)
 					usr << "A message may not be shorter than 1 character."
 					return
-				var/obj/Forums/Forum/Thread/FT = new
-				if(length(usr.Forum_Title) < 1)
+				var/obj/Forums/Forum/Thread/FT = new//Создание обьекта новой темы
+				if(length(usr.Forum_Title) < 1)//Если название темы не введено, то получается название"Нет темы"
 					usr.Forum_Title = "No Topic"
+
+				var/TEXT//Костыль для буквы Я
+				for(var/k = 1, k <= lentext(usr.Forum_Title), k++)
+					if(copytext(usr.Forum_Title, k, k+1) != "я")	TEXT += copytext(usr.Forum_Title, k, k+1)
+					else	TEXT += "Я"
+				usr.Forum_Title = TEXT
+				TEXT = ""
+				for(var/k = 1, k <= lentext(usr.Forum_Message), k++)
+					if(copytext(usr.Forum_Message, k, k+1) != "я")	TEXT += copytext(usr.Forum_Message, k, k+1)
+					else	TEXT += "Я"
+				usr.Forum_Message = TEXT
+
 				FT.name = html_encode(usr.Forum_Title)
-				FT.Message = html_encode(usr.Forum_Message)
+				FT.Message = html_encode(usr.Forum_Message)//Автоформатирование ссылок?
 				ID_Number++
-				FT.MyID = ID_Number
-				save_ID()
+				FT.MyID = ID_Number//Присвоение теме свой айди
+				save_ID()//Сохранение темы по айди
 				var/SecondName = usr.key
-				if(length(usr.name) > 15)
-					SecondName = "[copytext(usr.name,1,16)]..."
-				if(length(FT.Message) > 5000)
+				if(length(usr.name) > 15)	SecondName = "[copytext(usr.name,1,16)]..."
+				if(length(FT.Message) > 5000)//Сокращение Логина и сообщения для поста
 					FT.Message = "[copytext(usr.Forum_Message,1,5000)]... <font color = red>\[ Rest cut out due to long length.\]</font>"
 				FT.suffix = SecondName
+				FT.time_update = time2text(world.realtime)
+				Forum_Listing.time_update = FT.time_update
 				Forum_Listing.Forum_Threads += FT
 				FT.Forum_Listing = Forum_Listing
 				var/FM = FT.Message
@@ -303,10 +314,10 @@ obj/Forums
 					var/FilterMessage = "<body bgcolor = white color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [FT.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [FT.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
 					usr << browse(FilterMessage)
 				else
-					usr.Display_HTML_Forum(Forum_Listing)
+					usr.Display_HTML_SubForum()
 				Forum_Listing.save_forums()
 				return
-		Reply
+		Reply//Функция отписвания в теме
 			var/obj/Forums/Forum/Forum_Listing
 			name = "    Reply"
 			Valid_Forum2 = 0
@@ -362,10 +373,21 @@ obj/Forums
 				if(length(usr.Forum_Title) < 1)
 					usr.Forum_Title = "No Topic"
 				usr.Forum_Title = "        [usr.Forum_Title]"
+				var/TEXT//Костыль для буквы Я
+				for(var/k = 1, k <= lentext(usr.Forum_Title), k++)
+					if(copytext(usr.Forum_Title, k, k+1) != "я")	TEXT += copytext(usr.Forum_Title, k, k+1)
+					else	TEXT += "Я"
+				usr.Forum_Title = TEXT
+				TEXT = ""
+				for(var/k = 1, k <= lentext(usr.Forum_Message), k++)
+					if(copytext(usr.Forum_Message, k, k+1) != "я")	TEXT += copytext(usr.Forum_Message, k, k+1)
+					else	TEXT += "Я"
+				usr.Forum_Message = TEXT
 				FT.name = html_encode(usr.Forum_Title)
 				FT.Message = html_encode(usr.Forum_Message)
 				ID_Number++
 				FT.MyID = ID_Number
+				FT.time_update = time2text(world.realtime)
 				save_ID()
 				var/SecondName = usr.key
 				if(length(usr.name) > 15)
@@ -373,6 +395,7 @@ obj/Forums
 				if(length(FT.Message) > 5000)
 					FT.Message = "[copytext(usr.Forum_Message,1,5000)]... <font color = red>\[ Rest cut out due to long length.\]</font>"
 				FT.suffix = SecondName
+				usr.Forum_Thread.time_update = FT.time_update
 				usr.Forum_Thread.Forum_Messages += FT
 				FT.Forum_Listing = Forum_Listing
 				if(Using_HTML_Forums == 0)
@@ -392,41 +415,44 @@ obj/Forums
 			Valid_Forum2 = 0
 			New()
 				return
-			proc
-				Delete_Message2()
-					if(Forum_Banned.Find("[usr.key]"))
-						return
-					if(Administrator_Keys.Find(usr.key))
-						if(usr.Forum_Posting == 1)
-							return
-						usr.Forum_Posting = 1
-						switch(alert("Are you sure you want to delete this message?","Delete Message","Yes","No"))
-							if("Yes")
-								usr.Forum_Posting = 0
-								Forum_Listing:Forum_Threads -= src
-								usr.Display_HTML_Forum(src.Forum_Listing)
-								del(src)
-							else
-								usr.Forum_Posting = 0
-					return
-			Click()
+			proc/Delete_Message2()
 				if(Forum_Banned.Find("[usr.key]"))
 					return
-				if(usr.Forum_Deleting == 1&&usr.Forum_Delete == null)
-					usr.Forum_Delete = src
+				if(Administrator_Keys.Find(usr.key))
+					if(usr.Forum_Posting == 1)
+						return
+					usr.Forum_Posting = 1
+					switch(alert("Are you sure you want to delete this message?","Delete Message","Yes","No"))
+						if("Yes")
+							usr.Forum_Posting = 0
+							Forum_Listing:Forum_Threads -= src
+							usr.Display_HTML_Forum(src.Forum_Listing)
+							del(src)
+						else
+							usr.Forum_Posting = 0
+				return
+			Click()//Отображение шапки темы
+				if(Forum_Banned.Find("[usr.key]"))	return//Забаненным входа нет
+				if(usr.Forum_Deleting == 1 && usr.Forum_Delete == null)	usr.Forum_Delete = src//
 				usr.Forum_Thread = src
-				var/FM = src.Message
-				var/FM2 = findtext(FM,"\n")
+				var/FM = src.Message//Сообщение
+				var/FM2 = findtext(FM,"\n")//Конец строки
 				while(FM2 != 0)
-					var/cutfirst = copytext(FM,1,FM2)
-					var/cutlast = copytext(FM,FM2+1)
-					FM = "[cutfirst]<br>[cutlast]"
+					var/cutfirst = copytext(FM,1,FM2)//Вырезать первую строку
+					var/cutlast = copytext(FM,FM2+1)//Вырезать вторую строку
+					FM = "[cutfirst]<br>[cutlast]"//Отображение получившихся строк
 					FM2 = findtext(FM,"\n")
 				if(Using_HTML_Forums == 0)
 					var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
 					usr << browse(FilterMessage, "window=forum")
 				else
-					var/FilterMessage = "<body bgcolor = #608590 color = red><center><a href='?reference=Back;forum=[Forum_Listing:MyForum_ID]'>Back to [Forum_Listing:name]</a><br><br><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td colspan = 2 valign=middle>[usr.ReplyCheckClosed(Forum_Listing)]</td><td valign=middle align=right>[usr.AdminCheckThread2(Forum_Listing,src)]  [usr.AdminCheckThread(Forum_Listing,src)]</td></td></tr></table>"
+					var/FilterMessage = "<body bgcolor = #608590 color = red><center>"
+					FilterMessage += "<a href='?reference=Back;forum=[Forum_Listing:MyForum_ID]'>Back to [Forum_Listing:name]</a><br><br>"
+					FilterMessage += "<table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle>"
+					FilterMessage += "<font color = #C0C0C0 size = 3>Author:</font><font size = 4 color = #C0C0C0><b>        [src.suffix]</b></td><td align = right valign = middle>"
+					FilterMessage += "<font color = #C5C5C5 size = 4><b>      [src.time_update]</b></td></tr><tr><td align = center colspan = 2>"
+					FilterMessage += "<font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr>"
+					FilterMessage += "<tr><td colspan = 2 valign=middle>[usr.ReplyCheckClosed(Forum_Listing)]</td><td valign=middle align=right>[usr.AdminCheckThread2(Forum_Listing,src)]  [usr.AdminCheckThread(Forum_Listing,src)]</td></td></tr></table>"
 					for(var/obj/Forums/Forum/Message/M in Forum_Messages)
 						var/FMr = M.Message
 						var/FMr2 = findtext(FM,"\n")
@@ -440,7 +466,7 @@ obj/Forums
 					FilterMessage += "</center></body>"
 					usr << browse(FilterMessage, "window=forum")
 				return
-		Message
+		Message//Отображение сообщений
 			var/tmp/Forum_Listing
 			name = ""
 			var/Message = ""
@@ -479,7 +505,7 @@ obj/Forums
 					var/cutlast = copytext(FM,FM2+1)
 					FM = "[cutfirst]<br>[cutlast]"
 					FM2 = findtext(FM,"\n")
-				var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
+				var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Author:</font><font size = 4 color = #C0C0C0><b>        [src.suffix]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b>      [src.time_update]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
 				usr << browse(FilterMessage, "window=forum")
 				return
 
@@ -502,17 +528,14 @@ client/Topic(href,href_list[])
 		usr.Forum_Posting = 0
 	..()
 
-var/list/Forum_Banned = list()
-var/Forum_First_Admin = 0
-
-world/New()
-	..()
+var/list/Forum_Banned = list()//Забаненные на форуме
+var/Forum_First_Admin = 0//Наличие хоть одного модератора
 
 
 mob/Login()
 	..()
 	sleep(1)
-	if(Forum_First_Admin == 0)
+	if(Forum_First_Admin == 0)//Если модераторы не загружены, то первый зашедший моб становится им
 		var/filename = "Forum/Forum.sav"
 		var/savefile/F = new(filename)
 		var/directory = "/Forum/Forum/"
@@ -525,31 +548,31 @@ mob/Login()
 		F["Master"] << Forum_Master_Key
 
 world/Del()
-	save_forum()
+	save_forum()//Сохранение разрешенных форумов
 	for(var/obj/Forums/Forum/F in world)
 		if(F.Valid_Forum == 1)
 			F.save_forums()
 	..()
 
-var/list/Saved_List = new/list()
-var/Forum_Saved = 100
+var/list/Saved_List = new/list()//Лист для сохранений
+var/Forum_Saved = 200//Возможно сохранить до 200 тем в одном форуме
 
 obj/Forums/Forum/proc
-	save_forums()
-		var/filename = "Forum/[src.name].sav"
-		var/savefile/F = new(filename)
-		var/directory = "/Forum/[src.name]/"
+	save_forums()//Сохранение тем данного форума в файл
+		var/filename = "Forum/[src.name].sav"//Место сейва тем данного форума
+		var/savefile/F = new(filename)//Создание файла сейва
+		var/directory = "/Forum/[src.name]/"//Создание каталога для сейва
 		F.cd = directory
 		Saved_List = list()
 		var/FS = Forum_Saved
 		for(var/obj/Forums/Forum/Thread/T in Forum_Threads)
 			if(FS > 0)
 				FS -= 1
-				Saved_List += T
+				Saved_List += T//Сохраняется до 200 тем
 			else
 				break
 		F["ActualForum"] << Saved_List
-	load_forums()
+	load_forums()//Загрузка доступных тем из форума
 		if(length(file2text("Forum/[src.name].sav")))
 			var/filename = "Forum/[src.name].sav"
 			var/savefile/F = new(filename)
