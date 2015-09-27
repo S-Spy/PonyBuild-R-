@@ -10,7 +10,7 @@
 	if(embedded_flag)
 		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
 
-	if(reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") || species.name == "Earthpony") return -1
+	if(reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) return -1
 
 	var/health_deficiency = (100 - health)
 	if(health_deficiency >= 40) tally += (health_deficiency / 25)
@@ -18,10 +18,11 @@
 	if (!(species && (species.flags & NO_PAIN)))
 		if(halloss >= 10) tally += (halloss / 10) //halloss shouldn't slow you down if you can't even feel it
 
-	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-	if (hungry >= 70) tally += hungry/50
+	var/hungry = (500 - nutrition)/250 // So overeat would be 100 and default level would be 80
+	if (hungry >= 140 && species.name == "Earthpony") tally += hungry
+	else if(hungry >= 70)	tally += hungry
 
-	if(wear_suit)
+	if(wear_suit && species.name != "Earthpony")
 		tally += wear_suit.slowdown
 
 	if(istype(buckled, /obj/structure/bed/chair/wheelchair))
@@ -34,7 +35,7 @@
 			else if(E.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
-		if(shoes)
+		if(shoes && species.name != "Earthpony")
 			tally += shoes.slowdown
 
 		for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
@@ -46,7 +47,9 @@
 			else if(E.status & ORGAN_BROKEN)
 				tally += 1.5
 
-	if(shock_stage >= 10) tally += 3
+	if(shock_stage >= 10)
+		tally += 3
+		if(species.name == "Earthpony")	tally --
 
 	if(FAT in src.mutations)
 		tally += 1.5
@@ -57,6 +60,8 @@
 
 	if(mRun in mutations)
 		tally = 0
+
+	if(m_intent == "fly")	tally--
 
 	return (tally+config.pony_delay)
 

@@ -47,6 +47,11 @@
 
 	icon = 'icons/mob/pony_face.dmi'	  // default icon for all pony tails
 
+	bald
+		name = "Bald"
+		icon_state = "bald"
+		species_allowed = list("Earthpony", "Unicorn", "Pegasus")//ALL
+
 	twilight
 		name = "Twilight Tail"
 		icon_state = "twilight_tail"

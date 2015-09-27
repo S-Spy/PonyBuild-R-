@@ -1,3 +1,27 @@
+/area/dreams/cementery1
+	name = "Cementery 1"
+	icon_state = "away1"
+
+/area/dreams/beach2
+	name = "Beach 2"
+	icon_state = "cave"
+
+/area/dreams/discord3
+	name = "Discord dream 3"
+	icon_state = "anog"
+
+/area/dreams/sugar4
+	name = "Sugar Corner"
+	icon_state = "cafeteria"
+
+/area/dreams/castle5
+	name = "Castle of Two Sisters 5"
+	icon_state = "anomaly"
+
+/area/dreams/hell6
+	name = "Hell 666"
+	icon_state = "away3"
+
 
 /area/research_outpost
 	name = "Research Outpost"

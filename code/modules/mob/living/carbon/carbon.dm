@@ -13,7 +13,9 @@
 		if(src.nutrition && src.stat != 2)
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")				src.nutrition -= HUNGER_FACTOR/10
-			if(istype(src, /mob/living/carbon/pony) && src.species.name == "Earthpony")			src.nutrition += HUNGER_FACTOR/50
+			if(src.m_intent == "fly")				src.nutrition -= HUNGER_FACTOR/5
+			if(istype(src, /mob/living/carbon/pony) && src.species.name == "Earthpony")
+				src.nutrition += HUNGER_FACTOR/30
 		if((FAT in src.mutations) && src.m_intent == "run" && src.bodytemperature <= 360)
 			src.bodytemperature += 2
 
@@ -413,7 +415,12 @@
 		usr << "\red You are already sleeping"
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+		if(!home_mob && prob(30))
+			var/t = rand(200, 6000)
+			usr.sleeping = 20
+			goto_dream(t)
+		else if(home_mob)	goto_dream(2, 1)
+		else	usr.sleeping = 20
 
 /mob/living/carbon/Bump(atom/movable/AM as mob|obj, yes)
 

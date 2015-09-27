@@ -272,6 +272,7 @@
 		stop()
 		if(cooked)
 			cooked.loc = src.loc
+			cooked:heat_food(3)
 		return
 
 /obj/machinery/microwave/proc/wzhzhzh(var/seconds as num) // Whoever named this proc is fucking literally Satan. ~ Z

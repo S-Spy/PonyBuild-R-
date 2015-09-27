@@ -204,11 +204,32 @@
 	desc = "Stairs.  You walk up and down them."
 	icon_state = "rampbottom"
 	var/obj/multiz/stairs/connected
+	var/ID_connect
 	var/turf/target
 	var/turf/target2
-	var/suggest_dir // try this dir first when finding stairs; this is the direction to walk *down* the stairs
+	var/suggest_dir = SOUTH// try this dir first when finding stairs; this is the direction to walk *down* the stairs
 
-	New()
+	New()//Нужно определить спрайт лестницы и цель
+		..()
+		spawn(1)
+			if(!target)	for(var/obj/multiz/stairs/S in world-src)//Поиск цели
+				if(S.ID_connect == ID_connect)
+					target = locate(S.x, S.y, S.z)
+					S.target = locate(x, y, z)
+					connected = S
+					S.connected = src
+					break
+			//Определение типа спрайта
+			if(target && target.z > z)	icon_state = "ramptop"
+
+	Bumped(var/atom/movable/M)
+		if(connected && target && istype(src, /obj/multiz/stairs) && locate(/obj/multiz/stairs) in M.loc)
+			var/obj/multiz/stairs/Con = locate(/obj/multiz/stairs) in target.loc
+			if(Con == src.connected) //make sure the atom enters from the approriate lower stairs tile
+				M.Move(target)//Нужно определить цель
+		return
+
+	/*New()
 		..()
 		var/turf/cl= locate(1, 1, src.z)
 		for(var/obj/effect/landmark/zcontroller/c in cl)
@@ -271,4 +292,4 @@
 				var/turf/above2 = locate(bottom.x, bottom.y, controller.up_target)
 				if(istype(above2, /turf/space) || istype(above,/turf/simulated/floor/open))
 					top.target2 = above2
-		return
+		return*/

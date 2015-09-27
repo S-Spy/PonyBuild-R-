@@ -11,17 +11,23 @@
 		src << "\red The wiki URL is not set in the server configuration."
 	return
 
+/client/verb/github()//Не забыть про чейнжлог
+	set name = "github"
+	set desc = "Visit the our github repository."
+	set hidden = 1
+	if( config.githuburl )
+		if(alert("This will open the github in your browser. Are you sure?",,"Yes","No")=="Yes")
+			src << link(config.githuburl)
+	else
+		src << "\red The github URL is not set in the server configuration."
+	return
+
 /client/verb/forum()
 	set name = "forum"
-	set desc = "Visit the forum."
+	set desc = "Visit the forum ingame."
 	set hidden = 1
-	if( config.forumurl )
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
-			return
-		src << link(config.forumurl)
-	else
-		src << "\red The forum URL is not set in the server configuration."
-	return
+	if(mob.Selected_Forum)	mob.Display_HTML_Forum()
+	else	mob.Display_HTML_SubForum()
 
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()
