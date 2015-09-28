@@ -27,15 +27,19 @@ proc
 			if(Forum_ID_Number == null)
 				Forum_ID_Number = 0
 
+proc/probels(var/n)
+	var/text = ""
+	for(var/i = 0; i < n; i++)	text = "[text] "
+	return text
+
 mob/proc/Display_HTML_Forum()
-	src << browse_rsc('Closed Thread.dmi',"TheX")
-	src << browse_rsc('New Topic.jpg',"NewTopic")
-	if(!Forum_Banned.Find("[key]"))
-		var/HTML = "<html><body bgcolor=#608590>"
+	if(!Forum_Banned.Find("[key]"))//Отфильтровка забаненных
 		var/list/Forum_List = list()
 		var/list/sections = list()
+		var/HTML = "<html><body bgcolor=#608590>"
+		////////////////////////////////////////////////////////
 		for(var/obj/Forums/Forum/Fg in world)
-			if(Fg.Valid_Forum2 == 1)
+			if(Fg.valid2 == 1)
 				Forum_List += Fg
 				if(Fg.section)
 					var/t = 0
@@ -45,23 +49,32 @@ mob/proc/Display_HTML_Forum()
 							break
 					if(t)	continue
 					sections += Fg
-		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr /><br>"
-		for(var/obj/Forums/Forum/sect in sections)//Определяем открытость секции
+		////////////////////////////////////////////////////////
+		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr /><br></html><html>"
+		for(var/obj/Forums/Forum/sect in sections)
 			if(sect.language != switch_language)	continue
 			if(sect.section in closed_sections)
+			///////////////////////////////////////////////////////////////
 				HTML += "<b><head><style>a {text-decoration: none} </style></head><FONT SIZE=+2><a href='?reference=ViewSection;section=[sect.section]'>+</a></FONT>"
-				HTML += " <FONT COLOR=#201040 SIZE=+3>[sect.section]</FONT></b><br>"
+				HTML += " <FONT COLOR=#201040 SIZE=+3>[sanitize_lang(sect.section)]</FONT></b><br>"
 			else
 				HTML += "<head><style>a {text-decoration: none} </style></head><FONT SIZE=+3><a href='?reference=ViewSection;section=[sect.section]'>-</a></FONT>"
-				HTML += " <b><FONT SIZE=+3>[sect.section]</FONT></b><br>"
+				HTML += " <b><FONT SIZE=+3>[sanitize_lang(sect.section)]</FONT></b><br>"
+			////////////////////////////////////////////////////////////////
 				for(var/obj/Forums/Forum/Fg in Forum_List)
 					if(Fg.language != src.switch_language || Fg.parent || Fg.section != sect.section)	continue
-					HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[Fg.name]</FONT></a><br>[Fg.time_update]<br>"
+					HTML += "<table><tr><td align = left valign = middle>  <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[sanitize_lang(Fg.name)]</FONT></a><td>"
+					if(Fg.time_update)	HTML += "<td align = right valign = middle>[probels(40-lentext(Fg.name))]UPD: <a href='?reference=Thread;messageID=[Fg.last_topic.MyID];forum=[Fg.MyForum_ID]'>[sanitize_lang(Fg.last_topic.name)]</a></td>"
+					HTML += "</tr><br><tr>"
+					var/p = 0
 					for(var/obj/Forums/Forum/child in Forum_List)
-						if(child.parent == Fg)	HTML += "   <a href='?reference=ViewForum;forum=[child.MyForum_ID]'><FONT SIZE=2>[child.name]</FONT></a>   "
-					HTML += "<br>"
+						if(child.parent == Fg)
+							p += lentext(child.name)+3
+							HTML += "<td align = left valign = middle>   <a href='?reference=ViewForum;forum=[child.MyForum_ID]'><FONT SIZE=2>[sanitize_lang(child.name)]</FONT></a></td>"
+					if(Fg.time_update)	HTML += "<td align = right valign = middle>[probels(40-p)][time2text(Fg.time_update)] by [Fg.last_author]</td>"
+					HTML += "</tr></table><br>"
 
-		src << browse(HTML, "window=forum")
+		src << browse(HTML, "window=forum; size=600x500; botder=1")
 	else
 		alert(usr, "You are banned from the [world.name] forums.")
 
@@ -73,16 +86,20 @@ mob/proc/Display_HTML_SubForum()
 	if(!Forum_Banned.Find("[key]"))
 		var/list/Forum_List = list()
 		for(var/obj/Forums/Forum/Fg in world)
-			if(Fg.Valid_Forum2 == 1)
+			if(Fg.valid2 == 1)
 				Forum_List += Fg
-		var/HTML = "<html><body bgcolor=#608590><head><style>a {text-decoration: none} </style></head>"
+		var/HTML = "<html><body bgcolor=#608590><head><style>a {text-decoration: none} </style></head></html><html>"
 		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr />"
 		if(F.section)	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.section]</a>  /  "
 		else	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.parent.section]</a>  /  <a href='?reference=ViewForum;forum=[F.parent.MyForum_ID]'>[F.parent]</a>  /  "
 		HTML += "[F.name]</font></b><br>[F.desc]</center><br><table cellspacing=20 width = 100%  border=0>"
 		for(var/obj/Forums/Forum/Fg in Forum_List)//Строим форумы
 			if(Fg.parent != F)	continue
-			HTML += "      <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+2><b>[Fg.name]</b></FONT></a><br>[Fg.time_update]<br>"
+			HTML += "<table><tr><td align = left valign = middle>  <a href='?reference=ViewForum;forum=[Fg.MyForum_ID]'><FONT FACE=Arial COLOR=#404000 SIZE=+1>[sanitize_lang(Fg.name)]</FONT></a><td>"
+			if(Fg.time_update)	HTML += "<td align = right valign = middle>[probels(40-lentext(Fg.name))]UPD: <a href='?reference=Thread;messageID=[Fg.last_topic.MyID];forum=[Fg.MyForum_ID]'>[sanitize_lang(Fg.last_topic.name)]</a></td>"
+			HTML += "</tr><br><tr>"
+			if(Fg.time_update)	HTML += "<td align = right valign = middle>[probels(40)][time2text(Fg.time_update)] by [Fg.last_author]</td>"
+			HTML += "</tr></table><br>"
 		if(Forum_Page[F.name] == 0||Forum_Page[F.name] == null)
 			Forum_Page[F.name] = 1
 		var/max_pages = F.Forum_Threads.len/10
@@ -97,7 +114,8 @@ mob/proc/Display_HTML_SubForum()
 			else
 				F.Forum_Threads -= F.Forum_Threads[T]
 		if(Administrator_Keys.Find(src.key))
-			HTML += "<tr><td  valign=middle><a href='?reference=Admin;forum=[F.MyForum_ID]'><font color = #F50000>Moderator Commands \[*\]</font></a></td></tr><tr>"
+			HTML += "<tr><td  valign=middle><a href='?reference=Admin;forum=[F.MyForum_ID]'><font color = #F50000>Moderator Commands \[*]</font></a></td></tr><tr>"
+		if(!F.topic_on)	goto End
 		if(Forum_Page[F.name] < max_pages)
 			HTML += "<tr><td><a href='?reference=Next;forum=[F.MyForum_ID]'>Next  -></a></td></tr><tr><td> </td></tr>"
 		HTML += "</table><table bgcolor=#CCCCFC cellpadding=15 width = 100% border=0><tr><td><a href='?reference=NewThread;forum=[F.MyForum_ID]'><img src=NewTopic></a></td></tr><tr><td> </td></tr>"
@@ -114,7 +132,7 @@ mob/proc/Display_HTML_SubForum()
 							else
 								MyColor = 1
 								HTML += "<tr bgcolor=#CCCCFF>"
-							HTML += "<td><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[O.name]</a><br>[O.time_update]"
+							HTML += "<td><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[O.name]</a><br>[time2text(O.time_update)]"
 							//if(F.time_update && text2time(F.time_update) < text2time(O.time_update) || !F.time_update)
 							F.time_update = O.time_update
 							if(O.Forum_Messages.len == 1)
@@ -139,7 +157,7 @@ mob/proc/Display_HTML_SubForum()
 							else
 								MyColor = 1
 								HTML += "<tr bgcolor=#CCCCFF>"
-							HTML += "<td valign=middle><img src=TheX><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[O.name]</a>"
+							HTML += "<td valign=middle><img src=TheX><a href='?reference=Thread;messageID=[O.MyID];forum=[F.MyForum_ID]'>[sanitize_lang(O.name)]</a>"
 							if(O.Forum_Messages.len == 1)
 								HTML += "        [O.Forum_Messages.len] reply"
 							else
@@ -156,6 +174,7 @@ mob/proc/Display_HTML_SubForum()
 		if(Forum_Page[F.name] > 1)
 			HTML += "</table><table cellspacing=20 width = 100%  border=0><tr><td> </td></tr>"
 			HTML += "<tr><td><a href='?reference=Prev;forum=[F.MyForum_ID]'><-  Previous</a></td></tr>"
+		End
 		HTML += "</table></body></html>"
 		src << browse(HTML, "window=forum")
 	else
@@ -226,7 +245,9 @@ client/Topic(href,href_list[])
 					break
 			if(F != null)
 				F.Forum_New_Thread.Click()
-		if("Back")	mob.Display_HTML_SubForum()
+		if("Back")
+			if(mob.Selected_Forum)	mob.Display_HTML_SubForum()
+			else	mob.Display_HTML_Forum()
 		if("Thread")//Переход в тему по нажатию на ее название
 			var/obj/Forums/Forum/F
 			for(var/obj/Forums/Forum/FF in world)

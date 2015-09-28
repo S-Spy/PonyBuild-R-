@@ -4,8 +4,19 @@
 
  /////////////////////////
 //   HTML-Based Forums   //
- /////////////////////////
+ /////////////////////////\
 
+
+proc/sanitize_lang(var/text)//Костыль для сломанных букв
+	var/TEXT = ""
+	for(var/k = 1, k <= lentext(text), k++)
+		if(copytext(text, k, k+1) != "я")	TEXT += copytext(text, k, k+1)
+		else	TEXT += "Я"
+	return TEXT
+
+proc/html_encode_lang(var/text)	return html_encode(sanitize_lang(text))//sanitize_lang(text))
+
+proc/html_decode_lang(var/text) return html_decode(sanitize_lang(text))//sanitize_lang(text))
 
 world/New()
 	Using_HTML_Forums = 1       //Set this variable to 1 to use HTML-Based forums.
