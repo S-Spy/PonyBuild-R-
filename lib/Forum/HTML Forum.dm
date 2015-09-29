@@ -36,7 +36,7 @@ mob/proc/Display_HTML_Forum()
 	if(!Forum_Banned.Find("[key]"))//Отфильтровка забаненных
 		var/list/Forum_List = list()
 		var/list/sections = list()
-		var/HTML = "<html><body bgcolor=#608590>"
+		var/HTML = "<html><body bgcolor=#102010>"
 		////////////////////////////////////////////////////////
 		for(var/obj/Forums/Forum/Fg in world)
 			if(Fg.valid2 == 1)
@@ -88,7 +88,7 @@ mob/proc/Display_HTML_SubForum()
 		for(var/obj/Forums/Forum/Fg in world)
 			if(Fg.valid2 == 1)
 				Forum_List += Fg
-		var/HTML = "<html><body bgcolor=#608590><head><style>a {text-decoration: none} </style></head></html><html>"
+		var/HTML = "<html><body bgcolor=#102010><head><style>a {text-decoration: none} </style></head></html><html>"
 		HTML += "<b><a href='?reference=switch_lang'>[switch_language]</a></b>  <a href='?reference=update'>Update</a><hr />"
 		if(F.section)	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.section]</a>  /  "
 		else	HTML += "</center><br><br><center><b><font size = +2><a href='?reference=ViewMain'>[F.parent.section]</a>  /  <a href='?reference=ViewForum;forum=[F.parent.MyForum_ID]'>[F.parent]</a>  /  "

@@ -247,7 +247,7 @@ obj/Forums
 <html>
 <form method=get action='byond://' >
 <input type=hidden name=src value='Message'>
-<body bgcolor=#608590 text=black>
+<body bgcolor=#102010 text=black>
 <B><FONT color = red><center>Title:</FONT></B><br>
 <input type='text' name=ForumTitle size='58' maxlength='30'></textarea>
 <br>
@@ -331,7 +331,7 @@ obj/Forums
 <html>
 <form method=get action='byond://' >
 <input type=hidden name=src value='Message'>
-<body bgcolor=#608590 text=black>
+<body bgcolor=#102010 text=black>
 <B><FONT color = red><center>Title:</FONT></B><br>
 <input type='text' name=ForumTitle size='58' maxlength='30' value='Re:  [usr.Forum_Thread.name]'></textarea>
 <br>
@@ -425,11 +425,11 @@ obj/Forums
 					var/cutlast = copytext(FM,FM2+1)//Вырезать вторую строку
 					FM = "[cutfirst]<br>[cutlast]"//Отображение получившихся строк
 					FM2 = findtext(FM,"\n")
+				var/FilterMessage = "<body bgcolor = #102010 color = red><center>"
 				if(Using_HTML_Forums == 0)
-					var/FilterMessage = "<body bgcolor = #608590 color = red><center><table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
+					FilterMessage += "<table width = 100% cellspacing=0 bgcolor = #000060 cellpadding=5><td rowspan = 4 bgcolor = #000060 width = 1%></td><tr><td align = left valign = middle><font color = #C0C0C0 size = 3>Title:</font><font size = 4 color = #C0C0C0><b>        [src.name]</b></td><td align = right valign = middle><font color = #C5C5C5 size = 4><b><font color = #C0C0C0 size = 3>Author:</font>      [src.suffix]</b></td></tr><tr><td align = center colspan = 2><font size = +1 color = #C0C0C0>Message:</td></tr><tr><td bgcolor = #C5C5C5 colspan=2></font></font></center><br>[FM]<br><br></td><td rowspan = 4 bgcolor = #000060 width = 1%></td></tr><tr><td><br></td></td></tr></table></body>"
 					usr << browse(FilterMessage, "window=forum")
 				else
-					var/FilterMessage = "<body bgcolor = #608590 color = red><center>"
 					var/t = sanitize_lang(Forum_Listing:name)
 					if(!t)	t = "Main Forum"
 					FilterMessage += "<a href='?reference=Back;forum=[Forum_Listing:MyForum_ID]'>Back to [t]</a><br><br>"

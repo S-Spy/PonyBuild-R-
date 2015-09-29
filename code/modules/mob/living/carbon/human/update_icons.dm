@@ -159,6 +159,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(istype(I))	overlays += I
 	else if (icon_update)
 		icon = stand_icon
+		if(lying && !species.prone_icon)	dir = SOUTH
 		for(var/image/I in overlays_standing)
 			overlays += I
 
@@ -516,7 +517,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_pockets(0)
 	update_fire(0)
 	update_surgery(0)
-	update_tail_showing()
+	update_tail_showing(0)
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -935,7 +936,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
 		else 		ICON = p_tail
 
-	overlays_standing[R_HAND_LAYER+0.1] = image(ICON)
+	overlays_standing[R_HAND_LAYER] = image(ICON)
 
 	if(update_icons)
 		update_icons()
