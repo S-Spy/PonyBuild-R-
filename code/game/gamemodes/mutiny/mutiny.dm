@@ -63,7 +63,7 @@ datum/game_mode/mutiny
 						"a deserted transport carrying xenomorph specimens",
 						"an emissary for the gestalt requesting a security detail",
 						"a Pegasus slave rebellion",
-						"radical Skrellian transevolutionaries",
+						"radical Alicornian transevolutionaries",
 						"classified security operations",
 						"science-defying raw elemental chaos"
 						)

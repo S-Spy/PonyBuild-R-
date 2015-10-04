@@ -149,7 +149,7 @@ var/global/floorIsLava = 0
 				\[ Crew: <A href='?src=\ref[src];simplemake=pony;mob=\ref[M]'>pony</A>
 				<A href='?src=\ref[src];simplemake=pony;species=Unicorn;mob=\ref[M]'>Unicorn</A>
 				<A href='?src=\ref[src];simplemake=pony;species=Pegasus;mob=\ref[M]'>Pegasus</A>
-				<A href='?src=\ref[src];simplemake=pony;species=Skrell;mob=\ref[M]'>Skrell</A>
+				<A href='?src=\ref[src];simplemake=pony;species=Alicorn;mob=\ref[M]'>Alicorn</A>
 				<A href='?src=\ref[src];simplemake=pony;species=Vox;mob=\ref[M]'>Vox</A> \] | \[
 				<A href='?src=\ref[src];simplemake=nymph;mob=\ref[M]'>Nymph</A>
 				<A href='?src=\ref[src];simplemake=pony;species='Diona';mob=\ref[M]'>Diona</A> \] |

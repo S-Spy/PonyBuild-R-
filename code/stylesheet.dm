@@ -85,7 +85,7 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .pegasus				{color: #803B56;}
 .pegasus_signlang		{color: #941C1C;}
-.skrell					{color: #00CED1;}
+.alicorn					{color: #00CED1;}
 .soghun					{color: #228B22;}
 .solcom					{color: #22228B;}
 .changeling				{color: #800080;}

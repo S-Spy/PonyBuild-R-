@@ -2233,30 +2233,30 @@ var/global/list/uspell_datums = list()
 	cost = 1
 	sort_category = "ears"
 
-/datum/gear/skrell_chain
-	display_name = "skrell headtail-wear, female, chain"
-	path = /obj/item/clothing/ears/skrell/chain
+/datum/gear/alicorn_chain
+	display_name = "alicorn headtail-wear, female, chain"
+	path = /obj/item/clothing/ears/alicorn/chain
 	cost = 1
 	sort_category = "ears"
-	whitelisted = "Skrell"
+	whitelisted = "Alicorn"
 
-/datum/gear/skrell_plate
-	display_name = "skrell headtail-wear, male, bands"
-	path = /obj/item/clothing/ears/skrell/band
+/datum/gear/alicorn_plate
+	display_name = "alicorn headtail-wear, male, bands"
+	path = /obj/item/clothing/ears/alicorn/band
 	cost = 1
 	sort_category = "ears"
-	whitelisted = "Skrell"
+	whitelisted = "Alicorn"
 
-/datum/gear/skrell_cloth_male
-	display_name = "skrell headtail-wear, male, cloth"
-	path = /obj/item/clothing/ears/skrell/cloth_male
+/datum/gear/alicorn_cloth_male
+	display_name = "alicorn headtail-wear, male, cloth"
+	path = /obj/item/clothing/ears/alicorn/cloth_male
 	cost = 1
 	sort_category = "ears"
-	whitelisted = "Skrell"
+	whitelisted = "Alicorn"
 
-/datum/gear/skrell_cloth_female
-	display_name = "skrell headtail-wear, female, cloth"
-	path = /obj/item/clothing/ears/skrell/cloth_female
+/datum/gear/alicorn_cloth_female
+	display_name = "alicorn headtail-wear, female, cloth"
+	path = /obj/item/clothing/ears/alicorn/cloth_female
 	cost = 1
 	sort_category = "ears"
-	whitelisted = "Skrell"
+	whitelisted = "Alicorn"

@@ -75,14 +75,14 @@
 			if(SONG_DEBUT)
 				body += "[pick("Singer","Singer/songwriter","Saxophonist","Pianist","Guitarist","TV personality","Star")] [random_name(pick(MALE,FEMALE))] \
 				announced the debut of their new [pick("single","album","EP","label")] '[pick("Everyone's","Look at the","Baby don't eye those","All of those","Dirty nasty")] \
-				[pick("roses","three stars","starships","nanobots","cyborgs","Skrell","Sren'darr")] \
+				[pick("roses","three stars","starships","nanobots","cyborgs","Alicorn","Sren'darr")] \
 				[pick("on Venus","on Reade","on Moghes","in my hand","slip through my fingers","die for you","sing your heart out","fly away")]' \
 				with [pick("pre-puchases available","a release tour","cover signings","a launch concert")] on [affected_dest.name]."
 
 			if(MOVIE_RELEASE)
 				body += "From the [pick("desk","home town","homeworld","mind")] of [pick("acclaimed","award-winning","popular","stellar")] \
 				[pick("playwright","author","director","actor","TV star")] [random_name(pick(MALE,FEMALE))] comes the latest sensation: '\
-				[pick("Deadly","The last","Lost","Dead")] [pick("Starships","Warriors","outcasts","Pegasuss","Unicorn","Skrell")] \
+				[pick("Deadly","The last","Lost","Dead")] [pick("Starships","Warriors","outcasts","Pegasuss","Unicorn","Alicorn")] \
 				[pick("of","from","raid","go hunting on","visit","ravage","pillage","destroy")] \
 				[pick("Moghes","Earth","Biesel","Ahdomai","S'randarr","the Void","the Edge of Space")]'.\
 				. Own it on webcast today, or visit the galactic premier on [affected_dest.name]!"
@@ -153,7 +153,7 @@
 	"Man travels 7000 light years to retrieve lost hankie, 'It was my favourite'.",\
 	"New bowling lane that shoots mini-meteors at bowlers very popular.",\
 	"[pick("Unicorn","Spacer")] gets tattoo of Nyx on chest '[pick("CentComm","star","starship","asteroid")] tickles most'.",\
-	"Skrell marries computer; wedding attended by 100 modems.",\
+	"Alicorn marries computer; wedding attended by 100 modems.",\
 	"Chef reports successfully using harmonica as cheese grater.",\
 	"NanoTrasen invents handkerchief that says 'Bless you' after sneeze.",\
 	"Clone accused of posing for other clones’s school photo.",\
@@ -161,7 +161,7 @@
 	"Woman robs station with hair dryer; crewmen love new style.",\
 	"This space for rent.",\
 	"[affected_dest.name] Baker Wins Pickled Crumpet Toss Three Years Running",\
-	"Skrell Scientist Discovers Abacus Can Be Used To Dry Towels",\
+	"Alicorn Scientist Discovers Abacus Can Be Used To Dry Towels",\
 	"Survey: 'Cheese Louise' Voted Best Pizza Restaurant In Nyx",\
 	"I Was Framed, jokes [affected_dest.name] artist",\
 	"Mysterious Loud Rumbling Noises In [affected_dest.name] Found To Be Mysterious Loud Rumblings",\
@@ -177,8 +177,8 @@
 	"Gibson Gazette Updates Frequently Absurd, Poll Indicates",\
 	"Esoteric Verbosity Culminates In Communicative Ennui, [affected_dest.name] Academics Note",\
 	"Taj Demand Longer Breaks, Cleaner Litter, Slower Mice",\
-	"Survey: 3 Out Of 5 Skrell Loathe Modern Art",\
-	"Skrell Scientist Discovers Gravity While Falling Down Stairs",\
+	"Survey: 3 Out Of 5 Alicorn Loathe Modern Art",\
+	"Alicorn Scientist Discovers Gravity While Falling Down Stairs",\
 	"Boy Saves Pegasus From Tree on [affected_dest.name], Thousands Cheer",\
 	"Shipment Of Apples Overturns, [affected_dest.name] Diner Offers Applesauce Special",\
 	"Spotted Owl Spotted on [affected_dest.name]",\

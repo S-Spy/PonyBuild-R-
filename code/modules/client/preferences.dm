@@ -379,7 +379,7 @@ datum/preferences
 			switch(organ_name)
 				if("heart")
 					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+				if("voicebox") //on adding voiceboxes for speaking alicorn/similar replacements
 					dat += "\tSurgically altered [organ_name]"
 				if("eyes")
 					dat += "\tRetinal overlayed [organ_name]"
@@ -1429,7 +1429,7 @@ datum/preferences
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", rgb(r_hair, g_hair, b_hair)) as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -1533,7 +1533,7 @@ datum/preferences
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					//if(species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					//if(species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", rgb(r_skin, g_skin, b_skin)) as color|null
 					if(new_skin)
 						r_skin = hex2num(copytext(new_skin, 2, 4))

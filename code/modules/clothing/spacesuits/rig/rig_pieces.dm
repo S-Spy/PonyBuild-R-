@@ -10,7 +10,7 @@
 	heat_protection =    HEAD|FACE|EYES
 	cold_protection =    HEAD|FACE|EYES
 	brightness_on = 4
-	sprite_sheets = list("Pegasus" = 'icons/mob/species/pegasus/helmet.dmi',"Skrell" = 'icons/mob/species/skrell/helmet.dmi',"Unicorn" = 'icons/mob/species/unicorn/helmet.dmi')
+	sprite_sheets = list("Pegasus" = 'icons/mob/species/pegasus/helmet.dmi',"Alicorn" = 'icons/mob/species/alicorn/helmet.dmi',"Unicorn" = 'icons/mob/species/unicorn/helmet.dmi')
 	species_restricted = null
 
 /obj/item/clothing/gloves/rig

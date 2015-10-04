@@ -474,11 +474,11 @@
 		if(user.translator_on)
 			user.add_language("Sinta'unicorn")
 			user.add_language("Siik'tajr")
-			user.add_language("Skrellian")
+			user.add_language("Alicornian")
 		else
 			user.remove_language("Sinta'unicorn")
 			user.remove_language("Siik'tajr")
-			user.remove_language("Skrellian")
+			user.remove_language("Alicornian")
 
 	is_active(mob/living/silicon/pai/user)
 		return user.translator_on

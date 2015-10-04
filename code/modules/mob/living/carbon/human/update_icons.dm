@@ -916,27 +916,30 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(update_icons) update_icons()
 
 /mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
-	overlays_standing[TAIL_LAYER] = null
-	var/icon/ICON
-	update_unicorn_verbs()
-	if(species.tail)
+	overlays_standing[TAIL_LAYER] = null//Уровень хвоста обнуляется
+	update_unicorn_verbs()//Обновление списка вербов заклинаний
+	if(species.tail)//Если есть рог или крылья
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
-			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			var/icon/ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 			if(species.name == "Unicorn")
 				if(l_hand || r_hand || switch_ulight || switch_ulight_short)
 					var/icon/aura = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = "unicorn_light")
 					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 					ICON.Blend(aura, ICON_OVERLAY)
+					overlays_standing[TAIL_LAYER] = image(ICON)
 	//Pony tail
-	var/datum/sprite_accessory/ptailstyle = ptail[ptail_style]
 	if(species.flags)
+		var/datum/sprite_accessory/ptailstyle = ptail[ptail_style] //из глобального листа берется нужная прическа
 		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
 		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
-		else 		ICON = p_tail
+		if(overlays_standing[HAIR_LAYER])
+			var/icon/ICON = overlays_standing[HAIR_LAYER]
+			ICON.Blend(p_tail, ICON_OVERLAY)
+			overlays_standing[HAIR_LAYER] = image(ICON)
+		else 		overlays_standing[HAIR_LAYER] = image(p_tail)
 
-	overlays_standing[R_HAND_LAYER] = image(ICON)
+
 
 	if(update_icons)
 		update_icons()

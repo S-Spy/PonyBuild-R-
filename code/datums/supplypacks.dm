@@ -76,7 +76,7 @@ var/list/all_supply_groups = list("Operations","Security","Hospitality","Enginee
 	containername = "Farwa crate"
 	group = "Hydroponics"
 
-/datum/supply_packs/skrell
+/datum/supply_packs/alicorn
 	name = "Neaera crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
 	cost = 30
