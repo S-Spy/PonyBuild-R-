@@ -28,9 +28,9 @@
 	var/b_aura = 200
 
 	//Tail colour
-	var/r_ptail = 0
-	var/g_ptail = 0
-	var/b_ptail = 0
+	var/r_tail = 0
+	var/g_tail = 0
+	var/b_tail = 0
 
 	var/size_multiplier = 1 //multiplier for the mob's icon size
 	var/damage_multiplier = 1 //multiplies melee combat damage
@@ -41,7 +41,7 @@
 	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype
 
-	var/ptail_style = "Bald"	//Which ptail the player wants
+	var/pony_tail_style = "Bald"	//Which pony_tail the player wants
 	var/cutie_mark = 0	//Which cutie_mark the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 

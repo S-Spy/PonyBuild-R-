@@ -7,30 +7,29 @@ datum/preferences
 			else
 				gender = FEMALE
 		s_tone = random_skin_tone()
-		h_style = random_hair_style(gender, species)
-		f_style = random_facial_hair_style(gender, species)
-		randomize_hair_color("hair")
-		randomize_hair_color("facial")
+		h_style = random_style(gender, species)
+		f_style = random_style(gender, species, facial_hair_styles_list)
+		pony_tail_style = pick(pony_tail_styles_list)
+		randomize_hair_color()
 		randomize_eyes_color()
 		randomize_skin_color()
-		ptail_style = rand(1,ptail.len)
-		cutie_mark = rand(1,cutie_mark_t.len)
+		cutie_mark = pick(cutie_mark_t)
 		backbag = 2
 		age = rand(AGE_MIN,AGE_MAX)
 		if(H)
 			copy_to(H,1)
 
 
-	proc/randomize_hair_color(var/target = "hair")
+	proc/randomize_hair_color(var/target)
 		if(prob (75) && target == "facial") // Chance to inherit hair color
 			r_facial = r_hair
 			g_facial = g_hair
 			b_facial = b_hair
 			return
 
-		var/red
-		var/green
-		var/blue
+		var/red = 0
+		var/green = 0
+		var/blue = 0
 
 		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
 		switch(col)
@@ -80,6 +79,20 @@ datum/preferences
 				r_facial = red
 				g_facial = green
 				b_facial = blue
+			if("tail")
+				r_tail = red
+				g_tail = green
+				b_tail = blue
+			else
+				r_hair = red
+				g_hair = green
+				b_hair = blue
+				r_facial = red
+				g_facial = green
+				b_facial = blue
+				r_tail = red
+				g_tail = green
+				b_tail = blue
 
 	proc/randomize_eyes_color()
 		var/red
@@ -134,7 +147,7 @@ datum/preferences
 		var/green
 		var/blue
 
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
+		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino", "color")
 		switch(col)
 			if("black")
 				red = 0
@@ -168,6 +181,10 @@ datum/preferences
 				red = rand (200, 255)
 				green = rand (0, 150)
 				blue = rand (0, 150)
+			if("color")
+				red = rand (0, 255)
+				green = rand (0, 255)
+				blue = rand (0, 255)
 
 		red = max(min(red + rand (-25, 25), 255), 0)
 		green = max(min(green + rand (-25, 25), 255), 0)
@@ -249,14 +266,14 @@ datum/preferences
 			facial_s.Blend(rgb(r_facial, g_facial, b_facial), ICON_ADD)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
-		var/icon/ptail_s
-		var/datum/sprite_accessory/ptailstyle = ptail[ptail_style]
-		if(current_species.flags && ptailstyle)
-			ptail_s = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
-			ptail_s.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
+		var/icon/pony_tail_s
+		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style]
+		if(current_species.flags && pony_tailstyle)
+			pony_tail_s = new/icon("icon" = pony_tailstyle.icon, "icon_state" = "[pony_tailstyle.icon_state]_s")
+			pony_tail_s.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
 
 		var/icon/cutie_mark_s = null
-		if(cutie_mark && current_species.flags & HAS_ptail)
+		if(cutie_mark && current_species.flags & HAS_pony_tail)
 			cutie_mark_s = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = cutie_mark)
 
 		var/icon/clothes_s = null
@@ -692,8 +709,8 @@ datum/preferences
 			preview_icon.Blend(new /icon('icons/mob/eyes.dmi', "glasses"), ICON_OVERLAY)
 
 		preview_icon.Blend(eyes_s, ICON_OVERLAY)
-		if(ptail_s)
-			preview_icon.Blend(ptail_s, ICON_OVERLAY)
+		if(pony_tail_s)
+			preview_icon.Blend(pony_tail_s, ICON_OVERLAY)
 		if(cutie_mark_s)
 			preview_icon.Blend(cutie_mark_s, ICON_OVERLAY)
 		if(clothes_s)
@@ -702,6 +719,6 @@ datum/preferences
 		preview_icon_side = new(preview_icon, dir = WEST)
 
 		del(eyes_s)
-		del(ptail_s)
+		del(pony_tail_s)
 		del(cutie_mark_s)
 		del(clothes_s)

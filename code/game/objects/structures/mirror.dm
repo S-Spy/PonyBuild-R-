@@ -31,25 +31,25 @@
 		//handle facial hair (if necessary)
 		switch(alert(user, "What do you wish to change?", "De Magic Mirror of Trixie", "Hair", "Tail", "The Great and Powerful CANCEL!"))
 			if("Tail")
-				var/list/valid_ptail = list()
-				for(var/ptail_style in ptail)
-					var/datum/sprite_accessory/ptail/S = ptail[ptail_style]
+				var/list/valid_pony_tail = list()
+				for(var/pony_tail_style in pony_tail_styles_list)
+					var/datum/sprite_accessory/pony_tail/S = pony_tail_styles_list[pony_tail_style]
 					if(gender == MALE && S.gender == FEMALE)
 						continue
 					if(gender == FEMALE && S.gender == MALE)
 						continue
 					if(!(H.species.name in S.species_allowed))
 						continue
-					valid_ptail += ptail_style
+					valid_pony_tail += pony_tail_style
 
-				var/new_style = input(user, "Select a tail style", "Grooming")  as null|anything in valid_ptail
+				var/new_style = input(user, "Select a tail style", "Grooming")  as null|anything in valid_pony_tail
 				if(userloc != H.loc) return
 				if(new_style)
-					H.ptail_style = new_style
-				H.update_tail_showing()
+					H.pony_tail_style = new_style
+				H.update_horn_showing()
 
-		//var/global/list/ptail
-		//datum/sprite_accessory/ptail
+		//var/global/list/pony_tail
+		//datum/sprite_accessory/pony_tail
 			if("Hair")
 				if(H.gender == MALE)
 					var/list/species_facial_hair = list()

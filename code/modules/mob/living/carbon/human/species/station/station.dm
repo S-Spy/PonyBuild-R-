@@ -10,7 +10,7 @@
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most pony \
 	worlds tumultous at best."
 
-	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_ptail | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_pony_tail | HAS_EYE_COLOR
 	brute_mod = 0.9
 
 
@@ -39,7 +39,7 @@
 	//heat_level_2 = 480 //Default 400
 	//heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#34AF10"
 
@@ -89,7 +89,7 @@
 
 	primitive = /mob/living/carbon/monkey/pegasus
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR | HAS_EYE_COLOR// | HAS_WINGS
+	flags = CAN_JOIN | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR | HAS_EYE_COLOR// | HAS_WINGS
 
 	//flesh_color = "#AFA59E"
 	//base_color = "#333333"
@@ -117,7 +117,7 @@
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR
 
 	//flesh_color = "#8CD7A3"
 	//blood_color = "#1D2CBF"

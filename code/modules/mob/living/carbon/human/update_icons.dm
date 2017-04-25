@@ -377,14 +377,22 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			stand_icon.Blend(new/icon('icons/mob/pony_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
-	if(cutie_mark && species.flags & HAS_ptail)
+	if(cutie_mark && species.flags & HAS_pony_tail)
 		stand_icon.Blend(new /icon('icons/mob/pony.dmi', cutie_mark), ICON_OVERLAY)
+
+
+
+	//Pony tail
+	if(species.flags & HAS_pony_tail)//Если есть флаг хвоста
+		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа берется нужная прическа
+		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
+		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
+		stand_icon.Blend(p_tail, ICON_OVERLAY)
+
+	update_horn_showing(0)
 
 	if(update_icons)
 		update_icons()
-
-	//tail
-	update_tail_showing(0)
 
 //HAIR OVERLAY
 /mob/living/carbon/pony/proc/update_hair(var/update_icons=1)
@@ -517,7 +525,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_pockets(0)
 	update_fire(0)
 	update_surgery(0)
-	update_tail_showing(0)
+	update_horn_showing(0)
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -783,13 +791,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		overlays_standing[SUIT_LAYER]	= standing
 
-		update_tail_showing(0)
-
 	else
 		overlays_standing[SUIT_LAYER]	= null
 
-		update_tail_showing(0)
 
+	update_horn_showing(0)
 	update_collar(0)
 
 	if(update_icons)   update_icons()
@@ -913,9 +919,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_standing[L_HAND_LAYER] = null
 
-	if(update_icons) update_icons()
+	if(update_icons)
+		update_icons()
 
-/mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
+/mob/living/carbon/pony/proc/update_horn_showing(var/update_icons=1)
 	overlays_standing[TAIL_LAYER] = null//Уровень хвоста обнуляется
 	update_unicorn_verbs()//Обновление списка вербов заклинаний
 	if(species.tail)//Если есть рог или крылья
@@ -928,21 +935,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 					ICON.Blend(aura, ICON_OVERLAY)
 					overlays_standing[TAIL_LAYER] = image(ICON)
-	//Pony tail
-	if(species.flags)
-		var/datum/sprite_accessory/ptailstyle = ptail[ptail_style] //из глобального листа берется нужная прическа
-		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
-		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		if(overlays_standing[HAIR_LAYER])
-			var/icon/ICON = overlays_standing[HAIR_LAYER]
-			ICON.Blend(p_tail, ICON_OVERLAY)
-			overlays_standing[HAIR_LAYER] = image(ICON)
-		else 		overlays_standing[HAIR_LAYER] = image(p_tail)
-
-
 
 	if(update_icons)
 		update_icons()
+
 
 
 //Adds a collar overlay above the helmet layer if the suit has one

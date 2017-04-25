@@ -44,7 +44,7 @@ var/global/list/uspell_datums = list()
 			SetLuminosity(luminosity+3)
 			nutrition -= 6
 			switch_ulight = 1
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 50, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 1)
@@ -55,7 +55,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[1] = 1
 				spawn(250)	cooldown[1]=0
-		update_tail_showing()
+		update_horn_showing()
 
 	light()//OK
 		set category = "Unicorn"
@@ -73,7 +73,7 @@ var/global/list/uspell_datums = list()
 			SetLuminosity(luminosity+1)
 			nutrition -= 4
 			switch_ulight = 1
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 90, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(20)
 				if(switch_ulight == 2)
@@ -84,7 +84,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[2] = 1
 				spawn(100)	cooldown[2] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	clean()//OK
 		set name = "Cleaner"
@@ -96,7 +96,7 @@ var/global/list/uspell_datums = list()
 		cooldown[3] = 1
 		spawn(1000)	cooldown[3] = 0
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		var/obj/item/weapon/reagent_containers/spray/cleaner/H = new/obj/item/weapon/reagent_containers/spray/cleaner
 		H.Spray_at(usr, usr, 1)
@@ -104,7 +104,7 @@ var/global/list/uspell_datums = list()
 		del H
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	tele_glass()//OK
 		set name = "Telekinetic glass"
@@ -136,7 +136,7 @@ var/global/list/uspell_datums = list()
 			UnarmedAttack(G)
 			nutrition -= 5
 			switch_ulight = 6
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 180, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 6)
@@ -149,7 +149,7 @@ var/global/list/uspell_datums = list()
 				cooldown[6] = 1
 				spawn(200)	cooldown[6] = 0
 				switch_ulight = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	dist_light()//OK
 		set name = "Distance light"
@@ -173,7 +173,7 @@ var/global/list/uspell_datums = list()
 			L.Move(locate(x, y, z))
 			nutrition -= 8
 			switch_ulight = 7
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 40, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 7)
@@ -184,7 +184,7 @@ var/global/list/uspell_datums = list()
 				cooldown[7] = 1
 				spawn(300)	cooldown[7] = 0
 				switch_ulight = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	hair_transform(var/mob/living/carbon/pony/P in view(1))//OK
 		set name = "Morph"
@@ -194,7 +194,7 @@ var/global/list/uspell_datums = list()
 			usr << "You can't use this spell!"
 			return
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 		cooldown[8] = 1
 		spawn(1300)	cooldown[8] = 0
 		sleep(10)
@@ -214,7 +214,7 @@ var/global/list/uspell_datums = list()
 			if(!(P.species.name in H.species_allowed))	continue
 			valid_hair += H.name
 		for(var/path in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
-			var/datum/sprite_accessory/ptail/H = new path()
+			var/datum/sprite_accessory/pony_tail/H = new path()
 			if(P.gender == MALE && H.gender == FEMALE)	continue
 			if(P.gender == FEMALE && H.gender == MALE)	continue
 			if(!(P.species.name in H.species_allowed))	continue
@@ -223,11 +223,11 @@ var/global/list/uspell_datums = list()
 		nutrition -= 23
 		if(prob(concentration(5)))	P.f_style = pick(valid_facial)
 		if(prob(concentration(5)))	P.h_style = pick(valid_hair)
-		if(prob(concentration(5)))	P.ptail_style = pick(valid_tail)
+		if(prob(concentration(5)))	P.pony_tail_style = pick(valid_tail)
 		P.regenerate_icons()
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	hot()//OK
 		set name = "Heat"
@@ -246,14 +246,14 @@ var/global/list/uspell_datums = list()
 			switch_ulight_short = 1
 			cooldown[9] = 1
 			spawn(210)	cooldown[9] = 0
-			update_tail_showing()
+			update_horn_showing()
 			sleep(10)
 			if(istype(target, /obj/item/weapon/reagent_containers/food))	target:heat_food(target:heating+1)
 			else	target:bodytemperature += 5
 			nutrition -= 22
 			sleep(5)
 			switch_ulight_short = 0
-			update_tail_showing()
+			update_horn_showing()
 
 	concentrate()
 		set name = "High concentration"
@@ -269,7 +269,7 @@ var/global/list/uspell_datums = list()
 				return
 			nutrition -= 12
 			switch_ulight = 10
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 300, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 10)
@@ -279,7 +279,7 @@ var/global/list/uspell_datums = list()
 				cooldown[10] = 1
 				spawn(700)	cooldown[10] = 0
 				switch_ulight = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	fruit_transform(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in view(1))//OK
 		set name = "Organic transformation"
@@ -289,7 +289,7 @@ var/global/list/uspell_datums = list()
 			usr << "You can't use this spell!"
 			return
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 		cooldown[11] = 1
 		spawn(900)	cooldown[11] = 0
 		sleep(10)
@@ -298,7 +298,7 @@ var/global/list/uspell_datums = list()
 		nutrition -= 26
 		sleep(5)
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 
 	cold(var/mob/living/carbon/pony/P in view(1))//OK
 		set name = "Cooling"
@@ -310,13 +310,13 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[12] = 1
 		spawn(250)	cooldown[12] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		P.bodytemperature -= 10
 		nutrition -= 13
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	health_scan()//OK
 		set name = "Health scan"
@@ -328,7 +328,7 @@ var/global/list/uspell_datums = list()
 		cooldown[4] = 1
 		spawn(200)	cooldown[4] = 0
 		switch_ulight_short = 4
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		var/list/mobs = list()
 		for(var/mob/living/carbon/M in view(1))
@@ -340,7 +340,7 @@ var/global/list/uspell_datums = list()
 		del H
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	blood_dam(var/mob/living/carbon/pony/P in view(1))
 		set name = "Heel bleeding"
@@ -352,7 +352,7 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[13] = 1
 		spawn(700)	cooldown[13] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		var/obj/item/stack/medical/bruise_pack/B = new/obj/item/stack/medical/bruise_pack
 		B.attack(P, usr)
@@ -360,7 +360,7 @@ var/global/list/uspell_datums = list()
 		del B
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	notpain(var/mob/living/carbon/pony/P in view(1))
 		set name = "Pain relief"
@@ -372,14 +372,14 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[14] = 1
 		spawn(700)	cooldown[14] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		P.reagents.add_reagent("tramadol", 3)
 		P.reagents.add_reagent("adrenalin", 1)
 		nutrition -= 21
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	light_heel(var/mob/living/carbon/P in view(1))//ћожно добавить настройку дл€ аликорнов
 		set name = "Light heel"
@@ -391,13 +391,13 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[12] = 1
 		spawn(1200)	cooldown[15] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		P.apply_damages(-5, -5)
 		nutrition -= 33
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	organ_scan(var/mob/living/carbon/pony/P in view(1))
 		set name = "Organ analyze"
@@ -410,12 +410,12 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[16] = 1
 		spawn(600)	cooldown[16] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		nutrition -= 27
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	crowbar()
 		set name = "Telekinetic crowbar"
@@ -437,7 +437,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 17
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 40, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 17)
@@ -448,7 +448,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[17] = 1
 				spawn(150) cooldown[17] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 
 	screwdriver()
@@ -471,7 +471,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 18
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 40, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 18)
@@ -482,7 +482,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[18] = 1
 				spawn(150) cooldown[18] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	cut()
 		set name = "Telekinetic cut"
@@ -504,7 +504,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 19
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 40, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 19)
@@ -515,7 +515,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[19] = 1
 				spawn(150) cooldown[19] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	cyber_scan()//OK
 		set name = "Cyber scan"
@@ -531,7 +531,7 @@ var/global/list/uspell_datums = list()
 		cooldown[5] = 1
 		spawn(250)	cooldown[5] = 0
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		var/obj/item/device/robotanalyzer/H = new/obj/item/device/robotanalyzer
 		H.attack(M, usr)
@@ -539,7 +539,7 @@ var/global/list/uspell_datums = list()
 		del H
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 
 	brush()
@@ -563,7 +563,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 20
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 1800, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 20)
@@ -574,7 +574,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[20] = 1
 				spawn(300) cooldown[20] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	teleport()
 		set name = "Teleport"
@@ -586,7 +586,7 @@ var/global/list/uspell_datums = list()
 		var/list/Li = list("Record", "Teleport")
 		var/target = input(usr, "Choose mod your teleportation", "Mod")  as null|anything in Li
 		switch_ulight_short = 1
-		update_tail_showing()
+		update_horn_showing()
 		var mod = 0
 		//if(record_loc)	mod = sqrt((x-record_loc.x)^2 + (y-record_loc.y)^2)*sqrt((z-record_loc.z)^2)
 		sleep(10)
@@ -599,7 +599,7 @@ var/global/list/uspell_datums = list()
 		else usr << "You can't use this spell!" //“ут функци€ отказа
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	mag_boots()
 		set name = "Telekinetic Anchoring"
@@ -616,7 +616,7 @@ var/global/list/uspell_datums = list()
 				return
 			nutrition -= 11
 			switch_ulight = 22
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 100, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 22)
@@ -626,7 +626,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[2] = 1
 				spawn(600) cooldown[22] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	cell_power()
 		set name = "Charge of power"
@@ -645,13 +645,13 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[23] = 1
 		spawn(750)	cooldown[23] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(10)
 		target.charge += min(500, target.maxcharge-target.charge)
 		nutrition -= 30
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	welding()
 		set name = "Welding heating"
@@ -673,7 +673,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 24
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 240, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 24)
@@ -684,7 +684,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[24] = 1
 				spawn(1000) cooldown[24] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	hoofcufs()
 		set name = "Telekinetic hoofcufs"
@@ -711,7 +711,7 @@ var/global/list/uspell_datums = list()
 			del I
 			nutrition -= 8
 			switch_ulight = 25
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 240, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 25)
@@ -722,7 +722,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[25] = 1
 				spawn(250) cooldown[25] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	disarm()
 		set name = "Flash disarm"
@@ -740,10 +740,10 @@ var/global/list/uspell_datums = list()
 		switch_ulight_short = 1
 		cooldown[26] = 1
 		spawn(150)	cooldown[26] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 
 
@@ -760,10 +760,10 @@ var/global/list/uspell_datums = list()
 		nutrition -= 13
 		cooldown[27] = 1
 		spawn(240)	cooldown[27] = 0
-		update_tail_showing()
+		update_horn_showing()
 		sleep(5)
 		switch_ulight_short = 0
-		update_tail_showing()
+		update_horn_showing()
 
 
 
@@ -775,7 +775,7 @@ var/global/list/uspell_datums = list()
 		if(switch_ulight == 28)
 			switch_ulight = 0
 			cooldown[28] = 1
-			update_tail_showing()
+			update_horn_showing()
 			spawn(300) cooldown[28] = 0
 		else
 			if(prob(concentration(2)) || nutrition < 30 || switch_ulight != 0 || cooldown[28] == 1)
@@ -783,7 +783,7 @@ var/global/list/uspell_datums = list()
 				return
 			nutrition -= 15
 			switch_ulight = 28
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 15, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 28)
@@ -792,9 +792,9 @@ var/global/list/uspell_datums = list()
 			if(switch_ulight == 28)
 				switch_ulight = 0
 				cooldown[28] = 1
-				update_tail_showing()
+				update_horn_showing()
 				spawn(300) cooldown[28] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	party_shield()
 		set name = "Body shield"
@@ -821,7 +821,7 @@ var/global/list/uspell_datums = list()
 			S.icon = I
 			del I
 			switch_ulight = 29
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1, i < 200, i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 29)
@@ -832,7 +832,7 @@ var/global/list/uspell_datums = list()
 				switch_ulight = 0
 				cooldown[29] = 1
 				spawn(800) cooldown[29] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 	hoof_shield()//OK
 		set name = "Shield"
@@ -859,7 +859,7 @@ var/global/list/uspell_datums = list()
 			C.Move(locate(usr))
 			C.attack_hand(usr)
 			switch_ulight = 30
-			update_tail_showing()
+			update_horn_showing()
 			for(i=1; i < 50; i++) //ѕостепенное отн€тие сытности дл€ долгосрочных заклинаний
 				sleep(10)
 				if(switch_ulight == 30)
@@ -870,7 +870,7 @@ var/global/list/uspell_datums = list()
 				del C
 				cooldown[30] = 1
 				spawn(900) cooldown[30] = 0
-		update_tail_showing()
+		update_horn_showing()
 
 
 /mob/living/carbon/pony/proc/update_unicorn_verbs()

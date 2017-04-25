@@ -1,41 +1,29 @@
-proc/random_hair_style(gender, species = "Earthpony")
-	var/h_style = "Bald"
+proc/random_style(gender, species="Earthpony", var/list/styles_list=hair_styles_list)
+	var/style = "Short Hair"
+	if(styles_list == facial_hair_styles_list)	style = "Shaved"
+	if(styles_list == pony_tail_styles_list)	style = "Short Tail"
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+	var/list/valid_styles = list()
+	for(var/currentstyle in styles_list)
+		var/datum/sprite_accessory/S = styles_list[currentstyle]
 		if(gender == MALE && S.gender == FEMALE)
 			continue
 		if(gender == FEMALE && S.gender == MALE)
 			continue
 		if( !(species in S.species_allowed))
 			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+		valid_styles[currentstyle] = styles_list[currentstyle]
 
-	if(valid_hairstyles.len)
-		h_style = pick(valid_hairstyles)
+	if(valid_styles.len)
+		style = pick(valid_styles)
 
-	return h_style
+	return style
 
-proc/random_facial_hair_style(gender, species = "Earthpony")
-	var/f_style = "Shaved"
-
-	var/list/valid_facialhairstyles = list()
-	for(var/facialhairstyle in facial_hair_styles_list)
+/*proc/random_facial_hair_style(gender, species = "Earthpony")
 		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
 
-		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-	if(valid_facialhairstyles.len)
-		f_style = pick(valid_facialhairstyles)
-
-		return f_style
+		var/datum/sprite_accessory/S = facial_hair_styles_list[ponytailstyle]
+*/
 
 proc/random_name(gender, species = "Earthpony")
 

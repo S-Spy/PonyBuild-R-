@@ -114,6 +114,8 @@
 	unarmed_attacks = list()
 	for(var/u_type in unarmed_types)
 		unarmed_attacks += new u_type()
+	//base_color = ////////////////////////////////////-------------------------------------------------------------------
+	//tail = pick(
 
 /datum/species/proc/get_environment_discomfort(var/mob/living/carbon/pony/H, var/msg_type)
 

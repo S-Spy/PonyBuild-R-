@@ -43,7 +43,7 @@
 ////////////////////////////
 */
 
-/datum/sprite_accessory/ptail
+/datum/sprite_accessory/pony_tail
 
 	icon = 'icons/mob/pony_face.dmi'	  // default icon for all pony tails
 
