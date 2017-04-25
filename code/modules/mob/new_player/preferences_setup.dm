@@ -31,7 +31,7 @@ datum/preferences
 		var/green = 0
 		var/blue = 0
 
-		var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
+		var/col = pick ("punk", "black", "wheat")//"blonde", "chestnut", "copper", "brown", "old", "punk")
 		switch(col)
 			if("blonde")
 				red = 255
