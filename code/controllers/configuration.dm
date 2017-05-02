@@ -521,7 +521,7 @@
 				if("tickcomp")
 					Tickcomp = 1
 
-				if("ponys_need_surnames")
+				if("humans_need_surnames")
 					ponys_need_surnames = 1
 
 				if("tor_ban")

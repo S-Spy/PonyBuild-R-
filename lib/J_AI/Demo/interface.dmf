@@ -1,0 +1,173 @@
+macro "macro"
+	elem 
+		name = "North+REP"
+		command = ".north"
+		is-disabled = false
+	elem 
+		name = "South+REP"
+		command = ".south"
+		is-disabled = false
+	elem 
+		name = "East+REP"
+		command = ".east"
+		is-disabled = false
+	elem 
+		name = "West+REP"
+		command = ".west"
+		is-disabled = false
+	elem 
+		name = "Northeast+REP"
+		command = ".northeast"
+		is-disabled = false
+	elem 
+		name = "Northwest+REP"
+		command = ".northwest"
+		is-disabled = false
+	elem 
+		name = "Southeast+REP"
+		command = ".southeast"
+		is-disabled = false
+	elem 
+		name = "Southwest+REP"
+		command = ".southwest"
+		is-disabled = false
+	elem 
+		name = "Center+REP"
+		command = ".center"
+		is-disabled = false
+
+
+menu "menu"
+	elem 
+		name = "&Quit"
+		command = ".quit"
+		category = "&File"
+		is-checked = false
+		can-check = false
+		group = ""
+		is-disabled = false
+		saved-params = "is-checked"
+
+
+window "default"
+	elem "default"
+		type = MAIN
+		pos = 246,0
+		size = 762x489
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #004000
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		on-size = ""
+		title = ""
+		titlebar = true
+		statusbar = true
+		can-close = true
+		can-minimize = true
+		can-resize = false
+		is-pane = false
+		is-minimized = false
+		is-maximized = false
+		can-scroll = none
+		icon = 'Demo\\window.dmi'
+		image = ""
+		image-mode = stretch
+		keep-aspect = false
+		transparent-color = none
+		alpha = 255
+		macro = "macro"
+		menu = ""
+		on-close = ""
+	elem "output1"
+		type = OUTPUT
+		pos = 486,278
+		size = 271x205
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = false
+		right-click = false
+		saved-params = "max-lines"
+		on-size = ""
+		link-color = #0000ff
+		visited-color = #ff00ff
+		style = ""
+		enable-http-images = false
+		max-lines = 1000
+		image = ""
+	elem "info1"
+		type = INFO
+		pos = 487,5
+		size = 272x272
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = #ffffff
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = line
+		drop-zone = true
+		right-click = false
+		saved-params = ""
+		on-size = ""
+		highlight-color = #00ff00
+		tab-text-color = #80ff80
+		tab-background-color = #002d16
+		tab-font-family = ""
+		tab-font-size = 0
+		tab-font-style = ""
+		allow-html = true
+		multi-line = true
+		on-show = ""
+		on-hide = ""
+		on-tab = ""
+	elem "map1"
+		type = MAP
+		pos = 3,4
+		size = 480x480
+		anchor1 = none
+		anchor2 = none
+		font-family = ""
+		font-size = 0
+		font-style = ""
+		text-color = #000000
+		background-color = none
+		is-visible = true
+		is-disabled = false
+		is-transparent = false
+		is-default = true
+		border = none
+		drop-zone = true
+		right-click = false
+		saved-params = "icon-size"
+		on-size = ""
+		icon-size = 0
+		text-mode = false
+		on-show = ""
+		on-hide = ""
+

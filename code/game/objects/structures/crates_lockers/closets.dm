@@ -92,7 +92,6 @@
 
 	src.icon_state = src.icon_closed
 	src.opened = 0
-	if(istype(src, /obj/structure/closet/groowe))	src.welded = 1
 	playsound(src.loc, close_sound, 15, 1, -3)
 	density = 1
 	return 1
@@ -382,11 +381,13 @@
 			return
 		if(istype(W, /obj/item/weapon/shovel))
 			src.toggle(user)      //act like they were dragged onto the closet
+			src.welded = 1
 		else
 			usr.drop_item()
 			if(W)
 				W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/shovel))
+		src.welded = 0
 		src.toggle(user)
 		src.update_icon()
 		for(var/mob/M in viewers(src))

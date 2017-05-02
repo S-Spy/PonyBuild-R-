@@ -516,6 +516,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_pockets(0)
 	update_fire(0)
 	update_surgery(0)
+	update_tail_showing()
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -916,13 +917,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
 	overlays_standing[TAIL_LAYER] = null
 	var/icon/ICON
+	update_unicorn_verbs()
 	if(species.tail)
-		update_unicirn_verbs()
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
 			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 			if(species.name == "Unicorn")
-				if(l_hand || r_hand || switch_ulight == 1)
+				if(l_hand || r_hand || switch_ulight || switch_ulight_short)
 					var/icon/aura = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = "unicorn_light")
 					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 					ICON.Blend(aura, ICON_OVERLAY)
@@ -934,7 +935,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
 		else 		ICON = p_tail
 
-	overlays_standing[TAIL_LAYER] = image(ICON)
+	overlays_standing[R_HAND_LAYER+0.1] = image(ICON)
 
 	if(update_icons)
 		update_icons()

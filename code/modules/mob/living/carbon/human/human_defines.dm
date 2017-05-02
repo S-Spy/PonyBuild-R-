@@ -41,7 +41,7 @@
 	var/age = 30		//Player's age (pure fluff)
 	var/b_type = "A+"	//Player's bloodtype
 
-	var/ptail_style = "Short Tail"	//Which ptail the player wants
+	var/ptail_style = "Bald"	//Which ptail the player wants
 	var/cutie_mark = 0	//Which cutie_mark the player wants.
 	var/backbag = 2		//Which backpack type the player has chosen. Nothing, Satchel or Backpack.
 

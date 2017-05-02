@@ -67,6 +67,10 @@
 	update_adjacent()
 	..()
 
+/obj/structure/table/Bump(mob/user)
+	if(ispony(user) && user:m_intent == "fly")	user.Move(locate(src.x, src.y, src.z))
+	..()
+
 /obj/structure/table/update_icon()
 
 	if(health > 100)

@@ -61,6 +61,10 @@ var/list/stone_text_list = list("(Надпись стерлась под влиянием времени)",
 		stone_text = stone_text_list[rand(1,stone_text_list.len)]
 		if(stone_text != stone_text_list[1])
 			stone_text_list -= stone_text
+	attack_hand(mob/user as mob)
+		user << browse(stone_text, "window=name; size=200x80")
+		..()
+
 
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'

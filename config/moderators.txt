@@ -1,3 +1,14 @@
-; just add the ckey (lowercase) of every moderator on a separate line
-; lines starting with ; are comments and will be ignored
+# just add the ckey (lowercase) of every moderator on a separate line. First ckey - master_admin of forum. Next - just moderators
+# lines starting with # are comments and will be ignored
+# Просто добавь key с учетом регистра, чтобы человек получил ранг модератор на форуме
+# Первый key является главным администратором форума
+# Комментарий следует начать с #
+
+# MASTER_KEY
+S_Spy
+
+# Just Moderators of ingame forum
+Sosiskoed
+Dudeman1011
+MyGhosst
 

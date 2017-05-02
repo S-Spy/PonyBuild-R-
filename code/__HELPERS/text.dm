@@ -6,8 +6,7 @@
  *			Text searches
  *			Text modification
  *			Misc
- */
-
+*/
 
 /*
  * SQL sanitization
@@ -33,8 +32,17 @@
 			index = findtext(t, char)
 	return t
 
+/*
+proc/sanitize_russian(var/msg)
+	var/index = findtext(msg, "ÿ")
+	while(index)
+		msg = copytext(msg, 1, index) + "&#255;" + copytext(msg, index+1)
+		index = findtext(msg, "ÿ")
+	return msg
+*/
+
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ÿ"="ß"))
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
 	return t

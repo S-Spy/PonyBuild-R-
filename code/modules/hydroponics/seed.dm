@@ -103,8 +103,8 @@
 		if(istype(target, /mob/living/simple_animal/mouse))
 			new /obj/effect/decal/remains/mouse(get_turf(target))
 			del(target)
-		else if(istype(target, /mob/living/simple_animal/pegasus))
-			new /obj/effect/decal/remains/pegasus(get_turf(target))
+		else if(istype(target, /mob/living/simple_animal/lizard))
+			new /obj/effect/decal/remains/lizard(get_turf(target))
 			del(target)
 		return
 
