@@ -746,7 +746,7 @@ var/list/admin_verbs_mentor = list(
 	if(!istype(M, /mob/living/carbon/pony))
 		usr << "\red You can only do this to ponys!"
 		return
-	switch(alert("Are you sure you wish to edit this mob's appearance? Skrell, Unicorn, Vox and Pegasus can result in unintended consequences.",,"Yes","No"))
+	switch(alert("Are you sure you wish to edit this mob's appearance? Alicorn, Unicorn, Vox and Pegasus can result in unintended consequences.",,"Yes","No"))
 		if("No")
 			return
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
@@ -767,7 +767,7 @@ var/list/admin_verbs_mentor = list(
 		M.g_eyes = hex2num(copytext(new_eyes, 4, 6))
 		M.b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
-	var/new_skin = input("Please select body color. This is for Pegasus, Unicorn, and Skrell only!", "Character Generation") as color
+	var/new_skin = input("Please select body color. This is for Pegasus, Unicorn, and Alicorn only!", "Character Generation") as color
 	if(new_skin)
 		M.r_skin = hex2num(copytext(new_skin, 2, 4))
 		M.g_skin = hex2num(copytext(new_skin, 4, 6))

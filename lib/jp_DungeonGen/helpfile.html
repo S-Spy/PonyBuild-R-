@@ -1,0 +1,445 @@
+<html>
+<head>
+	<title>jp_DungeonGenerator helpfile</title>
+</head>
+<body>
+	<h2>Table of contents</h2>
+	<p>
+		<a href="#intro">Introduction</a><br/>
+		<a href="#algo">Algorithm</a><br/>
+		<a href="#how">How to use</a><br/>
+		<a href="#ref">Object reference:</a><br/>
+		....	<a href="#gen">jp_DungeonGenerator</a><br/>
+		....	<a href="#reg">jp_DungeonRegion</a><br/>
+		....	<a href="#room">jp_DungeonRoom</a><br/>
+		<a href="#custom">Making your own rooms</a><br/>
+		<a href="#preexist">Building dungeons onto other dungeons</a><br/>
+	</p>
+	<h2><a name="intro">Introduction</a></h2>
+	<p>
+		jp_DungeonGenerator is a library for procedurally generating, surprise surprise, dungeons. The random number generator is used as the input. Functionally, this means that the library can be used to generate arbitrary dungeons, without having to map them out yourself.<br/>
+		<br/>
+		This helpfile explains how the generator works and how to use it. Those two concepts are reasonably linked - it is important that you understand the basics of the algorithm, or you won't be able to set parameters appropriately, nor will you be able to create your own rooms, which is important for generating interesting dungeons.<br/>
+		<br/>
+		As a final note, before we begin, feel free to pillage this library for any code you think may be useful, and feel free to modify it - even re-release modified versions. However, I do ask that you credit me in any work that uses this library, or a modified version of it. Thank you.<br/>
+		--Jp
+	</p>
+
+	<h2><a name="algo">Algorithm</a></h2>
+	<p>
+		The algorithm used in jp_DungeonGenerator ensures that all squares placed within the dungeon can be reached from any other square if you move enough times - no square that is placed should be 'blocked' or otherwise unreachable. This guarantee can only be made if you respect the assumptions of the generator, however - if you don't, bad things happen. These assumptions will be elaborated upon in the relevant places in this document. To start with, the area that the generator is instructed to operate over must be composed entirely of 'wall' turfs.<br/>
+		<br/>
+		To the actual algorithm: It runs in three steps. The important (for now) parameters are:
+		<ul>
+		<li>numrooms - The number of rooms to place on the map</li>
+		<li>walltypes - The turfs that are considered 'walls' for the purpose of the generator</li>
+		<li>floortype - The turf used for the floor of rooms and corridors</li>
+		<li>area - The area that the generator operates over. It won't touch any turfs outside this area</li>
+		<li>extrapaths - The number of 'extra' paths (not required for reachability) to place</li>
+		<li>rooms - The list of rooms that the generator can place</li>
+		</ul>
+		<br/>
+		The first step is to place rooms in the dungeon. The generator selects 'numrooms' rooms from the list of rooms it is allowed to create, and places them in the area specified, ensuring that they do not overlap. Rooms are specified by a centre turf and a size - they are allowed to modify any turf within range(centre, size). They can be anything from a simple square to a maze to an amorphous blob. In fact, you can create your own rooms and ask the generator to place them - this is covered later on in this document.<br/>
+		<br/>
+		After placing rooms, the generator attempts to ensure reachability, by connecting all the rooms together with paths. The rooms are turned into 'regions', which have a set of internal turfs, and a set of border turfs. The generator selects two regions, and then attempts to draw a path between them, using only turfs in the border turfs lists as endpoints, and not going through any border turfs. If a path can be found, it is drawn, and the two regions are merged into one - the border and internal turfs lists are updated, including the turfs in the path between the two rooms. This goes on until only one region is left.<br/>
+		<br/>
+		The dungeon now consists of a number of rooms, linked with paths. However, the room structure forms a tree - there's only one way to get to any room. The next step adds cycles, by attempting to draw 'extra' paths in the one remaining region. A random start point is selected from its list of border turfs, and the path is then expanded until it hits a suitable endpoint and ends there. Once all the extra paths have been drawn, the dungeon is complete.<br/>
+		<br/>
+		This is a reasonably simplified description of the algorithm, leaving out many of the little quirks required to make it actually functional. These will be explained where relevant in the rest of the document.
+	</p>
+	<h2><a name="how">How to Use</a></h2>
+	<p>
+		This section focuses on how to actually use the generator. The generator consists of several objects:
+		<ul>
+		<li>jp_DungeonGenerator</li>
+		<li>jp_DungeonRegion</li>
+		<li>jp_DungeonRoom</li>
+		</ul>
+		<br/>
+		In order to use the generator, you create an object of type /jp_DungeonGenerator. This object does all the housekeeping, as well as actually drawing the dungeon, using the other two objects as required.<br/>
+		<br/>
+		Once you have a /jp_DungeonGenerator, you then need to fill in the various parameters used for dungeon generation. Each parameter is explained in depth in the reference for the object. The following parameters <i>must</i> be filled in:
+		<ul>
+		<li>corner1/corner2</li>
+		<li>allowedRooms</li>
+		<li>floortype</li>
+		<li>walltype</li>
+		<li>numrooms</li>
+		<li>numextrapaths</li>
+		<li>room max/min size</li>
+		<li>min/max path/longpath length</li>
+		<li>path end chance</li>
+		<li>long path chance</li>
+		<li>do fast or accurate room placement check</li>
+		<li>use pre-existing regions when building the dungeon</li>
+		</ul>
+		<br/>
+		Don't set the variables for these parameters directly - use the various 'setter' methods defined under jp_DungeonGenerator. There are three basic /jp_DungeonRoom subclasses defined for use in simple dungeons - /jp_DungeonRoom/square, /jp_DungeonRoom/circle and /jp_DungeonRoom/cross. There are also some examples in the demo that may prove useful.<br/>
+		<br/>
+		Finally, after filling in all the parameters to your liking, call the 'generate()' method, defined under jp_DungeonGenerator. This draws the actual dungeon. It is set to background, and will take a few seconds to complete - it is probably a good idea to spawn() off the call to generating the dungeon. It might also be a good idea to write up a system for generating dungeons when few people are around, and then cache them for later use.<br/>
+		<br/>
+		After generating the dungeon, there are a few output variables defined under jp_DungeonGenerator that provide some useful information on how dungeon generation went. They are:
+		<ul>
+		<li>out_numRooms</li>
+		<li>out_numPaths</li>
+		<li>out_numLongPaths</li>
+		<li>out_error</li>
+		<li>out_time</li>
+		<li>out_region</li>
+		<li>out_rooms</li>
+		</ul>
+		<br/>
+		These are explained in the reference section, but I will note for now that the most important variable in this list is out_error - it is 0 if generation went fine, a positive number if a fatal error occured (this indicates that the dungeon is unusable), and a negative number if a non-fatal error occured (This may indicate problems, but the dungeon is probably usable).
+	</p>
+
+	<h2><a name="ref">Object reference</a></h2>
+		<h3><a name="gen">jp_DungeonGenerator</a></h3>
+			<a href="#gen_out_error">out_error</a><br/>
+			<a href="#gen_out_numlongpaths">out_numLongPaths</a><br/>
+			<a href="#gen_out_numpaths">out_numPaths</a><br/>
+			<a href="#gen_out_numrooms">out_numRooms</a><br/>
+			<a href="#gen_out_region">jp_DungeonRegion/out_region</a><br/>
+			<a href="#gen_out_rooms">list/out_rooms</a><br/>			
+			<a href="#gen_out_time">out_time</a><br/>
+			<a href="#gen_allowedrooms">set/get/add/removeAllowedRoom()</a><br/>
+			<a href="#gen_walltype">set/get/add/removeWalltype()</a><br/>
+			<a href="#gen_errstring">errString(e)</a><br/>
+			<a href="#gen_generate">generate()</a><br/>
+			<a href="#gen_getadjacent">getAdjacent(turf/t)</a><br/>
+			<a href="#gen_area">get/setArea()</a><br/>
+			<a href="#gen_accuratecheck">get/setDoAccurateRoomPlacementCheck()</a><br/>
+			<a href="#gen_extrapaths">get/setExtraPaths()</a><br/>
+			<a href="#gen_floortype">get/setFloortype()</a><br/>
+			<a href="#gen_longpathchance">get/setLongPathChance()</a><br/>
+			<a href="#gen_maxpathlength">get/set max/min Path/LongPathLength()</a><br/>
+			<a href="#gen_maximumiterations">get/setMaximumIterations()</a><br/>
+			<a href="#gen_numrooms">get/setNumRooms()</a><br/>
+			<a href="#gen_pathendchance">get/setPathEndChance()</a><br/>
+			<a href="#gen_size">get/setRoomMax/MinSize()</a><br/>
+			<a href="#gen_preexist">get/setUsePreexistingRegions()</a>
+		<p>
+
+		<p>
+			Objects of type /jp_DungeonGenerator are used to actually generate dungeons. They're used by calling various setter and getter methods to change parameters for the dungeon, and then calling generate() to actually do the magic.
+		</p>
+
+		<h4><a name="gen_out_error">out_error</a></h4>
+		The output variable out_error is set when generate() is called. Its value is 0 if the generator encountered no errors while executing, a positive number if the generator encountered a fatal error and had to stop (Generally, this means that the area used for the generator should be reset - it isn't a usable dungeon), or a negative number if the generator encountered something that <i>could</i> be an issue, but isn't necessarily fatal (In this case, the dungeon is probably usable). These are the error values that out_error can take, and their meaning:
+			<ul>
+			<li>ERROR_MAX_ITERATIONS_EXTRAPATHS = -2. Parameters were fine, but maximum iterations was reached while placing extra paths after connectivity was ensured. The dungeon should be fine, all the rooms should be reachable, but it may be less interesting. Or you may just have asked to place too many extra paths.</li>
+			<li>ERROR_MAX_ITERATIONS_ROOMS = -1. Parameters were fine, but maximum iterations was reached while placing rooms. This is not necessarily a fatal error condition - it just means not all the rooms you specified may have been placed. This error may be masked by errors further along in the process.</li>
+			<li>ERROR_NO_ROOMS = 1. The allowed-rooms list is empty or bad.</li>
+			<li>ERROR_BAD_AREA = 2. The area that the generator is allowed to work on was specified badly</li>
+			<li>ERROR_NO_WALLTYPE = 3. The type used for walls wasn't specified</li>
+			<li>ERROR_NO_FLOORTYPE = 4. The type used for floors wasn't specified</li>
+			<li>ERROR_NUMROOMS_BAD = 5. The number of rooms to draw was a bad number</li>
+			<li>ERROR_NUMEXTRAPATHS_BAD = 6. The number of extra paths to draw was a bad number</li>
+			<li>ERROR_ROOM_SIZE_BAD = 7. The specified room sizes (either max or min) include a bad number</li>
+			<li>ERROR_PATH_LENGTH_BAD = 8. The specified path lengths (either max or min) include a bad number</li>
+			<li>ERROR_PATHENDCHANCE_BAD = 9. The pathend chance is a bad number</li>
+			<li>ERROR_LONGPATHCHANCE_BAD = 10. The chance of getting a long path was a bad number</li>
+			<li>ERROR_MAX_ITERATIONS_CONNECTIVITY = 11. Parameters were fine, but maximum iterations was reached while ensuring connectivity. If you get this error, there are <i>no</i> guarantees about reachability - indeed, you may end up with a dungeon where no room is reachable from any other room.</li>
+			</ul>
+		</p>
+
+		<p>
+		<h4><a name="gen_out_numlongpaths">out_numLongPaths</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. Indicates how many 'long' paths were placed in the dungeon. This includes those placed for reachability purposes.
+		</p>
+
+		<p>
+		<h4><a name="gen_out_numpaths">out_numPaths</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. Indicates how many paths were placed in the dungeon, including those placed for reachability and long paths.
+		</p>
+
+		<p>
+		<h4><a name="gen_out_numrooms">out_numRooms</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. Indicates how many rooms were placed in the dungeon.
+		</p>
+
+		<p>
+		<h4><a name="gen_out_region">jp_DungeonRegion/out_region</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. out_region is a reference to the /jp_DungeonRegion object that was left after the reachability step was finished. You can use this object to get a list of every internal turf in the dungeon, as well as to get a list of borders.
+		</p>
+
+		<p>
+		<h4><a name="gen_out_rooms">list/out_rooms</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. out_rooms is a list of references to the /jp_DungeonRoom objects that were placed in the dungeon. Could be useful for finding out what rooms were placed, what their internal turfs are, etc. etc.
+		</p>
+
+		<p>
+		<h4><a name="gen_out_time">out_time</a></h4>
+		Output variable, set when generate() is called. The value is only meaningful if generation ran to completion - that is, out_error is <=0. Indicates how long generation took, in milliseconds. Could be a funky value if generation runs over midnight, because it uses world.timeofday.
+		</p>
+
+		<p>
+		<h4><a name="gen_allowedrooms">set/get/add/removeAllowedRoom()</a></h4>
+		These procedures are used to modify the list of rooms that the generator selects from when placing rooms. They have the following signatures:
+		<ul>
+		<li>setAllowedRooms(list/l)</li>
+		<li>getAllowedRooms()</li>
+		<li>addAllowedRoom(r)</li>
+		<li>removeAllowedRoom(r)</li>
+		</ul>
+		
+		The allowed rooms list is a list of typepaths (NOT a list of objects!). It is initially null. setAllowedRooms(list/l) sets the allowed rooms list to the list l. Do not modify l after making the call - the list isn't copied, it is directly assigned. getAllowedRooms() simply returns the list of allowed rooms. This may be null. Do not modify the list, it isn't a copy. addAllowedRoom(r) adds the typepath 'r' to the list of allowed rooms. It will create the list if it does not already exist. Finally, removeAllowedRoom(r) removes a typepath from the list of allowed rooms.
+		</p>
+
+		<p>
+		<h4><a name="gen_walltype">set/get/add/removeWalltype()</a></h4>
+		These procedures are used to modify the list of typepaths that the generator considers 'walls' when making a dungeon. walltype may be a single typepath, or a list of typepaths. It is initially null. The procedures have the following signatures:
+		<ul>
+		<li>setWalltype(w)</li>
+		<li>getWalltype()</li>
+		<li>addWalltype(w)</li>
+		<li>removeWalltype(w)</li>
+		</ul>
+
+		setWalltype(w) merely sets the walltype parameter to w. If w is a typepath, that is the typepath that will be considered walls - if it is a list, that is the list of typepaths that will be considered walls. It is merely assigned, not copied - if w is a list, don't modify it after making the procedure call. getWalltype() simply returns either the typepath or the list of typepaths. This is not copied - don't modify any returned lists. addWalltype(w) adds the single typepath w to the list of types considered walls. It will create the list if it isn't currently one, and it does handle the case where walltype has been set to a typepath before addWalltype is called. Finally, removeWalltype(w) removes the type w from the list of typepaths considered walls, and it, too, handles the list/not list distinction.
+		</p>
+
+		<p>
+		<h4><a name="gen_errstring">errString(e)</a></h4>
+		errString(e) is used to get a human-readable version of the generator's error output. Call errString(out_error), and it returns a string describing the error that occured.
+		</p>
+
+		<p>
+		<h4><a name="gen_generate">generate()</a></h4>
+		The generate() procedure is where the magic happens. After setting all parameters to your liking, call generate() to actually make the map. generate() also sets all the output variables appropriately. generate() is a very slow procedure, taking several seconds to run on even fast computers, so it is probably best to avoid calling it when lag is an issue
+		</p>
+
+		<p>
+		<h4><a name="gen_getadjacent">getAdjacent(turf/t)</a></h4>
+		getAdjacent(t) returns all the turfs adjacent to the provided turf. This does <i>not</i> include diagonal movement. This procedure is useful for jp_DungeonRoom datums.
+		</p>
+
+		<p>
+		<h4><a name="gen_area">get/setArea()</a></h4>
+		These procedures are used to get and set the area that the generator should work over. getArea() returns a list containing the two corners of the area that has been specified. If the area has not been specified yet, this will be a list of nulls. setArea(turf/c1, turf/c2) sets the corners of the area that the generator can touch. c1 and c2 can be any two opposite corners.
+		</p>
+
+		<p>
+		<h4><a name="gen_accuratecheck">get/setDoAccurateRoomPlacementCheck()</a></h4>
+		These two procedures set and get the accurate-room-placement flag. When placing rooms, the generator needs to check if the room it's attempting to place will intersect with a room that's already been placed, and refuse to place it - this is the room placement check. It can do this one of two ways - a very fast method that will prevent all intersections, but can also sometimes say two rooms are intersecting when they are not (This will occur when rooms don't fill up all the space alloted to them - say, if a room is just a single turf), and a significantly slower method that won't throw false positives (The two algorithms are AABB and pixel-by-pixel detection. Even with the flag set to 'true', AABB is used as a culling step). Activating this won't slow down the generator much, but most of the time it's an unneccessary extra cost. Generally, you would only use this in conjunction with the use-pre-existing-regions flag, or if the rooms you are using consistently run into the false-positive problem.
+		</p>
+
+		<p>
+		<h4><a name="gen_extrapaths">get/setExtraPaths()</a></h4>
+		These two procedures are used to get and set the number of extra paths that the generator should place above and beyond the number required for reachability. getExtraPaths() returns the current number of extra paths, setExtraPaths(p) sets the number of extra paths to place to p.
+		</p>
+
+		<p>
+		<h4><a name="gen_floortype">get/setFloortype</a></h4>
+		These two procedures set and get the typepath used for floors in the dungeon. This will change the type used for corridors, and for some rooms. getFloortype() returns the typepath used, and setFloortype(f) sets the type used for floors to the typepath 'f'
+		</p>
+
+		<p>
+		<h4><a name="gen_longpathchance">get/setLongPathChance()</a></h4>
+		These two procedures set and get the chance that a path the generator is attempting to place will be designated a 'long' path. Paths drawn have a minimum length. You may set the minimum length for 'regular' and 'long' paths independently - this allows you to specify a dungeon that may have very short paths, but can have quite long ones, too. The chance is specified as a percentage - it must be a number between 0 and 100. getLongPathChance() gets the current chance, setLongPathChance(c) sets the long path chance to c.
+		</p>
+	
+		<p>
+		<h4><a name="gen_maxpathlength">get/set max/min Path/LongPathLength()</a></h4>
+		Get and set the maximum path length (which applies to both paths and regular paths), as well as the path minimum path length, and the long path minimum path lengths. Paths will be no longer than the maximum length, and no shorter than the minimum length. The functions provided are getMaxPathLength(), getMinPathLength(), and getMinLongPathLength(), which just get the various lengths, and setMaxPathLength(l), setMinPathLength(l), and setMinLongPathLength(l), which set the various lengths to the parameter passed.
+		</p>
+
+		<p>
+		<h4><a name="gen_maximumiterations">get/setMaximumIterations()</a></h4>
+		These two procedures let you set and get the maximum number of times the generator can spin its wheels and do nothing before it throws up its hands in disgust and gives up. When placing rooms or paths, there is a counter, initialised to 0. Every time a room or path is successfully placed, the counter is set to 0 again, whenever the generator attempts to place a room or path and it fails, the counter is incremented. If the counter reaches the maximum number of iterations, that step of generation is aborted and out_error is set appropriately. This is important to prevent infinite loops when, say, it is impossible to place the number of rooms specified in an area as large as the area specified. This is set to 100 by default. getMaximumIterations() returns the current maximum iterations allowed, setMaximumIterations(i) sets it to i.
+		</p>
+
+		<p>
+		<h4><a name="gen_numrooms">get/setNumRooms()</a></h4>
+		These two procedures set and get the number of rooms the generator will try to place in the dungeon. The generator will not necessarily manage to place them all, but it will try. getNumRooms() returns the current number, setNumRooms(n) sets it to n.
+		</p>
+		
+		<p>
+		<h4><a name="gen_pathendchance">get/setPathEndChance()</a></h4>
+		These two procedures set and get the chance for a path to end when it finds a valid endpoint. The chance is specified as a percentage, so it must be a number between 0 and 100. The reason you may not want it to be 100 is that it causes every path to be as short as it can be - which could be an issue with extra paths placed, because they'll tend to loop around back to where they came from. getPathEndChance() returns the current value, setPathEndChance(c) sets it to c.
+		</p>
+
+		<p>
+		<h4><a name="gen_size">get/setRoomMax/MinSize()</a></h4>
+		These procedures set and get the maximum and minimum size that rooms can be. Rooms cannot touch any turfs outside of range(centre, size) - so a room of size s can be, at most, 2*s+1 tiles high and wide. Rooms will not necessarily fill up all the space they are alloted - the generator will handle that case fine. Sizes will be selected uniformly from the range [minsize,maxsize] inclusive. getRoomMinSize() and getRoomMaxSize() simply get the respective sizes, and setRoomMinSize(s) and setRoomMaxSize(s) set the respective sizes to s.
+		</p>
+
+		<p>
+		<h4><a name="gen_preexist">get/setUsePreexistingRegions()</a></h4>
+		These two procedures set and get the use-pre-existing-regions flag. The generator can build 'on top of' a set of turfs that are already present in the dungeon, allowing you to make your own dungeon-segment/s (Perhaps an underground river, or castle throne room) however you want, and then link them all together with some procedurally-generated rooms and passages. When this flag is on, you can run the generator over an area that contains non-wall turfs. All the different non-wall segments will be turned into rooms, with the boundaries being the turfs that pass isWallType(). These are then fed into the generator during the room placement phase (They don't affect the count of rooms placed), and are linked together with everything else - so reachability is ensured. It's strongly suggested that you activate the do-accurate-room-placement flag when using pre-existing regions - they can be quite good at triggering some pathological behaviour in the room placement algorithms. More information on the use of the use-pre-existing-regions flag is presented later in this document, <a href="#preexist">here</a>
+		</p>
+
+		<h3><a name="reg">jp_DungeonRegion</a></h3>
+			<a href="#reg_addborder">addBorder(list/l)</a><br/>
+			<a href="#reg_addturfs">addTurfs(list/l, noborder)</a><br/>
+			<a href="#reg_getborder">getBorder()</a><br/>
+			<a href="#reg_getturfs">getTurfs()</a>
+		<p>
+			Objects of type /jp_DungeonRegion are used to represent the 'regions' in the dungeon generation algorithm. They're basically two lists of turfs - one list is the turfs contained within the region, and the other list is the list of turfs bordering the region.
+		</p>
+		<p>
+			<p>
+				<h4><a name="reg_addborder">addBorder(list/l)</a></h4>
+				Adds every turf in the passed list to the list of border turfs for this region. Will not add a turf if it's already in the list of border turfs.
+			</p>
+			<p>
+			<h4><a name="reg_addturfs">addTurfs(list/l, noborder)</a></h4>
+				Adds every turf in the passed list to the list of contained turfs for this region. Will not add a turf if it's already in the list of contained turfs. If a turf in 'l' is already in the border turfs list, it will be removed from the border turfs list. If 'noborder' is 0, this procedure will also loop through every turf adjacent to all the turfs in l, and add them to the border list if they are walls (Using the isWall() procedure defined under jp_DungeonGenerator to check for wall status).
+			</p>
+			<p>
+			<h4><a name="reg_getborder">getBorder()</a></h4>
+				Returns the list of turfs that are on the border of this region. Don't modify the list returned, it isn't a copy.
+			</p>
+			<p>
+			<h4><a name="reg_getturfs">getTurfs()</a></h4>
+				Returns the list of turfs contained by this region. Don't modify the list returned, it isn't a copy.
+			</p>
+		</p>
+		<h3><a name="room">jp_DungeonRoom</a></h3>
+			<a href=#room_border>list/border</a><br/>
+			<a href=#room_gen>jp_DungeonGenerator/gen</a><br/>
+			<a href=#room_multi>list/multiborder</a><br/>
+			<a href=#room_turfs>list/turfs</a><br/>
+			<a href=#room_walls>list/walls</a><br/>
+			<a href=#room_finalise>finalise()</a><br/>
+			<a href=#room_doesaccurate>doesAccurate()</a></br>
+			<a href=#room_doesmulti>doesMultiborder()</a></br>
+			<a href=#room_getborder>getBorder()</a><br/>
+			<a href=#room_getcentre>getCentre()</a><br/>
+			<a href=#room_getmulti>getMultiborder()</a><br/>
+			<a href=#room_getsize>getSize()</a><br/>
+			<a href=#room_getturfs>getTurfs()</a><br/>
+			<a href=#room_getwalls>getWalls()</a><br/>
+			<a href=#room_getx>getX()</a><br/>
+			<a href=#room_gety>getY()</a><br/>
+			<a href=#room_getz>getZ()</a><br/>
+			<a href=#room_new>New(s, turf/c, jp_DungeonGenerator/g)</a><br/>
+			<a href=#room_ok>ok()</a><br/>
+			<a href=#room_place>place()</a>
+		<p>
+			Objects of type /jp_DungeonRoom are used to represent the 'rooms' in the dungeon generation algorithm. They, like jp_DungeonRegions, have a list of internal turfs and border turfs, but those lists are not supposed to change while the object is around. They also have a list of 'wall' turfs, that should be considered for collision detection, but aren't suitable for building passages on.Additionally, users of the generator are intended to write new /jp_DungeonRoom datums that make different rooms. Objects of type /jp_DungeonRoom have reasonably strict rules on when they can do what that must be followed if you want the generator to behave reliably.
+		</p>
+
+		<p>
+		<h4><a name="room_border">list/border</a></h4>
+		All /jp_DungeonRoom datums have a list called 'border'. The list is initialised to an empty list when the room is created. Subclasses of /jp_DungeonRoom should fill this list up, either in New() (After calling ..()), or in place(). The list does NOT have to contain every wall turf bordering accessible turfs in the room - the only restrictions are that every border turf must be reachable from every other border turf, and that every turf in the border list should return true when passed to gen.isWall(). Additionally, any or every single one of the border turfs may be turned into floors - your room should function in that case. Finally, there must be at least one turf in the border list by the end of the place() call, or your room will crash the generator when it attempts to ensure reachability. Rooms can control where other rooms connect to them by only returning some turfs in the border list - if only one turf is ever in the border list, for example, that is the only place where a path will connect to the room. Put another way, every turf in the border list is a possible entry point to the room for a path.
+		</p>
+
+		<p>
+		<h4><a name="room_gen">jp_DungeonGenerator/gen</a></h4>
+		All /jp_DungeonRoom datums have the 'gen' variable, which is initialised to the jp_DungeonGenerator using the room when the room is created. You may use it at any point after the ..() call in New(). This is generally used for getting the typepath that should be used for floors (gen.floortype), to determine which turfs are walls (gen.isWall(t)), and to get a list of turfs adjacent to another turf (gen.getAdjacent(t))
+		</p>
+
+		<p>
+		<h4><a name="room_multi">list/multiborder</a></h4>
+		This list is used in conjunction with the 'doesMultiborder()' procedure. You don't need to fill it in, unless you return 'true' in doesMultiborder(). It is initialised to an empty list. The format is a list of lists - each entry in multiborder is a list of turfs in that specific set of border turfs. The same rules for the 'border' list apply for each individual sub-list in the multiborder list. 
+		</p>
+
+		<p>
+		<h4><a name="room_turfs">list/turfs</a></h4>
+		All /jp_DungeonRoom datums have the 'turfs' variable, which is initialised to an empty list when the room is created. Subclasses of /jp_DungeonRoom should fill this list up, either in New() (After calling ..()), or in place(). The list should contain every turf 'inside' the room, including dense ones like pillars or pools of water.
+		</p>
+
+		<p>
+		<h4><a name="room_walls">list/walls</a></h4>
+		All /jp_DungeonRoom datums have the 'walls' variable, which is initialised to an empty list when the room is created. Subclasses of /jp_DungeonRoom are not required to fill in this list, unless they return 'true' when doesAccurate() is called. It should be filled up when New() is called (After calling ..()). 'walls' is a list of turfs around the border of the room - what distinguishes it from the 'border' list is that the turfs in 'walls' are not considered to be viable entry points for passages - rooms won't be connected via these turfs. This list is important when using the accurate room placement algorithm.
+		</p>
+
+		<p>
+		<h4><a name="room_doesaccurate">doesAccurate()</a></h4>
+		This procedure is called by the generator when it wants to determine whether this room can be used for the accurate room placement algorithm. By default, it returns false. The generator defaults to the fast room placement algorithm when attempting to check two rooms that return false when doesAccurate() is called. Returning 'true' in this procedure adds some extra requirements to the room - firstly, it must fill the 'walls' list where appropriate. Secondly, it must fill in all lists - border (or multiborder), turfs, and walls - during the New() procedure (After ..() has been called).
+		</p>
+
+		<p>
+		<h4><a name="room_doesmulti">doesMultiborder()</a></h4>
+		The dungeon generator can handle rooms with multiple sets of borders - to see how this might be useful, consider a 'chasm' room, consisting of a ledge on one side, a chasm spanning the room, and a ledge on the other side. If you simply set the walls around both ledges to be border turfs, the generator will attempt to path 'through' the chasm, and not all rooms in the dungeon will be reachable. What we have here is two borders - one on each ledge. This procedure indicates whether or not the room is in this situation - it returns false by default. If it returns 'true', then you're indicating that the room does, in fact, have multiple disjoint sets of borders. In that case, you have to fill in the 'multiborder' list, in addition to the 'border' list (Which should just be all the turfs in the multiborder list). Another use multiborder functionality is to ensure that a room has a given number of exits - if you select two turfs on opposite sides of the room and put them in different border lists, then you'll get a path through each one.
+		</p>
+
+		<p>
+		<h4><a name="room_finalise">finalise()</a></h4>
+		This procedure is called on every /jp_DungeonRoom that has been placed in the dungeon once all generation has finished. It is almost the last thing that the generator does. /jp_DungeonRoom objects may do pretty much anything in finalise(), including modifying any turf on the map. /jp_DungeonRoom subclasses should extend this procedure when they want to populate rooms after they've been placed - for example, it could be used to put furniture in the room, or treasure and monsters. Another use would be to put doors on entrances to the room.
+		</p>
+
+		<p>
+		<h4><a name="room_getborder">getBorder()</a></h4>
+		This procedure returns the list of border turfs for the room. Don't modify the returned list, it isn't a copy.
+		</p>
+
+		<p>
+		<h4><a name="room_getcentre">getCentre()</a></h4>
+		This procedure returns the centre turf for the room.
+		</p>
+
+		<p>
+		<h4><a name="room_getmulti">getMultiborder()</a></h4>
+		This procedure returns the multiborder list for the room. Don't modify the returned lists, they aren't copies.
+		</p>
+		
+		<p>
+		<h4><a name="room_getsize">getSize()</a></h4>
+		This procedure returns the size of the room. Rooms are allowed to modify all turfs within range(centre, size)
+		</p>
+
+		<p>
+		<h4><a name="room_getturfs">getTurfs()</a></h4>
+		This procedure returns the turfs contained inside the room. Don't modify the returned list, it isn't a copy.
+		</p>
+
+		<p>
+		<h4><a name="room_getwalls">getWalls()</a></h4>
+		This procedure returns the walls for the room. Don't modify the returned list, it isn't a copy.
+		</p>
+
+		<p>
+		<h4><a name="room_getx">getX()</a></h4>
+		Returns the x-coordinate of the room's centre
+		</p>
+
+		<p>
+		<h4><a name="room_gety">getY()</a></h4>
+		Returns the y-coordinate of the room's centre
+		</p>
+
+		<p>
+		<h4><a name="room_getz">getZ()</a></h4>
+		Returns the z-coordinate of the room's centre
+		</p>
+
+		<p>
+		<h4><a name="room_new">New(s, turf/c, jp_DungeonGenerator/g)</a></h4>
+		Makes a new /jp_DungeonRoom, with size s, centre c, and generator g. When overriding New() for subclasses of /jp_DungeonRoom, you should call ..(s, c, g) before doing anything else. Additionally, be aware that New() is NOT allowed to modify turfs in the dungeon. That is the job of place() and finalise(). Modifying turfs in New() will cause the generator to fail, quite likely with a runtime error of some sort. Don't do it. It is, however, okay to fill the turfs and border list with the turfs that will be the turfs and borders for the room when it is placed - in fact, this is probably when you should do it.
+		</p>
+
+		<p>
+		<h4><a name="room_ok">ok()</a></h4>
+		Returns true by default. If ok() returns false, the generator counts that attempt to place a room as a failure and tries again. Can be used to ensure that your room is only placed in situations it can deal with - for example, ensuring you've got enough room by returning false in ok() if size is less than some number
+		</p>
+
+		<p>
+		<h4><a name="room_place">place()</a></h4>
+		Actually places all the turfs for the room. This procedure and finalise() are the only two /jp_DungeonRoom procedures that are allowed to modify objects on the map. place() is not allowed to touch any turfs other than those in range(centre, size). The border and turfs lists may be filled in this procedure, or in New(). If the centre turf is replaced (Say, with a new floor object), then centre should be assigned to the new centre turf.
+		</p>
+
+<h2><a name="custom>Making your own rooms</a></h2>
+<p>
+In order to generate an interesting dungeon, it is vital that you write your own /jp_DungeonRoom datums. This section details the important parts of doing so. There are several examples in the demo file that comes with the library that may prove useful.
+</p>
+<p>
+There are several procedures that you will likely want to use when subclassing  a /jp_DungeonRoom datum. New(), place(), finalise(), and ok() are the most useful ones.
+</p>
+<p>
+/jp_DungeonRoom has several built-in variables that you will be modifying when working with one. 'size' is the size of the room, and shouldn't be altered. 'centre' is the turf at the centre of the room - make sure it's always a turf on the map by replacing it if you replace the centre turf. turfs and border are lists of the turfs internal to the room and the borders of the room, respectively, initialised to list() when the room is first created, and they should be filled in. Finally, 'gen' is a reference to the /jp_DungeonGenerator that is using this room, and is used for making calls to getAdjacent() and isWall(), as well as reading gen.floortype. We will be writing a subclass of /jp_DungeonRoom.
+</p>
+<p>
+Start by writing your New() procedure - or more accurately, New(s, turf/c, jp_DungeonGenerator/g). The first statement should always be ..(s, c, g), to run the initialisation. After that, you should fill in the border and turfs lists with the turfs that will be borders and internal later. Do NOT actually modify any of the turfs - you still don't know if you're going to be placed or not. It may also be a good idea to sneak in a if(!ok()) return call just after the initialisation, in case the room cannot be placed where you are. Remember that the borders list does NOT have to contain every turf that is actually a border turf - if, for example, you want your throne room to only be accessible from one turf, put that turf in the border list, and that turf alone. However, all turfs in the border list must return true when passed into gen.walltype, there must be at least one turf in the border list, and players must be able to get from all turfs in the border list to every other turf in the border list by going through the room if reachability is to be guaranteed. For example, if you had a room that was bisected by an uncrossable river, you could NOT have the walls on both sides of the river in the border list, because players can't get from one to the other. If there was a bridge over the river, however, it'd be fine.
+</p>
+<p>
+Next, move on to place(). Your place() procedure will loop through all the turfs in the turfs list, remove them from the turfs list, create a new gen.floortype where the turf was, and then add this new floor turf to the turfs list. If 'centre' is in the turfs list, the new centre is the turf that was placed where centre used to be. Placing furniture or 'fancy' terrain (Like water) should be left until finalise().
+</p>
+<p>
+Next up is finalise(). finalise() is called after dungeon generation is finished, so it can go wild with modifying anything it wants. This is where you should place 'special' terrain (like water, or columns) and furniture in your dungeon room, as well as mobs. Keep in mind when placing furniture that if you invalidate the every-border-turf-reachable-from-every-other-border-turf condition, reachability is no longer guaranteed - don't block pathways with tables. Also, if decorating the 'walls' of your room, keep in mind that the next room over may be trying to decorate the same walls - you can have only a one-tile wide wall seperating two rooms.
+</p>
+<p>
+Finally, you should write an ok() procedure, if your room has some conditions. If, for example, you need at least 9 squares of space to build your room, your ok() procedure should return 0 if size<1 (remember - range(centre, size)) or 1 otherwise. This is not always necessary.
+</p>
+</body>
+</html>

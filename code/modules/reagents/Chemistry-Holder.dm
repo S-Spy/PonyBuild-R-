@@ -164,19 +164,19 @@ datum
 				src.handle_reactions()*/
 
 				var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
-				B.volume = 1000
+				B.volume = 1000//Временный стакан
 
-				var/datum/reagents/BR = B.reagents
-				var/datum/reagents/R = target.reagents
+				var/datum/reagents/BR = B.reagents//Ссылка на датум с реагентами у стакана
+				var/datum/reagents/R = target.reagents//Ссылка на датум реагенты у цели
 
 				amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
+				//Если амаунт не превышает границ, то он остается
+				src.trans_to(B, amount)//Переливание данных реагентов на данный обьем в стакан
 
-				src.trans_to(B, amount)
-
-				spawn(95)
-					BR.reaction(target, INGEST)
+				spawn(95)//Спустя 10 секунд
+					BR.reaction(target, INGEST)//В стакане происходит реакция
 					spawn(5)
-						BR.trans_to(target, BR.total_volume)
+						BR.trans_to(target, BR.total_volume)//Транспортировка получившихся веществ в цель
 						del(B)
 
 				return amount

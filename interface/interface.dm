@@ -26,11 +26,8 @@
 	set name = "forum"
 	set desc = "Visit the forum ingame."
 	set hidden = 1
-	if(!mob.Selected_Parent_Forum)	mob.Selected_Parent_Forum = Develope
-	if(!mob.Selected_Forum && mob.Selected_Parent_Forum.Child_Forum)
-		mob.Selected_Forum = mob.Selected_Parent_Forum.Child_Forum
-	if(mob.Selected_Forum)	mob.Display_HTML_Forum(mob.Selected_Forum)
-	else	mob.Display_HTML_Forum(mob.Selected_Parent_Forum)
+	if(mob.Selected_Forum)	mob.Display_HTML_Forum()
+	else	mob.Display_HTML_SubForum()
 
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()

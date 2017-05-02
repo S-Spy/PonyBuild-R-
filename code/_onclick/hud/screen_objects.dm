@@ -247,14 +247,11 @@
 		if("m_intent")
 			if(!usr.m_int)
 				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
+					if("run")	usr.m_int = "13,14"
+					if("walk")	usr.m_int = "14,14"
+					if("face")	usr.m_int = "15,14"
+					if("fly")	usr.m_int = "16,14"
+			else	usr.m_int = null
 		if("walk")
 			usr.m_intent = "walk"
 			usr.m_int = "14,14"
@@ -264,8 +261,10 @@
 		if("run")
 			usr.m_intent = "run"
 			usr.m_int = "13,14"
-		if("Reset Machine")
-			usr.unset_machine()
+		if("fly")
+			usr.m_intent = "fly"
+			usr.m_int = "16,14"
+		if("Reset Machine")	usr.unset_machine()
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
@@ -273,15 +272,12 @@
 					if(C.internal)
 						C.internal = null
 						C << "<span class='notice'>No longer running on internals.</span>"
-						if(C.internals)
-							C.internals.icon_state = "internal0"
+						if(C.internals)		C.internals.icon_state = "internal0"
 					else
-
 						var/no_mask
 						if(!(C.wear_mask && C.wear_mask.flags & AIRTIGHT))
 							var/mob/living/carbon/pony/H = C
-							if(!(H.head && H.head.flags & AIRTIGHT))
-								no_mask = 1
+							if(!(H.head && H.head.flags & AIRTIGHT))	no_mask = 1
 
 						if(no_mask)
 							C << "<span class='notice'>You are not wearing a suitable mask or helmet.</span>"

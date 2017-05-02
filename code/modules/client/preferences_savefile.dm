@@ -120,9 +120,9 @@
 	S["facial_red"]			>> r_facial
 	S["facial_green"]		>> g_facial
 	S["facial_blue"]		>> b_facial
-	S["ptail_red"]			>> r_ptail
-	S["ptail_green"]		>> g_ptail
-	S["ptail_blue"]			>> b_ptail
+	S["pony_tail_red"]			>> r_tail
+	S["pony_tail_green"]		>> g_tail
+	S["pony_tail_blue"]			>> b_tail
 	S["skin_tone"]			>> s_tone
 	S["skin_red"]			>> r_skin
 	S["skin_green"]			>> g_skin
@@ -132,7 +132,7 @@
 	S["eyes_red"]			>> r_eyes
 	S["eyes_green"]			>> g_eyes
 	S["eyes_blue"]			>> b_eyes
-	S["ptail_style"]		>> ptail_style
+	S["pony_tail_style"]		>> pony_tail_style
 	S["cutie_mark"]			>> cutie_mark
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
@@ -287,10 +287,10 @@
 	S["eyes_red"]			<< r_eyes
 	S["eyes_green"]			<< g_eyes
 	S["eyes_blue"]			<< b_eyes
-	S["ptail_red"]			<< r_ptail
-	S["ptail_green"]		<< g_ptail
-	S["ptail_blue"]			<< b_ptail
-	S["ptail_style"]		<< ptail_style
+	S["pony_tail_red"]			<< r_tail
+	S["pony_tail_green"]		<< g_tail
+	S["pony_tail_blue"]			<< b_tail
+	S["pony_tail_style"]		<< pony_tail_style
 	S["cutie_mark"]			<< cutie_mark
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type

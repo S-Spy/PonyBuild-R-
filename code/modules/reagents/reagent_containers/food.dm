@@ -63,6 +63,95 @@
 				R.volume = base_amount / 0.5
 				spawn(1000)	if(temperature == heating)	heat_food(temperature - 1)
 
+proc/taste(var/datum/reagents/R, var/byte_size=5)
+	var/obj/item/weapon/reagent_containers/glass/beaker/noreact/B = new /obj/item/weapon/reagent_containers/glass/beaker/noreact //temporary holder
+	B.volume = 1000
+	var/datum/reagents/tmp_R = new R
+	var/amount = byte_size
+	if(amount > tmp_R.total_volume)	amount = R.total_volume
+	tmp_R.trans_to(B, amount)
+
+	var/pungent = 0//острый
+	var/sweet = 0//сладкий
+	var/salty = 0//соленый
+	var/sour = 0//кислый
+	var/bitter = 0//√орький
+	var/datum/reagents/BR = B.reagents
+	for(var/datum/reagent/reagent in BR.reagent_list)
+		pungent += reagent.pungent * reagent.volume
+		sweet	+= reagent.sweet   * reagent.volume
+		salty	+= reagent.salty   * reagent.volume
+		sour 	+= reagent.sour    * reagent.volume
+		bitter  += reagent.bitter  * reagent.volume
+
+	if(pungent > 1.4)		pungent = 2
+	else if(pungent < 0.4)	pungent = 0
+	else					pungent = 1
+	if(sweet > 1.4)			sweet = 2
+	else if(sweet < 0.4)	sweet = 0
+	else					sweet = 1
+	if(salty > 1.4)			salty = 2
+	else if(salty < 0.4)	salty = 0
+	else					salty = 1
+	if(sour > 0.4)			sour = 1
+	else					sour = 0
+	if(bitter > 1.4)		bitter = 2
+	else if(bitter < 0.4)	bitter = 0
+	else		bitter = 1
+
+
+	var/answer = ""
+	if(!pungent && !sweet && !salty && !sour)
+		answer = "insipid taste"
+		goto End
+	if(pungent == 1 && sweet == 1 && salty == 1 && sour == 1)
+		answer = "nice mixture of tastes"
+		goto End
+
+	if(pungent == 2 && sweet == 2 && salty == 2 && sour == 1)
+		answer = "disgusting mixture of tastes"
+		goto End
+	else if(pungent == 2 && sweet == 2 && salty == 1 && sour == 1)	salty = 0
+	else if(pungent == 2 && sweet == 1 && salty == 2 && sour == 1)	sweet = 0
+	else if(pungent == 1 && sweet == 2 && salty == 2 && sour == 1)	pungent = 0
+
+	if(pungent == 2 && sweet == 1 && salty == 1 && sour == 1)
+		if(rand(1,2) == 1)	salty = 0
+		else				sweet = 0
+	else if(pungent == 1 && sweet == 2 && salty == 1 && sour == 1)
+		if(rand(1,2) == 1)	salty = 0
+		else				pungent = 0
+	else if(pungent == 1 && sweet == 1 && salty == 2 && sour == 1)
+		if(rand(1,2) == 1)	sweet = 0
+		else				pungent = 0
+
+	if(pungent == 2)		answer = "pungent "
+	else if(pungent == 1)	answer = "spicy "
+
+	if(sweet == 2)			answer = "sweet "
+	else if(sweet == 1)		answer = "sweetish"
+
+	if(salty == 2)			answer = "salty "
+	else if(pungent == 1)	answer = "brackish "
+
+	if(lentext(answer))
+		answer += "tasty"
+		if(sour || bitter)	answer += " with "
+
+	if(sour)	answer += "sour"
+	if(bitter == 2)
+		if(sour)	answer += "-"
+		answer += "bitter"
+	else if(bitter == 2)
+		if(sour)	answer += "-"
+		answer += "bitterish"
+
+	if(sour || bitter)	answer += " smack"
+
+	End
+
+	return "It's have [answer]."
+
 #undef CELLS
 #undef CELLSIZE
 

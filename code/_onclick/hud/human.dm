@@ -434,5 +434,5 @@
 	if(dna.species == "Earthpony") //no more xenos losing ears/tentacles
 		h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	cutie_mark = null
-	ptail_style = "Short Tail"
+	pony_tail_style = "Short Tail"
 	regenerate_icons()

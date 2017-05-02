@@ -11,7 +11,7 @@
 	icon_state = "anog"
 
 /area/dreams/sugar4
-	name = "Sugar Edgy"
+	name = "Sugar Corner"
 	icon_state = "cafeteria"
 
 /area/dreams/castle5

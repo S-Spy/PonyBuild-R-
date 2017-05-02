@@ -49,15 +49,15 @@
 				if(H.species.flags & IS_SYNTHETIC)
 					H << "\red You have a monitor for a head, where do you think you're going to put that?"
 					return
-			if (fullness <= 50)
+			if(fullness <= 50)
 				M << "\red You hungrily chew out a piece of [src] and gobble it!"
-			if (fullness > 50 && fullness <= 150)
+			else if(fullness <= 150)
 				M << "\blue You hungrily begin to eat [src]."
-			if (fullness > 150 && fullness <= 350)
+			else if(fullness <= 350)
 				M << "\blue You take a bite of [src]."
-			if (fullness > 350 && fullness <= 550)
+			else if(fullness <= 550)
 				M << "\blue You unwillingly chew a bit of [src]."
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			if(fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				M << "\red You cannot force any more of [src] to go down your throat."
 				return 0
 		else
@@ -93,16 +93,14 @@
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
-				if(reagents.total_volume > bitesize)
-					/*
-					 * I totally cannot understand what this code supposed to do.
-					 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
-					var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
-					reagents.trans_to(M, temp_bitesize)
-					*/
-					reagents.trans_to_ingest(M, bitesize)
-				else
-					reagents.trans_to_ingest(M, reagents.total_volume)
+				/*
+				 * I totally cannot understand what this code supposed to do.
+				 * Right now every snack consumes in 2 bites, my popcorn does not work right, so I simplify it. -- rastaf0
+				var/temp_bitesize =  max(reagents.total_volume /2, bitesize)
+				reagents.trans_to(M, temp_bitesize)
+				*/
+				M << "You eating [name]. [taste(reagents, bitesize)]"
+				reagents.trans_to_ingest(M, bitesize)
 				bitecount++
 				On_Consume(M)
 			return 1
@@ -1626,10 +1624,10 @@
 	monkey_type =/mob/living/carbon/monkey/unicorn
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type = /mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/monkey/alicorn
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type =/mob/living/carbon/monkey/skrell
+	monkey_type =/mob/living/carbon/monkey/alicorn
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger
@@ -3020,10 +3018,10 @@
 		reagents.add_reagent("nutriment", 6)
 		bitesize = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/skrellsnacks
-	name = "\improper SkrellSnax"
+/obj/item/weapon/reagent_containers/food/snacks/alicornsnacks
+	name = "\improper AlicornSnax"
 	desc = "Cured fungus shipped all the way from Jargon 4, almost like jerky! Almost."
-	icon_state = "skrellsnacks"
+	icon_state = "alicornsnacks"
 	filling_color = "#A66829"
 
 	New()

@@ -44,7 +44,7 @@
 	R.add_language("Tradeband", 1)
 	R.add_language("Sinta'unicorn", 0)
 	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 0)
+	R.add_language("Alicornian", 0)
 	R.add_language("Gutter", 0)
 
 /obj/item/weapon/robot_module/standard
@@ -344,7 +344,7 @@
 	R.add_language("Sinta'unicorn", 1)
 	R.add_language("Siik'maas", 1)
 	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 1)
+	R.add_language("Alicornian", 1)
 	R.add_language("Rootspeak", 1)
 	R.add_language("Tradeband", 1)
 	R.add_language("Gutter", 1)
@@ -365,7 +365,7 @@
 	R.add_language("Sinta'unicorn", 1)
 	R.add_language("Siik'maas", 1)
 	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 1)
+	R.add_language("Alicornian", 1)
 	R.add_language("Rootspeak", 1)
 	R.add_language("Tradeband", 1)
 	R.add_language("Gutter", 1)
@@ -416,7 +416,7 @@
 	R.add_language("Tradeband", 1)
 	R.add_language("Sinta'unicorn", 0)
 	R.add_language("Siik'tajr", 0)
-	R.add_language("Skrellian", 0)
+	R.add_language("Alicornian", 0)
 	R.add_language("Gutter", 1)
 
 /obj/item/weapon/robot_module/combat

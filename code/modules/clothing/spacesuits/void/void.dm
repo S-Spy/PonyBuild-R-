@@ -10,16 +10,16 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude","Unicorn","Pegasus","Skrell","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
+	species_restricted = list("exclude","Unicorn","Pegasus","Alicorn","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 	sprite_sheets_refit = list(
 		"Unicorn" = 'icons/mob/species/unicorn/helmet.dmi',
 		"Pegasus" = 'icons/mob/species/pegasus/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
+		"Alicorn" = 'icons/mob/species/alicorn/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
 		"Unicorn" = 'icons/obj/clothing/species/unicorn/hats.dmi',
 		"Pegasus" = 'icons/obj/clothing/species/pegasus/hats.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
+		"Alicorn" = 'icons/obj/clothing/species/alicorn/hats.dmi',
 		)
 
 	light_overlay = "helmet_light"
@@ -39,12 +39,12 @@
 	sprite_sheets_refit = list(
 		"Unicorn" = 'icons/mob/species/unicorn/suit.dmi',
 		"Pegasus" = 'icons/mob/species/pegasus/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi',
+		"Alicorn" = 'icons/mob/species/alicorn/suit.dmi',
 		)
 	sprite_sheets_obj = list(
 		"Unicorn" = 'icons/obj/clothing/species/unicorn/suits.dmi',
 		"Pegasus" = 'icons/obj/clothing/species/pegasus/suits.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
+		"Alicorn" = 'icons/obj/clothing/species/alicorn/suits.dmi',
 		)
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.
