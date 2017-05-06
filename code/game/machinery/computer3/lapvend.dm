@@ -53,7 +53,7 @@
 			var/obj/item/device/laptop/L = W
 			relap = L
 			calc_reimburse(L)
-			usr.drop_item()
+			usr.drop_active_hand()
 			L.loc = src
 			vendmode = 3
 			usr << "<span class='notice'>You slot your [L.name] into \The [src.name]</span>"

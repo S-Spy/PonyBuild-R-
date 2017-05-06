@@ -13,7 +13,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 1
 	var/min_reliability = 90
-	
+
 	use_power = 1
 	idle_power_usage = 30
 	active_power_usage = 2500
@@ -90,7 +90,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return
 		busy = 1
 		loaded_item = O
-		user.drop_item()
+		user.drop_active_hand()
 		O.loc = src
 		user << "<span class='notice'>You add \the [O] to \the [src]!</span>"
 		flick("d_analyzer_la", src)

@@ -25,7 +25,7 @@
 	return
 
 /obj/item/weapon/gift/attack_self(mob/user as mob)
-	user.drop_item()
+	user.drop_active_hand()
 	if(src.gift)
 		user.put_in_active_hand(gift)
 		src.gift.add_fingerprint(user)
@@ -130,7 +130,7 @@
 	if (!( locate(/obj/structure/table, src.loc) ))
 		user << "\blue You MUST put the paper on a table!"
 	if (W.w_class < 4)
-		if ((istype(user.l_hand, /obj/item/weapon/wirecutters) || istype(user.r_hand, /obj/item/weapon/wirecutters)))
+		if (user.type_in_hands(/obj/item/weapon/wirecutters))
 			var/a_used = 2 ** (src.w_class - 1)
 			if (src.amount < a_used)
 				user << "\blue You need more paper!"
@@ -140,7 +140,7 @@
 					return
 
 				src.amount -= a_used
-				user.drop_item()
+				user.drop_active_hand()
 				var/obj/item/weapon/gift/G = new /obj/item/weapon/gift( src.loc )
 				G.size = W.w_class
 				G.w_class = G.size + 1

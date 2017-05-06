@@ -36,7 +36,7 @@
 		return
 
 	sample = S
-	user.drop_item()
+	user.drop_active_hand()
 	S.loc = src
 
 	user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")

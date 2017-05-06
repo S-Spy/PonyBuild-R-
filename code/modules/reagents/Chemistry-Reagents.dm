@@ -1040,10 +1040,9 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
-					if(C.r_hand)
-						C.r_hand.clean_blood()
-					if(C.l_hand)
-						C.l_hand.clean_blood()
+					for(var/datum/hand/H in C.list_hands)
+						if(H.item_in_hand)
+							H.item_in_hand.clean_blood()
 					if(C.wear_mask)
 						if(C.wear_mask.clean_blood())
 							C.update_inv_wear_mask(0)
@@ -2343,7 +2342,7 @@ datum
 			color = "#440000"
 
 			on_mob_life(var/mob/living/M, var/alien)
-				if(alien && alien == IS_ALICORN)
+				if(alien && alien == IS_HERBIVORE)
 					M.adjustToxLoss(0.5)
 					M.nutrition -= nutriment_factor
 				..()
@@ -2357,7 +2356,7 @@ datum
 			color = "#FFFFAA"
 
 			on_mob_life(var/mob/living/M, var/alien)
-				if(alien && alien == IS_ALICORN)
+				if(alien && alien == IS_HERBIVORE)
 					M.adjustToxLoss(0.5)
 					M.nutrition -= nutriment_factor
 				..()
@@ -2484,7 +2483,7 @@ datum
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)
-							//victim.drop_item()
+							//victim.drop_active_hand()
 							return
 						else if ( mouth_covered ) // Mouth cover is better than eye cover
 							victim << "\red Your [safe_thing] protects your face from the pepperspray!"
@@ -2501,7 +2500,7 @@ datum
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)
-							//victim.drop_item()
+							//victim.drop_active_hand()
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
@@ -3706,7 +3705,7 @@ datum
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(A != src && isnum(A.data)) d += A.data
 
-				if(alien && alien == IS_ALICORN) //Alicorn get very drunk very quickly.
+				if(alien && alien == IS_HERBIVORE) //Alicorn get very drunk very quickly.
 					d*=5
 
 				M.dizziness += dizzy_adj.

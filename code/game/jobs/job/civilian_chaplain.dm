@@ -20,7 +20,7 @@
 		H.equip_to_slot_or_del(B, slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
 		H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
-		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
+		//H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
 		if(H.backbag == 1)
 			H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		else
@@ -135,7 +135,7 @@
 								if(T.icon_state == "carpetsymbol")
 									T.set_dir(2)
 
-				H.update_inv_l_hand() // so that it updates the bible's item_state in his hand
+				H.update_inv_hands() // so that it updates the bible's item_state in his hand
 
 				switch(input(H,"Look at your bible - is this what you want?") in list("Yes","No"))
 					if("Yes")

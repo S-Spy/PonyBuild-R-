@@ -369,7 +369,7 @@
 				on = has_power()
 				update()
 
-				user.drop_item()	//drop the item to update overlays and such
+				user.drop_active_hand()	//drop the item to update overlays and such
 				del(L)
 
 				if(on && rigged)

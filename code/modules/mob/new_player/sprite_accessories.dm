@@ -29,7 +29,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list("Earthpony", "Unicorn", "Pegasus")
+	var/list/species_allowed = list("Earthpony", "Unicorn", "Pegasus", "Alicorn")
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -95,6 +95,21 @@
 		icon_state = "fleur_tail"
 		gender = FEMALE
 
+
+/datum/sprite_accessory/cutiemark
+	icon = 'icons/mob/cutiemarks.dmi'	  // default icon for all hairs
+
+	blank
+		name = "Blank"
+		icon_state = "blank"
+
+	apples
+		name = "Three Red Apples"
+		icon_state = "3rapples"
+
+	music
+		name = "Music Note"
+		icon_state = "music"
 
 
 /datum/sprite_accessory/hair

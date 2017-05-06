@@ -8,55 +8,42 @@
 			if(src:module_active)
 				return src:module_active
 	else
-		if(hand)	return l_hand
-		else		return r_hand
+		if(!hand)	return null
+		return hand.item_in_hand
 
-//Returns the thing in our inactive hand
-/mob/proc/get_inactive_hand()
-	if(hand)	return r_hand
-	else		return l_hand
-
-//Puts the item into your l_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(var/obj/item/W)
-	if(lying)			return 0
-	if(!istype(W))		return 0
-	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
-		l_hand = W
-		W.layer = 20	//TODO: move to equipped?
-//		l_hand.screen_loc = ui_lhand
-		W.equipped(src,slot_l_hand)
-		if(client)	client.screen |= W
-		if(pulling == W) stop_pulling()
-		update_inv_l_hand()
-		return 1
-	return 0
 
 //Puts the item into your r_hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(var/obj/item/W)
+//Puts the item into our active hand if possible. returns 1 on success.
+/mob/proc/put_in_active_hand(var/obj/item/W, var/datum/hand/H)
+	if(!H)				H = hand//It's active hand. Else non-active
 	if(lying)			return 0
 	if(!istype(W))		return 0
-	if(!r_hand)
+	if(!H.item_in_hand)
 		W.loc = src
-		r_hand = W
-		W.layer = 20
-//		r_hand.screen_loc = ui_rhand
-		W.equipped(src,slot_r_hand)
+		H.item_in_hand = W
+		W.layer = hand.slot.layer+1
+		W.screen_loc = hand.slot.screen_loc
+
+		W.equipped(src,slot_r_hand)//Тут все добавляется в интерфейс. Зачем ЭТО?
+
 		if(client)	client.screen |= W
 		if(pulling == W) stop_pulling()
-		update_inv_r_hand()
+		update_inv_hands()
 		return 1
 	return 0
 
-//Puts the item into our active hand if possible. returns 1 on success.
-/mob/proc/put_in_active_hand(var/obj/item/W)
-	if(hand)	return put_in_l_hand(W)
-	else		return put_in_r_hand(W)
-
 //Puts the item into our inactive hand if possible. returns 1 on success.
-/mob/proc/put_in_inactive_hand(var/obj/item/W)
-	if(hand)	return put_in_r_hand(W)
-	else		return put_in_l_hand(W)
+/mob/proc/put_in_free_hand(var/obj/item/W)
+	var/datum/hand/free_hand
+	for(var/datum/hand/selhand in list_hands)
+		if(!selhand.item_in_hand)
+			free_hand = selhand
+			break
+	if(free_hand)
+		put_in_active_hand(W, free_hand)
+		return 1
+	else
+		return 0
 
 //Puts the item our active hand if possible. Failing that it tries our inactive hand. Returns 1 on success.
 //If both fail it drops it on the floor and returns 0.
@@ -64,12 +51,10 @@
 /mob/proc/put_in_hands(var/obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
+		update_inv_hands()
 		return 1
-	else if(put_in_inactive_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
+	else if(put_in_free_hand(W))
+		update_inv_hands()
 		return 1
 	else
 		W.loc = get_turf(src)
@@ -81,7 +66,7 @@
 
 /mob/proc/drop_item_v()		//this is dumb.
 	if(stat == CONSCIOUS && isturf(loc))
-		return drop_item()
+		return drop_active_hand()
 	return 0
 
 
@@ -106,49 +91,35 @@
 	return 0
 
 
-//Drops the item in our left hand
-/mob/proc/drop_l_hand(var/atom/Target)
-	if(l_hand)
-		if(client)	client.screen -= l_hand
-		l_hand.layer = initial(l_hand.layer)
 
-		if(Target)	l_hand.loc = Target.loc
-		else		l_hand.loc = loc
+
+//Drops the item in our active hand.
+/mob/proc/drop_active_hand(var/atom/Target, var/datum/hand/H)
+	if(!H)	H = hand //for non-active hands
+	if(H.item_in_hand)
+		if(client)	client.screen -= H.item_in_hand
+		H.item_in_hand.layer = initial(H.item_in_hand.layer)
+
+		if(Target)	H.item_in_hand.loc = Target.loc
+		else		H.item_in_hand.loc = loc
 
 		var/turf/T = get_turf(loc)
 		if(isturf(T))
-			T.Entered(l_hand)
+			T.Entered(H.item_in_hand)
 
-		l_hand.dropped(src)
-		l_hand = null
-		update_inv_l_hand()
+		H.item_in_hand.dropped(src)
+		H.item_in_hand = null
+		update_inv_hands()
 		return 1
 	return 0
 
-//Drops the item in our right hand
-/mob/proc/drop_r_hand(var/atom/Target)
-	if(r_hand)
-		if(client)	client.screen -= r_hand
-		r_hand.layer = initial(r_hand.layer)
-
-		if(Target)	r_hand.loc = Target.loc
-		else		r_hand.loc = loc
-
-		var/turf/T = get_turf(Target)
-		if(istype(T))
-			T.Entered(r_hand)
-
-		r_hand.dropped(src)
-		r_hand = null
-		update_inv_r_hand()
-		return 1
-	return 0
-
-//Drops the item in our active hand.
-/mob/proc/drop_item(var/atom/Target)
-	if(hand)	return drop_l_hand(Target)
-	else		return drop_r_hand(Target)
-
+/mob/proc/drop_all_hands(var/atom/Target)
+	if(list_hands.len)
+		for(var/datum/hand/H in list_hands)
+			drop_active_hand(null, H)
+			return 1
+	else
+		return 0
 
 
 
@@ -167,16 +138,15 @@
 
 
 /mob/proc/u_equip(W as obj)
-	if (W == r_hand)
-		r_hand = null
-		update_inv_r_hand(0)
-	else if (W == l_hand)
-		l_hand = null
-		update_inv_l_hand(0)
-	else if (W == back)
+	for(var/datum/hand/H in list_hands)
+		if(H.item_in_hand == W)
+			H.item_in_hand = null
+			update_inv_hands(0)
+			return
+	if(W == back)
 		back = null
 		update_inv_back(0)
-	else if (W == wear_mask)
+	else if(W == wear_mask)
 		wear_mask = null
 		update_inv_wear_mask(0)
 	return
@@ -191,12 +161,11 @@
 	if(!I.canremove && !force)
 		return 0
 
-	if(I == r_hand)
-		r_hand = null
-		update_inv_r_hand()
-	else if(I == l_hand)
-		l_hand = null
-		update_inv_l_hand()
+	for(var/datum/hand/H in list_hands)
+		if(H.item_in_hand == I)
+			H.item_in_hand = null
+			update_inv_hands()
+			break
 
 	if(I)
 		if(client)
@@ -248,6 +217,13 @@
 /mob/living/carbon/pony/proc/equip_if_possible(obj/item/W, slot, del_on_fail = 1) // since byond doesn't seem to have pointers, this seems like the best way to do this :/
 	//warning: icky code
 	var/equipped = 0
+	if(slot==slot_l_hand || slot==slot_r_hand)
+		for(var/datum/hand/H in list_hands)
+			if(!H.item_in_hand && H.slot_place==slot)
+				H.item_in_hand = W
+				equipped = 1
+				break
+
 	switch(slot)
 		if(slot_back)
 			if(!src.back)
@@ -260,14 +236,6 @@
 		if(slot_handcuffed)
 			if(!src.handcuffed)
 				src.handcuffed = W
-				equipped = 1
-		if(slot_l_hand)
-			if(!src.l_hand)
-				src.l_hand = W
-				equipped = 1
-		if(slot_r_hand)
-			if(!src.r_hand)
-				src.r_hand = W
 				equipped = 1
 		if(slot_belt)
 			if(!src.belt && src.w_uniform)

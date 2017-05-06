@@ -69,7 +69,7 @@
 /obj/item/clothing/accessory/stethoscope/attack(mob/living/carbon/pony/M, mob/living/user)
 	if(ispony(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/body_part = parse_zone(user.zone_sel.selecting)
+			var/body_part = parse_zone(user.zone_sel.selecting.name)
 			if(body_part)
 				var/their = "their"
 				switch(M.gender)

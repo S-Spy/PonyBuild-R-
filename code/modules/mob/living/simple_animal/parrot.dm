@@ -179,7 +179,7 @@
 
 						var/obj/item/device/radio/headset/headset_to_add = item_to_add
 
-						usr.drop_item()
+						usr.drop_active_hand()
 						headset_to_add.loc = src
 						src.ears = headset_to_add
 						usr << "You fit the headset onto [src]."
@@ -518,10 +518,10 @@
 			if(I.w_class < 2)
 				return I
 
-		if(iscarbon(AM))
-			var/mob/living/carbon/C = AM
-			if((C.l_hand && C.l_hand.w_class <= 2) || (C.r_hand && C.r_hand.w_class <= 2))
-				return C
+		if(ismob(AM))
+			for(var/datum/hand/H in AM:list_hands)
+				if(H.item_in_hand && H.item_in_hand.w_class <= 2)
+					return AM
 	return null
 
 /mob/living/simple_animal/parrot/proc/search_for_perch()
@@ -549,8 +549,9 @@
 
 		if(iscarbon(AM))
 			var/mob/living/carbon/C = AM
-			if(C.l_hand && C.l_hand.w_class <= 2 || C.r_hand && C.r_hand.w_class <= 2)
-				return C
+			for(var/datum/hand/H in C.list_hands)
+				if(H.item_in_hand && H.item_in_hand.w_class <= 2)
+					return C
 	return null
 
 
@@ -600,11 +601,9 @@
 	var/obj/item/stolen_item = null
 
 	for(var/mob/living/carbon/C in view(1,src))
-		if(C.l_hand && C.l_hand.w_class <= 2)
-			stolen_item = C.l_hand
-
-		if(C.r_hand && C.r_hand.w_class <= 2)
-			stolen_item = C.r_hand
+		for(var/datum/hand/H in C.list_hands)
+			if(H.item_in_hand && H.item_in_hand.w_class <= 2)
+				stolen_item = H.item_in_hand
 
 		if(stolen_item)
 			C.u_equip(stolen_item)

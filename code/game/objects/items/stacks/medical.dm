@@ -2,8 +2,8 @@
 	name = "medical pack"
 	singular_name = "medical pack"
 	icon = 'icons/obj/items.dmi'
-	amount = 5
-	max_amount = 5
+	amount = 7
+	max_amount = 7
 	w_class = 2
 	throw_speed = 4
 	throw_range = 20
@@ -17,7 +17,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 
 		if(affecting.display_name == "head")
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
@@ -53,7 +53,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 
 		if(affecting.open == 0)
 			if(!affecting.bandage())
@@ -104,7 +104,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 
 		if(affecting.open == 0)
 			if(!affecting.salve())
@@ -134,7 +134,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 
 		if(affecting.open == 0)
 			var/bandaged = affecting.bandage()
@@ -189,7 +189,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 
 		if(affecting.open == 0)
 			if(!affecting.salve())
@@ -219,7 +219,7 @@
 
 	if (istype(M, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/affecting = H.get_organ(user.zone_sel.selecting.name)
 		var/limb = affecting.display_name
 		if(!(affecting.name == "l_arm" || affecting.name == "r_arm" || affecting.name == "l_leg" || affecting.name == "r_leg"))
 			user << "<span class='warning'>You can't apply a splint there.</span>"

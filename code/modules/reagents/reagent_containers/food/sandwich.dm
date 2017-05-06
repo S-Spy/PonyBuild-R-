@@ -27,7 +27,7 @@
 		return
 	else if(istype(W,/obj/item/weapon/shard))
 		user << "\blue You hide [W] in \the [src]."
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		update()
 		return
@@ -35,7 +35,7 @@
 		user << "\blue You layer [W] over \the [src]."
 		var/obj/item/weapon/reagent_containers/F = W
 		F.reagents.trans_to(src, F.reagents.total_volume)
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		ingredients += W
 		update()

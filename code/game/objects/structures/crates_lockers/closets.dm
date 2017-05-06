@@ -207,7 +207,7 @@
 			return
 		if(W.loc != user) // This should stop mounted modules ending up outside the module.
 			return
-		usr.drop_item()
+		usr.drop_active_hand()
 		if(W)
 			W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/packageWrap))
@@ -383,7 +383,7 @@
 			src.toggle(user)      //act like they were dragged onto the closet
 			src.welded = 1
 		else
-			usr.drop_item()
+			usr.drop_active_hand()
 			if(W)
 				W.loc = src.loc
 	else if(istype(W, /obj/item/weapon/shovel))

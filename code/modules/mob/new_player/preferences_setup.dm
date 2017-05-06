@@ -1,19 +1,37 @@
 datum/preferences
 	//The mob should have a gender you want before running this proc. Will run fine without H
+	proc/check_color()
+		var/r_dif = abs(r_hair-r_skin)
+		var/g_dif = abs(r_hair-r_skin)
+		var/b_dif = abs(r_hair-r_skin)
+		if(r_dif+g_dif+b_dif < 60)		//ѕроверка одинаковости
+			return 0
+
+		if(r_hair>150 || g_hair>150 || b_hair>150)
+			if(r_skin<150 && g_skin<150 && b_skin<150)
+				return 0
+		return 1
+
 	proc/randomize_appearance_for(var/mob/living/carbon/pony/H)
+		gender = pick(MALE, FEMALE)
 		if(H)
-			if(H.gender == MALE)
-				gender = MALE
-			else
-				gender = FEMALE
+			if(H.gender == MALE)	gender = MALE
+			else					gender = FEMALE
 		s_tone = random_skin_tone()
 		h_style = random_style(gender, species)
 		f_style = random_style(gender, species, facial_hair_styles_list)
-		pony_tail_style = pick(pony_tail_styles_list)
+		pony_tail_style = random_style(gender, species, pony_tail_styles_list)
 		randomize_hair_color()
 		randomize_eyes_color()
-		randomize_skin_color()
-		cutie_mark = pick(cutie_mark_t)
+
+		var/i=1//„тобы игра не зависла с бесконечными проверками
+		do
+			i++
+			randomize_skin_color()
+		while(i<10 && !check_color())
+
+		randomize_aura_color()
+		cutie_mark = random_cutiemark()
 		backbag = 2
 		age = rand(AGE_MIN,AGE_MAX)
 		if(H)
@@ -31,7 +49,7 @@ datum/preferences
 		var/green = 0
 		var/blue = 0
 
-		var/col = pick ("punk", "black", "wheat")//"blonde", "chestnut", "copper", "brown", "old", "punk")
+		var/col = pick ("color")//, "wheat", "black", "blonde", "chestnut", "copper", "brown", "old", "punk")
 		switch(col)
 			if("blonde")
 				red = 255
@@ -61,7 +79,7 @@ datum/preferences
 				red = rand (100, 255)
 				green = red
 				blue = red
-			if("punk")
+			if("color")
 				red = rand (0, 255)
 				green = rand (0, 255)
 				blue = rand (0, 255)
@@ -142,12 +160,18 @@ datum/preferences
 		g_eyes = green
 		b_eyes = blue
 
+	proc/randomize_aura_color()
+		r_aura = rand(100, 255)
+		g_aura = rand(100, 255)
+		b_aura = rand(100, 255)
+
+
 	proc/randomize_skin_color()
 		var/red
 		var/green
 		var/blue
 
-		var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino", "color")
+		var/col = pick ("color")//, "black", "grey", "albino", "brown", "chestnut", "blue", "lightblue", "green")
 		switch(col)
 			if("black")
 				red = 0
@@ -228,22 +252,26 @@ datum/preferences
 			preview_icon.Blend(temp, ICON_OVERLAY)
 
 
+		//Magic horn
+		if(current_species && current_species.flags & HAS_HORN)
+			var/icon/I = new/icon(current_species.icobase, "horn")
+			preview_icon.Blend(I, ICON_OVERLAY)
 
-		//Tail
-		if(current_species && (current_species.tail))
-			var/icon/temp = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[current_species.tail]_s")
-			preview_icon.Blend(temp, ICON_OVERLAY)
+		//Wings of pegasus
+		if(current_species && (current_species.flags & HAS_WINGS))
+			var/icon/I = new/icon(current_species.icobase, "wings")
+			preview_icon.Blend(I, ICON_OVERLAY)
 
 		// Skin color
 		if(current_species && (current_species.flags & HAS_SKIN_COLOR))
 			preview_icon.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 
-		// Skin tone
-		if(current_species && (current_species.flags & HAS_SKIN_TONE))
-			if (s_tone >= 0)
-				preview_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-			else
-				preview_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
+		//Magic aura
+		if(current_species && current_species.flags & HAS_HORN)
+			var/icon/I = new/icon('icons/mob/pony.dmi', "icon_state" = "unicorn_light")
+			I.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
+			preview_icon.Blend(I, ICON_OVERLAY)
+
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/pony_face.dmi', "icon_state" = current_species ? current_species.eyes : "eyes_s")
 		if ((current_species && (current_species.flags & HAS_EYE_COLOR)))
@@ -255,7 +283,7 @@ datum/preferences
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
 			var/un
-			if(species == "Unicorn")	un = "_un"
+			if(current_species.flags & HAS_HORN)	un = "_un"
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
@@ -269,12 +297,13 @@ datum/preferences
 		var/icon/pony_tail_s
 		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style]
 		if(current_species.flags && pony_tailstyle)
-			pony_tail_s = new/icon("icon" = pony_tailstyle.icon, "icon_state" = "[pony_tailstyle.icon_state]_s")
+			pony_tail_s = new/icon(pony_tailstyle.icon, "icon_state" = "[pony_tailstyle.icon_state]_s")
 			pony_tail_s.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
 
-		var/icon/cutie_mark_s = null
-		if(cutie_mark && current_species.flags & HAS_pony_tail)
-			cutie_mark_s = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = cutie_mark)
+		var/icon/cutie_mark_s
+		if(cutie_mark)
+			var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
+			if(CM)	cutie_mark_s = new/icon(CM.icon, "icon_state" = CM.icon_state)
 
 		var/icon/clothes_s = null
 		if(job_civilian_low & ASSISTANT)//This gives the preview icon clothes depending on which job(if any) is set to 'high'
@@ -720,5 +749,4 @@ datum/preferences
 
 		del(eyes_s)
 		del(pony_tail_s)
-		del(cutie_mark_s)
 		del(clothes_s)

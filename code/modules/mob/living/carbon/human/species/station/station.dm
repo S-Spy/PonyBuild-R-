@@ -1,6 +1,6 @@
 /datum/species/pony
 	name = "Earthpony"
-	name_plural = "ponys"
+	name_plural = "Earthpony"
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
@@ -10,8 +10,9 @@
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most pony \
 	worlds tumultous at best."
 
-	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_pony_tail | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_EYE_COLOR
 	brute_mod = 0.9
+	reagent_tag = IS_HERBIVORE
 
 
 /datum/species/unicorn
@@ -39,11 +40,11 @@
 	//heat_level_2 = 480 //Default 400
 	//heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#34AF10"
 
-	reagent_tag = IS_UNICORN
+	//reagent_tag = IS_UNICORN
 	//base_color = "#011000"
 
 	//heat_discomfort_level = 295
@@ -58,6 +59,7 @@
 	//	"You feel sluggish and cold.",
 	//	"Your scales bristle against the cold."
 	//	)
+	reagent_tag = IS_HERBIVORE
 
 /datum/species/pegasus
 	name = "Pegasus"
@@ -89,7 +91,7 @@
 
 	primitive = /mob/living/carbon/monkey/pegasus
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR | HAS_EYE_COLOR// | HAS_WINGS
+	flags = CAN_JOIN | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_WINGS
 
 	//flesh_color = "#AFA59E"
 	//base_color = "#333333"
@@ -101,13 +103,14 @@
 	//	"Your overheated skin itches."
 	//	)
 	//cold_discomfort_level = 275
+	reagent_tag = IS_HERBIVORE
 
 /datum/species/alicorn
 	name = "Alicorn"
 	name_plural = "Alicorn"
 	icobase = 'icons/mob/pony_races/r_alicorn.dmi'
 	deform = 'icons/mob/pony_races/r_def_alicorn.dmi'
-	eyes = "alicorn_eyes_s"
+	//eyes = "alicorn_eyes_s"
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey/alicorn
 	unarmed_types = list(/datum/unarmed_attack/punch)
@@ -117,13 +120,13 @@
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_pony_tail | HAS_SKIN_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_WINGS | HAS_EYE_COLOR
 
 	//flesh_color = "#8CD7A3"
 	//blood_color = "#1D2CBF"
 	//base_color = "#006666"
 
-	//reagent_tag = IS_ALICORN
+	reagent_tag = IS_HERBIVORE
 
 /datum/species/diona
 	name = "Diona"

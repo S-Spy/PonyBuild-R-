@@ -103,7 +103,7 @@
 		if (src.holding)
 			return
 		var/obj/item/weapon/tank/T = W
-		user.drop_item()
+		user.drop_active_hand()
 		T.loc = src
 		src.holding = T
 		update_icon()
@@ -165,7 +165,7 @@
 
 		var/obj/item/weapon/cell/C = I
 
-		user.drop_item()
+		user.drop_active_hand()
 		C.add_fingerprint(user)
 		cell = C
 		C.loc = src

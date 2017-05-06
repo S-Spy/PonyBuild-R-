@@ -11,14 +11,13 @@
 
 /mob/living/carbon/monkey
 	var/list/overlays_lying[M_TOTAL_LAYERS]
-	var/list/overlays_standing[M_TOTAL_LAYERS]
 
 /mob/living/carbon/monkey/regenerate_icons()
 	..()
 	update_inv_wear_mask(0)
 	update_inv_back(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
+	update_inv_hands(0)
+	update_inv_hands(0)
 	update_inv_handcuffed(0)
 	update_fire(0)
 	update_icons()
@@ -53,42 +52,6 @@
 	if(update_icons)		update_icons()
 
 
-/mob/living/carbon/monkey/update_inv_r_hand(var/update_icons=1)
-	if(r_hand)
-		var/t_icon = INV_R_HAND_DEF_ICON
-		if(r_hand.item_icons && (icon_r_hand in r_hand.item_icons))
-			t_icon = r_hand.item_icons[icon_r_hand]
-		
-		var/t_state = r_hand.item_state
-		if(!t_state)	t_state = r_hand.icon_state
-		
-		overlays_standing[M_R_HAND_LAYER]	= image("icon" = t_icon, "icon_state" = t_state)
-		r_hand.screen_loc = ui_rhand
-		if (handcuffed) drop_r_hand()
-	else
-		overlays_standing[M_R_HAND_LAYER]	= null
-	
-	if(update_icons) update_icons()
-
-
-/mob/living/carbon/monkey/update_inv_l_hand(var/update_icons=1)
-	if(l_hand)
-		var/t_icon = INV_L_HAND_DEF_ICON
-		if(l_hand.item_icons && (icon_l_hand in l_hand.item_icons))
-			t_icon = l_hand.item_icons[icon_l_hand]
-		
-		var/t_state = l_hand.item_state
-		if(!t_state)	 t_state = l_hand.icon_state
-		
-		overlays_standing[M_L_HAND_LAYER]	= image("icon" = t_icon, "icon_state" = t_state)
-		l_hand.screen_loc = ui_lhand
-		if (handcuffed) drop_l_hand()
-	else
-		overlays_standing[M_L_HAND_LAYER]	= null
-	
-	if(update_icons) update_icons()
-
-
 /mob/living/carbon/monkey/update_inv_back(var/update_icons=1)
 	if(back)
 		overlays_standing[M_BACK_LAYER]	= image("icon" = 'icons/mob/back.dmi', "icon_state" = "[back.icon_state]")
@@ -100,8 +63,7 @@
 
 /mob/living/carbon/monkey/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
+		drop_all_hands()
 		stop_pulling()
 		overlays_standing[M_HANDCUFF_LAYER]	= image("icon" = 'icons/mob/monkey.dmi', "icon_state" = "handcuff1")
 	else

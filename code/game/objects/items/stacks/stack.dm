@@ -297,7 +297,7 @@
 			break
 
 /obj/item/stack/attack_hand(mob/user as mob)
-	if (user.get_inactive_hand() == src)
+	if (user.item_in_hands(src, user.list_hands-user.hand))
 		var/obj/item/stack/F = src.split(1)
 		if (F)
 			user.put_in_hands(F)
@@ -315,7 +315,7 @@
 	if (istype(W, /obj/item/stack))
 		var/obj/item/stack/S = W
 
-		if (user.get_inactive_hand()==src)
+		if (user.item_in_hands(src, user.list_hands-user.hand))
 			src.transfer_to(S, 1)
 		else
 			src.transfer_to(S)

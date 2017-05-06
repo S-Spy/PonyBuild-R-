@@ -75,7 +75,7 @@
 			return
 		if(W.loc != user) // This should stop mounted modules ending up outside the module.
 			return
-		user.drop_item()
+		user.drop_active_hand()
 		if(W)
 			W.loc = src.loc
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)

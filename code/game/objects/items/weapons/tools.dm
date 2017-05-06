@@ -82,7 +82,7 @@
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))	return ..()
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
+	if(user.zone_sel.selecting.name != "eyes" && user.zone_sel.selecting.name != "head")
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -189,9 +189,7 @@
 		F.weldtool = src
 		if (user.client)
 			user.client.screen -= src
-		if (user.r_hand == src)
-			user.u_equip(src)
-		else
+		if(user.item_in_hands(src))
 			user.u_equip(src)
 		src.master = F
 		src.layer = initial(src.layer)
@@ -238,7 +236,7 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/M = location
-		if(M.l_hand == src || M.r_hand == src)
+		if(M.item_in_hands(src))
 			location = get_turf(M)
 	if (istype(location, /turf))
 		location.hotspot_expose(700, 5)
@@ -457,7 +455,7 @@
 
 	if(hasorgans(M))
 
-		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting]
+		var/datum/organ/external/S = M:organs_by_name[user.zone_sel.selecting.name]
 
 		if (!S) return
 		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")

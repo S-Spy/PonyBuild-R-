@@ -142,8 +142,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(ismob(loc))
 			var/mob/living/M = loc
 			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(1)
+			M.update_inv_hands(0)
+			M.update_inv_hands(1)
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		processing_objects.Add(src)
@@ -159,8 +159,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				M << "<span class='notice'>Your [name] goes out.</span>"
 			M.u_equip(src) //un-equip it so the overlays can update
 			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(1)
+			M.update_inv_hands(0)
+			M.update_inv_hands(1)
 		processing_objects.Remove(src)
 		del(src)
 	else
@@ -173,8 +173,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(1)
+			M.update_inv_hands(0)
+			M.update_inv_hands(1)
 		processing_objects.Remove(src)
 
 /obj/item/clothing/mask/smokable/attackby(obj/item/weapon/W as obj, mob/user as mob)
@@ -304,8 +304,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	..()
 
 	user.update_inv_wear_mask(0)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(1)
+	user.update_inv_hands(0)
+	user.update_inv_hands(1)
 
 /////////////////
 //SMOKING PIPES//
@@ -341,8 +341,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(ismob(loc))
 			var/mob/living/M = loc
 			M.update_inv_wear_mask(0)
-			M.update_inv_l_hand(0)
-			M.update_inv_r_hand(1)
+			M.update_inv_hands(0)
+			M.update_inv_hands(1)
 
 /obj/item/clothing/mask/smokable/pipe/attack_self(mob/user as mob)
 	if(lit == 1)
@@ -393,8 +393,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		light("<span class='notice'>[user] fiddles with [W], and manages to light their [name] with the power of science.</span>")
 
 	user.update_inv_wear_mask(0)
-	user.update_inv_l_hand(0)
-	user.update_inv_r_hand(1)
+	user.update_inv_hands(0)
+	user.update_inv_hands(1)
 
 /obj/item/clothing/mask/smokable/pipe/cobpipe
 	name = "corn cob pipe"
@@ -438,7 +438,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = icon_off
 
 /obj/item/weapon/flame/lighter/attack_self(mob/living/user)
-	if(user.r_hand == src || user.l_hand == src)
+	var/has_item
+	for(var/datum/hand/H in user.list_hands)
+		if(H.item_in_hand == src)
+			has_item = 1
+			break
+
+	if(has_item)
 		if(!lit)
 			lit = 1
 			icon_state = icon_on
@@ -450,10 +456,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 				else
 					user << "<span class='warning'>You burn yourself while lighting the lighter.</span>"
-					if (user.l_hand == src)
-						user.apply_damage(2,BURN,"l_hand")
-					else
-						user.apply_damage(2,BURN,"r_hand")
+					for(var/datum/hand/H in user.list_hands)
+						if(H.item_in_hand == src)
+							var/datum/organ/O = pick(H.connect_organs)
+							user.apply_damage(2, BURN, O.name)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			user.SetLuminosity(user.luminosity + 2)
@@ -479,7 +485,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	M.IgniteMob()
 
-	if(istype(M.wear_mask, /obj/item/clothing/mask/smokable/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/smokable/cigarette) && user.zone_sel.selecting.name == "mouth" && lit)
 		var/obj/item/clothing/mask/smokable/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)

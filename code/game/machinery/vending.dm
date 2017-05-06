@@ -226,7 +226,7 @@
 			attack_hand(user)
 		return
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		coin = W
 		categories |= CAT_COIN

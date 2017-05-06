@@ -6,10 +6,9 @@
 		msg += "It is \icon[src.handcuffed] handcuffed!\n"
 	if (src.wear_mask)
 		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its head.\n"
-	if (src.l_hand)
-		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
-	if (src.r_hand)
-		msg += "It has \icon[src.r_hand] \a [src.r_hand] in its right hand.\n"
+	for(var/datum/hand/H in list_hands)
+		if(H.item_in_hand)
+			msg += "It has \icon[H.item_in_hand] \a [H.item_in_hand] in its [H.name].\n"
 	if (src.back)
 		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
 	if (src.stat == DEAD)

@@ -166,7 +166,7 @@
 			user << "\The [src] already has a helmet installed."
 		else
 			user << "You attach \the [W] to \the [src]'s helmet mount."
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.helmet = W
 		return
@@ -175,7 +175,7 @@
 			user << "\The [src] already has magboots installed."
 		else
 			user << "You attach \the [W] to \the [src]'s boot mounts."
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			boots = W
 		return

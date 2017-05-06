@@ -48,7 +48,7 @@ datum/preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
 	var/be_special = 0					//Special role selection
-	var/UI_style = "Midnight"
+	var/UI_style = "White"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
@@ -60,13 +60,13 @@ datum/preferences
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/pony_tail_style = "Bald"				//pony_tail type
+	var/pony_tail_style = "Short Tail"	//pony_tail type
 	var/r_tail = 0						//Face hair color
 	var/g_tail = 0						//Face hair color
 	var/b_tail = 0						//Face hair color
-	var/cutie_mark						//Cutie mark type
+	var/cutie_mark = "Blank"			//Cutie mark type
 	var/backbag = 2						//backpack type
-	var/h_style = "Bald"				//Hair type
+	var/h_style = "Short Hair"			//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
 	var/b_hair = 0						//Hair color
@@ -146,16 +146,13 @@ datum/preferences
 
 /datum/preferences/New(client/C)
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
-	if(istype(C))
-		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
-					return
-	gender = pick(MALE, FEMALE)
-	real_name = random_name(gender,species)
+	if(istype(C) && !IsGuestKey(C.key))
+		load_path(C.ckey)
+		if(load_preferences() && load_character())
+			return
 
 	randomize_appearance_for()//случайный персонаж при первом открывании сетапа
+	real_name = random_name(gender,species)
 
 	gear = list()
 
@@ -281,7 +278,7 @@ datum/preferences
 	dat += "<br>"
 	dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
 	dat += "<b>Custom UI</b>(recommended for White UI):<br>"
-	dat += "-Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>"
+	dat += "-Color: <b><table style='display:inline;' bgcolor='[UI_style_color]'><tr><td><a href='?_src_=prefs;preference=UIcolor'>__</a></td></tr></table></b> <br>"
 	dat += "-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
 	dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
 	dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
@@ -392,10 +389,7 @@ datum/preferences
 	else
 		dat += "<br><br>"
 
-	//var/list/undies = gender == MALE ? pony_tail_m : pony_tail_f
-
-
-	dat += "Cutie Mark: <a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[get_key_by_value(cutie_mark_t,cutie_mark)]</b></a><br>"
+	dat += "Cutie Mark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
@@ -426,26 +420,26 @@ datum/preferences
 	dat += "<a href='byond://?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
 	dat += "<br>"
 
-	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+	dat += "<br><b>Mane</b><br>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td><a href='?_src_=prefs;preference=hair;task=input'>__</a></td></tr></table></font> "
+	dat += "  Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 
 	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td><a href='?_src_=prefs;preference=facial;task=input'>__</a></td></tr></table></font> "
 	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 
 	dat += "<br><b>Tail</b><br>"
-	dat += "<a href='?_src_=prefs;preference=pony_tail;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail)]'><tr><td>__</td></tr></table></font> "
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail)]'><tr><td><a href='?_src_=prefs;preference=pony_tail;task=input'>__</a></td></tr></table></font> "
 	dat += " Style: <a href='?_src_=prefs;preference=pony_tail_style;task=input'>[pony_tail_style]</a><br>"
 
-	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<br><b>Eyes: </b>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td><a href='?_src_=prefs;preference=eyes;task=input'>__</a></td></tr></table></font> <br>"
 
-	dat += "<br><b>Body Color</b><br>"
-	dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<br><b>Body Color: </b>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td><a href='?_src_=prefs;preference=skin;task=input'>__</a></td></tr></table></font> <br>"
 
 	dat += "<br><b>Magic Aura Color:</b> "
-	dat += "<a href='?_src_=prefs;preference=aura;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td><a href='?_src_=prefs;preference=aura;task=input'>__</a></td></tr></table></font> <br>"
 
 	dat += "<br><br>"
 
@@ -644,7 +638,7 @@ datum/preferences
 		dat += "</br><b>Has excellent traction.</b>"
 	if(current_species.flags & NO_POISON)
 		dat += "</br><b>Immune to most poisons.</b>"
-	if(current_species.flags & HAS_SKIN_TONE)
+	if(current_species.flags & HAS_WINGS)
 		dat += "</br><b>Has a variety of skin tones.</b>"
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "</br><b>Has a variety of skin colours.</b>"
@@ -658,16 +652,18 @@ datum/preferences
 	dat += "</tr>"
 	dat += "</table><center><hr/>"
 	unicorn_spells = list()
-	if(current_species.name == "Unicorn" || current_species.name == "Alicorn")
+	if(current_species.flags & HAS_HORN)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
 
-	var/restricted = 0
-	if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-		if(!(current_species.flags & CAN_JOIN))
-			restricted = 2
-		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species))
-			restricted = 1
+
+	var/there_will_be_set_white_list
+	//var/restricted = 0
+	//if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+	//	if(!(current_species.flags & CAN_JOIN))
+	//		restricted = 2
+	//	else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species))
+	//		restricted = 1
 
 	//if(restricted)
 	//	if(restricted == 1)
@@ -1314,8 +1310,7 @@ datum/preferences
 					b_tail = rand(0,255)
 					//ShowChoices(user)
 				if("cutie_mark")
-					var/r = pick(cutie_mark_t)
-					cutie_mark = cutie_mark_t[r]
+					cutie_mark = random_cutiemark()
 					//ShowChoices(user)
 				if("eyes")
 					r_eyes = rand(0,255)
@@ -1370,7 +1365,7 @@ datum/preferences
 							h_style = pick(valid_hairstyles)
 						else
 							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
+							h_style = hair_styles_list["Short Hair"]
 
 						//grab one of the valid facial hair styles for the newly chosen species
 						var/list/valid_facialhairstyles = list()
@@ -1513,12 +1508,9 @@ datum/preferences
 						b_tail = hex2num(copytext(new_tail, 6, 8))
 
 				if("cutie_mark")
-					var/list/cutie_mark_options
-					cutie_mark_options = cutie_mark_t
-
-					var/new_cutie_mark = input(user, "Choose your character's cutie mark:", "Character Preference") as null|anything in cutie_mark_options
+					var/new_cutie_mark = input(user, "Choose your character's cutie mark:", "Character Preference") as null|anything in cutiemarks_list
 					if (new_cutie_mark)
-						cutie_mark = cutie_mark_options[new_cutie_mark]
+						cutie_mark = new_cutie_mark
 					ShowChoices(user)
 
 				if("eyes")
@@ -1710,14 +1702,10 @@ datum/preferences
 
 				if("ui")
 					switch(UI_style)
-						if("Midnight")
-							UI_style = "Orange"
-						if("Orange")
+						if("White")
 							UI_style = "old"
 						if("old")
 							UI_style = "White"
-						else
-							UI_style = "Midnight"
 
 				if("UIcolor")
 					var/UI_style_color_new = input(user, "Choose your UI color, dark colors are not recommended!") as color|null
@@ -1854,6 +1842,7 @@ datum/preferences
 	character.total_SP = total_SP
 
 	// Destroy/cyborgize organs
+
 
 	for(var/name in organ_data)
 

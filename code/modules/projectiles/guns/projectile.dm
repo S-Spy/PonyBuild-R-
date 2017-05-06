@@ -50,7 +50,7 @@
 		chambered = ammo_magazine.stored_ammo[1]
 		if(handle_casings != HOLD_CASINGS)
 			ammo_magazine.stored_ammo -= chambered
-	
+
 	if (chambered)
 		return chambered.BB
 	return null
@@ -168,7 +168,7 @@
 	unload_ammo(user)
 
 /obj/item/weapon/gun/projectile/attack_hand(mob/user as mob)
-	if(user.get_inactive_hand() == src)
+	if(user.item_in_hands(src, user.list_hands-user.hand))
 		unload_ammo(user, allow_dump=0)
 	else
 		return ..()

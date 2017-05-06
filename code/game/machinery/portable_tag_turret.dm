@@ -117,8 +117,9 @@
 
 
 	if(target_suit)//Lasertag turrets target the opposing team, how great is that? -Sieve
-		if((istype(L.r_hand, target_weapon)) || (istype(L.l_hand, target_weapon)))
-			return TURRET_PRIORITY_TARGET
+		for(var/datum/hand/H in L.list_hands)
+			if((istype(H.item_in_hand, target_weapon)))
+				return TURRET_PRIORITY_TARGET
 
 		if(istype(L, /mob/living/carbon/pony))
 			var/mob/living/carbon/pony/H = L

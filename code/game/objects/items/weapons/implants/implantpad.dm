@@ -25,7 +25,7 @@
 
 
 	attack_hand(mob/user as mob)
-		if ((src.case && (user.l_hand == src || user.r_hand == src)))
+		if (src.case && user.item_in_hands(src))
 			user.put_in_active_hand(case)
 
 			src.case.add_fingerprint(user)
@@ -42,7 +42,7 @@
 		..()
 		if(istype(C, /obj/item/weapon/implantcase))
 			if(!( src.case ))
-				user.drop_item()
+				user.drop_active_hand()
 				C.loc = src
 				src.case = C
 		else

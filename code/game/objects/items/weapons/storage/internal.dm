@@ -44,13 +44,10 @@
 			return 0
 
 		if (!( user.restrained() ) && !( user.stat ))
-			switch(over_object.name)
-				if("r_hand")
-					user.u_equip(master_item)
-					user.put_in_r_hand(master_item)
-				if("l_hand")
-					user.u_equip(master_item)
-					user.put_in_l_hand(master_item)
+			for(var/datum/hand/H in usr.list_hands)
+				if(over_object.name in H.connect_organ_names)
+					usr.u_equip(src)
+					usr.put_in_active_hand(src, H)
 			master_item.add_fingerprint(user)
 			return 0
 	return 0

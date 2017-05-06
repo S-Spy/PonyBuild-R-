@@ -1,41 +1,35 @@
 proc/random_style(gender, species="Earthpony", var/list/styles_list=hair_styles_list)
-	var/style = "Short Hair"
-	if(styles_list == facial_hair_styles_list)	style = "Shaved"
-	if(styles_list == pony_tail_styles_list)	style = "Short Tail"
+	var/style
 
 	var/list/valid_styles = list()
 	for(var/currentstyle in styles_list)
+		if(currentstyle=="Bald")	continue
+
 		var/datum/sprite_accessory/S = styles_list[currentstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
+
+		if(gender == MALE && S.gender == FEMALE)	continue
+		if(gender == FEMALE && S.gender == MALE)	continue
+		if(!(species in S.species_allowed))			continue
+
 		valid_styles[currentstyle] = styles_list[currentstyle]
 
-	if(valid_styles.len)
-		style = pick(valid_styles)
+	if(valid_styles.len)	style = pick(valid_styles)
 
 	return style
 
-/*proc/random_facial_hair_style(gender, species = "Earthpony")
-		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
+proc/random_cutiemark()
+	if(cutiemarks_list.len)		return pick(cutiemarks_list)	//&&M.species & has_cutiemark
+	else						return "Blank"
 
-		var/datum/sprite_accessory/S = facial_hair_styles_list[ponytailstyle]
-*/
 
 proc/random_name(gender, species = "Earthpony")
 
 	var/datum/species/current_species
-	if(species)
-		current_species = all_species[species]
+	if(species)		current_species = all_species[species]
 
 	if(!current_species || current_species.name == "Earthpony")
-		if(gender==FEMALE)
-			return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
-		else
-			return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		if(gender==FEMALE)		return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		else					return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	else
 		return current_species.get_random_name(gender)
 

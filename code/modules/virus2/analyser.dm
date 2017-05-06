@@ -18,7 +18,7 @@
 		return
 
 	dish = O
-	user.drop_item()
+	user.drop_active_hand()
 	O.loc = src
 
 	user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")

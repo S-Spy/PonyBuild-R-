@@ -37,17 +37,14 @@
 				// Induce blurriness
 				target.visible_message("<span class='danger'>[target] looks momentarily disoriented.</span>", "<span class='danger'>You see stars.</span>")
 				target.apply_effect(attack_damage*2, EYE_BLUR, armour)
-			if("l_arm", "l_hand")
-				if (target.l_hand)
+			if("l_arm", "l_hand", "r_arm", "r_hand")
+				if(target.hand)
 					// Disarm left hand
 					//Urist McAssistant dropped the macguffin with a scream just sounds odd. Plus it doesn't work with NO_PAIN
-					target.visible_message("<span class='danger'>\The [target.l_hand] was knocked right out of [target]'s grasp!</span>")
-					target.drop_l_hand()
-			if("r_arm", "r_hand")
-				if (target.r_hand)
-					// Disarm right hand
-					target.visible_message("<span class='danger'>\The [target.r_hand] was knocked right out of [target]'s grasp!</span>")
-					target.drop_r_hand()
+					target.visible_message("<span class='danger'>\The [target.hand.item_in_hand] was knocked right out of [target]'s grasp!</span>")
+					for(var/datum/hand/H in target.list_hands)
+						if(zone in H.connect_organ_names)
+							target.drop_active_hand(null, H)
 			if("chest")
 				if(!target.lying)
 					var/turf/T = get_step(get_turf(target), get_dir(get_turf(user), get_turf(target)))

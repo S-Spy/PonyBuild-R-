@@ -179,7 +179,14 @@
 				//TODO: generalize this.
 				user << "<span class='notice'>You add some cable to the [src.name] and slide it inside the battery casing.</span>"
 				var/obj/item/weapon/cell/potato/pocell = new /obj/item/weapon/cell/potato(get_turf(user))
-				if(src.loc == user && !(user.l_hand && user.r_hand) && istype(user,/mob/living/carbon/pony))
+
+				var/has_free_hand
+				for(var/datum/hand/H in user.list_hands)
+					if(!H.item_in_hand)
+						has_free_hand = 1
+						break
+
+				if(src.loc == user && has_free_hand && istype(user,/mob/living/carbon/pony))
 					user.put_in_hands(pocell)
 				pocell.maxcharge = src.potency * 10
 				pocell.charge = pocell.maxcharge

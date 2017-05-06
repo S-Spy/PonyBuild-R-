@@ -6,7 +6,7 @@
 ######################################################################
 
 # not_a_user - Admin
-#S_Spy - Host
+S_Spy - Host
 Dudeman1011 - Game Master
 Zorghol - Head Admin
 Aphimag - Host

@@ -90,7 +90,7 @@ FLOOR SAFES
 	var/mob/living/carbon/pony/user = usr
 
 	var/canhear = 0
-	if(istype(user.l_hand, /obj/item/clothing/accessory/stethoscope) || istype(user.r_hand, /obj/item/clothing/accessory/stethoscope))
+	if(user.type_in_hands(/obj/item/clothing/accessory/stethoscope))
 		canhear = 1
 
 	if(href_list["open"])
@@ -146,7 +146,7 @@ FLOOR SAFES
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			user.drop_item()
+			user.drop_active_hand()
 			I.loc = src
 			user << "<span class='notice'>You put [I] in [src].</span>"
 			updateUsrDialog()

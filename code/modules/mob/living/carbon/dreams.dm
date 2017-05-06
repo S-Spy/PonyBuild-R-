@@ -71,14 +71,13 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 		user.g_skin = rand(1, 240)
 		user.r_skin = rand(1, 240)
 		user.f_style = "Shaved"
-		user.h_style = "Vinyl Hair"
+		user.h_style = "Short Hair"
 		user.pony_tail_style = "Short Tail"
 		user.name = "Stranger"
-	var/obj/item/device/flashlight/lantern/LAMP = new/obj/item/device/flashlight/lantern
+	var/obj/item/device/flashlight/lantern/LAMP = new/obj/item/device/flashlight/lantern()
 	LAMP.brightness_on = 3
 	LAMP.initialize()
-	if(prob(50))	user.l_hand = LAMP
-	else	user.r_hand = LAMP
+	if(prob(50))	user.put_in_free_hand(LAMP)
 
 	user.SetLuminosity(LAMP.brightness_on)
 	user.regenerate_icons()

@@ -113,7 +113,7 @@
 				"\blue You add one of [O] to \the [src].")
 		else
 		//	user.before_take_item(O)	//This just causes problems so far as I can tell. -Pete
-			user.drop_item()
+			user.drop_active_hand()
 			O.loc = src
 			user.visible_message( \
 				"\blue [user] has added \the [O] to \the [src].", \

@@ -14,7 +14,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target as mob, mob/living/user as mob)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
-	user.drop_item()
+	user.drop_active_hand()
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	user.put_in_active_hand(B)
 	if(prob(33))
@@ -43,7 +43,7 @@
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/datum/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
+	var/datum/organ/external/affecting = user.zone_sel.selecting.name //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armour values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.

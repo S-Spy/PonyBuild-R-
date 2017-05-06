@@ -40,7 +40,7 @@
 		return
 
 	new build_type( user.loc )
-	user.drop_item()
+	user.drop_active_hand()
 	del(src)
 	return
 

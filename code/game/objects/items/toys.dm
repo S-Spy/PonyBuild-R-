@@ -240,7 +240,7 @@
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(istype(I, /obj/item/toy/ammo/crossbow))
 			if(bullets <= 4)
-				user.drop_item()
+				user.drop_active_hand()
 				del(I)
 				bullets++
 				user << "\blue You load the foam dart into the crossbow."
@@ -364,8 +364,8 @@
 
 		if(istype(user,/mob/living/carbon/pony))
 			var/mob/living/carbon/pony/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+			H.update_inv_hands()
+			H.update_inv_hands()
 
 		src.add_fingerprint(user)
 		return
