@@ -22,6 +22,43 @@
 		src << "\red The github URL is not set in the server configuration."
 	return
 
+var/list/bagreports = list()
+
+/client/verb/fast_bag_report()//Не забыть про чейнжлог
+	set name = "fast_bag_report"
+	set desc = "You can read and write here about actual errors."
+	set hidden = 1
+	var/dat = "<html><body>"
+	for(var/message in bagreports)
+		if(message)
+			dat += message
+			//dat += "<a href=?bagreport_remove> Remove</a>"
+			dat += "<br><br>"
+	dat += "<a href=?bagreport_add><b>\[Add Report\]</a></b><br>"
+	dat += "</body></html>"
+	usr << browse(dat, "window=bagreport;size=300x400")
+
+/world/New()
+	..()
+	var/file = file2text("data/bagreport.txt")
+	bagreports = splittext(file, "\n")
+
+/world/Del()
+	fdel("data/bagreport.txt")
+	for(var/message in bagreports)
+		if(message)	text2file("[message]\n","data/bagreport.txt")
+	..()
+
+
+/client/Topic(href)
+	if(href == "bagreport_add")
+		var/message = input("Введите описание ошибки.","Сообщение")
+		if(message)
+			bagreports += "<b>[usr.key]:</b> [message]"
+		fast_bag_report()
+
+	else ..()
+
 /client/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum ingame."

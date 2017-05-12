@@ -1,3 +1,4 @@
+<html><body>
 <h1>Welcome to Pony Station!</h1><br>
 <br><strong>Bugtracker:</strong> Discord: https://discord.gg/7vtx8RC<br>
 <br>We are glad to see you on our server, but is obliged to warn that is the server test. No admins and rules. Build updated regularly.<br>
@@ -6,5 +7,7 @@ Forum working!<br><br>
 <br>Good people who participated in the development:
 <br>Zorghol - Cool Spriter
 <br>Sosiskoed - Merry Mapper
+<br>ѕроверка буквы €1-€я€-яяя€€€яяя
 <br>MyGhosst - Good friend and Spriter<br>
 <br>Luna Solar - Creative Storyteller<br>
+</body></html>

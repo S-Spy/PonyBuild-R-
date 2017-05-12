@@ -21,6 +21,18 @@
  * Text sanitization
  */
 
+/mob/verb/test_text()
+	var/t = "\"__ßÿßÿß___ßßßÿÿÿßßß__\""
+	usr << "1._"+fix_255(t)
+	usr << "2._"+strip_html_simple(t)
+	usr << "3._"+sanitize_simple(t)
+	usr << "4._"+readd_quotes(t)
+	usr << "5._"+sanitize(t)
+	usr << "6._"+strip_html(t)
+	usr << "7._"+reject_bad_text(t)
+
+
+
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
@@ -45,14 +57,15 @@ proc/fix_255(var/text)
 	return replacetext(text, "ÿ", "&#255;")
 
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="","\t"="", "ÿ"="&#255;") )
 	//t = fix_255(t)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
+	t = readd_quotes(t)
 	return t
 
 /proc/readd_quotes(var/t)
-	var/list/repl_chars = list("&#34;" = "\"")
+	var/list/repl_chars = list("&#34;" = "\"", "&#255;" = "ÿ")
 	for(var/char in repl_chars)
 		var/index = findtext(t, char)
 		while(index)
