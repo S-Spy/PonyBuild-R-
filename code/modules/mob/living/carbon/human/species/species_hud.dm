@@ -28,7 +28,7 @@
 	var/list/adding_intent = list(
 		"mov_intent"	=  list("loc" = ui_movi, 														"dir" = SOUTHWEST),
 		"resist"		=  list("loc" = ui_pull_resist, "state" = "act_resist", 										 ),
-		"drop"			=  list("loc" = ui_drop_throw, 	"state" = "act_drop", 												 ),
+		"drop"			=  list("loc" = ui_drop_throw, 	"state" = "act_drop", 											 ),
 		"act_intent"	=  list("loc" = ui_acti,	 					 								"dir" = SOUTHWEST),
 		"equip"			=  list("loc" = ui_equip,	 	"state" = "act_equip", 											 )
 		)
@@ -44,7 +44,8 @@
 		"pressure"			=  list("loc" = ui_pressure, 	"state" = "pressure0"							 ),
 		"body temperature"	=  list("loc" = ui_temp, 		"state" = "temp1" 								 ),
 		"nutrition"			=  list("loc" = ui_nutrition, 	"state" = "nutrition0" 							 ),
-		"damage zone"		=  list("loc" = ui_zonesel, 	"noicon"= 1, "noname" = 1)
+		"emoji"				=  list("loc" = ui_emoji, 		"state" = "0", "noicon"	= 1						 ),
+		"damage zone"		=  list("loc" = ui_zonesel, 	"noicon"= 1, "noname" = 1						 )
 	)
 	var/list/hud_splash_add = list(
 		"flash"				=  list("loc" = "1,1 to 15,15", "state" = "blank", 			 				),

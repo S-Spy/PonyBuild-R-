@@ -381,29 +381,18 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			stand_icon.Blend(new/icon('icons/mob/pony_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
+	if(cutie_mark)
+		var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
+		if(CM)	stand_icon.Blend(new/icon(CM.icon, "icon_state" = CM.icon_state), ICON_OVERLAY)
+
 	if(species.flags & HAS_WINGS)
 		var/icon/IW = new/icon(species.icobase, "wings")
 		IW.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 		stand_icon.Blend(IW, ICON_OVERLAY)
 
-	if(cutie_mark)
-		var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
-		if(CM)	stand_icon.Blend(new/icon(CM.icon, "icon_state" = CM.icon_state), ICON_OVERLAY)
 
-	if(species.flags & HAS_HORN)
-		var/icon/ICON = new/icon(species.icobase, "icon_state" = "horn")
-		ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
-		var/has_item
-		for(var/datum/hand/H in list_hands)
-			if(H.item_in_hand)
-				has_item = 1
-				break
-		if(has_item || horn_light || horn_light_short)
-			var/icon/aura = new/icon('icons/mob/pony.dmi', "icon_state" = "unicorn_light")
-			aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
-			ICON.Blend(aura, ICON_OVERLAY)
-		stand_icon.Blend(ICON, ICON_OVERLAY)
-		update_unicorn_verbs()//Обновление списка вербов заклинаний
+
+
 
 	if(update_icons)
 		update_icons()
@@ -426,8 +415,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	//base icons
 	var/icon/face_standing	= new /icon('icons/mob/pony_face.dmi',"bald_s")
 
-	if(gender == FEMALE)
-		face_standing.Blend(new /icon('icons/mob/pony.dmi', "f1"), ICON_OVERLAY)
+	if(gender == FEMALE)	face_standing.Blend(new /icon('icons/mob/pony.dmi', "f1"), ICON_OVERLAY)
 	else					face_standing.Blend(new /icon('icons/mob/pony.dmi', "m"), ICON_OVERLAY)
 
 	if(f_style)
@@ -439,17 +427,35 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 
+	if(species.flags & HAS_HORN)
+		var/icon/ICON = new/icon(species.icobase, "icon_state" = "horn")
+		ICON.Blend(rgb(r_skin, g_skin, b_skin))
+		face_standing.Blend(ICON, ICON_OVERLAY)
+
+		var/has_item
+		for(var/datum/hand/H in list_hands)
+			if(H.item_in_hand)
+				has_item = 1
+				break
+		if(has_item || horn_light || horn_light_short)
+			var/icon/aura = new/icon('icons/mob/pony.dmi', "icon_state" = "horn_light")
+			aura.Blend(rgb(r_aura, g_aura, b_aura))
+			face_standing.Blend(aura, ICON_OVERLAY)
+
+		update_unicorn_verbs()//Обновление списка вербов заклинаний
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && src.species.name in hair_style.species_allowed)
 			var/un
-			if(species.name == "Unicorn")	un = "_un"
+			if(species.flags & HAS_HORN)	un = "_un"
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			if(hair_style.do_colouration)
 				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
 			face_standing.Blend(hair_s, ICON_OVERLAY)
+
+
 
 	//Pony tail
 	if(get_organ("groin"))//Если есть флаг хвоста и тело, на котором он может держаться
@@ -939,7 +945,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 				if(HOOF_ICON)	overlays_standing[R_HAND_LAYER] = null
 				if(TELE_ICON)	overlays_standing[L_HAND_LAYER] = null
 
-	if(update_icons) update_icons()
+	if(ispony(src))
+		src:update_hair(0)
+	if(update_icons)
+		update_icons()
 
 
 //Adds a collar overlay above the helmet layer if the suit has one

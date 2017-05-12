@@ -29,6 +29,17 @@
 	if(mob.Selected_Forum)	mob.Display_HTML_Forum()
 	else	mob.Display_HTML_SubForum()
 
+#define BACKSTORY_FILE "config/backstory.html"
+/client/verb/backstory()
+	set name = "backstory"
+	set desc = "Show our backstories."
+	set hidden = 1
+
+	src << browse(file(BACKSTORY_FILE), "window=backstory;size=480x320")
+	return
+#undef BACKSTORY_FILE
+
+
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()
 	set name = "Rules"

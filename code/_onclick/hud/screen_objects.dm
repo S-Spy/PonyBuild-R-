@@ -14,7 +14,6 @@
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 
-
 /obj/screen/text
 	icon = null
 	icon_state = null
@@ -311,7 +310,6 @@ proc/get_pixel_list(var/obj/screen/zone_sel/O)
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return 1
-
 
 	switch(name)
 		if("toggle", "toggle_inv")

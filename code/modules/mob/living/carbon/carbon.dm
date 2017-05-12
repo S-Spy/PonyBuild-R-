@@ -386,12 +386,9 @@
 		usr << "\red You are already sleeping"
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		if(!home_mob && prob(30))
-			var/t = rand(200, 6000)
-			usr.sleeping = 20
-			goto_dream(t)
-		else if(home_mob)	goto_dream(2, 1)
-		else	usr.sleeping = 20
+		usr.sleeping = 20
+
+
 
 /mob/living/carbon/Bump(atom/movable/AM as mob|obj, yes)
 

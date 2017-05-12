@@ -70,18 +70,23 @@
 				hud_elements |= using
 
 				var/list/obj/screen/small_sort_list = list()//Маленькие подиконки режимов
-
-				using = new /obj/screen( src );	using.name = "help";	help_intent = using;	small_sort_list += using
-				using = new /obj/screen( src );	using.name = "disarm";	disarm_intent = using;	small_sort_list += using
-				using = new /obj/screen( src );	using.name = "grab";	grab_intent = using;	small_sort_list += using
-				using = new /obj/screen( src );	using.name = "harm";	hurt_intent = using;	small_sort_list += using
+				if(ui_style != 'icons/mob/screen1.dmi')
+					using = new /obj/screen( src );	using.name = "help";	help_intent = using;	small_sort_list += using
+					using = new /obj/screen( src );	using.name = "disarm";	disarm_intent = using;	small_sort_list += using
+					using = new /obj/screen( src );	using.name = "grab";	grab_intent = using;	small_sort_list += using
+					using = new /obj/screen( src );	using.name = "harm";	hurt_intent = using;	small_sort_list += using
 
 				for(var/obj/screen/gui in small_sort_list)
 					gui.layer = 21
 					gui.screen_loc = ui_acti
 					var/icon/ico = new(ui_style, "black")
 					ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
-					ico.DrawBox(rgb(255,255,255,1),1,1,ico.Width()/2,ico.Height()/2)
+					switch(gui.name)
+						if("help")		ico.DrawBox(rgb(255,255,255,1), 1,				1+ico.Height()/2, 	ico.Width()/2,	ico.Height())
+						if("disarm")	ico.DrawBox(rgb(255,255,255,1), 1+ico.Width()/2,1+ico.Height()/2, 	ico.Width(),	ico.Height())
+						if("grab")		ico.DrawBox(rgb(255,255,255,1), 1+ico.Width()/2,1, 					ico.Width(),	ico.Height()/2)
+						if("harm")		ico.DrawBox(rgb(255,255,255,1), 1,				1, 					ico.Width()/2,	ico.Height()/2)
+
 					gui.icon = ico
 					src.adding += gui
 
@@ -104,7 +109,8 @@
 
 		switch(hud_slot)
 			if("damage zone")	using = new /obj/screen/zone()
-			else		using = new /obj/screen()
+			if("emoji")			using = new /obj/screen/emoji()
+			else				using = new /obj/screen()
 
 
 		if(!slot_data["noname"])	using.name = hud_slot
@@ -211,7 +217,7 @@
 			src.other += inv_box
 
 
-	mymob.pain = new /obj/screen( null )//Зачем это?
+	mymob.pain = new /obj/screen( null )
 
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)

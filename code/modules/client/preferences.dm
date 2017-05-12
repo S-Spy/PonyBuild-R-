@@ -23,8 +23,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"diona" = 1,                                         // 12
 	"mutineer" = IS_MODE_COMPILED("mutiny"),             // 13
 	"pAI candidate" = 1, // -- TLE                       // 14
-//	"ghost hunter" = IS_MODE_COMPILED("ghostbusters"),   // 15
-//	"master of dreams" = IS_MODE_COMPILED("daemon"),     // 16
+	//"ghost hunter" = IS_MODE_COMPILED("ghostbusters"),   // 15
+	//"master of dreams" = IS_MODE_COMPILED("daemon")     // 16
 )
 
 //used for alternate_option
@@ -33,6 +33,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 #define RETURN_TO_LOBBY 2
 
 datum/preferences
+	var/show_choices = 1
+
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -245,6 +247,9 @@ datum/preferences
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
+	if(!show_choices)
+		show_choices = 1
+		return
 	if(!user || !user.client)	return
 	if(!pony_tail_style)	pony_tail_style = "Short Tail"
 	update_preview_icon()
@@ -608,19 +613,73 @@ datum/preferences
 	return
 
 /datum/preferences/proc/SetSpecies(mob/user)
-	if(!species_preview || !(species_preview in all_species))
+	if(!species_preview)
+		species_preview = species
+
+	if(!(species_preview in all_species))
 		species_preview = "Earthpony"
+
 	var/datum/species/current_species = all_species[species_preview]
-	var/dat = "<body>"
-	dat += "<center><h2>[current_species.name] \[<a href='?src=\ref[user];preference=species;task=change'>change</a>\]</h2></center><hr/>"
-	dat += "<table padding='8px'>"
+
+	var/dat = {"<html><head>
+	<script>
+		var dir=1;
+		var icon;
+	</script>
+
+	<script>
+		function update_preview_icon() {
+			switch(dir) {
+				case 1:
+					icon.src='species_preview_[current_species.name]_w.png';
+					dir = 2;
+					break;
+				case 2:
+					icon.src='species_preview_[current_species.name]_n.png';
+					dir = 3;
+					break;
+				case 3:
+					icon.src='species_preview_[current_species.name]_e.png';
+					dir = 4;
+					break;
+				default:
+					icon.src='species_preview_[current_species.name]_s.png';
+					dir = 1;
+					break;
+			}
+		}
+	</script>
+	</head><body>"}
+
+
+
+	dat += "<center><h2>[current_species.name]</h2></center><hr/>"
+	dat += "<table><tr><td>"
+	dat += "<table border=1>"
+
+	var/list/check_list = list()//Для проверки дублирования
+	for(var/S in playable_species)
+		if(S in check_list)	continue
+		check_list += S
+		if(S!=current_species.name)
+			dat += "<tr><td><a href='?src=\ref[user];preference=species;task=change;select=[S]'>[S]</a></td></tr>"
+		else
+			dat += "<tr><td><a href='?src=\ref[user];preference=species;task=change;select=[S]'><b>[S]</b></a></td></tr>"
+	dat += "</table></td>"
+	dat += "<td width=50> </td>"
+
+	dat += "<td><table padding='8px'>"
 	dat += "<tr>"
-	dat += "<td width = 400>[current_species.blurb]</td>"
+	dat += {"<td width = 400>[current_species.blurb]</td>"}
 	dat += "<td width = 200 align='center'>"
 	if("preview" in icon_states(current_species.icobase))
-		usr << browse_rsc(icon(current_species.icobase,"preview"), "species_preview_[current_species.name].png")
-		dat += "<img src='species_preview_[current_species.name].png' width='64px' height='64px'><br/><br/>"
-	dat += "<b>Language:</b> [current_species.language]<br/>"
+		usr << browse_rsc(icon(current_species.icobase,"preview", NORTH), "species_preview_[current_species.name]_n.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", WEST), "species_preview_[current_species.name]_w.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", SOUTH), "species_preview_[current_species.name]_s.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", EAST), "species_preview_[current_species.name]_e.png")
+		dat += {"<img src='species_preview_[current_species.name]_s.png' id="icon_preview" width='64px' height='64px'><br><br>"}
+
+	dat += "<b>Language:</b> [current_species.language]<br>"
 	dat += "<small>"
 	if(current_species.flags & CAN_JOIN)
 		dat += "</br><b>Often present on pony stations.</b>"
@@ -650,7 +709,7 @@ datum/preferences
 		dat += "</br><b>Is machine-based.</b>"
 	dat += "</small></td>"
 	dat += "</tr>"
-	dat += "</table><center><hr/>"
+	dat += "</table></td></tr></table><center><hr/>"
 	unicorn_spells = list()
 	if(current_species.flags & HAS_HORN)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
@@ -671,10 +730,19 @@ datum/preferences
 	//	else if(restricted == 2)
 	//		dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
 	//if(!restricted || check_rights(R_ADMIN, 0))
+
 	dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
-	dat += "</center></body>"
+	dat += "</center>"
+	dat += {"
+<script>
+	icon = document.getElementById("icon_preview");
+	setInterval(update_preview_icon, 1200);
+</script>
+	"}
+	dat += "</body></html>"
 
 	user << browse(null, "window=preferences")
+	//user << browse(dat, "window=preferences;size=700x400")
 	user << browse(dat, "window=species;size=700x400")
 
 /datum/preferences/proc/SetAntagoptions(mob/user)
@@ -703,14 +771,19 @@ datum/preferences
 	HTML += "<tt><center>"
 	HTML += "<b>Spell Options</b> <hr /><br>"
 	free_SP = total_SP
-	HTML += "<br><b>Spells:</b><br>"
+	HTML += "<br><b>Spells:</b><br><table>"
 	for(var/i = 1; i <= unicorn_spells.len; i++)
 		var/datum/spells/G = uspell_datums[unicorn_spells[i]]
 		free_SP -= G.cost
-		HTML += "[G.color] [i].[G.spell_name] - [G.cost] SP   <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell[i];active=1'>Remove</a><br>"
+		HTML += "<tr><td>[i]. </td>"
+		HTML += "<td> [G.spell_name] </td>"
+		HTML += "<td>  [G.cost] SP </td>"
+		HTML += "<td bgcolor=[G.color] width=30> [G.color] </td>"
+		HTML += "<td> <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell;spellname=[G.spell_name];active=1'>Remove</a></td></tr>"
+	HTML += "</table>"
 
 	if(free_SP > 0)
-		HTML +="<a href='?src=\ref[user];preference=spelloptions;spelltask=addspell;active=1'>Add Spell</a>"
+		HTML +="<br><a href='?src=\ref[user];preference=spelloptions;spelltask=addspell;active=1'>Add Spell</a>"
 	HTML +="<br>"
 	HTML +="<br>"
 	HTML +="Free Spell Points: [free_SP]/[total_SP]<br>"
@@ -720,37 +793,8 @@ datum/preferences
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=spelloptions")
+	user << browse(HTML, "window=spelloptions;size=300x250")
 
-	/*
-	HTML +="Uplink Type : <b><a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
-	HTML +="<br>"
-	if(jobban_isbanned(user, "Records"))
-		HTML += "<b>You are banned from using character records.</b><br>"
-	else
-		HTML +="<b><a href=\"byond://?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
-
-
-
-		dat += "<br><b>Custom Loadout:</b> "
-
-
-	var/total_cost = 0
-
-	if(!islist(gear)) gear = list()
-
-	if(gear && gear.len)
-		dat += "<br>"
-		for(var/i = 1; i <= gear.len; i++)
-			var/datum/gear/G = gear_datums[gear[i]]
-			if(G)
-				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
-
-		dat += "<b>Used:</b> [total_cost] points."
-	else
-		dat += "none."
-	*/
 	return
 
 /datum/preferences/proc/SetFlavorText(mob/user)
@@ -1190,38 +1234,11 @@ datum/preferences
 				var/choice = input(user, "Select unicorn spell to add: ") as null|anything in valid_spell_choices
 				unicorn_spells[choice] = uspell_datums[choice]
 			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell1")
-			unicorn_spells -= unicorn_spells[1]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell2")
-			unicorn_spells -= unicorn_spells[2]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell3")
-			unicorn_spells -= unicorn_spells[3]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell4")
-			unicorn_spells -= unicorn_spells[4]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell5")
-			unicorn_spells -= unicorn_spells[5]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell6")
-			unicorn_spells -= unicorn_spells[6]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell7")
-			unicorn_spells -= unicorn_spells[7]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell8")
-			unicorn_spells -= unicorn_spells[8]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell9")
-			unicorn_spells -= unicorn_spells[9]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell10")
-			unicorn_spells -= unicorn_spells[10]
+		if (href_list["spelltask"] == "removespell")
+			unicorn_spells -= uspell_datums[href_list["spellname"]]
 			SetSpelloptions(user)
 		if (href_list["spelltask"] == "done")
-			user << browse(null, "window=spelloptions")
+			//user << browse(null, "window=spelloptions")
 			ShowChoices(user)
 		return 1
 
@@ -1279,10 +1296,12 @@ datum/preferences
 		if("change")
 			if(href_list["preference"] == "species")
 				// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
-				var/choice = input("Which species would you like to look at?") as null|anything in playable_species
-				if(!choice) return
-				species_preview = choice
+				if(href_list["select"])
+					species_preview = href_list["select"]
+
+				show_choices = 0
 				SetSpecies(user)
+
 
 		if("random")
 			switch(href_list["preference"])
@@ -1291,37 +1310,29 @@ datum/preferences
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if("hair")
-					r_hair = rand(0,255)
-					g_hair = rand(0,255)
-					b_hair = rand(0,255)
+					randomize_hair_color("hair")
 				if("h_style")
 					h_style = random_style(gender, species)
 				if("facial")
-					r_facial = rand(0,255)
-					g_facial = rand(0,255)
-					b_facial = rand(0,255)
+					randomize_hair_color("facial")
 				if("f_style")
 					f_style = random_style(gender, species, facial_hair_styles_list)
 				if("pony_tail_style")
 					pony_tail_style = random_style(gender, species, pony_tail_styles_list)
 				if("pony_tail_color")
-					r_tail = rand(0,255)
-					g_tail = rand(0,255)
-					b_tail = rand(0,255)
+					randomize_hair_color("tail")
+				if("aura")
+					randomize_aura_color()
 					//ShowChoices(user)
 				if("cutie_mark")
 					cutie_mark = random_cutiemark()
 					//ShowChoices(user)
 				if("eyes")
-					r_eyes = rand(0,255)
-					g_eyes = rand(0,255)
-					b_eyes = rand(0,255)
+					randomize_eyes_color()
 				if("s_tone")
 					s_tone = random_skin_tone()
 				if("s_color")
-					r_skin = rand(0,255)
-					g_skin = rand(0,255)
-					b_skin = rand(0,255)
+					randomize_skin_color()
 				if("bag")
 					backbag = rand(1,4)
 				/*if("skin_style")
@@ -1349,49 +1360,8 @@ datum/preferences
 					var/prev_species = species
 					species = href_list["newspecies"]
 					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+						randomize_appearance_for()
 
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Short Hair"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
-
-						//reset hair colour and skin colour
-						//r_hair = 0//hex2num(copytext(new_hair, 2, 4))
-						//g_hair = 0//hex2num(copytext(new_hair, 4, 6))
-						//b_hair = 0//hex2num(copytext(new_hair, 6, 8))
-
-						s_tone = 0
 
 				if("language")
 					var/languages_available

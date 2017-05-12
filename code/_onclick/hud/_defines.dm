@@ -60,32 +60,33 @@
 
 #define ui_borg_pull "12:24,2:7"
 #define ui_borg_module "13:26,2:7"
-#define ui_borg_panel "14:28,2:7"
+#define ui_borg_panel "EAST:-4,2:7"
 
 //Gun buttons
 #define ui_gun1 "13:26,3:7"
 #define ui_gun2 "14:28, 4:7"
 #define ui_gun3 "13:26,4:7"
-#define ui_gun_select "14:28,3:7"
+#define ui_gun_select "EAST:-4,3:7"
 
 //Upper-middle right (damage indicators)
-#define ui_toxin "14:28,13:27"
-#define ui_fire "14:28,12:25"
-#define ui_oxygen "14:28,11:23"
-#define ui_pressure "14:28,10:21"
+#define ui_toxin "EAST:-4,13:27"
+#define ui_fire "EAST:-4,12:25"
+#define ui_oxygen "EAST:-4,11:23"
+#define ui_pressure "EAST:-4,10:21"
 
-#define ui_alien_toxin "14:28,13:25"
-#define ui_alien_fire "14:28,12:25"
-#define ui_alien_oxygen "14:28,11:25"
+#define ui_alien_toxin "EAST:-4,13:25"
+#define ui_alien_fire "EAST:-4,12:25"
+#define ui_alien_oxygen "EAST:-4,11:25"
 
 //Middle right (status indicators)
-#define ui_nutrition "14:28,5:11"
-#define ui_temp "14:28,6:13"
-#define ui_health "14:28,7:15"
-#define ui_internal "14:28,8:17"
+#define ui_emoji "EAST:-4,NORTH-1:11"
+#define ui_nutrition "EAST:-4,5:11"
+#define ui_temp "EAST:-4,6:13"
+#define ui_health "EAST:-4,7:15"
+#define ui_internal "EAST:-4,8:17"
 									//borgs
-#define ui_borg_health "14:28,6:13" //borgs have the health display where ponys have the pressure damage indicator.
-#define ui_alien_health "14:28,6:13" //aliens have the health display where ponys have the pressure damage indicator.
+#define ui_borg_health "EAST:-4,6:13" //borgs have the health display where ponys have the pressure damage indicator.
+#define ui_alien_health "EAST:-4,6:13" //aliens have the health display where ponys have the pressure damage indicator.
 
 //Pop-up inventory
 #define ui_shoes "7:16,5:-8"
