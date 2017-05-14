@@ -9,8 +9,9 @@
 S_Spy - Host
 Dudeman1011 - Game Master
 Zorghol - Head Admin
-Zorghol - FighterX2500
+FighterX2500 - Head Admin
 Aphimag - Host
 MyGhosst - Guard Admin
 Luna Solar - Guard Admin
 Sosiskoed - Guard Admin
+IWuna - Guard Admin

@@ -42,7 +42,7 @@
 		while(index)
 			t = copytext(t, 1, index) + copytext(t, index+1)
 			index = findtext(t, char)
-	return t
+	return fix_255(t)
 
 /*
 proc/sanitize_russian(var/msg)
@@ -58,20 +58,16 @@ proc/fix_255(var/text)
 
 //Removes a few problematic characters
 /proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="","\t"="", "ÿ"="&#255;") )
-	//t = fix_255(t)
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
-	t = readd_quotes(t)
+	//t = readd_quotes(t)
 	return t
 
 /proc/readd_quotes(var/t)
 	var/list/repl_chars = list("&#34;" = "\"", "&#255;" = "ÿ")
 	for(var/char in repl_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
-			index = findtext(t, char)
-	return t
+		t = replacetext(t, char, repl_chars[char])
+	return fix_255(t)
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
