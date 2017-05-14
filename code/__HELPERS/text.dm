@@ -23,6 +23,7 @@
 
 /mob/verb/test_text()
 	var/t = "\"__ßÿßÿß___ßßßÿÿÿßßß__\""
+
 	usr << "1._"+fix_255(t)
 	usr << "2._"+strip_html_simple(t)
 	usr << "3._"+sanitize_simple(t)
@@ -72,7 +73,10 @@ proc/fix_255(var/text)
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
 	t = html_encode(sanitize_simple(t,repl_chars))
-	return fix_255(html_encode(sanitize_simple(t,repl_chars)))
+	t = replacetext(t, "&amp;#255;", "&#255;")
+	t = replacetext(t, "&#39;", "'")
+	t = replacetext(t, "&#34;", "\"")
+	return t
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
