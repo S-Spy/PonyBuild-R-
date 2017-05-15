@@ -813,7 +813,7 @@ window "rpane"
 		anchor2 = none
 		background-color = none
 		saved-params = "is-checked"
-		text = "BagReport"
+		text = "BugReport"
 		command = "fast_bag_report"
 		group = "rpanemode"
 	elem "forumb"

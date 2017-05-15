@@ -404,15 +404,16 @@ datum/preferences
 		dat += "<br><br>"
 
 	dat += "CutieMark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
-	dat += "Custom CutieMark: <a href='?_src_=prefs;cutie_paint=switch'><b>"
+	/*dat += "Custom CutieMark: <a href='?_src_=prefs;cutie_paint=switch'><b>"
 	if(custom_cutiemark)
 		dat += "Yes</b></a> "
 		dat += " <a href='?_src_=prefs;cutie_paint=set'><b>Draw Cutiemark"
 	else
 		dat += "No"
+	dat += "</b></a><br><br>"*/
 
 
-	dat += "</b></a><br><br>Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
 	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
