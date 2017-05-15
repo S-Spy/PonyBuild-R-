@@ -195,8 +195,10 @@
 	S["uplinklocation"] >> uplinklocation
 	S["exploit_record"]	>> exploit_record
 
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
+
+	S["cutie_paint"]		>> colors4x4
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -337,7 +339,7 @@
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]		<< player_alt_titles
+	S["player_alt_titles"]	<< player_alt_titles
 	S["be_special"]			<< be_special
 	S["disabilities"]		<< disabilities
 	S["used_skillpoints"]	<< used_skillpoints
@@ -359,6 +361,8 @@
 
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha
+
+	S["cutie_paint"]		<< colors4x4
 
 	return 1
 

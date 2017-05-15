@@ -1,18 +1,22 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>color</title>
   <style>
    .letter {
     color: blue; /* Цвет символа */
     font-size: 110%; /* Размер шрифта */
    } 
+   .main {
+    color: darkgreen; /* Цвет символа */
+   } 
    p {
     color: rgb(49, 151, 116); /* Цвет текста */
+/*  text=#00c000*/
    }
   </style>
  </head> 
-<body text=#00c000>
+<body>
+<span class="main">
 <h1>Welcome to Pony Station!</h1><br>
 <br><strong>Bugtracker:</strong><br>
 <span class="letter"><b>Discord:</b> https://discord.gg/7vtx8RC</span><br>
@@ -22,6 +26,8 @@ Forum working!<br><br>
 <br>Good people who participated in the development:
 <br>Zorghol - Cool Spriter
 <br>Sosiskoed - Merry Mapper
-<br>MyGhosst - Good friend and Spriter<br>
+<br>iWuna - Spriter
+<br>MyGhosst - Good friend and Spriter
 <br>Luna Solar - Creative Storyteller<br>
+</span>
 </body></html>

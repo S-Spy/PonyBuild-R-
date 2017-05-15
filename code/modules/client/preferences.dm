@@ -146,7 +146,16 @@ datum/preferences
 	var/metadata = ""
 	var/slot_name = ""
 
+	var/brush_color
+	var/list/colors4x4[4][4]//Для записи в лист сохранений
+	var/custom_cutiemark = 0
+	var/icon/cutiemark_paint_west
+	var/icon/cutiemark_paint_east
+
 /datum/preferences/New(client/C)
+	for(var/i1=1, i1<=4, i1++)	for(var/i2=1, i2<=4, i2++)
+		colors4x4[i1][i2]="#00000000"
+
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C) && !IsGuestKey(C.key))
 		load_path(C.ckey)
@@ -394,9 +403,16 @@ datum/preferences
 	else
 		dat += "<br><br>"
 
-	dat += "Cutie Mark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
+	dat += "CutieMark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
+	dat += "Custom CutieMark: <a href='?_src_=prefs;cutie_paint=switch'><b>"
+	if(custom_cutiemark)
+		dat += "Yes</b></a> "
+		dat += " <a href='?_src_=prefs;cutie_paint=set'><b>Draw Cutiemark"
+	else
+		dat += "No"
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+
+	dat += "</b></a><br><br>Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
 	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
@@ -987,10 +1003,80 @@ datum/preferences
 					job_engsec_low |= job.flag
 	return 1
 
+/mob/var/icon/cutiemark_paint_west//Если стоит галочка, то эта переменная заполнится и будет использоваться заместо
+/mob/var/icon/cutiemark_paint_east
+
+/datum/preferences/proc/CustomCutiemarkPaint(mob/user)
+	if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	if(!cutiemark_paint_west)
+		cutiemark_paint_east = new/icon('icons/mob/cutiemarks.dmi', "blank")
+		cutiemark_paint_west = new/icon('icons/mob/cutiemarks.dmi', "blank")
+
+
+	var/dat = {"
+<html>
+<body>
+<b>Brush color:<b> <table><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
+<table border=0 cellspacing=0>"}
+
+	for(var/iy=4, iy>=1, iy--)
+		dat += "<tr>"
+		for(var/ix=1, ix<=4, ix++)
+			if(colors4x4[ix][iy]=="#00000000")
+				if(!( (ix==1 && (iy==4||iy==3)) || (ix==2 && iy==4) ))
+					colors4x4[ix][iy] = rgb(150, 150, 150)
+
+			dat += "<td bgcolor='[colors4x4[ix][iy]]'>"
+			dat += "<font face='fixedsys' size='3' color='[colors4x4[ix][iy]]'><a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors4x4[ix][iy]]'>__</a></font>"
+			dat += "</td>"
+		dat += "</tr>"
+	usr << browse_rsc(cutiemark_paint_east,"cutiemark_paint.png")
+	usr << browse_rsc(cutiemark_paint_west,"cutiemark_paint2.png")
+	dat += {"</table>
+<img src=cutiemark_paint.png height=128 width=128>
+<img src=cutiemark_paint2.png height=128 width=128>
+<br>
+<a href='?_src_=prefs;cutie_paint=3'>\[Done\]</a>
+</body>
+</html>
+"}
+
+	user << browse(dat, "window=cutie_paint;size=150x200")
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
 
 	if(!istype(user, /mob/new_player))	return
+
+	switch(href_list["cutie_paint"])
+		if("1")
+			brush_color = input(usr, "Choose your brush colour:", "Character Preference", brush_color) as color|null
+			CustomCutiemarkPaint(user)
+			return
+		if("2")
+			var/ix = text2num(href_list["x"])
+			var/iy = text2num(href_list["y"])
+
+			if( !(ix==1 && (iy==4 || iy==3)) && !(ix==2 && iy==4) )
+				colors4x4[ix][iy] = brush_color
+				cutiemark_paint_east.DrawBox(brush_color, 11+ix, 9+iy)
+				cutiemark_paint_west.DrawBox(brush_color, 16+5-ix, 9+iy)
+			CustomCutiemarkPaint(user)
+			return
+		if("3")
+			user << browse(null,  "window=cutie_paint")
+		if("switch")
+			custom_cutiemark = !custom_cutiemark
+		if("set")
+			CustomCutiemarkPaint(user)
+			return
+
+	if(href_list["preference"] == "cutie_paint")
+		if(config.forumurl)
+			user << link(config.forumurl)
+		else
+			user << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+			return
 
 	if(href_list["preference"] == "open_whitelist_forum")
 		if(config.forumurl)

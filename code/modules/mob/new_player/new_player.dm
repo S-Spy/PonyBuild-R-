@@ -470,6 +470,10 @@
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
 
+		if(client.prefs.custom_cutiemark)
+			new_character.cutiemark_paint_east = client.prefs.cutiemark_paint_east
+			new_character.cutiemark_paint_west = client.prefs.cutiemark_paint_west
+
 		if(client.prefs.disabilities)
 			// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X
 			new_character.dna.SetSEState(GLASSESBLOCK,1,0)

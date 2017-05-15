@@ -267,7 +267,7 @@ datum/preferences
 		if(current_species && (current_species.flags & HAS_SKIN_COLOR))
 			preview_icon.Blend(rgb(r_skin, g_skin, b_skin))
 
-		if(cutie_mark)
+		if(cutie_mark && !(cutiemark_paint_east && custom_cutiemark))
 			var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
 			if(CM)
 				var/icon/cutie_mark_s = new/icon(CM.icon, "icon_state" = CM.icon_state)
@@ -672,6 +672,12 @@ datum/preferences
 		preview_icon_front = new(preview_icon, dir = SOUTH)
 		preview_icon_side = new(preview_icon, dir = WEST)
 
+		if(cutiemark_paint_west && custom_cutiemark)
+			preview_icon_side.Blend(cutiemark_paint_west, ICON_OVERLAY)
+
 		del(eyes_s)
 		del(pony_tail_s)
 		del(clothes_s)
+
+
+
