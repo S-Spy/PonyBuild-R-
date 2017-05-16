@@ -568,7 +568,6 @@ The else statement is for equipping stuff to empty slots.
 It can still be worn/put on as normal.
 */
 /obj/effect/equip_e/pony/done()	//TODO: And rewrite this :< ~Carn
-	world << "TEST4"
 	target.cpr_time = 1
 	if(isanimal(source)) return //animals cannot strip people
 	if(!source || !target) return		//Target or source no longer exist

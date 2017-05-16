@@ -1,4 +1,4 @@
-//A storage item intended to be used by other items to provide storage functionality.
+ensor_monitoring.dmensor_monitoring.dm//A storage item intended to be used by other items to provide storage functionality.
 //Types that use this should consider overriding emp_act() and hear_talk(), unless they shield their contents somehow.
 /obj/item/weapon/storage/internal
 	var/obj/item/master_item
@@ -27,30 +27,52 @@
 //doing it without the ability to call another proc's parent, really.
 /obj/item/weapon/storage/internal/proc/handle_mousedrop(mob/user as mob, obj/over_object as obj)
 	if (ispony(user) || ismonkey(user)) //so monkeys can take off their backpacks -- Urist
-
 		if (istype(user.loc,/obj/mecha)) // stops inventory actions in a mech
 			return 0
-
 		if(over_object == user && Adjacent(user)) // this must come before the screen objects only block
 			src.open(user)
 			return 0
-
 		if (!( istype(over_object, /obj/screen) ))
 			return 1
-
 		//makes sure master_item is equipped before putting it in hand, so that we can't drag it into our hand from miles away.
 		//there's got to be a better way of doing this...
 		if (!(master_item.loc == user) || (master_item.loc && master_item.loc.loc == user))
 			return 0
 
 		if (!( user.restrained() ) && !( user.stat ))
-			for(var/datum/hand/H in usr.list_hands)
-				if(over_object.name in H.connect_organ_names)
-					usr.u_equip(src)
-					usr.put_in_active_hand(src, H)
+			for(var/datum/hand/H in user.list_hands)
+				if(over_object == H.slot)
+					user.u_equip(master_item)
+					user.put_in_active_hand(master_item, H)
+					break
 			master_item.add_fingerprint(user)
 			return 0
 	return 0
+
+
+/*
+/obj/item/clothing/suit/storage/MouseDrop(atom/over_object)
+	if(ishuman(usr) || ismonkey(usr))
+		var/mob/M = usr
+		if (!( istype(over_object, /obj/screen/inventory) ))
+			return ..()
+
+		if(!(src.loc == usr) || (src.loc && src.loc.loc == usr))
+			return
+
+		playsound(get_turf(src), "rustle", 50, 1, -5)
+		if (!M.incapacitated())
+			var/obj/screen/inventory/OI = over_object
+
+			if(OI.hand_index && M.put_in_hand_check(src, OI.hand_index))
+				M.u_equip(src, 0)
+				M.put_in_hand(OI.hand_index, src)
+				M.update_inv_wear_suit()
+				src.add_fingerprint(usr)
+			return
+
+		usr.attack_hand(src)
+*/
 
 //items that use internal storage have the option of calling this to emulate default storage attack_hand behaviour.
 //returns 1 if the master item's parent's attack_hand() should be called, 0 otherwise.

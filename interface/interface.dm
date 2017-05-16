@@ -54,7 +54,7 @@ var/list/bagreports = list()
 	if(href == "bagreport_add")
 		var/message = input("¬ведите описание ошибки.","—ообщение")
 		if(message)
-			bagreports += "<b>[usr.key]:</b> [message]"
+			bagreports += "<b>[usr.key]:</b> [sanitize_simple(message)]"
 		fast_bag_report()
 
 	else ..()
