@@ -314,8 +314,8 @@
 //Used for new pony mobs created by cloning/goleming/etc.
 /mob/living/carbon/pony/proc/set_cloned_appearance()
 	f_style = "Shaved"
-	if(dna.species == "Earthpony") //no more xenos losing ears/tentacles
-		h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
+	//if(dna.species == "Earthpony") //no more xenos losing ears/tentacles
+	h_style = pick("Short Hair")
 	cutie_mark = "Blank"
 	pony_tail_style = "Short Tail"
 	regenerate_icons()

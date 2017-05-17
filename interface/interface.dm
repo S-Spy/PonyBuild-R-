@@ -31,7 +31,7 @@ var/list/bagreports = list()
 	var/dat = "<html><body>"
 	for(var/message in bagreports)
 		if(message)
-			dat += message
+			dat += sanitize_simple(message)
 			//dat += "<a href=?bagreport_remove> Remove</a>"
 			dat += "<br><br>"
 	dat += "<a href=?bagreport_add><b>\[Add Report\]</a></b><br>"
@@ -54,7 +54,7 @@ var/list/bagreports = list()
 	if(href == "bagreport_add")
 		var/message = input("¬ведите описание ошибки.","—ообщение")
 		if(message)
-			bagreports += "<b>[usr.key]:</b> [sanitize_simple(message)]"
+			bagreports += "<b>[usr.key]:</b> [message]"
 		fast_bag_report()
 
 	else ..()

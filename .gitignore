@@ -7,4 +7,6 @@ Thumbs.db
 *.backup
 *.dmb
 *.sav
+*~
 data/
+Forum/
