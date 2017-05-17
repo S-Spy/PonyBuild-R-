@@ -814,7 +814,7 @@ window "rpane"
 		background-color = none
 		saved-params = "is-checked"
 		text = "BugReport"
-		command = "fast_bag_report"
+		command = "fast_bug_report"
 		group = "rpanemode"
 	elem "forumb"
 		type = BUTTON

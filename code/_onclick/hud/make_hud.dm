@@ -143,11 +143,13 @@
 			if("blind")
 				using.icon = 'icons/mob/screen1_full.dmi'
 				using.name = " "
+				using.layer = 17
 				using.mouse_opacity = 0
 				using.invisibility = 101
 				mymob.blind = using
 			if("dmg")
 				using.mouse_opacity = 0
+				using.layer = 17
 				using.layer = 18.1
 				using.icon = 'icons/mob/screen1_full.dmi'
 				mymob.damageoverlay = using

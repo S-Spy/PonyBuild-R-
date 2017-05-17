@@ -30,8 +30,8 @@
 #define ui_belt "5:14,1:5"
 
 #define ui_equip null
-#define ui_swaphand1 "7:16,1:2"
-#define ui_swaphand2 "8:16,1:2"
+#define ui_swaphand1 "7,1:2"
+#define ui_swaphand2 "8,1:2"
 #define ui_storage1 "9:18,1:5"
 #define ui_storage2 "10:20,1:5"
 
@@ -50,7 +50,7 @@
 //Lower right, persistant menu
 #define ui_dropbutton "1,2:5"
 #define ui_drop_throw "1:6,2:5"
-#define ui_pull_resist "1:4,1:5"
+#define ui_pull_resist "1:5,1:5"
 #define ui_acti "13:26,1:5"
 #define ui_movi "12:24,1:5"
 
