@@ -42,6 +42,9 @@ var/list/bagreports = list()
 	..()
 	var/file = file2text("data/bagreport.txt")
 	bagreports = splittext(file, "\n")
+	for(var/mes in bagreports)
+		mes = sanitize_simple(mes)
+
 
 /world/Del()
 	fdel("data/bagreport.txt")
