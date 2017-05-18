@@ -14,7 +14,6 @@
 	var/obj/master = null	//A reference to the object in the slot. Grabs or items, generally.
 	var/gun_click_time = -100 //I'm lazy.
 
-
 /obj/screen/text
 	icon = null
 	icon_state = null
@@ -23,13 +22,12 @@
 	maptext_height = 480
 	maptext_width = 480
 
-
-/obj/screen/inventory
-	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
-
+/obj/screen/toggle_inv
+	name = "toggle_inv"
+	layer = 19
+	icon_state = "x"
 
 /obj/screen/close
-	name = "close"
 
 /obj/screen/close/Click()
 	if(master)
@@ -43,17 +41,12 @@
 	var/obj/item/owner
 
 /obj/screen/item_action/Click()
-	if(!usr || !owner)
-		return 1
-	if(usr.next_move >= world.time)
-		return
+	if(!usr || !owner)				return 1
+	if(usr.next_move >= world.time)	return
+
 	usr.next_move = world.time + 6
-
-	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)
-		return 1
-
-	if(!(owner in usr))
-		return 1
+	if(usr.stat || usr.restrained() || usr.stunned || usr.lying)	return 1
+	if(!(owner in usr))												return 1
 
 	owner.ui_action_click()
 	return 1
@@ -64,7 +57,6 @@
 
 
 /obj/screen/grab
-	name = "grab"
 
 /obj/screen/grab/Click()
 	var/obj/item/weapon/grab/G = master
@@ -79,15 +71,12 @@
 
 
 /obj/screen/storage
-	name = "storage"
 
 /obj/screen/storage/Click()
-	if(world.time <= usr.next_move)
-		return 1
-	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
-		return 1
-	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
-		return 1
+	if(world.time <= usr.next_move)									return 1
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)	return 1
+	if (istype(usr.loc,/obj/mecha)) 								return 1// stops inventory actions in a mech
+
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
 		if(I)
@@ -102,105 +91,228 @@
 	dir = 2
 
 	move
-		name = "Allow Walking"
-		icon_state = "no_walk0"
-		screen_loc = ui_gun2
-
+		name = "Allow Walking";		icon_state = "no_walk0";	screen_loc = ui_gun2
 	run
-		name = "Allow Running"
-		icon_state = "no_run0"
-		screen_loc = ui_gun3
-
+		name = "Allow Running";		icon_state = "no_run0";		screen_loc = ui_gun3
 	item
-		name = "Allow Item Use"
-		icon_state = "no_item0"
-		screen_loc = ui_gun1
+		name = "Allow Item Use";	icon_state = "no_item0";	screen_loc = ui_gun1
+	mode		//dir = 1
+		name = "Toggle Gun Mode";	icon_state = "gun0";		screen_loc = ui_gun_select
 
-	mode
-		name = "Toggle Gun Mode"
-		icon_state = "gun0"
-		screen_loc = ui_gun_select
-		//dir = 1
 
-/obj/screen/zone_sel
+
+
+/obj/screen/zone_rotate              // Стрелочки для переключения псевдо 3д режима куклы
+	icon = 'icons/mob/zone_sel.dmi'
+	screen_loc = ui_zonemode
+	var/obj/screen/zone/connect
+
+	left_arrow
+		name = "left arrow"
+		icon_state = "zone_sel_lb"
+	right_arrow
+		name = "right arrow"
+		icon_state = "zone_sel_rb"
+
+	Click()
+		if(!connect)	return
+
+		if(connect.d3_mode == "")
+			var/obj/screen/zone_switch/switcher = locate(/obj/screen/zone_switch) in connect.connect_list
+			if(switcher)	switcher.switch_mode()
+
+		if(name=="left arrow")	connect.dir = turn(connect.dir, 45)
+		else					connect.dir = turn(connect.dir, -45)
+
+		for(var/obj/screen/zone_sel/ZS in connect.connect)
+			ZS.dir = connect.dir
+			ZS.pixel_list = get_pixel_list(ZS)
+		update_icon()
+
+
+
+/obj/screen/zone_switch
+	name = "switch mode"
+	icon = 'icons/mob/zone_sel.dmi'
+	icon_state = "zone_sel_ab"
+	screen_loc = ui_zonemode
+	var/obj/screen/zone/connect
+
+	proc/switch_mode()
+		if(!connect)	return
+
+		if(icon_state == "zone_sel_mb")
+			connect.d3_mode = ""
+			icon_state = "zone_sel_ab"
+		else
+			connect.d3_mode = "3d_"
+			icon_state = "zone_sel_mb"
+
+		for(var/obj/screen/zone_sel/ZS in connect.connect)
+			ZS.icon_state = "[connect.d3_mode][ZS.name]"
+			ZS.dir = connect.dir
+			ZS.pixel_list = get_pixel_list(ZS)
+		connect.icon_state = "[connect.d3_mode]zone"
+		connect.update_icon()
+
+	Click()
+		switch_mode()
+		update_icon()
+
+/datum/pixel
+	var/x
+	var/y
+
+	New(var/px, var/py)
+		x = px;y = py
+
+proc/get_pixel_list(var/obj/screen/zone_sel/O)
+	var/icon/I = icon(O.icon, O.icon_state, O.dir)
+	if(!findtext(O.icon_state, "3d_"))	 I = icon(O.icon, O.icon_state)
+
+	var/list/datum/pixel/pixel_list = list()
+	for(var/px=1, px<=32, px++)	for(var/py=1, py<=32, py++)
+		if(I.GetPixel(px, py))
+			var/datum/pixel/P = new/datum/pixel(px, py)
+			pixel_list += P
+
+	return pixel_list
+
+
+
+/obj/screen/zone
 	name = "damage zone"
-	icon_state = "zone_sel"
+	icon = 'icons/mob/zone_sel.dmi'
+	icon_state = "zone"
 	screen_loc = ui_zonesel
-	var/selecting = "chest"
+	layer = 19
+	dir = WEST
+	var/obj/screen/zone_sel/selecting
+	var/list/obj/screen/zone_sel/connect = list()
+	var/list/obj/screen/connect_list = list() //all
+	var/d3_mode = ""
 
-/obj/screen/zone_sel/Click(location, control,params)
+
+
+
+	New()		//При создании добавляем дополнительный интерфейс и определяем зоны
+		..()
+		var/list/paths = typesof(/obj/screen/zone_sel) - /obj/screen/zone_sel
+
+		for(var/path in paths)
+			var/obj/screen/zone_sel/ZL = new path()
+			if(!selecting)
+				selecting = ZL
+				name = "damage zone: [ZL.name]"
+			ZL.dir = dir
+			ZL.pixel_list = get_pixel_list(ZL)
+			connect += ZL
+
+		var/obj/screen/zone_switch/ZS = new /obj/screen/zone_switch()
+		ZS.connect = src
+		connect_list += ZS
+
+		var/obj/screen/zone_rotate/left_arrow/ZA1 = new /obj/screen/zone_rotate/left_arrow()
+		ZA1.connect = src
+		connect_list += ZA1
+
+		var/obj/screen/zone_rotate/right_arrow/ZA2 = new /obj/screen/zone_rotate/right_arrow()
+		ZA2.connect = src
+		connect_list += ZA2
+		update_icon()
+
+	update_icon()
+		var/icon/I = icon(icon, icon_state)
+		if(selecting)
+			//if(d3_mode=="")
+			switch(selecting.name)//Перенаправление с невидимых иконок
+				if("ears")	selecting = locate(/obj/screen/zone_sel/head) in connect
+				if("neck")	selecting = locate(/obj/screen/zone_sel/head) in connect
+				if("horn")	selecting = locate(/obj/screen/zone_sel/head) in connect
+				if("wings")	selecting = locate(/obj/screen/zone_sel/chest) in connect
+				if("tail")	selecting = locate(/obj/screen/zone_sel/groin) in connect
+
+			name = "damage zone: [selecting.name]"
+			var/icon/I_add = icon(selecting.icon, selecting.icon_state)
+			I.Blend(I_add, ICON_OVERLAY)
+
+		overlays.len = 0
+		overlays += image(I)
+
+
+/obj/screen/zone/Click(location, control, params)  //Выбор прицельной зоны
+	var/obj/screen/zone_sel/old_selecting = selecting //We're only going to update_icon() if there's been a change
+
 	var/list/PL = params2list(params)
 	var/icon_x = text2num(PL["icon-x"])
 	var/icon_y = text2num(PL["icon-y"])
-	var/old_selecting = selecting //We're only going to update_icon() if there's been a change
 
-	switch(icon_y)
-		if(1 to 3) //Back Hoofs
-			switch(icon_x)
-				if(11 to 16)	selecting = "r_foot"
-				if(17 to 22)	selecting = "l_foot"
-				else			return 1
-		if(4) //Back Hoof & BackLegs
-			switch(icon_x)
-				if(11 to 14)	selecting = "r_foot"
-				if(15 to 16)	selecting = "r_leg"
-				if(17 to 18)	selecting = "l_leg"
-				if(19 to 22)	selecting = "l_foot"
-				else			return 1
-		if(5 to 9) //BackLegs
-			switch(icon_x)
-				if(11 to 16)	selecting = "r_leg"
-				if(17 to 22)	selecting = "l_leg"
-				else			return 1
-		if(10) //BackLegs & Groin
-			switch(icon_x)
-				if(11 to 15)	selecting = "r_leg"
-				if(16 to 17)	selecting = "groin"
-				if(18 to 22)	selecting = "l_leg"
-				else			return 1
-		if(11 to 13) //Groin
-			switch(icon_x)
-				if(11 to 22)	selecting = "groin"
-				else			return 1
-		if(14 to 16) //Chest
-			switch(icon_x)
-				if(11 to 22)	selecting = "chest"
-				else			return 1
-		if(17) //Chest and forelegs and forehoofs
-			switch(icon_x)
-				if(1 to 5)		selecting = "r_hand"
-				if(6 to 10)		selecting = "r_arm"
-				if(11 to 22)	selecting = "chest"
-				if(23 to 27)	selecting = "l_arm"
-				if(28 to 32)	selecting = "l_hand"
-		if(18 to 23) //Chest and forelegs and forehoofs
-			switch(icon_x)
-				if(1 to 5)		selecting = "r_hand"
-				if(6 to 12)		selecting = "r_arm"
-				if(13 to 20)	selecting = "chest"
-				if(21 to 27)	selecting = "l_arm"
-				if(28 to 32)	selecting = "l_hand"
-		if(23 to 32) //Head, but we need to check for eye or mouth
-			if(icon_x in 11 to 22)
-				selecting = "head"
-				switch(icon_y)
-					if(23 to 24)	if(icon_x in 15 to 18)		selecting = "mouth"
-					if(26 to 28)	if(icon_x in 14 to 19)		selecting = "eyes"
+	for(var/obj/screen/zone_sel/ZS in connect)
+		for(var/datum/pixel/P in ZS.pixel_list)
+			if(icon_x==P.x && icon_y==P.y)
+				selecting = ZS
+				update_icon()
+				break
+		if(old_selecting != selecting)	break
 
-	if(old_selecting != selecting)
-		update_icon()
 	return 1
 
-/obj/screen/zone_sel/update_icon()
-	overlays.Cut()
-	overlays += image('icons/mob/zone_sel.dmi', "[selecting]")
+
+/obj/screen/zone_sel			//Список зон. Это реализовано в виде обьектов для гибкого взаимодействия с пикселями иконок
+	icon = 'icons/mob/zone_sel.dmi'
+	var/list/datum/pixel/pixel_list = list()
+
+
+	eyes				//I think when upper then more high the priority
+		name = "eyes"
+	ears
+		name = "ears"
+	mouth
+		name = "mouth"
+	wings
+		name = "wings"
+	horn
+		name = "horn"
+	chest
+		name = "chest"
+	groin
+		name = "groin"
+	r_hand
+		name = "r_hand"
+	l_hand
+		name = "l_hand"
+	r_arm
+		name = "r_arm"
+	l_arm
+		name = "l_arm"
+	r_foot
+		name = "r_foot"
+	l_foot
+		name = "l_foot"
+	r_leg
+		name = "r_leg"
+	l_leg
+		name = "l_leg"
+	tail
+		name = "tail"
+	head
+		name = "head"
+	neck
+		name = "neck"
+
+	New()
+		..()
+		icon_state = "[name]"
+
+
+
 
 
 /obj/screen/Click(location, control, params)
 	if(!usr)	return 1
 
 	switch(name)
-		if("toggle")
+		if("toggle", "toggle_inv")
 			if(usr.hud_used.inventory_shown)
 				usr.hud_used.inventory_shown = 0
 				usr.client.screen -= usr.hud_used.other
@@ -235,7 +347,7 @@
 						usr.m_intent = "walk"
 						usr.hud_used.move_intent.icon_state = "walking"
 					if("run")
-						if(C.species.name == "Earthpony")
+						if(C.species.flags & HAS_WINGS)
 							usr.m_intent = "fly"
 							usr.hud_used.move_intent.icon_state = "flying"
 						else
@@ -247,25 +359,24 @@
 		if("m_intent")
 			if(!usr.m_int)
 				switch(usr.m_intent)
-					if("run")
-						usr.m_int = "13,14"
-					if("walk")
-						usr.m_int = "14,14"
-					if("face")
-						usr.m_int = "15,14"
-			else
-				usr.m_int = null
-		if("walk")
-			usr.m_intent = "walk"
-			usr.m_int = "14,14"
+					if("run")	usr.m_int = "13,14"
+					if("walk")	usr.m_int = "14,14"
+					if("face")	usr.m_int = "15,14"
+					if("fly")	usr.m_int = "16,14"
+			else	usr.m_int = null
 		if("face")
 			usr.m_intent = "face"
 			usr.m_int = "15,14"
+		if("walk")
+			usr.m_intent = "walk"
+			usr.m_int = "14,14"
 		if("run")
 			usr.m_intent = "run"
 			usr.m_int = "13,14"
-		if("Reset Machine")
-			usr.unset_machine()
+		if("fly")
+			usr.m_intent = "fly"
+			usr.m_int = "16,14"
+		if("Reset Machine")	usr.unset_machine()
 		if("internal")
 			if(iscarbon(usr))
 				var/mob/living/carbon/C = usr
@@ -273,34 +384,32 @@
 					if(C.internal)
 						C.internal = null
 						C << "<span class='notice'>No longer running on internals.</span>"
-						if(C.internals)
-							C.internals.icon_state = "internal0"
+						if(C.internals)		C.internals.icon_state = "internal0"
 					else
-
 						var/no_mask
 						if(!(C.wear_mask && C.wear_mask.flags & AIRTIGHT))
 							var/mob/living/carbon/pony/H = C
-							if(!(H.head && H.head.flags & AIRTIGHT))
-								no_mask = 1
+							if(!(H.head && H.head.flags & AIRTIGHT))	no_mask = 1
 
 						if(no_mask)
 							C << "<span class='notice'>You are not wearing a suitable mask or helmet.</span>"
 							return 1
 						else
 							var/list/nicename = null
-							var/list/tankcheck = null
+							var/list/tankcheck = C.list_items_in_hands()
 							var/breathes = "oxygen"    //default, we'll check later
 							var/list/contents = list()
 							var/from = "on"
+
 
 							if(ispony(C))
 								var/mob/living/carbon/pony/H = C
 								breathes = H.species.breath_type
 								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
-								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+								tankcheck += list (H.s_store, C.back, H.belt, H.l_store, H.r_store)
 							else
 								nicename = list("right hand", "left hand", "back")
-								tankcheck = list(C.r_hand, C.l_hand, C.back)
+								tankcheck += C.back
 
 							// Rigs are a fucking pain since they keep an air tank in nullspace.
 							if(istype(C.back,/obj/item/weapon/rig))
@@ -497,6 +606,18 @@
 			return 0
 	return 1
 
+
+/obj/screen/inventory
+	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards
+
+	hand
+		var/obj/screen/alternative
+		var/datum/hand/parent
+		layer = 19
+		icon = 'icons/mob/screen1_White.dmi'
+
+
+
 /obj/screen/inventory/Click()
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
@@ -506,24 +627,16 @@
 		return 1
 	if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 		return 1
+	if(istype(src,/obj/screen/inventory/hand))
+		usr.swap_hand(src)
+		usr.next_move = world.time+2
+		return 1
+
 	switch(name)
-		if("r_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("r")
-				usr.next_move = world.time+2
-		if("l_hand")
-			if(iscarbon(usr))
-				var/mob/living/carbon/C = usr
-				C.activate_hand("l")
-				usr.next_move = world.time+2
 		if("swap")
-			usr:swap_hand()
-		if("hand")
 			usr:swap_hand()
 		else
 			if(usr.attack_ui(slot_id))
-				usr.update_inv_l_hand(0)
-				usr.update_inv_r_hand(0)
+				usr.update_inv_hands(0)
 				usr.next_move = world.time+6
 	return 1

@@ -49,7 +49,7 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Earthpony", "Skrell")	//ponyoid bodytypes
+		if("Earthpony", "Alicorn")	//ponyoid bodytypes
 			species_restricted = list("exclude","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		else
 			species_restricted = list(target_species)
@@ -71,10 +71,10 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Skrell")
+		if("Alicorn")
 			species_restricted = list("exclude","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		if("Earthpony")
-			species_restricted = list("exclude","Skrell","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
+			species_restricted = list("exclude","Alicorn","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		else
 			species_restricted = list(target_species)
 
@@ -139,7 +139,7 @@
 /obj/item/clothing/ears/offear
 	name = "Other ear"
 	w_class = 5.0
-	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon = 'icons/mob/screen1_White.dmi'
 	icon_state = "block"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 
@@ -427,7 +427,7 @@ BLIND     // can't see anything
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))
-			user.drop_item()
+			user.drop_active_hand()
 			accessories += A
 			A.on_attached(src, user)
 
@@ -463,15 +463,12 @@ BLIND     // can't see anything
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
-
 		if (!( usr.restrained() ) && !( usr.stat ))
-			switch(over_object.name)
-				if("r_hand")
+			for(var/datum/hand/H in usr.list_hands)
+				if(over_object == H.slot)
 					usr.u_equip(src)
-					usr.put_in_r_hand(src)
-				if("l_hand")
-					usr.u_equip(src)
-					usr.put_in_l_hand(src)
+					usr.put_in_active_hand(src, H)
+					break
 			src.add_fingerprint(usr)
 			return
 	return

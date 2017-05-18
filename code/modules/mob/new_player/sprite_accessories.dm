@@ -29,7 +29,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list("Earthpony", "Unicorn", "Pegasus")
+	var/list/species_allowed = list("Earthpony", "Unicorn", "Pegasus", "Alicorn")
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -43,7 +43,7 @@
 ////////////////////////////
 */
 
-/datum/sprite_accessory/ptail
+/datum/sprite_accessory/pony_tail
 
 	icon = 'icons/mob/pony_face.dmi'	  // default icon for all pony tails
 
@@ -95,6 +95,21 @@
 		icon_state = "fleur_tail"
 		gender = FEMALE
 
+
+/datum/sprite_accessory/cutiemark
+	icon = 'icons/mob/cutiemarks.dmi'	  // default icon for all hairs
+
+	blank
+		name = "Blank"
+		icon_state = "blank"
+
+	apples
+		name = "Three Red Apples"
+		icon_state = "3rapples"
+
+	music
+		name = "Music Note"
+		icon_state = "music"
 
 
 /datum/sprite_accessory/hair
@@ -265,7 +280,7 @@
 		name = "Shaved"
 		icon_state = "bald"
 		gender = NEUTER
-		species_allowed = list("Earthpony","Unicorn","Pegasus","Skrell","Vox","Machine")
+		species_allowed = list("Earthpony","Unicorn","Pegasus","Alicorn","Vox","Machine")
 
 	/*watson
 		name = "Watson Mustache"
@@ -367,15 +382,15 @@
 		species_allowed = list("Unicorn")
 
 	skr_tentacle_m
-		name = "Skrell Male Tentacles"
-		icon_state = "skrell_hair_m"
-		species_allowed = list("Skrell")
+		name = "Alicorn Male Tentacles"
+		icon_state = "alicorn_hair_m"
+		species_allowed = list("Alicorn")
 		gender = MALE
 
 	skr_tentacle_f
-		name = "Skrell Female Tentacles"
-		icon_state = "skrell_hair_f"
-		species_allowed = list("Skrell")
+		name = "Alicorn Female Tentacles"
+		icon_state = "alicorn_hair_f"
+		species_allowed = list("Alicorn")
 		gender = FEMALE
 
 	taj_ears
@@ -503,8 +518,8 @@
 		icon = 'icons/mob/pony_races/r_pegasus.dmi'
 		species_allowed = list("Unicorn")
 
-	skrell
-		name = "Default skrell skin"
+	alicorn
+		name = "Default alicorn skin"
 		icon_state = "default"
-		icon = 'icons/mob/pony_races/r_skrell.dmi'
-		species_allowed = list("Skrell")
+		icon = 'icons/mob/pony_races/r_alicorn.dmi'
+		species_allowed = list("Alicorn")

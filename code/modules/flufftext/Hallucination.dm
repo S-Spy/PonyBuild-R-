@@ -37,9 +37,11 @@ mob/living/carbon/proc/handle_hallucinations()
 				//src << "Traitor Items"
 				if(!halitem)
 					halitem = new
-					var/list/slots_free = list(ui_lhand,ui_rhand)
-					if(l_hand) slots_free -= ui_lhand
-					if(r_hand) slots_free -= ui_rhand
+					var/list/slots_free = list()
+					for(var/datum/hand/H in list_hands)
+						if(!H.item_in_hand)
+							slots_free += H.screen_loc
+
 					if(istype(src,/mob/living/carbon/pony))
 						var/mob/living/carbon/pony/H = src
 						if(!H.belt) slots_free += ui_belt
@@ -365,14 +367,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 
 	//var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(target.loc)
-	if(clone.l_hand)
-		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.l_hand.name
-			F.weap = clone.l_hand
-	else if (clone.r_hand)
-		if(!(locate(clone.r_hand) in non_fakeattack_weapons))
-			clone_weapon = clone.r_hand.name
-			F.weap = clone.r_hand
+	for(var/datum/hand/H in clone.list_hands)
+		if(H.item_in_hand)
+			if(!(locate(H.item_in_hand) in non_fakeattack_weapons))
+				clone_weapon = H.item_in_hand.name
+				F.weap = H.item_in_hand
+				break
+
 
 	F.name = clone.name
 	F.my_target = target

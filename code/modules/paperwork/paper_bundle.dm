@@ -36,8 +36,8 @@
 		P.loc = src
 		if(istype(user,/mob/living/carbon/pony))
 			var/mob/living/carbon/pony/H = user
-			H.update_inv_l_hand()
-			H.update_inv_r_hand()
+			H.update_inv_hands()
+			H.update_inv_hands()
 	else if(istype(W, /obj/item/weapon/photo))
 		amount++
 		if(screen == 2)
@@ -87,7 +87,7 @@
 				user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.", \
 				"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.")
 
-				if(user.get_inactive_hand() == src)
+				if(user.item_in_hands(src, user.list_hands-user.hand))
 					user.drop_from_inventory(src)
 
 				new /obj/effect/decal/cleanable/ash(src.loc)

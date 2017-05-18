@@ -165,7 +165,7 @@
 		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
 			user << "<span class='notice'>This machine only accepts beakers</span>"
 		src.beaker =  B
-		user.drop_item()
+		user.drop_active_hand()
 		B.loc = src
 		user << "You set [B] on the machine."
 		nanomanager.update_uis(src) // update all UIs attached to src
@@ -301,7 +301,7 @@
 			user << "A beaker is already loaded into the machine."
 			return
 		src.beaker = B
-		user.drop_item()
+		user.drop_active_hand()
 		B.loc = src
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -314,7 +314,7 @@
 			return
 
 		src.loaded_pill_bottle = B
-		user.drop_item()
+		user.drop_active_hand()
 		B.loc = src
 		user << "You add the pill bottle into the dispenser slot!"
 		src.updateUsrDialog()
@@ -793,7 +793,7 @@
 			return
 
 		src.beaker =  I
-		user.drop_item()
+		user.drop_active_hand()
 		I.loc = src
 		user << "You add the beaker to the machine!"
 		src.updateUsrDialog()
@@ -847,7 +847,7 @@
 			return 1
 		else
 			src.beaker =  O
-			user.drop_item()
+			user.drop_active_hand()
 			O.loc = src
 			update_icon()
 			src.updateUsrDialog()

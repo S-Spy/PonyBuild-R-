@@ -617,10 +617,10 @@ var/list/be_special_flags = list(
 #define NO_PAIN        8     // Cannot suffer halloss/recieves deceptive health indicator.
 #define NO_SLIP        16    // Cannot fall over.
 #define NO_POISON      32    // Cannot not suffer toxloss.
-#define HAS_SKIN_TONE  64    // Skin tone selectable in chargen. (0-255)
+#define HAS_WINGS  64    	 // Skin tone selectable in chargen. (0-255)
 #define HAS_SKIN_COLOR 128   // Skin colour selectable in chargen. (RGB)
 #define HAS_LIPS       256   // Lips are drawn onto the mob icon. (lipstick)
-#define HAS_ptail  512   // ptail is drawn onto the mob icon.
+#define HAS_HORN       512   // pony_tail is drawn onto the mob icon.
 #define IS_PLANT       1024  // Is a treeperson.
 #define IS_WHITELISTED 2048  // Must be whitelisted to play.
 #define IS_SYNTHETIC   4096  // Is a machine race.
@@ -698,7 +698,7 @@ var/list/be_special_flags = list(
 // Some on_mob_life() procs check for alien races.
 #define IS_DIONA  1
 #define IS_VOX    2
-#define IS_SKRELL 3
+#define IS_HERBIVORE 3
 #define IS_UNICORN 4
 #define IS_XENOS  5
 

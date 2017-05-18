@@ -30,10 +30,14 @@
 #define DNA_UI_EYES_R      11
 #define DNA_UI_EYES_G      12
 #define DNA_UI_EYES_B      13
-#define DNA_UI_GENDER      14
-#define DNA_UI_BEARD_STYLE 15
-#define DNA_UI_HAIR_STYLE  16
-#define DNA_UI_LENGTH      16 // Update this when you add something, or you WILL break shit.
+#define DNA_UI_AURA_R      14
+#define DNA_UI_AURA_G      15
+#define DNA_UI_AURA_B      16
+#define DNA_UI_GENDER      17
+#define DNA_UI_BEARD_STYLE 18
+#define DNA_UI_HAIR_STYLE  19
+#define DNA_UI_TAIL_STYLE  20
+#define DNA_UI_LENGTH      20 // Update this when you add something, or you WILL break shit.
 
 #define DNA_SE_LENGTH 27
 // For later:
@@ -121,13 +125,18 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	// Hair
 	// FIXME:  Species-specific defaults pls
 	if(!character.h_style)
-		character.h_style = "Skinhead"
+		character.h_style = "Short Hair"
 	var/hair = hair_styles_list.Find(character.h_style)
 
 	// Facial Hair
 	if(!character.f_style)
 		character.f_style = "Shaved"
 	var/beard	= facial_hair_styles_list.Find(character.f_style)
+
+	// Tail
+	if(!character.pony_tail_style)
+		character.pony_tail_style = "Short Tail"
+	var/tail	= pony_tail_styles_list.Find(character.pony_tail_style)
 
 	SetUIValueRange(DNA_UI_HAIR_R,    character.r_hair,    255,    1)
 	SetUIValueRange(DNA_UI_HAIR_G,    character.g_hair,    255,    1)
@@ -145,12 +154,17 @@ var/global/list/datum/dna/gene/dna_genes[0]
 	SetUIValueRange(DNA_UI_SKIN_G,    character.g_skin,    255,    1)
 	SetUIValueRange(DNA_UI_SKIN_B,    character.b_skin,    255,    1)
 
-	SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
+	SetUIValueRange(DNA_UI_AURA_R,    character.r_aura,    255,    1)
+	SetUIValueRange(DNA_UI_AURA_G,    character.g_aura,    255,    1)
+	SetUIValueRange(DNA_UI_AURA_B,    character.b_aura,    255,    1)
+
+	//SetUIValueRange(DNA_UI_SKIN_TONE, 35-character.s_tone, 220,    1) // Value can be negative.
 
 	SetUIState(DNA_UI_GENDER,         character.gender!=MALE,        1)
 
 	SetUIValueRange(DNA_UI_HAIR_STYLE,  hair,  hair_styles_list.len,       1)
 	SetUIValueRange(DNA_UI_BEARD_STYLE, beard, facial_hair_styles_list.len,1)
+	SetUIValueRange(DNA_UI_TAIL_STYLE,  tail,  pony_tail_styles_list.len,       1)
 
 	UpdateUI()
 

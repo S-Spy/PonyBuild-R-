@@ -180,13 +180,13 @@
 		new_name += ..(gender,1)
 	return new_name
 
-/datum/language/skrell
-	name = "Skrellian"
-	desc = "A melodic and complex language spoken by the Skrell of Qerrbalak. Some of the notes are inaudible to ponys."
+/datum/language/alicorn
+	name = "Alicornian"
+	desc = "A melodic and complex language spoken by the Alicorn of Qerrbalak. Some of the notes are inaudible to ponys."
 	speech_verb = "warbles"
 	ask_verb = "warbles"
 	exclaim_verb = "warbles"
-	colour = "skrell"
+	colour = "alicorn"
 	key = "k"
 	flags = WHITELISTED
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")

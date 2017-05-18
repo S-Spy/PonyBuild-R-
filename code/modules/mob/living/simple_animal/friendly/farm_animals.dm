@@ -55,9 +55,9 @@
 
 		if(!pulledby)
 			var/obj/effect/plant/food
-			food = locate(/obj/effect/plant) in oview(5,loc)	
+			food = locate(/obj/effect/plant) in oview(5,loc)
 			if(food)
-				var/step = get_step_to(src, food, 0) 	
+				var/step = get_step_to(src, food, 0)
 				Move(step)
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -232,7 +232,7 @@ var/global/chicken_count = 0
 		if(G.seed && G.seed.kitchen_tag == "wheat")
 			if(!stat && eggsleft < 8)
 				user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
-				user.drop_item()
+				user.drop_active_hand()
 				del(O)
 				eggsleft += rand(1, 4)
 			else

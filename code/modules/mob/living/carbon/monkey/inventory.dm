@@ -1,18 +1,15 @@
 /obj/effect/equip_e/monkey/process()
 	if (item)
 		item.add_fingerprint(source)
-	if (!( item ))
+	else
+		for(var/datum/hand/H in target.list_hands)
+			if(place in H.connect_organ_names)
+				if(!H.item_in_hand)
+					del(src)
+					return
 		switch(place)
 			if("head")
 				if (!( target.wear_mask ))
-					del(src)
-					return
-			if("l_hand")
-				if (!( target.l_hand ))
-					del(src)
-					return
-			if("r_hand")
-				if (!( target.r_hand ))
 					del(src)
 					return
 			if("back")
@@ -39,16 +36,16 @@
 				O.show_message(text("\red <B>[] is trying to put a [] on []</B>", source, item, target), 1)
 	else
 		var/message = null
+		for(var/datum/hand/H in target.list_hands)
+			if(place in H.connect_organ_names)
+				message = text("\red <B>[] is trying to take off a [] from []'s [H.name]!</B>", source, H.item_in_hand, target)
+				break
 		switch(place)
 			if("mask")
 				if(istype(target.wear_mask, /obj/item/clothing)&&!target.wear_mask:canremove)
 					message = text("\red <B>[] fails to take off \a [] from []'s body!</B>", source, target.wear_mask, target)
 				else
 					message = text("\red <B>[] is trying to take off \a [] from []'s head!</B>", source, target.wear_mask, target)
-			if("l_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s left hand!</B>", source, target.l_hand, target)
-			if("r_hand")
-				message = text("\red <B>[] is trying to take off a [] from []'s right hand!</B>", source, target.r_hand, target)
 			if("back")
 				message = text("\red <B>[] is trying to take off a [] from []'s back!</B>", source, target.back, target)
 			if("handcuff")
@@ -69,12 +66,35 @@
 	return
 
 /obj/effect/equip_e/monkey/done()
-	if(!source || !target)						return
-	if(source.loc != s_loc)						return
-	if(target.loc != t_loc)						return
-	if(LinkBlocked(s_loc,t_loc))				return
+	if(!source || !target)							return
+	if(source.loc != s_loc)							return
+	if(target.loc != t_loc)							return
+	if(LinkBlocked(s_loc,t_loc))					return
 	if(item && source.get_active_hand() != item)	return
-	if ((source.restrained() || source.stat))	return
+	if ((source.restrained() || source.stat))		return
+
+	for(var/datum/hand/H in target.list_hands)
+		if(place in H.connect_organ_names)
+			if (H.item_in_hand)
+				var/obj/item/W = H.item_in_hand
+				target.u_equip(W)
+				if (target.client)
+					target.client.screen -= W
+				if (W)
+					W.loc = target.loc
+					W.layer = initial(W.layer)
+					W.dropped(target)
+				W.add_fingerprint(source)
+			else
+				if (istype(item, /obj/item))
+					source.drop_active_hand()
+					loc = target
+					item.layer = 20
+					H.item_in_hand = item
+					item.loc = target
+					item.dropped(source)
+					item.equipped(target,H.item_in_hand)
+
 	switch(place)
 		if("mask")
 			if (target.wear_mask)
@@ -91,51 +111,11 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/clothing/mask))
-					source.drop_item()
+					source.drop_active_hand()
 					loc = target
 					item.layer = 20
 					target.wear_mask = item
 					item.loc = target
-		if("l_hand")
-			if (target.l_hand)
-				var/obj/item/W = target.l_hand
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.layer = initial(W.layer)
-					W.dropped(target)
-				W.add_fingerprint(source)
-			else
-				if (istype(item, /obj/item))
-					source.drop_item()
-					loc = target
-					item.layer = 20
-					target.l_hand = item
-					item.loc = target
-					item.dropped(source)
-					item.equipped(target,target.l_hand)
-		if("r_hand")
-			if (target.r_hand)
-				var/obj/item/W = target.r_hand
-				target.u_equip(W)
-				if (target.client)
-					target.client.screen -= W
-				if (W)
-					W.loc = target.loc
-					W.layer = initial(W.layer)
-					W.dropped(target)
-				W.add_fingerprint(source)
-			else
-				if (istype(item, /obj/item))
-					source.drop_item()
-					loc = target
-					item.layer = 20
-					target.r_hand = item
-					item.loc = target
-					item.dropped(source)
-					item.equipped(target,target.r_hand)
 		if("back")
 			if (target.back)
 				var/obj/item/W = target.back
@@ -149,7 +129,7 @@
 				W.add_fingerprint(source)
 			else
 				if ((istype(item, /obj/item) && item.slot_flags & SLOT_BACK ))
-					source.drop_item()
+					source.drop_active_hand()
 					loc = target
 					item.layer = 20
 					target.back = item
@@ -167,7 +147,7 @@
 				W.add_fingerprint(source)
 			else
 				if (istype(item, /obj/item/weapon/handcuffs))
-					source.drop_item()
+					source.drop_active_hand()
 					target.handcuffed = item
 					item.loc = target
 		if("internal")
@@ -203,6 +183,12 @@
 	if(W == get_active_hand())
 		u_equip(W)
 
+	for(var/datum/hand/H in list_hands)
+		if(H.slot_place == slot)
+			H.item_in_hand = W
+			W.equipped(src, slot)
+			update_inv_hands(redraw_mob)
+
 	switch(slot)
 		if(slot_back)
 			src.back = W
@@ -219,14 +205,6 @@
 			src.legcuffed = W
 			W.equipped(src, slot)
 			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
-			src.l_hand = W
-			W.equipped(src, slot)
-			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
-			src.r_hand = W
-			W.equipped(src, slot)
-			update_inv_r_hand(redraw_mob)
 		if(slot_in_backpack)
 			W.loc = src.back
 		else

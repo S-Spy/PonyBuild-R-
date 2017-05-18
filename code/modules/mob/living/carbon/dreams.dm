@@ -38,15 +38,15 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 		user.b_hair = usr:b_hair
 		user.g_hair = usr:g_hair
 		user.r_hair = usr:r_hair
-		user.b_ptail = usr:b_ptail
-		user.g_ptail = usr:g_ptail
-		user.r_ptail = usr:r_ptail
+		user.b_tail = usr:b_tail
+		user.g_tail = usr:g_tail
+		user.r_tail = usr:r_tail
 		user.b_skin = usr:b_skin
 		user.g_skin = usr:g_skin
 		user.r_skin = usr:r_skin
 		user.f_style = usr:f_style
 		user.h_style = usr:h_style
-		user.ptail_style = usr:ptail_style
+		user.pony_tail_style = usr:pony_tail_style
 		user.name = name
 		user.voice = name
 		user.flavor_texts = usr:flavor_texts
@@ -64,21 +64,20 @@ mob/living/carbon/proc/goto_dream(var/time = 0, var/unsleep = 0, var/number = 0,
 		user.b_hair = user.b_facial
 		user.g_hair = user.g_facial
 		user.r_hair = user.r_facial
-		user.b_ptail = user.b_facial
-		user.g_ptail = user.g_facial
-		user.r_ptail = user.r_facial
+		user.b_tail = user.b_facial
+		user.g_tail = user.g_facial
+		user.r_tail = user.r_facial
 		user.b_skin = rand(1, 240)
 		user.g_skin = rand(1, 240)
 		user.r_skin = rand(1, 240)
 		user.f_style = "Shaved"
-		user.h_style = "Vinyl Hair"
-		user.ptail_style = "Short Tail"
+		user.h_style = "Short Hair"
+		user.pony_tail_style = "Short Tail"
 		user.name = "Stranger"
-	var/obj/item/device/flashlight/lantern/LAMP = new/obj/item/device/flashlight/lantern
+	var/obj/item/device/flashlight/lantern/LAMP = new/obj/item/device/flashlight/lantern()
 	LAMP.brightness_on = 3
 	LAMP.initialize()
-	if(prob(50))	user.l_hand = LAMP
-	else	user.r_hand = LAMP
+	if(prob(50))	user.put_in_free_hand(LAMP)
 
 	user.SetLuminosity(LAMP.brightness_on)
 	user.regenerate_icons()

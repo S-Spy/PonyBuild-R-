@@ -448,7 +448,7 @@
 			if (stat & MAINT)
 				user << "<span class='warning'>There is no connector for your power cell.</span>"
 				return
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			cell = W
 			user.visible_message(\

@@ -210,7 +210,7 @@
 
 		if(do_after(user, 40))
 			if(!src) return
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			user << "\blue You installed the airlock electronics!"
 			src.state = 2

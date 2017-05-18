@@ -22,7 +22,7 @@
 			return
 
 		dish = I
-		c.drop_item()
+		c.drop_active_hand()
 		I.loc = src
 
 	if(istype(I,/obj/item/weapon/diseasedisk))

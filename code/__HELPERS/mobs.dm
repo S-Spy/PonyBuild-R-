@@ -1,53 +1,35 @@
-proc/random_hair_style(gender, species = "Earthpony")
-	var/h_style = "Bald"
+proc/random_style(gender, species="Earthpony", var/list/styles_list=hair_styles_list)
+	var/style
 
-	var/list/valid_hairstyles = list()
-	for(var/hairstyle in hair_styles_list)
-		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
-		valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+	var/list/valid_styles = list()
+	for(var/currentstyle in styles_list)
+		if(currentstyle=="Bald")	continue
 
-	if(valid_hairstyles.len)
-		h_style = pick(valid_hairstyles)
+		var/datum/sprite_accessory/S = styles_list[currentstyle]
 
-	return h_style
+		if(gender == MALE && S.gender == FEMALE)	continue
+		if(gender == FEMALE && S.gender == MALE)	continue
+		if(!(species in S.species_allowed))			continue
 
-proc/random_facial_hair_style(gender, species = "Earthpony")
-	var/f_style = "Shaved"
+		valid_styles[currentstyle] = styles_list[currentstyle]
 
-	var/list/valid_facialhairstyles = list()
-	for(var/facialhairstyle in facial_hair_styles_list)
-		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-		if(gender == MALE && S.gender == FEMALE)
-			continue
-		if(gender == FEMALE && S.gender == MALE)
-			continue
-		if( !(species in S.species_allowed))
-			continue
+	if(valid_styles.len)	style = pick(valid_styles)
 
-		valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
+	return style
 
-	if(valid_facialhairstyles.len)
-		f_style = pick(valid_facialhairstyles)
+proc/random_cutiemark()
+	if(cutiemarks_list.len)		return pick(cutiemarks_list)	//&&M.species & has_cutiemark
+	else						return "Blank"
 
-		return f_style
 
 proc/random_name(gender, species = "Earthpony")
 
 	var/datum/species/current_species
-	if(species)
-		current_species = all_species[species]
+	if(species)		current_species = all_species[species]
 
 	if(!current_species || current_species.name == "Earthpony")
-		if(gender==FEMALE)
-			return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
-		else
-			return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+		if(gender==FEMALE)		return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+		else					return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	else
 		return current_species.get_random_name(gender)
 

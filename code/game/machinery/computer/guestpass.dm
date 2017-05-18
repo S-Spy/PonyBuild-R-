@@ -61,7 +61,7 @@
 /obj/machinery/computer/guestpass/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/card/id))
 		if(!giver)
-			user.drop_item()
+			user.drop_active_hand()
 			O.loc = src
 			giver = O
 			updateUsrDialog()
@@ -150,7 +150,7 @@
 				else
 					var/obj/item/I = usr.get_active_hand()
 					if (istype(I, /obj/item/weapon/card/id))
-						usr.drop_item()
+						usr.drop_active_hand()
 						I.loc = src
 						giver = I
 				updateUsrDialog()

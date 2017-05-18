@@ -83,7 +83,7 @@
 		if(w_items + I.w_class > 5)
 			user << "<span class='notice'>The cistern is full.</span>"
 			return
-		user.drop_item()
+		user.drop_active_hand()
 		I.loc = src
 		w_items += I.w_class
 		user << "You carefully place \the [I] into the cistern."
@@ -218,10 +218,9 @@
 
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
-		if(M.r_hand)
-			M.r_hand.clean_blood()
-		if(M.l_hand)
-			M.l_hand.clean_blood()
+		for(var/datum/hand/H in M.list_hands)
+			if(H.item_in_hand)
+				H.item_in_hand.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)

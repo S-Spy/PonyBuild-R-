@@ -23,8 +23,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 	"diona" = 1,                                         // 12
 	"mutineer" = IS_MODE_COMPILED("mutiny"),             // 13
 	"pAI candidate" = 1, // -- TLE                       // 14
-//	"ghost hunter" = IS_MODE_COMPILED("ghostbusters"),   // 15
-//	"master of dreams" = IS_MODE_COMPILED("daemon"),     // 16
+	//"ghost hunter" = IS_MODE_COMPILED("ghostbusters"),   // 15
+	//"master of dreams" = IS_MODE_COMPILED("daemon")     // 16
 )
 
 //used for alternate_option
@@ -33,6 +33,8 @@ var/global/list/special_roles = list( //keep synced with the defines BE_* in set
 #define RETURN_TO_LOBBY 2
 
 datum/preferences
+	var/show_choices = 1
+
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
@@ -48,7 +50,7 @@ datum/preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#010000"			//Whatever this is set to acts as 'reset' color and is thus unusable as an actual custom color
 	var/be_special = 0					//Special role selection
-	var/UI_style = "Midnight"
+	var/UI_style = "White"
 	var/toggles = TOGGLES_DEFAULT
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
@@ -60,13 +62,13 @@ datum/preferences
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/ptail_style = "Bald"				//ptail type
-	var/r_ptail = 0						//Face hair color
-	var/g_ptail = 0						//Face hair color
-	var/b_ptail = 0						//Face hair color
-	var/cutie_mark						//Cutie mark type
+	var/pony_tail_style = "Short Tail"	//pony_tail type
+	var/r_tail = 0						//Face hair color
+	var/g_tail = 0						//Face hair color
+	var/b_tail = 0						//Face hair color
+	var/cutie_mark = "Blank"			//Cutie mark type
 	var/backbag = 2						//backpack type
-	var/h_style = "Bald"				//Hair type
+	var/h_style = "Short Hair"			//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
 	var/b_hair = 0						//Hair color
@@ -144,15 +146,23 @@ datum/preferences
 	var/metadata = ""
 	var/slot_name = ""
 
+	var/brush_color
+	var/list/colors4x4[4][4]//Для записи в лист сохранений
+	var/custom_cutiemark = 0
+	var/icon/cutiemark_paint_west
+	var/icon/cutiemark_paint_east
+
 /datum/preferences/New(client/C)
+	for(var/i1=1, i1<=4, i1++)	for(var/i2=1, i2<=4, i2++)
+		colors4x4[i1][i2]="#00000000"
+
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
-	if(istype(C))
-		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
-			if(load_preferences())
-				if(load_character())
-					return
-	gender = pick(MALE, FEMALE)
+	if(istype(C) && !IsGuestKey(C.key))
+		load_path(C.ckey)
+		if(load_preferences() && load_character())
+			return
+
+	randomize_appearance_for()//случайный персонаж при первом открывании сетапа
 	real_name = random_name(gender,species)
 
 	gear = list()
@@ -246,8 +256,11 @@ datum/preferences
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
+	if(!show_choices)
+		show_choices = 1
+		return
 	if(!user || !user.client)	return
-	if(!ptail_style)	ptail_style = "Short Tail"
+	if(!pony_tail_style)	pony_tail_style = "Short Tail"
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
@@ -279,7 +292,7 @@ datum/preferences
 	dat += "<br>"
 	dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
 	dat += "<b>Custom UI</b>(recommended for White UI):<br>"
-	dat += "-Color: <a href='?_src_=prefs;preference=UIcolor'><b>[UI_style_color]</b></a> <table style='display:inline;' bgcolor='[UI_style_color]'><tr><td>__</td></tr></table><br>"
+	dat += "-Color: <b><table style='display:inline;' bgcolor='[UI_style_color]'><tr><td><a href='?_src_=prefs;preference=UIcolor'>__</a></td></tr></table></b> <br>"
 	dat += "-Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
 	dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</b></a><br>"
 	dat += "<b>Play lobby music:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? "Yes" : "No"]</b></a><br>"
@@ -379,7 +392,7 @@ datum/preferences
 			switch(organ_name)
 				if("heart")
 					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+				if("voicebox") //on adding voiceboxes for speaking alicorn/similar replacements
 					dat += "\tSurgically altered [organ_name]"
 				if("eyes")
 					dat += "\tRetinal overlayed [organ_name]"
@@ -390,10 +403,15 @@ datum/preferences
 	else
 		dat += "<br><br>"
 
-	//var/list/undies = gender == MALE ? ptail_m : ptail_f
+	dat += "CutieMark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
+	/*dat += "Custom CutieMark: <a href='?_src_=prefs;cutie_paint=switch'><b>"
+	if(custom_cutiemark)
+		dat += "Yes</b></a> "
+		dat += " <a href='?_src_=prefs;cutie_paint=set'><b>Draw Cutiemark"
+	else
+		dat += "No"
+	dat += "</b></a><br><br>"*/
 
-
-	dat += "Cutie Mark: <a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[get_key_by_value(cutie_mark_t,cutie_mark)]</b></a><br>"
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
@@ -424,26 +442,26 @@ datum/preferences
 	dat += "<a href='byond://?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
 	dat += "<br>"
 
-	dat += "<br><b>Hair</b><br>"
-	dat += "<a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+	dat += "<br><b>Mane</b><br>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td><a href='?_src_=prefs;preference=hair;task=input'>__</a></td></tr></table></font> "
+	dat += "  Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 
 	dat += "<br><b>Facial</b><br>"
-	dat += "<a href='?_src_=prefs;preference=facial;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td>__</td></tr></table></font> "
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td><a href='?_src_=prefs;preference=facial;task=input'>__</a></td></tr></table></font> "
 	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 
 	dat += "<br><b>Tail</b><br>"
-	dat += "<a href='?_src_=prefs;preference=ptail;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_ptail, 2)][num2hex(g_ptail, 2)][num2hex(b_ptail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_ptail, 2)][num2hex(g_ptail, 2)][num2hex(b_ptail)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=ptail_style;task=input'>[ptail_style]</a><br>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail)]'><tr><td><a href='?_src_=prefs;preference=pony_tail;task=input'>__</a></td></tr></table></font> "
+	dat += " Style: <a href='?_src_=prefs;preference=pony_tail_style;task=input'>[pony_tail_style]</a><br>"
 
-	dat += "<br><b>Eyes</b><br>"
-	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<br><b>Eyes: </b>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td><a href='?_src_=prefs;preference=eyes;task=input'>__</a></td></tr></table></font> <br>"
 
-	dat += "<br><b>Body Color</b><br>"
-	dat += "<a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<br><b>Body Color: </b>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td><a href='?_src_=prefs;preference=skin;task=input'>__</a></td></tr></table></font> <br>"
 
 	dat += "<br><b>Magic Aura Color:</b> "
-	dat += "<a href='?_src_=prefs;preference=aura;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td>__</td></tr></table></font><br>"
+	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td><a href='?_src_=prefs;preference=aura;task=input'>__</a></td></tr></table></font> <br>"
 
 	dat += "<br><br>"
 
@@ -612,19 +630,73 @@ datum/preferences
 	return
 
 /datum/preferences/proc/SetSpecies(mob/user)
-	if(!species_preview || !(species_preview in all_species))
+	if(!species_preview)
+		species_preview = species
+
+	if(!(species_preview in all_species))
 		species_preview = "Earthpony"
+
 	var/datum/species/current_species = all_species[species_preview]
-	var/dat = "<body>"
-	dat += "<center><h2>[current_species.name] \[<a href='?src=\ref[user];preference=species;task=change'>change</a>\]</h2></center><hr/>"
-	dat += "<table padding='8px'>"
+
+	var/dat = {"<html><head>
+	<script>
+		var dir=1;
+		var icon;
+	</script>
+
+	<script>
+		function update_preview_icon() {
+			switch(dir) {
+				case 1:
+					icon.src='species_preview_[current_species.name]_w.png';
+					dir = 2;
+					break;
+				case 2:
+					icon.src='species_preview_[current_species.name]_n.png';
+					dir = 3;
+					break;
+				case 3:
+					icon.src='species_preview_[current_species.name]_e.png';
+					dir = 4;
+					break;
+				default:
+					icon.src='species_preview_[current_species.name]_s.png';
+					dir = 1;
+					break;
+			}
+		}
+	</script>
+	</head><body>"}
+
+
+
+	dat += "<center><h2>[current_species.name]</h2></center><hr/>"
+	dat += "<table><tr><td>"
+	dat += "<table border=1>"
+
+	var/list/check_list = list()//Для проверки дублирования
+	for(var/S in playable_species)
+		if(S in check_list)	continue
+		check_list += S
+		if(S!=current_species.name)
+			dat += "<tr><td><a href='?src=\ref[user];preference=species;task=change;select=[S]'>[S]</a></td></tr>"
+		else
+			dat += "<tr><td><a href='?src=\ref[user];preference=species;task=change;select=[S]'><b>[S]</b></a></td></tr>"
+	dat += "</table></td>"
+	dat += "<td width=50> </td>"
+
+	dat += "<td><table padding='8px'>"
 	dat += "<tr>"
-	dat += "<td width = 400>[current_species.blurb]</td>"
+	dat += {"<td width = 400>[current_species.blurb]</td>"}
 	dat += "<td width = 200 align='center'>"
 	if("preview" in icon_states(current_species.icobase))
-		usr << browse_rsc(icon(current_species.icobase,"preview"), "species_preview_[current_species.name].png")
-		dat += "<img src='species_preview_[current_species.name].png' width='64px' height='64px'><br/><br/>"
-	dat += "<b>Language:</b> [current_species.language]<br/>"
+		usr << browse_rsc(icon(current_species.icobase,"preview", NORTH), "species_preview_[current_species.name]_n.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", WEST), "species_preview_[current_species.name]_w.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", SOUTH), "species_preview_[current_species.name]_s.png")
+		usr << browse_rsc(icon(current_species.icobase,"preview", EAST), "species_preview_[current_species.name]_e.png")
+		dat += {"<img src='species_preview_[current_species.name]_s.png' id="icon_preview" width='64px' height='64px'><br><br>"}
+
+	dat += "<b>Language:</b> [current_species.language]<br>"
 	dat += "<small>"
 	if(current_species.flags & CAN_JOIN)
 		dat += "</br><b>Often present on pony stations.</b>"
@@ -642,7 +714,7 @@ datum/preferences
 		dat += "</br><b>Has excellent traction.</b>"
 	if(current_species.flags & NO_POISON)
 		dat += "</br><b>Immune to most poisons.</b>"
-	if(current_species.flags & HAS_SKIN_TONE)
+	if(current_species.flags & HAS_WINGS)
 		dat += "</br><b>Has a variety of skin tones.</b>"
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "</br><b>Has a variety of skin colours.</b>"
@@ -654,29 +726,40 @@ datum/preferences
 		dat += "</br><b>Is machine-based.</b>"
 	dat += "</small></td>"
 	dat += "</tr>"
-	dat += "</table><center><hr/>"
+	dat += "</table></td></tr></table><center><hr/>"
 	unicorn_spells = list()
-	if(current_species.name == "Unicorn" || current_species.name == "Alicorn")
+	if(current_species.flags & HAS_HORN)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
 
-	var/restricted = 0
-	if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
-		if(!(current_species.flags & CAN_JOIN))
-			restricted = 2
-		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species))
-			restricted = 1
 
-	if(restricted)
-		if(restricted == 1)
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
-		else if(restricted == 2)
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
-	if(!restricted || check_rights(R_ADMIN, 0))
-		dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
-	dat += "</center></body>"
+	var/there_will_be_set_white_list
+	//var/restricted = 0
+	//if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+	//	if(!(current_species.flags & CAN_JOIN))
+	//		restricted = 2
+	//	else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species))
+	//		restricted = 1
+
+	//if(restricted)
+	//	if(restricted == 1)
+	//		dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
+	//	else if(restricted == 2)
+	//		dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
+	//if(!restricted || check_rights(R_ADMIN, 0))
+
+	dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
+	dat += "</center>"
+	dat += {"
+<script>
+	icon = document.getElementById("icon_preview");
+	setInterval(update_preview_icon, 1200);
+</script>
+	"}
+	dat += "</body></html>"
 
 	user << browse(null, "window=preferences")
+	//user << browse(dat, "window=preferences;size=700x400")
 	user << browse(dat, "window=species;size=700x400")
 
 /datum/preferences/proc/SetAntagoptions(mob/user)
@@ -705,14 +788,19 @@ datum/preferences
 	HTML += "<tt><center>"
 	HTML += "<b>Spell Options</b> <hr /><br>"
 	free_SP = total_SP
-	HTML += "<br><b>Spells:</b><br>"
+	HTML += "<br><b>Spells:</b><br><table>"
 	for(var/i = 1; i <= unicorn_spells.len; i++)
 		var/datum/spells/G = uspell_datums[unicorn_spells[i]]
 		free_SP -= G.cost
-		HTML += "[G.color] [i].[G.spell_name] - [G.cost] SP   <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell[i];active=1'>Remove</a><br>"
+		HTML += "<tr><td>[i]. </td>"
+		HTML += "<td> [G.spell_name] </td>"
+		HTML += "<td>  [G.cost] SP </td>"
+		HTML += "<td bgcolor=[G.color] width=30> [G.color] </td>"
+		HTML += "<td> <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell;spellname=[G.spell_name];active=1'>Remove</a></td></tr>"
+	HTML += "</table>"
 
 	if(free_SP > 0)
-		HTML +="<a href='?src=\ref[user];preference=spelloptions;spelltask=addspell;active=1'>Add Spell</a>"
+		HTML +="<br><a href='?src=\ref[user];preference=spelloptions;spelltask=addspell;active=1'>Add Spell</a>"
 	HTML +="<br>"
 	HTML +="<br>"
 	HTML +="Free Spell Points: [free_SP]/[total_SP]<br>"
@@ -722,37 +810,8 @@ datum/preferences
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
-	user << browse(HTML, "window=spelloptions")
+	user << browse(HTML, "window=spelloptions;size=300x250")
 
-	/*
-	HTML +="Uplink Type : <b><a href='?src=\ref[user];preference=antagoptions;antagtask=uplinktype;active=1'>[uplinklocation]</a></b>"
-	HTML +="<br>"
-	if(jobban_isbanned(user, "Records"))
-		HTML += "<b>You are banned from using character records.</b><br>"
-	else
-		HTML +="<b><a href=\"byond://?src=\ref[user];preference=records;task=exploitable_record\">[TextPreview(exploit_record,40)]</a></b>"
-
-
-
-		dat += "<br><b>Custom Loadout:</b> "
-
-
-	var/total_cost = 0
-
-	if(!islist(gear)) gear = list()
-
-	if(gear && gear.len)
-		dat += "<br>"
-		for(var/i = 1; i <= gear.len; i++)
-			var/datum/gear/G = gear_datums[gear[i]]
-			if(G)
-				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] points) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[remove\]</a><br>"
-
-		dat += "<b>Used:</b> [total_cost] points."
-	else
-		dat += "none."
-	*/
 	return
 
 /datum/preferences/proc/SetFlavorText(mob/user)
@@ -945,10 +1004,80 @@ datum/preferences
 					job_engsec_low |= job.flag
 	return 1
 
+/mob/var/icon/cutiemark_paint_west//Если стоит галочка, то эта переменная заполнится и будет использоваться заместо
+/mob/var/icon/cutiemark_paint_east
+
+/datum/preferences/proc/CustomCutiemarkPaint(mob/user)
+	if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+	if(!cutiemark_paint_west)
+		cutiemark_paint_east = new/icon('icons/mob/cutiemarks.dmi', "blank")
+		cutiemark_paint_west = new/icon('icons/mob/cutiemarks.dmi', "blank")
+
+
+	var/dat = {"
+<html>
+<body>
+<b>Brush color:<b> <table><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
+<table border=0 cellspacing=0>"}
+
+	for(var/iy=4, iy>=1, iy--)
+		dat += "<tr>"
+		for(var/ix=1, ix<=4, ix++)
+			if(colors4x4[ix][iy]=="#00000000")
+				if(!( (ix==1 && (iy==4||iy==3)) || (ix==2 && iy==4) ))
+					colors4x4[ix][iy] = rgb(150, 150, 150)
+
+			dat += "<td bgcolor='[colors4x4[ix][iy]]'>"
+			dat += "<font face='fixedsys' size='3' color='[colors4x4[ix][iy]]'><a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors4x4[ix][iy]]'>__</a></font>"
+			dat += "</td>"
+		dat += "</tr>"
+	usr << browse_rsc(cutiemark_paint_east,"cutiemark_paint.png")
+	usr << browse_rsc(cutiemark_paint_west,"cutiemark_paint2.png")
+	dat += {"</table>
+<img src=cutiemark_paint.png height=128 width=128>
+<img src=cutiemark_paint2.png height=128 width=128>
+<br>
+<a href='?_src_=prefs;cutie_paint=3'>\[Done\]</a>
+</body>
+</html>
+"}
+
+	user << browse(dat, "window=cutie_paint;size=150x200")
+
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
 
 	if(!istype(user, /mob/new_player))	return
+
+	switch(href_list["cutie_paint"])
+		if("1")
+			brush_color = input(usr, "Choose your brush colour:", "Character Preference", brush_color) as color|null
+			CustomCutiemarkPaint(user)
+			return
+		if("2")
+			var/ix = text2num(href_list["x"])
+			var/iy = text2num(href_list["y"])
+
+			if( !(ix==1 && (iy==4 || iy==3)) && !(ix==2 && iy==4) )
+				colors4x4[ix][iy] = brush_color
+				cutiemark_paint_east.DrawBox(brush_color, 11+ix, 9+iy)
+				cutiemark_paint_west.DrawBox(brush_color, 16+5-ix, 9+iy)
+			CustomCutiemarkPaint(user)
+			return
+		if("3")
+			user << browse(null,  "window=cutie_paint")
+		if("switch")
+			custom_cutiemark = !custom_cutiemark
+		if("set")
+			CustomCutiemarkPaint(user)
+			return
+
+	if(href_list["preference"] == "cutie_paint")
+		if(config.forumurl)
+			user << link(config.forumurl)
+		else
+			user << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
+			return
 
 	if(href_list["preference"] == "open_whitelist_forum")
 		if(config.forumurl)
@@ -1192,38 +1321,11 @@ datum/preferences
 				var/choice = input(user, "Select unicorn spell to add: ") as null|anything in valid_spell_choices
 				unicorn_spells[choice] = uspell_datums[choice]
 			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell1")
-			unicorn_spells -= unicorn_spells[1]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell2")
-			unicorn_spells -= unicorn_spells[2]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell3")
-			unicorn_spells -= unicorn_spells[3]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell4")
-			unicorn_spells -= unicorn_spells[4]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell5")
-			unicorn_spells -= unicorn_spells[5]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell6")
-			unicorn_spells -= unicorn_spells[6]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell7")
-			unicorn_spells -= unicorn_spells[7]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell8")
-			unicorn_spells -= unicorn_spells[8]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell9")
-			unicorn_spells -= unicorn_spells[9]
-			SetSpelloptions(user)
-		if (href_list["spelltask"] == "removespell10")
-			unicorn_spells -= unicorn_spells[10]
+		if (href_list["spelltask"] == "removespell")
+			unicorn_spells -= uspell_datums[href_list["spellname"]]
 			SetSpelloptions(user)
 		if (href_list["spelltask"] == "done")
-			user << browse(null, "window=spelloptions")
+			//user << browse(null, "window=spelloptions")
 			ShowChoices(user)
 		return 1
 
@@ -1281,10 +1383,12 @@ datum/preferences
 		if("change")
 			if(href_list["preference"] == "species")
 				// Actual whitelist checks are handled elsewhere, this is just for accessing the preview window.
-				var/choice = input("Which species would you like to look at?") as null|anything in playable_species
-				if(!choice) return
-				species_preview = choice
+				if(href_list["select"])
+					species_preview = href_list["select"]
+
+				show_choices = 0
 				SetSpecies(user)
+
 
 		if("random")
 			switch(href_list["preference"])
@@ -1293,37 +1397,29 @@ datum/preferences
 				if("age")
 					age = rand(AGE_MIN, AGE_MAX)
 				if("hair")
-					r_hair = rand(0,255)
-					g_hair = rand(0,255)
-					b_hair = rand(0,255)
+					randomize_hair_color("hair")
 				if("h_style")
-					h_style = random_hair_style(gender, species)
+					h_style = random_style(gender, species)
 				if("facial")
-					r_facial = rand(0,255)
-					g_facial = rand(0,255)
-					b_facial = rand(0,255)
+					randomize_hair_color("facial")
 				if("f_style")
-					f_style = random_facial_hair_style(gender, species)
-				if("ptail")
-					ptail_style = pick(ptail)
-					r_ptail = rand(0,255)
-					g_ptail = rand(0,255)
-					b_ptail = rand(0,255)
-					ShowChoices(user)
+					f_style = random_style(gender, species, facial_hair_styles_list)
+				if("pony_tail_style")
+					pony_tail_style = random_style(gender, species, pony_tail_styles_list)
+				if("pony_tail_color")
+					randomize_hair_color("tail")
+				if("aura")
+					randomize_aura_color()
+					//ShowChoices(user)
 				if("cutie_mark")
-					var/r = pick(cutie_mark_t)
-					cutie_mark = cutie_mark_t[r]
-					ShowChoices(user)
+					cutie_mark = random_cutiemark()
+					//ShowChoices(user)
 				if("eyes")
-					r_eyes = rand(0,255)
-					g_eyes = rand(0,255)
-					b_eyes = rand(0,255)
+					randomize_eyes_color()
 				if("s_tone")
 					s_tone = random_skin_tone()
 				if("s_color")
-					r_skin = rand(0,255)
-					g_skin = rand(0,255)
-					b_skin = rand(0,255)
+					randomize_skin_color()
 				if("bag")
 					backbag = rand(1,4)
 				/*if("skin_style")
@@ -1351,49 +1447,8 @@ datum/preferences
 					var/prev_species = species
 					species = href_list["newspecies"]
 					if(prev_species != species)
-						//grab one of the valid hair styles for the newly chosen species
-						var/list/valid_hairstyles = list()
-						for(var/hairstyle in hair_styles_list)
-							var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-							valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
+						randomize_appearance_for()
 
-						if(valid_hairstyles.len)
-							h_style = pick(valid_hairstyles)
-						else
-							//this shouldn't happen
-							h_style = hair_styles_list["Bald"]
-
-						//grab one of the valid facial hair styles for the newly chosen species
-						var/list/valid_facialhairstyles = list()
-						for(var/facialhairstyle in facial_hair_styles_list)
-							var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
-							if(gender == MALE && S.gender == FEMALE)
-								continue
-							if(gender == FEMALE && S.gender == MALE)
-								continue
-							if( !(species in S.species_allowed))
-								continue
-
-							valid_facialhairstyles[facialhairstyle] = facial_hair_styles_list[facialhairstyle]
-
-						if(valid_facialhairstyles.len)
-							f_style = pick(valid_facialhairstyles)
-						else
-							//this shouldn't happen
-							f_style = facial_hair_styles_list["Shaved"]
-
-						//reset hair colour and skin colour
-						//r_hair = 0//hex2num(copytext(new_hair, 2, 4))
-						//g_hair = 0//hex2num(copytext(new_hair, 4, 6))
-						//b_hair = 0//hex2num(copytext(new_hair, 6, 8))
-
-						s_tone = 0
 
 				if("language")
 					var/languages_available
@@ -1429,7 +1484,7 @@ datum/preferences
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", rgb(r_hair, g_hair, b_hair)) as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -1484,10 +1539,10 @@ datum/preferences
 					if(new_f_style)
 						f_style = new_f_style
 
-				if("ptail_style")
-					var/list/valid_ptailstyles = list()
-					for(var/ptailstyle in ptail)
-						var/datum/sprite_accessory/S = ptail[ptailstyle]
+				if("pony_tail_style")
+					var/list/valid_pony_tailstyles = list()
+					for(var/pony_tailstyle in pony_tail_styles_list)
+						var/datum/sprite_accessory/S = pony_tail_styles_list[pony_tailstyle]
 						if(gender == MALE && S.gender == FEMALE)
 							continue
 						if(gender == FEMALE && S.gender == MALE)
@@ -1495,27 +1550,24 @@ datum/preferences
 						if( !(species in S.species_allowed))
 							continue
 
-						valid_ptailstyles[ptailstyle] = ptail[ptailstyle]
+						valid_pony_tailstyles[pony_tailstyle] = pony_tail_styles_list[pony_tailstyle]
 
-					var/new_pt_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_ptailstyles
+					var/new_pt_style = input(user, "Choose your character's tail style:", "Character Preference")  as null|anything in valid_pony_tailstyles
 					if(new_pt_style)
-						ptail_style = new_pt_style
+						pony_tail_style = new_pt_style
 					ShowChoices(user)
 
-				if("ptail")
-					var/new_tail = input(user, "Choose your character's tail colour:", "Character Preference", rgb(r_ptail, g_ptail, b_ptail)) as color|null
+				if("pony_tail")
+					var/new_tail = input(user, "Choose your character's tail colour:", "Character Preference", rgb(r_tail, g_tail, b_tail)) as color|null
 					if(new_tail)
-						r_ptail = hex2num(copytext(new_tail, 2, 4))
-						g_ptail = hex2num(copytext(new_tail, 4, 6))
-						b_ptail = hex2num(copytext(new_tail, 6, 8))
+						r_tail = hex2num(copytext(new_tail, 2, 4))
+						g_tail = hex2num(copytext(new_tail, 4, 6))
+						b_tail = hex2num(copytext(new_tail, 6, 8))
 
 				if("cutie_mark")
-					var/list/cutie_mark_options
-					cutie_mark_options = cutie_mark_t
-
-					var/new_cutie_mark = input(user, "Choose your character's cutie mark:", "Character Preference") as null|anything in cutie_mark_options
+					var/new_cutie_mark = input(user, "Choose your character's cutie mark:", "Character Preference") as null|anything in cutiemarks_list
 					if (new_cutie_mark)
-						cutie_mark = cutie_mark_options[new_cutie_mark]
+						cutie_mark = new_cutie_mark
 					ShowChoices(user)
 
 				if("eyes")
@@ -1533,7 +1585,7 @@ datum/preferences
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					//if(species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					//if(species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", rgb(r_skin, g_skin, b_skin)) as color|null
 					if(new_skin)
 						r_skin = hex2num(copytext(new_skin, 2, 4))
@@ -1707,14 +1759,10 @@ datum/preferences
 
 				if("ui")
 					switch(UI_style)
-						if("Midnight")
-							UI_style = "Orange"
-						if("Orange")
+						if("White")
 							UI_style = "old"
 						if("old")
 							UI_style = "White"
-						else
-							UI_style = "Midnight"
 
 				if("UIcolor")
 					var/UI_style_color_new = input(user, "Choose your UI color, dark colors are not recommended!") as color|null
@@ -1830,9 +1878,9 @@ datum/preferences
 	character.g_skin = g_skin
 	character.b_skin = b_skin
 
-	character.r_ptail = r_ptail
-	character.g_ptail = g_ptail
-	character.b_ptail = b_ptail
+	character.r_tail = r_tail
+	character.g_tail = g_tail
+	character.b_tail = b_tail
 
 	character.s_tone = s_tone
 
@@ -1851,6 +1899,7 @@ datum/preferences
 	character.total_SP = total_SP
 
 	// Destroy/cyborgize organs
+
 
 	for(var/name in organ_data)
 
@@ -1871,7 +1920,7 @@ datum/preferences
 				else if(status == "mechanical")
 					I.mechanize()
 
-	character.ptail_style = ptail_style
+	character.pony_tail_style = pony_tail_style
 
 	character.cutie_mark = cutie_mark
 

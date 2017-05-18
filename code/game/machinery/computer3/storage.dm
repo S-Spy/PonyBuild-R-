@@ -107,8 +107,8 @@
 		if(usr)
 			if(!usr.get_active_hand())
 				usr.put_in_active_hand(inserted)
-			else if(forced && !usr.get_inactive_hand())
-				usr.put_in_inactive_hand(inserted)
+			else if(forced && usr.free_hand())
+				usr.put_in_free_hand(inserted)
 		for(var/datum/file/F in inserted.files)
 			F.computer = null
 		inserted = null
@@ -126,7 +126,7 @@
 				return
 
 			usr << "You insert [O] into [src]."
-			usr.drop_item()
+			usr.drop_active_hand()
 			O.loc = src
 			inserted = O
 			writeprotect = inserted.writeprotect

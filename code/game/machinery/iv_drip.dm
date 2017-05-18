@@ -56,7 +56,7 @@
 			user << "There is already a reagent container loaded!"
 			return
 
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		src.beaker = W
 		user << "You attach \the [W] to \the [src]."

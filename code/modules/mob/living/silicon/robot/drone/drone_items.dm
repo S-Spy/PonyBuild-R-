@@ -53,7 +53,7 @@
 		return wrapped.attack_self(user)
 	return ..()
 
-/obj/item/weapon/gripper/verb/drop_item()
+/obj/item/weapon/gripper/verb/drop_active_hand()
 
 	set name = "Drop Item"
 	set desc = "Release an item from your magnetic gripper."

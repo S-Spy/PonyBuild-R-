@@ -15,7 +15,7 @@
 
 	var/mob/living/carbon/pony/user = usr
 
-	if (!(user.l_hand == src || user.r_hand == src))
+	if (!user.item_in_hands(src))
 		return //bag must be in your hands to use
 
 	if (isturf(I.loc))
@@ -31,12 +31,15 @@
 			var/obj/item/weapon/storage/U = I.loc
 			user.client.screen -= I
 			U.contents.Remove(I)
-		else if(user.l_hand == I)					//in a hand
-			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
-			user.drop_r_hand()
 		else
-			return
+			var/has_item
+			for(var/datum/hand/H in user.list_hands)//in a hand
+				if(H.item_in_hand == I)
+					user.drop_active_hand(null, H)
+					has_item = 1
+					break
+			if(has_item)
+				return
 
 	if(!istype(I) || I.anchored)
 		return

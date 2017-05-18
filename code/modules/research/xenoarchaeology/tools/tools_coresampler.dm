@@ -86,7 +86,7 @@
 		var/success = 0
 		if(istype(src.loc, /mob))
 			var/mob/M = src.loc
-			success = M.put_in_inactive_hand(filled_bag)
+			success = M.put_in_free_hand(filled_bag)
 		if(!success)
 			filled_bag.loc = get_turf(src)
 		filled_bag = null

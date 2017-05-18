@@ -88,7 +88,7 @@
 				Paralyse(10)
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
-				drop_item()
+				drop_active_hand()
 				spawn( 0 )
 					emote("cough")
 					return
@@ -552,9 +552,9 @@
 
 		if(blind && stat != DEAD)
 			if(blinded)
-				blind.layer = 18
+				blind.invisibility = 8
 			else
-				blind.layer = 0
+				blind.invisibility = 101
 
 				if(disabilities & NEARSIGHTED)
 					client.screen += global_hud.vimpaired

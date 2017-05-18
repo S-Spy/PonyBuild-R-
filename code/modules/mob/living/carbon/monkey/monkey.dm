@@ -23,12 +23,12 @@
 	greaterform = "Pegasus"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
 
-/mob/living/carbon/monkey/skrell
+/mob/living/carbon/monkey/alicorn
 	name = "neaera"
 	voice_name = "neaera"
 	speak_emote = list("squicks")
-	icon_state = "skrellkey1"
-	greaterform = "Skrell"
+	icon_state = "alicornkey1"
+	greaterform = "Alicorn"
 	uni_append = list(0x01C,0xC92) // 01CC92
 
 /mob/living/carbon/monkey/unicorn
@@ -192,7 +192,7 @@
 							if ((O.client && !( O.blinded )))
 								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
 					else
-						drop_item()
+						drop_active_hand()
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 						for(var/mob/O in viewers(src, null))
 							if ((O.client && !( O.blinded )))

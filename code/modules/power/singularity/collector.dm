@@ -62,7 +62,7 @@ var/global/list/rad_collectors = list()
 		if(src.P)
 			user << "\red There's already a phoron tank loaded."
 			return 1
-		user.drop_item()
+		user.drop_active_hand()
 		src.P = W
 		W.loc = src
 		update_icons()

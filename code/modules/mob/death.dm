@@ -67,14 +67,13 @@
 	layer = MOB_LAYER
 
 	if(blind && client)
-		blind.layer = 0
+		blind.invisibility = 101
 
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	drop_r_hand()
-	drop_l_hand()
+	drop_all_hands()
 
 	if(healths)
 		healths.icon_state = "health6"

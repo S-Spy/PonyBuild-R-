@@ -103,8 +103,8 @@
 		user.drop_from_inventory(src)
 		user.put_in_hands(concealed_blade)
 		user.put_in_hands(src)
-		user.update_inv_l_hand(0)
-		user.update_inv_r_hand()
+		user.update_inv_hands(0)
+		user.update_inv_hands()
 		concealed_blade = null
 	else
 		..()

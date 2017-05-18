@@ -11,6 +11,11 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
+
+	make_hand_list() //Создание слотов для рук
+	for(var/datum/hand/H in list_hands)
+		H.slot.icon = 'icons/mob/screen1_White.dmi'
+	swap_hand()
 	..()
 
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
@@ -121,7 +126,7 @@
 //This proc is called whenever someone clicks an inventory ui slot.
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
-	if(istype(W))
+	if(W)
 		equip_to_slot_if_possible(W, slot)
 
 /mob/proc/put_in_any_hand_if_possible(obj/item/W as obj, del_on_fail = 0, disable_warning = 1, redraw_mob = 1)
@@ -136,7 +141,7 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W as obj, slot, del_on_fail = 0, disable_warning = 0, redraw_mob = 1)
-	if(!istype(W)) return 0
+	if(!W) return 0
 
 	if(!W.mob_can_equip(src, slot))
 		if(del_on_fail)
@@ -209,10 +214,13 @@ var/list/slot_equipment_priority = list( \
 	var/dat = {"
 	<B><HR><FONT size=3>[name]</FONT></B>
 	<BR><HR>
-	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];item=l_hand'>[(l_hand ? l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];item=r_hand'>[(r_hand ? r_hand : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
+	<BR><B>Head(Mask):</B> <A href='?src=\ref[src];item=mask'>[(wear_mask ? wear_mask : "Nothing")]</A>"}
+
+	for(var/datum/hand/H in list_hands)
+		dat += "<BR><B>[H.name]:</B> <A href='?src=\ref[src];item=l_hand'>[(H.item_in_hand ? H.item_in_hand : "Nothing")]</A>"
+
+
+	dat += {"<BR><B>Back:</B> <A href='?src=\ref[src];item=back'>[(back ? back : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
@@ -258,7 +266,12 @@ var/list/slot_equipment_priority = list( \
 
 
 /mob/proc/ret_grab(obj/effect/list_container/mobl/L as obj, flag)
-	if ((!( istype(l_hand, /obj/item/weapon/grab) ) && !( istype(r_hand, /obj/item/weapon/grab) )))
+	var/all_clear = 1
+	for(var/datum/hand/H in list_hands)
+		if(istype(H.item_in_hand, /obj/item/weapon/grab))
+			all_clear = 0
+			break
+	if (all_clear)
 		if (!( L ))
 			return null
 		else
@@ -268,18 +281,13 @@ var/list/slot_equipment_priority = list( \
 			L = new /obj/effect/list_container/mobl( null )
 			L.container += src
 			L.master = src
-		if (istype(l_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = l_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
-		if (istype(r_hand, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = r_hand
-			if (!( L.container.Find(G.affecting) ))
-				L.container += G.affecting
-				if (G.affecting)
-					G.affecting.ret_grab(L, 1)
+		for(var/datum/hand/H in list_hands)
+			if (istype(H.item_in_hand, /obj/item/weapon/grab))
+				var/obj/item/weapon/grab/G = H.item_in_hand
+				if (!( L.container.Find(G.affecting) ))
+					L.container += G.affecting
+					if (G.affecting)
+						G.affecting.ret_grab(L, 1)
 		if (!( flag ))
 			if (L.master == src)
 				var/list/temp = list(  )
@@ -298,16 +306,11 @@ var/list/slot_equipment_priority = list( \
 
 	if(istype(loc,/obj/mecha)) return
 
-	if(hand)
-		var/obj/item/W = l_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_l_hand()
-	else
-		var/obj/item/W = r_hand
-		if (W)
-			W.attack_self(src)
-			update_inv_r_hand()
+	var/obj/item/W = hand.item_in_hand
+	if (W)
+		W.attack_self(src)
+		update_inv_hands()
+
 	if(next_move < world.time)
 		next_move = world.time + 2
 	return
@@ -886,8 +889,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(lying)
 		density = 0
-		drop_l_hand()
-		drop_r_hand()
+		drop_all_hands()
 	else
 		density = 1
 

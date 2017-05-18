@@ -50,8 +50,8 @@ There are several things that need to be remembered:
 		update_inv_shoes()
 		update_inv_w_uniform()
 		update_inv_glasse()
-		update_inv_l_hand()
-		update_inv_r_hand()
+		update_inv_hands()
+		update_inv_hands()
 		update_inv_belt()
 		update_inv_wear_id()
 		update_inv_ears()
@@ -79,13 +79,13 @@ There are several things that need to be remembered:
 	it manually:
 		e.g.
 		update_inv_head(0)
-		update_inv_l_hand(0)
-		update_inv_r_hand()		//<---calls update_icons()
+		update_inv_hands(0)
+		update_inv_hands()		//<---calls update_icons()
 
 	or equivillantly:
 		update_inv_head(0)
-		update_inv_l_hand(0)
-		update_inv_r_hand(0)
+		update_inv_hands(0)
+		update_inv_hands(0)
 		update_icons()
 
 >	If you need to update all overlays you can use regenerate_icons(). it works exactly like update_clothing used to.
@@ -132,8 +132,9 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LAYERS			24
 //////////////////////////////////
 
+/mob/var/list/overlays_standing[TOTAL_LAYERS]
+
 /mob/living/carbon/pony
-	var/list/overlays_standing[TOTAL_LAYERS]
 	var/previous_damage_appearance // store what the body last looked like, so we only have to update it if something changed
 
 //UPDATES OVERLAYS FROM OVERLAYS_LYING/OVERLAYS_STANDING
@@ -146,7 +147,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/stealth = 0
 	//cloaking devices. //TODO: get rid of this :<
-	for(var/obj/item/weapon/cloaking_device/S in list(l_hand,r_hand,belt,l_store,r_store))
+	var/list/slots = list(belt,l_store,r_store)
+	for(var/datum/hand/H in list_hands)
+		slots |= H.item_in_hand
+	for(var/obj/item/weapon/cloaking_device/S in slots)
 		if(S.active)
 			stealth = 1
 			break
@@ -155,10 +159,11 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon_state = "body_cloaked"
 		var/image/I	= overlays_standing[L_HAND_LAYER]
 		if(istype(I))	overlays += I
-		I 			= overlays_standing[R_HAND_LAYER]
+		I = overlays_standing[R_HAND_LAYER]
 		if(istype(I))	overlays += I
 	else if (icon_update)
 		icon = stand_icon
+		if(lying && !species.prone_icon)	dir = SOUTH
 		for(var/image/I in overlays_standing)
 			overlays += I
 
@@ -346,7 +351,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		//Skin tone.
 		if(!husk && !hulk)
-			if(species.flags & HAS_SKIN_TONE)
+			if(species.flags & HAS_WINGS)
 				if(s_tone >= 0)
 					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
 				else
@@ -376,14 +381,22 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			stand_icon.Blend(new/icon('icons/mob/pony_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
-	if(cutie_mark && species.flags & HAS_ptail)
-		stand_icon.Blend(new /icon('icons/mob/pony.dmi', cutie_mark), ICON_OVERLAY)
+	if(cutie_mark)
+		if(!cutiemark_paint_east)
+			var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
+			stand_icon.Blend(new/icon(CM.icon, "icon_state" = CM.icon_state), ICON_OVERLAY)
+
+	if(species.flags & HAS_WINGS)
+		var/icon/IW = new/icon(species.icobase, "wings")
+		IW.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+		stand_icon.Blend(IW, ICON_OVERLAY)
+
+
+
+
 
 	if(update_icons)
 		update_icons()
-
-	//tail
-	update_tail_showing(0)
 
 //HAIR OVERLAY
 /mob/living/carbon/pony/proc/update_hair(var/update_icons=1)
@@ -403,8 +416,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	//base icons
 	var/icon/face_standing	= new /icon('icons/mob/pony_face.dmi',"bald_s")
 
-	if(gender == FEMALE)
-		face_standing.Blend(new /icon('icons/mob/pony.dmi', "f1"), ICON_OVERLAY)
+	if(gender == FEMALE)	face_standing.Blend(new /icon('icons/mob/pony.dmi', "f1"), ICON_OVERLAY)
 	else					face_standing.Blend(new /icon('icons/mob/pony.dmi', "m"), ICON_OVERLAY)
 
 	if(f_style)
@@ -416,17 +428,42 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 
+	if(species.flags & HAS_HORN)
+		var/icon/ICON = new/icon(species.icobase, "icon_state" = "horn")
+		ICON.Blend(rgb(r_skin, g_skin, b_skin))
+		face_standing.Blend(ICON, ICON_OVERLAY)
+
+		var/has_item
+		for(var/datum/hand/H in list_hands)
+			if(H.item_in_hand)
+				has_item = 1
+				break
+		if(has_item || block_horn_light)
+			var/icon/aura = new/icon('icons/mob/pony.dmi', "icon_state" = "horn_light")
+			aura.Blend(rgb(r_aura, g_aura, b_aura))
+			face_standing.Blend(aura, ICON_OVERLAY)
+
+		update_unicorn_verbs()//ќбновление списка вербов заклинаний
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && src.species.name in hair_style.species_allowed)
 			var/un
-			if(species.name == "Unicorn")	un = "_un"
+			if(species.flags & HAS_HORN)	un = "_un"
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			if(hair_style.do_colouration)
 				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
 			face_standing.Blend(hair_s, ICON_OVERLAY)
+
+
+
+	//Pony tail
+	if(get_organ("groin"))//≈сли есть флаг хвоста и тело, на котором он может держатьс€
+		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа беретс€ нужна€ прическа
+		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
+		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
+		face_standing.Blend(p_tail, ICON_OVERLAY)
 
 
 
@@ -509,14 +546,13 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_belt(0)
 	update_inv_back(0)
 	update_inv_wear_suit(0)
-	update_inv_r_hand(0)
-	update_inv_l_hand(0)
+	update_inv_hands(0)
+	update_inv_hands(0)
 	update_inv_handcuffed(0)
 	update_inv_legcuffed(0)
 	update_inv_pockets(0)
 	update_fire(0)
 	update_surgery(0)
-	update_tail_showing()
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -771,8 +807,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		if( istype(wear_suit, /obj/item/clothing/suit/straight_jacket) )
 			drop_from_inventory(handcuffed)
-			drop_l_hand()
-			drop_r_hand()
+			drop_all_hands()
 
 		if(wear_suit.blood_DNA)
 			var/obj/item/clothing/suit/S = wear_suit
@@ -782,13 +817,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		overlays_standing[SUIT_LAYER]	= standing
 
-		update_tail_showing(0)
-
 	else
 		overlays_standing[SUIT_LAYER]	= null
 
-		update_tail_showing(0)
 
+	update_icons()
 	update_collar(0)
 
 	if(update_icons)   update_icons()
@@ -848,8 +881,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 /mob/living/carbon/pony/update_inv_handcuffed(var/update_icons=1)
 	if(handcuffed)
-		drop_r_hand()
-		drop_l_hand()
+		drop_all_hands()
 		stop_pulling()	//TODO: should be handled elsewhere
 		overlays_standing[HANDCUFF_LAYER]	= image("icon" = 'icons/mob/mob.dmi', "icon_state" = "handcuff1")
 	else
@@ -869,74 +901,53 @@ proc/get_damage_icon_part(damage_state, body_part)
 	if(update_icons)   update_icons()
 
 
-/mob/living/carbon/pony/update_inv_r_hand(var/update_icons=1)
-	if(r_hand)
-		r_hand.screen_loc = ui_rhand	//TODO
+/mob/update_inv_hands(var/update_icons=1)
+	for(var/datum/hand/selhand in list_hands)
+		if(selhand.item_in_hand)
+			selhand.item_in_hand.screen_loc = selhand.screen_loc	//TODO
 
-		var/t_icon = INV_R_HAND_DEF_ICON
-		if(r_hand.item_icons && (icon_r_hand in r_hand.item_icons))
-			t_icon = r_hand.item_icons[icon_r_hand]
+			var/t_icon
+			switch(selhand.item_type)
+				if(MOUTH_ICON)	t_icon = INV_R_HAND_DEF_ICON
+				if(HOOF_ICON)	t_icon = INV_R_HAND_DEF_ICON
+				if(TELE_ICON)	t_icon = INV_L_HAND_DEF_ICON
 
-		var/t_state = r_hand.item_state //useful for clothing that changes icon_state but retains the same sprite on the mob when held in hand
-		if(!t_state)	t_state = r_hand.icon_state
-		if(r_hand.icon_override)
-			t_state = "[t_state]_r"
-			overlays_standing[R_HAND_LAYER] = image("icon" = r_hand.icon_override, "icon_state" = "[t_state]")
+			if(selhand.item_in_hand.item_icons && (icon_r_hand in selhand.item_in_hand.item_icons))
+				switch(selhand.item_type)
+					if(MOUTH_ICON)	t_icon = selhand.item_in_hand.item_icons[icon_r_hand]
+					if(HOOF_ICON)	t_icon = selhand.item_in_hand.item_icons[icon_r_hand]
+					if(TELE_ICON)	t_icon = selhand.item_in_hand.item_icons[icon_l_hand]
+
+			var/t_state = selhand.item_in_hand.item_state //useful for clothing that changes icon_state but retains the same sprite on the mob when held in hand
+			if(!t_state)	t_state = selhand.item_in_hand.icon_state
+
+			switch(selhand.item_type)
+				if(MOUTH_ICON)
+					if(selhand.item_in_hand.icon_override)
+						t_state = "[t_state]_r"
+						overlays_standing[R_HAND_LAYER] = image("icon" = selhand.item_in_hand.icon_override, "icon_state" = "[t_state]")
+					else	overlays_standing[R_HAND_LAYER] = image("icon" = t_icon, "icon_state" = "[t_state]")
+				if(HOOF_ICON)
+					if(selhand.item_in_hand.icon_override)
+						t_state = "[t_state]_r"
+						overlays_standing[R_HAND_LAYER] = image("icon" = selhand.item_in_hand.icon_override, "icon_state" = "[t_state]")
+					else	overlays_standing[R_HAND_LAYER] = image("icon" = t_icon, "icon_state" = "[t_state]")
+				if(TELE_ICON)
+					if(selhand.item_in_hand.icon_override)
+						t_state = "[t_state]_l"
+						overlays_standing[L_HAND_LAYER] = image("icon" = selhand.item_in_hand.icon_override, "icon_state" = "[t_state]")
+					else	overlays_standing[L_HAND_LAYER] = image("icon" = t_icon, "icon_state" = "[t_state]")
+
+
+			if(handcuffed) drop_all_hands()
 		else
-			overlays_standing[R_HAND_LAYER] = image("icon" = t_icon, "icon_state" = "[t_state]")
+			switch(selhand.item_type)
+				if(MOUTH_ICON)	overlays_standing[R_HAND_LAYER] = null
+				if(HOOF_ICON)	overlays_standing[R_HAND_LAYER] = null
+				if(TELE_ICON)	overlays_standing[L_HAND_LAYER] = null
 
-		if (handcuffed) drop_r_hand()
-	else
-		overlays_standing[R_HAND_LAYER] = null
-
-	if(update_icons) update_icons()
-
-
-/mob/living/carbon/pony/update_inv_l_hand(var/update_icons=1)
-	if(l_hand)
-		l_hand.screen_loc = ui_lhand	//TODO
-
-		var/t_icon = INV_L_HAND_DEF_ICON
-		if(l_hand.item_icons && (icon_l_hand in l_hand.item_icons))
-			t_icon = l_hand.item_icons[icon_l_hand]
-
-		var/t_state = l_hand.item_state //useful for clothing that changes icon_state but retains the same sprite on the mob when held in hand
-		if(!t_state)	t_state = l_hand.icon_state
-		if(l_hand.icon_override)
-			t_state = "[t_state]_l"
-			overlays_standing[L_HAND_LAYER] = image("icon" = l_hand.icon_override, "icon_state" = "[t_state]")
-		else
-			overlays_standing[L_HAND_LAYER] = image("icon" = t_icon, "icon_state" = "[t_state]")
-
-		if (handcuffed) drop_l_hand()
-	else
-		overlays_standing[L_HAND_LAYER] = null
-
-	if(update_icons) update_icons()
-
-/mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
-	overlays_standing[TAIL_LAYER] = null
-	var/icon/ICON
-	update_unicorn_verbs()
-	if(species.tail)
-		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
-			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
-			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
-			if(species.name == "Unicorn")
-				if(l_hand || r_hand || switch_ulight || switch_ulight_short)
-					var/icon/aura = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = "unicorn_light")
-					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
-					ICON.Blend(aura, ICON_OVERLAY)
-	//Pony tail
-	var/datum/sprite_accessory/ptailstyle = ptail[ptail_style]
-	if(species.flags)
-		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
-		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
-		else 		ICON = p_tail
-
-	overlays_standing[R_HAND_LAYER+0.1] = image(ICON)
-
+	if(ispony(src))
+		src:update_hair(0)
 	if(update_icons)
 		update_icons()
 

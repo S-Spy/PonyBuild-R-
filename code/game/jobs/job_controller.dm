@@ -500,16 +500,14 @@ var/global/datum/controller/occupations/job_master
 
 		//TODO: Generalize this by-species
 		if(H.species)
-			if(H.species.name == "Pegasus" || H.species.name == "Unicorn")
-				H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
-			else if(H.species.name == "Vox")
+			//if(H.species.name == "Pegasus" || H.species.name == "Unicorn")
+				//H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H),slot_shoes,1)
+			if(H.species.name == "Vox")
 				H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), slot_wear_mask)
-				if(!H.r_hand)
+				var/datum/hand/selhand = H.free_hand()
+				if(selhand)
 					H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_r_hand)
-					H.internal = H.r_hand
-				else if (!H.l_hand)
-					H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(H), slot_l_hand)
-					H.internal = H.l_hand
+					H.internal = selhand.item_in_hand
 				H.internals.icon_state = "internal1"
 
 		if(istype(H)) //give ponys wheelchairs, if they need them.

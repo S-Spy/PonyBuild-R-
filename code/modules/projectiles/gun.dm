@@ -76,7 +76,7 @@
 					"<span class='danger'>[user] shoots \himself in the foot with \the [src]!</span>",
 					"<span class='danger'>You shoot yourself in the foot with \the [src]!</span>"
 					)
-				M.drop_item()
+				M.drop_active_hand()
 		else
 			handle_click_empty(user)
 		return 0
@@ -107,7 +107,7 @@
 			Fire(A,user,params) //Otherwise, fire normally.
 
 /obj/item/weapon/gun/attack(atom/A, mob/living/user, def_zone)
-	if (A == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+	if (A == user && user.zone_sel.selecting.name == "mouth" && !mouthshoot)
 		handle_suicide(user)
 	else if(user.a_intent == "hurt") //point blank shooting
 		Fire(A, user, pointblank=1)
@@ -134,7 +134,7 @@
 
 	user.next_move = world.time + 4
 
-	if(process_projectile(projectile, user, target, user.zone_sel.selecting, params, pointblank, reflex))
+	if(process_projectile(projectile, user, target, user.zone_sel.selecting.name, params, pointblank, reflex))
 		handle_post_fire(user, target, pointblank, reflex)
 
 		update_icon()

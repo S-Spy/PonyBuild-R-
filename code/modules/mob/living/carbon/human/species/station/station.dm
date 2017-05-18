@@ -1,6 +1,6 @@
 /datum/species/pony
 	name = "Earthpony"
-	name_plural = "ponys"
+	name_plural = "Earthpony"
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/punch, /datum/unarmed_attack/bite)
@@ -10,8 +10,9 @@
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most pony \
 	worlds tumultous at best."
 
-	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_ptail | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_EYE_COLOR
 	brute_mod = 0.9
+	reagent_tag = IS_HERBIVORE
 
 
 /datum/species/unicorn
@@ -39,11 +40,11 @@
 	//heat_level_2 = 480 //Default 400
 	//heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#34AF10"
 
-	reagent_tag = IS_UNICORN
+	//reagent_tag = IS_UNICORN
 	//base_color = "#011000"
 
 	//heat_discomfort_level = 295
@@ -58,6 +59,7 @@
 	//	"You feel sluggish and cold.",
 	//	"Your scales bristle against the cold."
 	//	)
+	reagent_tag = IS_HERBIVORE
 
 /datum/species/pegasus
 	name = "Pegasus"
@@ -74,7 +76,7 @@
 	burn_mod = 1.2
 
 	blurb = "The Pegasus race is a species of feline-like bipeds hailing from the planet of Ahdomai in the \
-	S'randarr system. They have been brought up into the space age by the ponys and Skrell, and have been \
+	S'randarr system. They have been brought up into the space age by the ponys and Alicorn, and have been \
 	influenced heavily by their long history of Slavemaster rule. They have a structured, clan-influenced way \
 	of family and politics. They prefer colder environments, and speak a variety of languages, mostly Siik'Maas, \
 	using unique inflections their mouths form."
@@ -89,7 +91,7 @@
 
 	primitive = /mob/living/carbon/monkey/pegasus
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_WINGS
 
 	//flesh_color = "#AFA59E"
 	//base_color = "#333333"
@@ -101,29 +103,30 @@
 	//	"Your overheated skin itches."
 	//	)
 	//cold_discomfort_level = 275
+	reagent_tag = IS_HERBIVORE
 
-/datum/species/skrell
-	name = "Skrell"
-	name_plural = "Skrell"
-	icobase = 'icons/mob/pony_races/r_skrell.dmi'
-	deform = 'icons/mob/pony_races/r_def_skrell.dmi'
-	eyes = "skrell_eyes_s"
-	language = "Skrellian"
-	primitive = /mob/living/carbon/monkey/skrell
+/datum/species/alicorn
+	name = "Alicorn"
+	name_plural = "Alicorn"
+	icobase = 'icons/mob/pony_races/r_alicorn.dmi'
+	deform = 'icons/mob/pony_races/r_def_alicorn.dmi'
+	//eyes = "alicorn_eyes_s"
+	language = "Sol Common"
+	primitive = /mob/living/carbon/monkey/alicorn
 	unarmed_types = list(/datum/unarmed_attack/punch)
-	blurb = "An amphibious species, Skrell come from the star system known as Qerr'Vallis, which translates to 'Star of \
-	the royals' or 'Light of the Crown'.<br/><br/>Skrell are a highly advanced and logical race who live under the rule \
-	of the Qerr'Katish, a caste within their society which keeps the empire of the Skrell running smoothly. Skrell are \
+	blurb = "An amphibious species, Alicorn come from the star system known as Qerr'Vallis, which translates to 'Star of \
+	the royals' or 'Light of the Crown'.<br/><br/>Alicorn are a highly advanced and logical race who live under the rule \
+	of the Qerr'Katish, a caste within their society which keeps the empire of the Alicorn running smoothly. Alicorn are \
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_ptail | HAS_SKIN_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_WINGS | HAS_EYE_COLOR
 
-	flesh_color = "#8CD7A3"
-	blood_color = "#1D2CBF"
-	base_color = "#006666"
+	//flesh_color = "#8CD7A3"
+	//blood_color = "#1D2CBF"
+	//base_color = "#006666"
 
-	reagent_tag = IS_SKRELL
+	reagent_tag = IS_HERBIVORE
 
 /datum/species/diona
 	name = "Diona"
@@ -142,7 +145,7 @@
 	species hailing from Epsilon Ursae Minoris. Each 'diona' is a cluster of numerous cat-sized organisms called nymphs; \
 	there is no effective upper limit to the number that can fuse in gestalt, and reports exist	of the Epsilon Ursae \
 	Minoris primary being ringed with a cloud of singing space-station-sized entities.<br/><br/>The Dionaea coexist peacefully with \
-	all known species, especially the Skrell. Their communal mind makes them slow to react, and they have difficulty understanding \
+	all known species, especially the Alicorn. Their communal mind makes them slow to react, and they have difficulty understanding \
 	even the simplest concepts of other minds. Their alien physiology allows them survive happily off a diet of nothing but light, \
 	water and other radiation."
 

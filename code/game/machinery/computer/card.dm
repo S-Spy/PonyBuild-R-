@@ -58,11 +58,11 @@
 		return ..()
 
 	if(!scan && access_change_ids in id_card.access)
-		user.drop_item()
+		user.drop_active_hand()
 		id_card.loc = src
 		scan = id_card
 	else if(!modify)
-		user.drop_item()
+		user.drop_active_hand()
 		id_card.loc = src
 		modify = id_card
 
@@ -156,7 +156,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					usr.drop_active_hand()
 					I.loc = src
 					modify = I
 
@@ -173,7 +173,7 @@
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_item()
+					usr.drop_active_hand()
 					I.loc = src
 					scan = I
 

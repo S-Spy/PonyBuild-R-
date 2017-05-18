@@ -554,7 +554,7 @@
 
 		kit.uses--
 		if(kit.uses<1)
-			user.drop_item()
+			user.drop_active_hand()
 			del(O)
 
 /obj/item/clothing/suit/space/void/attackby(var/obj/item/O as obj, mob/user as mob)
@@ -573,7 +573,7 @@
 
 		kit.uses--
 		if(kit.uses<1)
-			user.drop_item()
+			user.drop_active_hand()
 			del(O)
 
 ///////// Salvage crew hardsuit - Cybele Petit - solaruin ///////////////
@@ -673,11 +673,11 @@
 
 //////////// Earpieces ////////////////
 
-////////////////////////// Skrellian Tailwear - Qokkri Xilo - Paradoxon /////////////
+////////////////////////// Alicornian Tailwear - Qokkri Xilo - Paradoxon /////////////
 
 /obj/item/clothing/ears/fluff/qokkri
-	name = "Skrellian Tailwear"
-	desc = "An ensemble of sophisticated jewels and bands, most likely belonging to a scientific Skrell."
+	name = "Alicornian Tailwear"
+	desc = "An ensemble of sophisticated jewels and bands, most likely belonging to a scientific Alicorn."
 	icon_state = "xilobeads"
 	icon = 'icons/obj/custom_items.dmi'
 	item_state = "xilobeads"
@@ -759,7 +759,7 @@
 
 /obj/item/clothing/head/fluff/edvin_telephosphor_1 //foolamancer: Edvin Telephosphor
 	name = "Edvin's Hat"
-	desc = "A hat specially tailored for Skrellian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
+	desc = "A hat specially tailored for Alicornian anatomy. It has a yellow badge on the front, with a large red 'T' inscribed on it."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "edvin_telephosphor_1"
 
@@ -1228,7 +1228,7 @@
 			usr << "[src] already has something inside it."
 		else
 			usr << "You slip [O] into [src]."
-			user.drop_item()
+			user.drop_active_hand()
 			O.loc = src
 			src.held = O
 		return

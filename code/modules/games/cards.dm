@@ -70,14 +70,14 @@
 		usr << "There are no cards in the deck."
 		return
 
+	var/datum/hand/selhand = user.type_in_hands(/obj/item/weapon/hand)
 	var/obj/item/weapon/hand/H
-	if(user.l_hand && istype(user.l_hand,/obj/item/weapon/hand))
-		H = user.l_hand
-	else if(user.r_hand && istype(user.r_hand,/obj/item/weapon/hand))
-		H = user.r_hand
-	else
+
+	if(!selhand)
 		H = new(get_turf(src))
 		user.put_in_hands(H)
+	else
+		H = selhand.item_in_hand
 
 	if(!H || !user) return
 

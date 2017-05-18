@@ -121,9 +121,9 @@
 	magazine_type = /obj/item/ammo_magazine/mc9mm/flash
 
 /obj/item/weapon/gun/projectile/pistol/attack_hand(mob/user as mob)
-	if(user.get_inactive_hand() == src)
+	if(user.item_in_hands(src, user.list_hands-user.hand))
 		if(silenced)
-			if(user.l_hand != src && user.r_hand != src)
+			if(!user.item_in_hands(src))
 				..()
 				return
 			user << "<span class='notice'>You unscrew [silenced] from [src].</span>"
@@ -136,10 +136,10 @@
 
 /obj/item/weapon/gun/projectile/pistol/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/weapon/silencer))
-		if(user.l_hand != src && user.r_hand != src)	//if we're not in his hands
+		if(!user.item_in_hands(src))	//if we're not in his hands
 			user << "<span class='notice'>You'll need [src] in your hands to do that.</span>"
 			return
-		user.drop_item()
+		user.drop_active_hand()
 		user << "<span class='notice'>You screw [I] onto [src].</span>"
 		silenced = I	//dodgy?
 		w_class = 3

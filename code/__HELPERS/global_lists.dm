@@ -23,8 +23,8 @@ var/global/list/joblist = list()					//list of all jobstypes, minus borg and AI
 var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					// Table of say codes for all languages
-var/global/list/whitelisted_species = list() // Species that require a whitelist check.
-var/global/list/playable_species = list("Earthpony", "Unicorn", "Pegasus")    // A list of ALL playable species, whitelisted, latejoin or otherwise.
+var/global/list/whitelisted_species = list("Earthpony", "Unicorn", "Pegasus") // Species that require a whitelist check.
+var/global/list/playable_species = list("Earthpony", "Unicorn", "Pegasus", "Alicorn")    // A list of ALL playable species, whitelisted, latejoin or otherwise.
 
 // Posters
 var/global/list/poster_designs = list()
@@ -41,10 +41,12 @@ var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessor
 var/global/list/facial_hair_styles_male_list = list()
 var/global/list/facial_hair_styles_female_list = list()
 var/global/list/skin_styles_female_list = list()		//unused
-	//ptail
-var/global/list/ptail = list() //Curse whoever made male/female ptail diffrent colours
-	//cutie_mark
-var/global/list/cutie_mark_t = list("Apple's" = "u1", "Headphones" = "u2", "Black shirt" = "u3", "White shirt" = "u4", "None")
+	//pony_tail
+var/global/list/pony_tail_styles_list = list()
+var/global/list/pony_tail_styles_male_list = list() //Curse whoever made male/female pony_tail diffrent colours
+var/global/list/pony_tail_styles_female_list = list()
+	//cutiemark
+var/global/list/cutiemarks_list = list()
 	//Backpacks
 var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Alt")
 
@@ -55,10 +57,10 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 /proc/makeDatumRefLists()
 	var/list/paths
 
-	paths = typesof(/datum/sprite_accessory/ptail) - /datum/sprite_accessory/ptail
+	paths = typesof(/datum/sprite_accessory/pony_tail) - /datum/sprite_accessory/pony_tail
 	for(var/path in paths)
-		var/datum/sprite_accessory/ptail/P = new path()
-		ptail[P.name] = P
+		var/datum/sprite_accessory/pony_tail/P = new path()
+		pony_tail_styles_list[P.name] = P
 
 
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
@@ -85,12 +87,34 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
 
+
+	//Прически хвостов!
+	paths = typesof(/datum/sprite_accessory/pony_tail) - /datum/sprite_accessory/pony_tail
+	for(var/path in paths)
+		var/datum/sprite_accessory/pony_tail/H = new path()
+		pony_tail_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)	pony_tail_styles_male_list += H.name
+			if(FEMALE)	pony_tail_styles_female_list += H.name
+			else
+				pony_tail_styles_male_list += H.name
+				pony_tail_styles_female_list += H.name
+
+
+	//Кьютимарки!
+	paths = typesof(/datum/sprite_accessory/cutiemark) - /datum/sprite_accessory/cutiemark
+	for(var/path in paths)
+		var/datum/sprite_accessory/cutiemark/H = new path()
+		cutiemarks_list[H.name] = H
+
+
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = typesof(/datum/surgery_step)-/datum/surgery_step
 	for(var/T in paths)
 		var/datum/surgery_step/S = new T
 		surgery_steps += S
 	sort_surgeries()
+
 
 	//List of job. I can't believe this was calculated multiple times per tick!
 	paths = typesof(/datum/job) -list(/datum/job,/datum/job/ai,/datum/job/cyborg)

@@ -73,7 +73,7 @@
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/living/carbon/pony/M = location
-		if(M.l_hand == src || M.r_hand == src || M.head == src)
+		if(M.item_in_hands(src) || M.head == src)
 			location = M.loc
 
 	if (istype(location, /turf))

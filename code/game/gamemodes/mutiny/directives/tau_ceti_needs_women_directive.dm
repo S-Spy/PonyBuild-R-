@@ -28,7 +28,7 @@ datum/directive/tau_ceti_needs_women
 		var/list/aliens[0]
 		for(var/mob/M in get_crew_of_target_gender())
 			var/species = M.get_species()
-			if(species == "Pegasus" || species == "Unicorn" || species == "Skrell")
+			if(species == "Pegasus" || species == "Unicorn" || species == "Alicorn")
 				aliens.Add(M)
 		return aliens
 
@@ -57,7 +57,7 @@ datum/directive/tau_ceti_needs_women/initialize()
 
 	special_orders = list(
 		"Remove [get_target_gender()] personnel from Command positions.",
-		"Terminate employment of all [get_target_gender()] Skrell, pegasus, and Unicorn.")
+		"Terminate employment of all [get_target_gender()] Alicorn, pegasus, and Unicorn.")
 
 datum/directive/tau_ceti_needs_women/meets_prerequisites()
 	var/females = 0

@@ -360,11 +360,9 @@ Class Procs:
 		return threatcount
 
 	if(auth_weapons && !src.allowed(perp))
-		if(istype(perp.l_hand, /obj/item/weapon/gun) || istype(perp.l_hand, /obj/item/weapon/melee))
-			threatcount += 4
-
-		if(istype(perp.r_hand, /obj/item/weapon/gun) || istype(perp.r_hand, /obj/item/weapon/melee))
-			threatcount += 4
+		for(var/datum/hand/H in perp.list_hands)
+			if(istype(H.item_in_hand, /obj/item/weapon/gun) || istype(H.item_in_hand, /obj/item/weapon/melee))
+				threatcount += 4
 
 		if(istype(perp.belt, /obj/item/weapon/gun) || istype(perp.belt, /obj/item/weapon/melee))
 			threatcount += 2

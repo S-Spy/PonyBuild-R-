@@ -26,7 +26,13 @@
 	if(!holstered)
 		return
 
-	if(istype(user.get_active_hand(),/obj) && istype(user.get_inactive_hand(),/obj))
+	var/has_free_hand
+	for(var/datum/hand/H in user.list_hands)
+		if(!H.item_in_hand)
+			has_free_hand = 1
+			break
+
+	if(!has_free_hand)
 		user << "<span class='warning'>You need an empty hand to draw \the [holstered]!</span>"
 	else
 		if(user.a_intent == "hurt")

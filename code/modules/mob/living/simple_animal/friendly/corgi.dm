@@ -159,7 +159,7 @@
 						usr << "\red It doesn't seem too keen on wearing that item."
 						return
 
-					usr.drop_item()
+					usr.drop_active_hand()
 
 					place_on_head(item_to_add)
 
@@ -184,7 +184,7 @@
 						usr << "\red This object won't fit."
 						return
 
-					usr.drop_item()
+					usr.drop_active_hand()
 					item_to_add.loc = src
 					src.inventory_back = item_to_add
 					regenerate_icons()

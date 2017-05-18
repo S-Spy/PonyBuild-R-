@@ -114,6 +114,8 @@
 	unarmed_attacks = list()
 	for(var/u_type in unarmed_types)
 		unarmed_attacks += new u_type()
+	//base_color = ////////////////////////////////////-------------------------------------------------------------------
+	//tail = pick(
 
 /datum/species/proc/get_environment_discomfort(var/mob/living/carbon/pony/H, var/msg_type)
 
@@ -122,7 +124,7 @@
 
 	var/covered = 0 // Basic coverage can help.
 	for(var/obj/item/clothing/clothes in H)
-		if(H.l_hand == clothes|| H.r_hand == clothes)
+		if(H.item_in_hands(clothes))
 			continue
 		if((clothes.body_parts_covered & UPPER_TORSO) && (clothes.body_parts_covered & LOWER_TORSO))
 			covered = 1
@@ -143,11 +145,6 @@
 /datum/species/proc/create_organs(var/mob/living/carbon/pony/H) //Handles creation of mob organs.
 
 	//Trying to work out why species changes aren't fixing organs properly.
-	if(H.organs)                  H.organs.Cut()
-	if(H.internal_organs)         H.internal_organs.Cut()
-	if(H.organs_by_name)          H.organs_by_name.Cut()
-	if(H.internal_organs_by_name) H.internal_organs_by_name.Cut()
-
 	H.organs = list()
 	H.internal_organs = list()
 	H.organs_by_name = list()

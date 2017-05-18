@@ -10,6 +10,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	opacity = 0
 
 	var/school = "evocation" //not relevant at now, but may be important later if there are changes to how spells work. the ones I used for now will probably be changed... maybe spell presets? lacking flexibility but with some other benefit?
+	var/spell_level = 1
 
 	var/charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
@@ -39,8 +40,14 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 
 	var/critfailchance = 0
 	var/centcomm_cancast = 1 //Whether or not the spell should be allowed on z2
+	var/cooldown = 0
 
-/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+
+/obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/living/carbon/pony/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+
+	if(user.active_spell == src)
+		spell_off(user)
+		return 0//Отключение
 
 	if(!(src in usr.spell_list))
 		usr << "\red You shouldn't have this spell! Something's wrong."
@@ -64,21 +71,29 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		usr << "Not when you're incapacitated."
 		return 0
 
+	if(!prob(user.concentration(level)) || usr.nutrition < 50)
+		usr << "You can't use this spell! Maybe you must eat something?"
+		return 0//Проверка доступности долгосрочного заклинания
+
+	if(user.block_horn_light || !(usr.species & HAS_HORN))
+		return 0//&& ismage(usr)
+
 	if(ispony(usr) || ismonkey(usr))
-		if(istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
+		if(invocation_type != "none" && istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
 			usr << "Mmmf mrrfff!"
 			return 0
 
+
 	if(clothes_req) //clothes check
 		if(!istype(usr, /mob/living/carbon/pony))
-			usr << "You aren't a pony, Why are you trying to cast a pony spell, silly non-pony? Casting pony spells is for ponys."
+			usr << "You aren't a pony, Why are you trying to cast a pony spell, silly non-pony? Casting pony spells is for ponies."
 			return 0
 		if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe) && !istype(user:wear_suit, /obj/item/clothing/suit/space/void/wizard))
 			usr << "I don't feel strong enough without my robe."
 			return 0
-		if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-			usr << "I don't feel strong enough without my sandals."
-			return 0
+		//if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
+		//	usr << "I don't feel strong enough without my sandals."
+		//	return 0
 		if(!istype(usr:head, /obj/item/clothing/head/wizard) && !istype(user:head, /obj/item/clothing/head/helmet/space/void/wizard))
 			usr << "I don't feel strong enough without my hat."
 			return 0
@@ -93,6 +108,13 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				adjust_var(user, holder_var_type, holder_var_amount)
 
 	return 1
+
+/obj/effect/proc_holder/spell/proc/spell_off(mob/living/carbon/pony/user = usr)
+	user.active_spell = null
+	user.block_horn_light = 0
+	name = replacetext(name, " \[ACTIVE\]", "")
+	user.update_icons()
+
 
 /obj/effect/proc_holder/spell/proc/invocation(mob/user = usr) //spelling the spell out and setting it on recharge/reducing charges amount
 
@@ -180,6 +202,25 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 				var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 				smoke.set_up(smoke_amt, 0, location) //no idea what the 0 is
 				smoke.start()
+
+	var/mob/living/carbon/pony/user = usr
+	//if(!ismage)
+	user.nutrition -= 4*level
+	user.active_spell = src
+	user.block_horn_light = 1
+	name += " \[ACTIVE\]"
+	//if(ismage)
+	user.update_icons()
+
+	spawn(1)
+		for(var/t=0, t<=cooldown, t += 10)
+			sleep(10)
+			//if(ismage)
+			if(src == user.active_spell)
+				if(user.nutrition > 50)	user.nutrition -= level
+				else break
+			else return
+		spell_off(user)
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets)
 	return

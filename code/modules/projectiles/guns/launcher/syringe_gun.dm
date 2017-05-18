@@ -53,10 +53,10 @@
 			if(L.can_inject())
 				if(syringe.reagents)
 					syringe.reagents.trans_to(L, 15)
-		
+
 		syringe.break_syringe(iscarbon(hit_atom)? hit_atom : null)
 		syringe.update_icon()
-	
+
 	icon_state = initial(icon_state) //reset icon state
 	update_icon()
 
@@ -69,13 +69,13 @@
 	force = 7
 	matter = list("metal" = 2000)
 	slot_flags = SLOT_BELT
-	
+
 	fire_sound = 'sound/weapons/empty.ogg'
 	fire_sound_text = "a metallic thunk"
 	recoil = 0
 	release_force = 10
 	throw_distance = 10
-	
+
 	var/list/darts = list()
 	var/max_darts = 1
 	var/obj/item/weapon/syringe_cartridge/next
@@ -102,7 +102,7 @@
 	add_fingerprint(user)
 
 /obj/item/weapon/gun/launcher/syringe/attack_hand(mob/living/user as mob)
-	if(user.get_inactive_hand() == src)
+	if(user.item_in_hands(src, user.list_hands-user.hand))
 		if(!darts.len)
 			user << "<span class='warning'>[src] is empty.</span>"
 			return

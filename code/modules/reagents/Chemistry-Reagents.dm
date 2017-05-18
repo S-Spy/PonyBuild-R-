@@ -26,6 +26,11 @@ datum
 		var/glass_name = null
 		var/glass_desc = null
 		var/glass_center_of_mass = null
+		var/pungent = 0
+		var/sweet = 0
+		var/salty = 0
+		var/sour = 0
+		var/bitter = 0//Горький
 		//var/list/viruses = list()
 		var/color = "#000000" // rgb: 0, 0, 0 (does not support alpha channels - yet!)
 
@@ -98,6 +103,8 @@ datum
 
 
 		blood
+			salty = 0.6
+			sweet = 0.1
 			data = new/list("donor"=null,"viruses"=null,"species"="Earthpony","blood_DNA"=null,"blood_type"=null,"blood_colour"= "#A10808","resistances"=null,"trace_chem"=null, "antibodies" = list())
 			name = "Blood"
 			id = "blood"
@@ -171,6 +178,9 @@ datum
 */
 		vaccine
 			//data must contain virus type
+			bitter = 0.1
+			salty = 0.05
+			sweet = -0.05
 			name = "Vaccine"
 			id = "vaccine"
 			reagent_state = LIQUID
@@ -193,6 +203,8 @@ datum
 				return
 
 		woodpulp
+			bitter = 0.4
+			salty = 0.1
 			name = "Wood Pulp"
 			id = "woodpulp"
 			description = "A mass of wood fibers."
@@ -201,6 +213,8 @@ datum
 
 		#define WATER_LATENT_HEAT 19000 // How much heat is removed when applied to a hot turf, in J/unit (19000 makes 120 u of water roughly equivalent to 4L)
 		water
+			bitter = -0.05
+			pungent = -0.1
 			name = "Water"
 			id = "water"
 			description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
@@ -276,6 +290,9 @@ datum
 					return
 
 		water/holywater
+			sweet = 0.1
+			bitter = -0.1
+			pungent = -0.2
 			name = "Holy Water"
 			id = "holywater"
 			description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
@@ -296,6 +313,8 @@ datum
 				return
 
 		lube
+			bitter = 0.6
+			sour = 0.1
 			name = "Space Lube"
 			id = "lube"
 			description = "Lubricant is a substance introduced between two moving surfaces to reduce the friction and wear between them. giggity."
@@ -318,6 +337,7 @@ datum
 						return
 
 		plasticide
+			bitter = 0.1
 			name = "Plasticide"
 			id = "plasticide"
 			description = "Liquid plastic, do not eat."
@@ -333,6 +353,8 @@ datum
 				return
 
 		slimetoxin
+			bitter = 0.1
+			sweet = 0.1
 			name = "Mutation Toxin"
 			id = "mutationtoxin"
 			description = "A corruptive toxin produced by slimes."
@@ -351,6 +373,8 @@ datum
 				return
 
 		aslimetoxin
+			bitter = 0.1
+			sour = 0.1
 			name = "Advanced Mutation Toxin"
 			id = "amutationtoxin"
 			description = "An advanced corruptive toxin produced by slimes."
@@ -454,6 +478,7 @@ datum
 				return
 
 		oxygen
+			sweet = 0.02
 			name = "Oxygen"
 			id = "oxygen"
 			description = "A colorless, odorless gas."
@@ -479,6 +504,7 @@ datum
 			custom_metabolism = 0.01
 
 		nitrogen
+			sour = -0.01
 			name = "Nitrogen"
 			id = "nitrogen"
 			description = "A colorless, odorless, tasteless gas."
@@ -496,6 +522,7 @@ datum
 				..()
 
 		hydrogen
+			sour = 0.01
 			name = "Hydrogen"
 			id = "hydrogen"
 			description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
@@ -505,6 +532,7 @@ datum
 			custom_metabolism = 0.01
 
 		potassium
+			salty = 0.4
 			name = "Potassium"
 			id = "potassium"
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
@@ -514,6 +542,10 @@ datum
 			custom_metabolism = 0.01
 
 		mercury
+			sweet = 0.1
+			salty = 0.1
+			bitter = 0.2
+			sour = 0.2
 			name = "Mercury"
 			id = "mercury"
 			description = "A chemical element."
@@ -531,6 +563,8 @@ datum
 				return
 
 		sulfur
+			bitter = 0.1
+			salty = 0.05
 			name = "Sulfur"
 			id = "sulfur"
 			description = "A chemical element with a pungent smell."
@@ -540,6 +574,8 @@ datum
 			custom_metabolism = 0.01
 
 		carbon
+			bitter = 0.1
+			sour = -0.05
 			name = "Carbon"
 			id = "carbon"
 			description = "A chemical element, the builing block of life."
@@ -559,6 +595,7 @@ datum
 						dirtoverlay.alpha = min(dirtoverlay.alpha+volume*30, 255)
 
 		chlorine
+			bitter = 0.1
 			name = "Chlorine"
 			id = "chlorine"
 			description = "A chemical element with a characteristic odour."
@@ -573,6 +610,7 @@ datum
 				return
 
 		fluorine
+			salty = 0.2
 			name = "Fluorine"
 			id = "fluorine"
 			description = "A highly-reactive chemical element."
@@ -587,6 +625,7 @@ datum
 				return
 
 		sodium
+			salty = 0.4
 			name = "Sodium"
 			id = "sodium"
 			description = "A chemical element, readily reacts with water."
@@ -596,6 +635,8 @@ datum
 			custom_metabolism = 0.01
 
 		phosphorus
+			bitter = 0.4
+			sour = 0.4
 			name = "Phosphorus"
 			id = "phosphorus"
 			description = "A chemical element, the backbone of biological energy carriers."
@@ -605,6 +646,8 @@ datum
 			custom_metabolism = 0.01
 
 		lithium
+			bitter = 0.2
+			sour = 0.1
 			name = "Lithium"
 			id = "lithium"
 			description = "A chemical element, used as antidepressant."
@@ -621,6 +664,7 @@ datum
 				return
 
 		sugar
+			sweet = 1
 			name = "Sugar"
 			id = "sugar"
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
@@ -638,6 +682,7 @@ datum
 
 
 		glycerol
+			sweet = 0.9
 			name = "Glycerol"
 			id = "glycerol"
 			description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
@@ -647,6 +692,8 @@ datum
 			custom_metabolism = 0.01
 
 		nitroglycerin
+			sweet = 0.4
+			bitter = 0.1
 			name = "Nitroglycerin"
 			id = "nitroglycerin"
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
@@ -656,6 +703,7 @@ datum
 			custom_metabolism = 0.01
 
 		radium
+			bitter = 0.6
 			name = "Radium"
 			id = "radium"
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
@@ -695,6 +743,9 @@ datum
 
 
 		ryetalyn
+			salty = 0.2
+			bitter = 0.4
+			sweet = 0.1
 			name = "Ryetalyn"
 			id = "ryetalyn"
 			description = "Ryetalyn can cure all genetic abnomalities via a catalytic process."
@@ -720,6 +771,9 @@ datum
 				return
 
 		thermite
+			bitter = 0.2
+			sour = 0.1
+			sweet = -0.2
 			name = "Thermite"
 			id = "thermite"
 			description = "Thermite produces an aluminothermic reaction known as a thermite reaction. Can be used to melt walls."
@@ -742,6 +796,7 @@ datum
 				return
 
 		paracetamol
+			bitter = 0.1
 			name = "Paracetamol"
 			id = "paracetamol"
 			description = "Most probably know this as Tylenol, but this chemical is a mild, simple painkiller."
@@ -758,6 +813,11 @@ datum
 				return
 
 		tramadol
+			pungent = -0.2
+			bitter = -0.2
+			sour = -0.2
+			salty = -0.2
+			sweet = -0.2
 			name = "Tramadol"
 			id = "tramadol"
 			description = "A simple, yet effective painkiller."
@@ -774,6 +834,11 @@ datum
 				return
 
 		oxycodone
+			pungent = -0.3
+			bitter = -0.3
+			sour = -0.3
+			salty = -0.3
+			sweet = -0.3
 			name = "Oxycodone"
 			id = "oxycodone"
 			description = "An effective and very addictive painkiller."
@@ -791,6 +856,8 @@ datum
 
 
 		virus_food
+			salty = 0.1
+			sweet = 0.4
 			name = "Virus Food"
 			id = "virusfood"
 			description = "A mixture of water, milk, and oxygen. Virus cells can use this mixture to reproduce."
@@ -805,6 +872,7 @@ datum
 				return
 
 		sterilizine
+			bitter = 0.8
 			name = "Sterilizine"
 			id = "sterilizine"
 			description = "Sterilizes wounds in preparation for surgery."
@@ -839,6 +907,8 @@ datum
 					return
 	*/
 		iron
+			bitter = 0.1
+			sour = 0.05
 			name = "Iron"
 			id = "iron"
 			description = "Pure iron is a metal."
@@ -847,6 +917,8 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 		gold
+			bitter = 0.1
+			sour = 0.05
 			name = "Gold"
 			id = "gold"
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
@@ -854,6 +926,8 @@ datum
 			color = "#F7C430" // rgb: 247, 196, 48
 
 		silver
+			bitter = 0.05
+			sour = 0.05
 			name = "Silver"
 			id = "silver"
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
@@ -861,6 +935,8 @@ datum
 			color = "#D0D0D0" // rgb: 208, 208, 208
 
 		uranium
+			bitter = 0.2
+			sour = 0.05
 			name ="Uranium"
 			id = "uranium"
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
@@ -883,6 +959,8 @@ datum
 						return
 
 		aluminum
+			bitter = 0.1
+			sour = 0.05
 			name = "Aluminum"
 			id = "aluminum"
 			description = "A silvery white and ductile member of the boron group of chemical elements."
@@ -890,6 +968,7 @@ datum
 			color = "#A8A8A8" // rgb: 168, 168, 168
 
 		silicon
+			bitter = -0.05
 			name = "Silicon"
 			id = "silicon"
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
@@ -897,6 +976,7 @@ datum
 			color = "#A8A8A8" // rgb: 168, 168, 168
 
 		fuel
+			bitter = 1
 			name = "Welding fuel"
 			id = "fuel"
 			description = "Required for welders. Flamable."
@@ -929,6 +1009,7 @@ datum
 					return
 
 		space_cleaner
+			bitter = 0.5
 			name = "Space cleaner"
 			id = "cleaner"
 			description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
@@ -959,10 +1040,9 @@ datum
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
-					if(C.r_hand)
-						C.r_hand.clean_blood()
-					if(C.l_hand)
-						C.l_hand.clean_blood()
+					for(var/datum/hand/H in C.list_hands)
+						if(H.item_in_hand)
+							H.item_in_hand.clean_blood()
 					if(C.wear_mask)
 						if(C.wear_mask.clean_blood())
 							C.update_inv_wear_mask(0)
@@ -986,6 +1066,9 @@ datum
 					M.clean_blood()
 
 		leporazine
+			sweet = -0.1
+			pungent = 0.2
+			sour = 0.1
 			name = "Leporazine"
 			id = "leporazine"
 			description = "Leporazine can be use to stabilize an individuals body temperature."
@@ -1004,6 +1087,7 @@ datum
 				return
 
 		cryptobiolin
+			sour = 0.4
 			name = "Cryptobiolin"
 			id = "cryptobiolin"
 			description = "Cryptobiolin causes confusion and dizzyness."
@@ -1022,6 +1106,8 @@ datum
 
 
 		kelotane
+			bitter = 0.1
+			pungent = 0.1
 			name = "Kelotane"
 			id = "kelotane"
 			description = "Kelotane is a drug used to treat burns."
@@ -1040,6 +1126,8 @@ datum
 				return
 
 		dermaline
+			bitter = 0.4
+			pungent = 0.05
 			name = "Dermaline"
 			id = "dermaline"
 			description = "Dermaline is the next step in burn medication. Works twice as good as kelotane and enables the body to restore even the direst heat-damaged tissue."
@@ -1058,6 +1146,8 @@ datum
 				return
 
 		dexalin
+			sweet = 1
+			sour = 0.3
 			name = "Dexalin"
 			id = "dexalin"
 			description = "Dexalin is used in the treatment of oxygen deprivation."
@@ -1081,6 +1171,8 @@ datum
 				return
 
 		dexalinp
+			sweet = 0.09
+			sour = 0.5
 			name = "Dexalin Plus"
 			id = "dexalinp"
 			description = "Dexalin Plus is used in the treatment of oxygen deprivation. It is highly effective."
@@ -1104,6 +1196,9 @@ datum
 				return
 
 		tricordrazine
+			sweet = 0.6
+			pungent = 0.8
+			salty = 0.1
 			name = "Tricordrazine"
 			id = "tricordrazine"
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
@@ -1124,6 +1219,9 @@ datum
 				return
 
 		anti_toxin
+			pungent = 0.3
+			bitter = 0.3
+			sour = 0.3
 			name = "Dylovene"
 			id = "anti_toxin"
 			description = "Dylovene is a broad-spectrum antitoxin."
@@ -1142,6 +1240,11 @@ datum
 				return
 
 		adminordrazine //An OP chemical for admins
+			bitter = -2
+			pungent = -2
+			salty = -2
+			sweet = -2
+			sour = -2
 			name = "Adminordrazine"
 			id = "adminordrazine"
 			description = "It's magic. We don't have to explain it."
@@ -1184,7 +1287,8 @@ datum
 				..()
 				return
 		synaptizine
-
+			salty = 0.4
+			sweet = 0.1
 			name = "Synaptizine"
 			id = "synaptizine"
 			description = "Synaptizine is used to treat various diseases."
@@ -1207,6 +1311,8 @@ datum
 				return
 
 		impedrezene
+			bitter = 0.4
+			sweet = 0.1
 			name = "Impedrezene"
 			id = "impedrezene"
 			description = "Impedrezene is a narcotic that impedes one's ability by slowing down the higher brain cell functions."
@@ -1224,6 +1330,7 @@ datum
 				return
 
 		hyronalin
+			bitter = 0.4
 			name = "Hyronalin"
 			id = "hyronalin"
 			description = "Hyronalin is a medicinal drug used to counter the effect of radiation poisoning."
@@ -1240,6 +1347,8 @@ datum
 				return
 
 		arithrazine
+			bitter = 0.7
+			pungent = 0.2
 			name = "Arithrazine"
 			id = "arithrazine"
 			description = "Arithrazine is an unstable medication used for the most extreme cases of radiation poisoning."
@@ -1260,6 +1369,8 @@ datum
 				return
 
 		alkysine
+			sweet = 0.8
+			sour = 0.1
 			name = "Alkysine"
 			id = "alkysine"
 			description = "Alkysine is a drug used to lessen the damage to neurological tissue after a catastrophic injury. Can heal brain tissue."
@@ -1276,6 +1387,9 @@ datum
 				return
 
 		imidazoline
+			bitter = 0.5
+			sour = 0.6
+			pungent = 0.4
 			name = "Imidazoline"
 			id = "imidazoline"
 			description = "Heals eye damage"
@@ -1298,6 +1412,9 @@ datum
 				return
 
 		peridaxon
+			bitter = 1
+			pungent = 0.3
+			sour = 0.5
 			name = "Peridaxon"
 			id = "peridaxon"
 			description = "Used to encourage recovery of internal organs and nervous systems. Medicate cautiously."
@@ -1319,6 +1436,8 @@ datum
 				return
 
 		bicaridine
+			bitter = 0.3
+			sweet = 0.2
 			name = "Bicaridine"
 			id = "bicaridine"
 			description = "Bicaridine is an analgesic medication and can be used to treat blunt trauma."
@@ -1337,6 +1456,9 @@ datum
 				return
 
 		hyperzine
+			sweet = 0.6
+			pungent = 0.9
+			bitter = 0.2
 			name = "Hyperzine"
 			id = "hyperzine"
 			description = "Hyperzine is a highly effective, long lasting, muscle stimulant."
@@ -1352,6 +1474,7 @@ datum
 				return
 
 		adrenaline
+			sweet = 0.2
 			name = "Adrenaline"
 			id = "adrenaline"
 			description = "Adrenaline is a hormone used as a drug to treat cardiac arrest and other cardiac dysrhythmias resulting in diminished or absent cardiac output."
@@ -1367,6 +1490,7 @@ datum
 				return
 
 		cryoxadone
+			sour = 0.6
 			name = "Cryoxadone"
 			id = "cryoxadone"
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
@@ -1385,6 +1509,7 @@ datum
 				return
 
 		clonexadone
+			sour = 0.5
 			name = "Clonexadone"
 			id = "clonexadone"
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
@@ -1403,6 +1528,10 @@ datum
 				return
 
 		rezadone
+			bitter = 1
+			pungent = 0.5
+			sweet = 0.1
+			salty = 0.2
 			name = "Rezadone"
 			id = "rezadone"
 			description = "A powder derived from fish toxin, this substance can effectively treat genetic damage in ponyoids, though excessive consumption has side effects."
@@ -1432,6 +1561,9 @@ datum
 				return
 
 		spaceacillin
+			bitter = 0.1
+			sweet = -0.1
+			pungent = -0.1
 			name = "Spaceacillin"
 			id = "spaceacillin"
 			description = "An all-purpose antiviral agent."
@@ -1449,6 +1581,8 @@ datum
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		nanites
+			bitter = 0.2
+			sour = 0.1
 			name = "Nanomachines"
 			id = "nanites"
 			description = "Microscopic construction robots."
@@ -1461,6 +1595,9 @@ datum
 					M.contract_disease(new /datum/disease/robotic_transformation(0),1)
 
 		xenomicrobes
+			salty = 0.2
+			pungent = 0.6
+			sour = 0.5
 			name = "Xenomicrobes"
 			id = "xenomicrobes"
 			description = "Microbes with an entirely alien cellular structure."
@@ -1473,6 +1610,8 @@ datum
 					M.contract_disease(new /datum/disease/xeno_transformation(0),1)
 
 		fluorosurfactant//foam precursor
+			bitter = 0.05
+			pungent = -0.05
 			name = "Fluorosurfactant"
 			id = "fluorosurfactant"
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
@@ -1480,6 +1619,8 @@ datum
 			color = "#9E6B38" // rgb: 158, 107, 56
 
 		foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
+			bitter = 0.05
+			pungent = -0.05
 			name = "Foaming agent"
 			id = "foaming_agent"
 			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
@@ -1487,6 +1628,8 @@ datum
 			color = "#664B63" // rgb: 102, 75, 99
 
 		nicotine
+			bitter = 0.3
+			sweet = -0.5
 			name = "Nicotine"
 			id = "nicotine"
 			description = "A highly addictive stimulant extracted from the tobacco plant."
@@ -1494,6 +1637,8 @@ datum
 			color = "#181818" // rgb: 24, 24, 24
 
 		ammonia
+			sweet = 0.3
+			salty = 0.3
 			name = "Ammonia"
 			id = "ammonia"
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
@@ -1501,12 +1646,16 @@ datum
 			color = "#404030" // rgb: 64, 64, 48
 
 		ultraglue
+			bitter = 0.7
+			pungent = 0.4
 			name = "Ultra Glue"
 			id = "glue"
 			description = "An extremely powerful bonding agent."
 			color = "#FFFFCC" // rgb: 255, 255, 204
 
 		diethylamine
+			sweet = -1
+			sour = 0.6
 			name = "Diethylamine"
 			id = "diethylamine"
 			description = "A secondary amine, mildly corrosive."
@@ -1514,6 +1663,8 @@ datum
 			color = "#604030" // rgb: 96, 64, 48
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
+			bitter = 0.7
+			sour = 0.7
 			name = "Ethylredoxrazine"
 			id = "ethylredoxrazine"
 			description = "A powerful oxidizer that reacts with ethanol."
@@ -1535,6 +1686,7 @@ datum
 
 
 		crayon_dust
+			bitter = 0.1
 			name = "Crayon dust"
 			id = "crayon_dust"
 			description = "Intensely coloured powder obtained by grinding crayons."
@@ -1585,6 +1737,8 @@ datum
 //////////////////////////Paint//////////////////////////////
 
 		paint
+			sour = 0.4
+			bitter = 0.4
 			name = "Paint"
 			id = "paint"
 			description = "This paint will stick to almost any object."
@@ -1612,6 +1766,7 @@ datum
 //////////////////////////Poison stuff///////////////////////
 
 		toxin
+			bitter = 0.2
 			name = "Toxin"
 			id = "toxin"
 			description = "A toxic chemical."
@@ -1628,6 +1783,8 @@ datum
 				return
 
 		toxin/amatoxin
+			bitter = 0.2
+			sweet = 0.3
 			name = "Amatoxin"
 			id = "amatoxin"
 			description = "A powerful poison derived from certain species of mushroom."
@@ -1636,6 +1793,7 @@ datum
 			toxpwr = 1
 
 		toxin/mutagen
+			bitter = 0.5
 			name = "Unstable mutagen"
 			id = "mutagen"
 			description = "Might cause unpredictable mutations. Keep away from children."
@@ -1662,6 +1820,8 @@ datum
 				return
 
 		toxin/phoron
+			bitter = 1
+			pungent = 1
 			name = "Phoron"
 			id = "phoron"
 			description = "Phoron in its liquid form."
@@ -1695,6 +1855,8 @@ datum
 					return
 
 		toxin/lexorin
+			bitter = 0.5
+			sour = 1
 			name = "Lexorin"
 			id = "lexorin"
 			description = "Lexorin temporarily stops respiration. Causes tissue damage."
@@ -1715,6 +1877,8 @@ datum
 				return
 
 		toxin/slimejelly
+			bitter = 0.05
+			pungent = 0.1
 			name = "Slime Jelly"
 			id = "slimejelly"
 			description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -1732,6 +1896,7 @@ datum
 				return
 
 		toxin/cyanide //Fast and Lethal
+			bitter = 1
 			name = "Cyanide"
 			id = "cyanide"
 			description = "A highly toxic chemical."
@@ -1748,6 +1913,8 @@ datum
 				return
 
 		toxin/minttoxin
+			sweet = 0.5
+			sour = 0.2
 			name = "Mint Toxin"
 			id = "minttoxin"
 			description = "Useful for dealing with undesirable customers."
@@ -1763,6 +1930,9 @@ datum
 				return
 
 		toxin/carpotoxin
+			salty = 0.5
+			sweet = 0.1
+			bitter = 0.3
 			name = "Carpotoxin"
 			id = "carpotoxin"
 			description = "A deadly neurotoxin produced by the dreaded space carp."
@@ -1771,6 +1941,8 @@ datum
 			toxpwr = 2
 
 		toxin/zombiepowder
+			sweet = 0.05
+			bitter = 0.1
 			name = "Zombie Powder"
 			id = "zombiepowder"
 			description = "A strong neurotoxin that puts the subject into a death-like state."
@@ -1795,6 +1967,9 @@ datum
 				..()
 
 		toxin/mindbreaker
+			sweet = 0.1
+			bitter = 0.6
+			sour = 0.1
 			name = "Mindbreaker Toxin"
 			id = "mindbreaker"
 			description = "A powerful hallucinogen, it can cause fatal effects in users."
@@ -1812,6 +1987,10 @@ datum
 
 		//Reagents used for plant fertilizers.
 		toxin/fertilizer
+			bitter = 1
+			sour = 0.5
+			sweet = -1
+			salty = 0.8
 			name = "fertilizer"
 			id = "fertilizer"
 			description = "A chemical mix good for growing plants with."
@@ -1820,18 +1999,29 @@ datum
 			color = "#664330" // rgb: 102, 67, 48
 
 		toxin/fertilizer/eznutrient
+			salty = 0.4
+			sweet = 0.1
 			name = "EZ Nutrient"
 			id = "eznutrient"
 
 		toxin/fertilizer/left4zed
+			bitter = 0.5
+			salty = 0.4
+			sweet = 0.1
 			name = "Left-4-Zed"
 			id = "left4zed"
 
 		toxin/fertilizer/robustharvest
+			sour = 0.8
+			bitter = 0.2
+			salty = 0.9
+			sweet = 0.05
 			name = "Robust Harvest"
 			id = "robustharvest"
 
 		toxin/plantbgone
+			bitter = 0.4
+			sour = 0.3
 			name = "Plant-B-Gone"
 			id = "plantbgone"
 			description = "A harmful toxic mixture to kill plantlife. Do not ingest!"
@@ -1884,6 +2074,10 @@ datum
 								H.adjustToxLoss(50)
 
 		toxin/stoxin
+			sweet = 0.4
+			sour = 0.1
+			salty = -0.2
+			sour = 0.2
 			name = "Soporific"
 			id = "stoxin"
 			description = "An effective hypnotic used to treat insomnia."
@@ -1913,6 +2107,10 @@ datum
 				return
 
 		toxin/chloralhydrate
+			bitter = 1
+			sour = 1
+			sweet = -1
+			salty = -1
 			name = "Chloral Hydrate"
 			id = "chloralhydrate"
 			description = "A powerful sedative."
@@ -1940,6 +2138,9 @@ datum
 				return
 
 		toxin/potassium_chloride
+			bitter = 0.9
+			salty = 0.5
+			sour = 0.5
 			name = "Potassium Chloride"
 			id = "potassium_chloride"
 			description = "A delicious salt that stops the heart when injected into cardiac muscle."
@@ -1960,6 +2161,8 @@ datum
 				return
 
 		toxin/potassium_chlorophoride
+			bitter = 0.8
+			salty = 0.8
 			name = "Potassium Chlorophoride"
 			id = "potassium_chlorophoride"
 			description = "A specific chemical based on Potassium Chloride to stop the heart for surgery. Not safe to eat!"
@@ -1980,6 +2183,10 @@ datum
 				return
 
 		toxin/beer2	//disguised as normal beer for use by emagged brobots
+			bitter = 0.5
+			sweet = 0.5
+			sour = 0.5
+			salty = 0.2
 			name = "Beer"
 			id = "beer2"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water. The fermentation appears to be incomplete." //If the players manage to analyze this, they deserve to know something is wrong.
@@ -2010,6 +2217,8 @@ datum
 				return
 
 		toxin/acid
+			bitter = 0.3
+			sour = 1
 			name = "Sulphuric acid"
 			id = "sacid"
 			description = "A very corrosive mineral acid with the molecular formula H2SO4."
@@ -2095,6 +2304,8 @@ datum
 						del(O)
 
 		toxin/acid/polyacid
+			bitter = 0.2
+			sour = 1
 			name = "Polytrinic acid"
 			id = "pacid"
 			description = "Polytrinic acid is a an extremely corrosive chemical substance."
@@ -2107,6 +2318,8 @@ datum
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
 		nutriment
+			sweet = 0.6
+			salty = 0.3
 			name = "Nutriment"
 			id = "nutriment"
 			description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
@@ -2121,29 +2334,36 @@ datum
 				..()
 				return
 
-		nutriment/protein // Bad for Skrell!
+		nutriment/protein // Bad for Alicorn!
+			sweet = 0.6
+			salty = 0.6
 			name = "animal protein"
 			id = "protein"
 			color = "#440000"
 
 			on_mob_life(var/mob/living/M, var/alien)
-				if(alien && alien == IS_SKRELL)
+				if(alien && alien == IS_HERBIVORE)
 					M.adjustToxLoss(0.5)
 					M.nutrition -= nutriment_factor
 				..()
 
-		nutriment/egg // Also bad for skrell. Not a child of protein because it might mess up, not sure.
+		nutriment/egg // Also bad for alicorn. Not a child of protein because it might mess up, not sure.
+			sweet = 0.4
+			salty = 0.6
+			sour = 0.1
 			name = "egg yolk"
 			id = "egg"
 			color = "#FFFFAA"
 
 			on_mob_life(var/mob/living/M, var/alien)
-				if(alien && alien == IS_SKRELL)
+				if(alien && alien == IS_HERBIVORE)
 					M.adjustToxLoss(0.5)
 					M.nutrition -= nutriment_factor
 				..()
 
 		lipozine
+			pungent = 0.3
+			sour = 0.6
 			name = "Lipozine" // The anti-nutriment.
 			id = "lipozine"
 			description = "A chemical compound that causes a powerful fat-burning reaction."
@@ -2162,6 +2382,9 @@ datum
 				return
 
 		soysauce
+			salty = 0.9
+			sweet = 0.1
+			sour = 0.4
 			name = "Soysauce"
 			id = "soysauce"
 			description = "A salty sauce made from the soy plant."
@@ -2170,6 +2393,9 @@ datum
 			color = "#792300" // rgb: 121, 35, 0
 
 		ketchup
+			salty = 0.6
+			sweet = 0.2
+
 			name = "Ketchup"
 			id = "ketchup"
 			description = "Ketchup, catsup, whatever. It's tomato paste."
@@ -2178,6 +2404,7 @@ datum
 			color = "#731008" // rgb: 115, 16, 8
 
 		capsaicin
+			pungent = 1
 			name = "Capsaicin Oil"
 			id = "capsaicin"
 			description = "This is what makes chilis hot."
@@ -2212,6 +2439,7 @@ datum
 				return
 
 		condensedcapsaicin
+			pungent = 1.5
 			name = "Condensed Capsaicin"
 			id = "condensedcapsaicin"
 			description = "A chemical agent used for self-defense and in police work."
@@ -2255,7 +2483,7 @@ datum
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)
-							//victim.drop_item()
+							//victim.drop_active_hand()
 							return
 						else if ( mouth_covered ) // Mouth cover is better than eye cover
 							victim << "\red Your [safe_thing] protects your face from the pepperspray!"
@@ -2272,7 +2500,7 @@ datum
 							victim.Stun(5)
 							victim.Weaken(5)
 							//victim.Paralyse(10)
-							//victim.drop_item()
+							//victim.drop_active_hand()
 
 			on_mob_life(var/mob/living/M as mob)
 				if(!M)
@@ -2299,6 +2527,8 @@ datum
 				return
 
 		frostoil
+			pungent = 1
+			sour = 0.3
 			name = "Frost Oil"
 			id = "frostoil"
 			description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
@@ -2323,6 +2553,7 @@ datum
 					M.adjustToxLoss(rand(15,30))
 
 		sodiumchloride
+			salty = 1
 			name = "Table Salt"
 			id = "sodiumchloride"
 			description = "A salt made of sodium chloride. Commonly used to season food."
@@ -2331,6 +2562,8 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 		blackpepper
+			pungent = 0.9
+			bitter = 0.5
 			name = "Black Pepper"
 			id = "blackpepper"
 			description = "A powder ground from peppercorns. *AAAACHOOO*"
@@ -2338,6 +2571,8 @@ datum
 			// no color (ie, black)
 
 		coco
+			sweet = 0.9
+			bitter = 0.3
 			name = "Coco Powder"
 			id = "coco"
 			description = "A fatty, bitter paste made from coco beans."
@@ -2351,6 +2586,8 @@ datum
 				return
 
 		hot_coco // there's also drink/hot_coco for whatever reason
+			sweet = 0.9
+			bitter = 0.2
 			name = "Hot Chocolate"
 			id = "hot_coco"
 			description = "Made with love! And cocoa beans."
@@ -2370,6 +2607,9 @@ datum
 				return
 
 		psilocybin
+			sweet = 0.7
+			sour = 0.3
+			salty = 0.3
 			name = "Psilocybin"
 			id = "psilocybin"
 			description = "A strong psycotropic derived from certain species of mushroom."
@@ -2403,6 +2643,7 @@ datum
 				return
 
 		sprinkles
+			sweet = 0.7
 			name = "Sprinkles"
 			id = "sprinkles"
 			description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
@@ -2420,8 +2661,11 @@ datum
 				*/
 				..()
 
-/*	//removed because of meta bullshit. this is why we can't have nice things.
+	//removed because of meta bullshit. this is why we can't have nice things.
 		syndicream
+			bitter = 0.5
+			sweet = 0.5
+			sour = 0.1
 			name = "Cream filling"
 			id = "syndicream"
 			description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
@@ -2438,8 +2682,11 @@ datum
 						..()
 						return
 				..()
-*/
+
 		cornoil
+			sweet = 0.5
+			salty = 0.4
+			bitter = 0.1
 			name = "Corn Oil"
 			id = "cornoil"
 			description = "An oil derived from various types of corn."
@@ -2479,6 +2726,8 @@ datum
 					del(hotspot)
 
 		enzyme
+			bitter = 1
+			salty = 1
 			name = "Universal Enzyme"
 			id = "enzyme"
 			description = "A universal enzyme used in the preperation of certain chemicals and foods."
@@ -2487,6 +2736,9 @@ datum
 			overdose = REAGENTS_OVERDOSE
 
 		dry_ramen
+			salty = 0.6
+			sweet = 0.2
+			bitter = 0.3
 			name = "Dry Ramen"
 			id = "dry_ramen"
 			description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
@@ -2500,6 +2752,10 @@ datum
 				return
 
 		hot_ramen
+			salty = 0.5
+			sweet = 0.2
+			bitter = 0.1
+			pungent = 0.1
 			name = "Hot Ramen"
 			id = "hot_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
@@ -2515,6 +2771,10 @@ datum
 				return
 
 		hell_ramen
+			salty = 0.4
+			sweet = 0.1
+			bitter = 0.1
+			pungent = 0.5
 			name = "Hell Ramen"
 			id = "hell_ramen"
 			description = "The noodles are boiled, the flavors are artificial, just like being back in school."
@@ -2529,6 +2789,7 @@ datum
 				return
 
 		flour
+			bitter = 0.1
 			name = "flour"
 			id = "flour"
 			description = "This is what you rub all over yourself to pretend to be a ghost."
@@ -2547,6 +2808,9 @@ datum
 					new /obj/effect/decal/cleanable/flour(T)
 
 		rice
+			salty = 0.3
+			sweet = 0.1
+			bitter = 0.6
 			name = "Rice"
 			id = "rice"
 			description = "Enjoy the great taste of nothing."
@@ -2560,6 +2824,8 @@ datum
 				return
 
 		cherryjelly
+			sweet = 0.6
+			sour = 0.2
 			name = "Cherry Jelly"
 			id = "cherryjelly"
 			description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
@@ -2577,6 +2843,7 @@ datum
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		drink
+			sweet = 0.1
 			name = "Drink"
 			id = "drink"
 			description = "Uh, some kind of drink."
@@ -2605,6 +2872,8 @@ datum
 				return
 
 		drink/orangejuice
+			sweet = 0.6
+			sour = 0.6
 			name = "Orange juice"
 			id = "orangejuice"
 			description = "Both delicious AND rich in Vitamin C, what more do you need?"
@@ -2620,6 +2889,9 @@ datum
 				return
 
 		drink/tomatojuice
+			salty = 0.5
+			sweet = 0.3
+			sour = 0.1
 			name = "Tomato Juice"
 			id = "tomatojuice"
 			description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
@@ -2635,6 +2907,9 @@ datum
 				return
 
 		drink/limejuice
+			sour = 0.6
+			sweet = 0.6
+			bitter = 0.1
 			name = "Lime Juice"
 			id = "limejuice"
 			description = "The sweet-sour juice of limes."
@@ -2650,6 +2925,9 @@ datum
 				return
 
 		drink/carrotjuice
+			salty = 0.5
+			sweet = 0.3
+			bitter = 0.05
 			name = "Carrot juice"
 			id = "carrotjuice"
 			description = "It is just like a carrot but without crunching."
@@ -2674,6 +2952,9 @@ datum
 				return
 
 		drink/berryjuice
+			sour = 0.6
+			sweet = 0.6
+			bitter = 0.3
 			name = "Berry Juice"
 			id = "berryjuice"
 			description = "A delicious blend of several different kinds of berries."
@@ -2684,6 +2965,9 @@ datum
 			glass_desc = "Berry juice. Or maybe it's jam. Who cares?"
 
 		drink/grapejuice
+			sour = 0.6
+			sweet = 0.5
+			bitter = 0.1
 			name = "Grape Juice"
 			id = "grapejuice"
 			description = "It's grrrrrape!"
@@ -2694,6 +2978,9 @@ datum
 			glass_desc = "It's grrrrrape!"
 
 		drink/grapesoda
+			sour = 0.3
+			sweet = 0.5
+			bitter = 0.05
 			name = "Grape Soda"
 			id = "grapesoda"
 			description = "Grapes made into a fine drank."
@@ -2705,6 +2992,9 @@ datum
 			glass_desc = "Looks like a delicious drink!"
 
 		drink/poisonberryjuice
+			sweet = 0.1
+			bitter = 0.8
+			sour = 0.6
 			name = "Poison Berry Juice"
 			id = "poisonberryjuice"
 			description = "A tasty juice blended from various kinds of very deadly and toxic berries."
@@ -2720,6 +3010,8 @@ datum
 				return
 
 		drink/watermelonjuice
+			sour = 0.8
+			sweet = 0.6
 			name = "Watermelon Juice"
 			id = "watermelonjuice"
 			description = "Delicious juice made from watermelon."
@@ -2730,6 +3022,9 @@ datum
 			glass_desc = "Delicious juice made from watermelon."
 
 		drink/lemonjuice
+			sour = 1
+			sweet = 0.6
+			bitter = 0.1
 			name = "Lemon Juice"
 			id = "lemonjuice"
 			description = "This juice is VERY sour."
@@ -2740,6 +3035,7 @@ datum
 			glass_desc = "Sour..."
 
 		drink/banana
+			sweet = 0.9
 			name = "Banana Juice"
 			id = "banana"
 			description = "The raw essence of a banana."
@@ -2750,6 +3046,7 @@ datum
 			glass_desc = "The raw essence of a banana. HONK!"
 
 		drink/nothing
+			sweet = -2
 			name = "Nothing"
 			id = "nothing"
 			description = "Absolutely nothing."
@@ -2759,6 +3056,8 @@ datum
 			glass_desc = "Absolutely nothing."
 
 		drink/potato_juice
+			bitter = 0.5
+			salty = 0.1
 			name = "Potato Juice"
 			id = "potato"
 			description = "Juice of the potato. Bleh."
@@ -2770,6 +3069,8 @@ datum
 			glass_desc = "Juice from a potato. Bleh."
 
 		drink/milk
+			sweet = 0.5
+			salty = 0.05
 			name = "Milk"
 			id = "milk"
 			description = "An opaque white liquid produced by the mammary glands of mammals."
@@ -2786,6 +3087,8 @@ datum
 				return
 
 		drink/milk/soymilk
+			sweet = 0.5
+			salty = 0.2
 			name = "Soy Milk"
 			id = "soymilk"
 			description = "An opaque white liquid made from soybeans."
@@ -2796,6 +3099,8 @@ datum
 			glass_desc = "White and nutritious soy goodness!"
 
 		drink/milk/cream
+			sweet = 0.7
+			bitter = 0.1
 			name = "Cream"
 			id = "cream"
 			description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
@@ -2806,6 +3111,9 @@ datum
 			glass_desc = "Ewwww..."
 
 		drink/grenadine
+			sour = 0.5
+			sweet = 0.2
+			bitter = 0.2
 			name = "Grenadine Syrup"
 			id = "grenadine"
 			description = "Made in the modern day with proper pomegranate substitute. Who uses real fruit, anyways?"
@@ -2817,6 +3125,8 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=6)
 
 		drink/hot_coco
+			sweet = 0.5
+			pungent = 0.1
 			name = "Hot Chocolate"
 			id = "hot_coco"
 			description = "Made with love! And cocoa beans."
@@ -2829,6 +3139,9 @@ datum
 			glass_desc = "Made with love! And cocoa beans."
 
 		drink/coffee
+			pungent = 0.1
+			sweet = 0.2
+			bitter = 0.6
 			name = "Coffee"
 			id = "coffee"
 			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
@@ -2851,6 +3164,9 @@ datum
 				holder.remove_reagent(src.id, 0.1)
 
 		drink/coffee/icecoffee
+			bitter = 0.5
+			sweet = 0.3
+			pungent = 0.1
 			name = "Iced Coffee"
 			id = "icecoffee"
 			description = "Coffee and ice, refreshing and cool."
@@ -2862,6 +3178,9 @@ datum
 			glass_desc = "A drink to perk you up and refresh you!"
 
 		drink/coffee/soy_latte
+			sweet = 0.3
+			salty = 0.3
+			bitter = 0.2
 			name = "Soy Latte"
 			id = "soy_latte"
 			description = "A nice and tasty beverage while you are reading your hippie books."
@@ -2881,6 +3200,9 @@ datum
 				return
 
 		drink/coffee/cafe_latte
+			pungent = 0.1
+			sweet = 0.5
+			bitter = 0.05
 			name = "Cafe Latte"
 			id = "cafe_latte"
 			description = "A nice, strong and tasty beverage while you are reading."
@@ -2900,6 +3222,9 @@ datum
 				return
 
 		drink/tea
+			bitter = 0.1
+			sweet = 0.3
+			pungent = 0.1
 			name = "Tea"
 			id = "tea"
 			description = "Tasty black tea, it has antioxidants, it's good for you!"
@@ -2920,6 +3245,9 @@ datum
 				return
 
 		drink/tea/icetea
+			bitter = 0.1
+			sweet = 0.3
+			pungent = -0.1
 			name = "Iced Tea"
 			id = "icetea"
 			description = "No relation to a certain rap artist/ actor."
@@ -2932,10 +3260,14 @@ datum
 			glass_center_of_mass = list("x"=15, "y"=10)
 
 		drink/cold
+			pungent = -0.5
 			name = "Cold drink"
 			adj_temp = -5
 
 		drink/cold/tonic
+			pungent = -0.3
+			sweet = 0.5
+			sour = 0.1
 			name = "Tonic Water"
 			id = "tonic"
 			description = "It tastes strange but at least the quinine keeps the Space Malaria at bay."
@@ -2949,6 +3281,8 @@ datum
 			glass_desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 
 		drink/cold/sodawater
+			sweet = 0.5
+			pungent = -0.1
 			name = "Soda Water"
 			id = "sodawater"
 			description = "A can of club soda. Why not make a scotch and soda?"
@@ -2961,6 +3295,8 @@ datum
 			glass_desc = "Soda water. Why not make a scotch and soda?"
 
 		drink/cold/ice
+			pungent = -0.9
+			bitter = -0.05
 			name = "Ice"
 			id = "ice"
 			description = "Frozen water, your dentist wouldn't like you chewing this."
@@ -2972,6 +3308,8 @@ datum
 			glass_desc = "Generally, you're supposed to put something else in there too..."
 
 		drink/cold/space_cola
+			sweet = 0.5
+			bitter = 0.05
 			name = "Space Cola"
 			id = "cola"
 			description = "A refreshing beverage."
@@ -2984,6 +3322,8 @@ datum
 			glass_desc = "A glass of refreshing Space Cola"
 
 		drink/cold/nuka_cola
+			sweet = 0.4
+			bitter = 0.1
 			name = "Nuka Cola"
 			id = "nuka_cola"
 			description = "Cola, cola never changes."
@@ -3004,6 +3344,9 @@ datum
 				return
 
 		drink/cold/spacemountainwind
+			sour = 0.4
+			sweet = 0.4
+			bitter = 0.1
 			name = "Mountain Wind"
 			id = "spacemountainwind"
 			description = "Blows right through you like a space wind."
@@ -3016,6 +3359,10 @@ datum
 			glass_desc = "Space Mountain Wind. As you know, there are no mountains in space, only wind."
 
 		drink/cold/dr_gibb
+			sweet = 0.7
+			bitter = 0.3
+			salty = 0.2
+			sour = 0.3
 			name = "Dr. Gibb"
 			id = "dr_gibb"
 			description = "A delicious blend of 42 different flavours"
@@ -3027,6 +3374,8 @@ datum
 			glass_desc = "Dr. Gibb. Not as dangerous as the name might imply."
 
 		drink/cold/space_up
+			sweet = 6
+			bitter = 0.1
 			name = "Space-Up"
 			id = "space_up"
 			description = "Tastes like a hull breach in your mouth."
@@ -3038,6 +3387,9 @@ datum
 			glass_desc = "Space-up. It helps keep your cool."
 
 		drink/cold/lemon_lime
+			sour = 0.6
+			sweet = 0.5
+			bitter = 0.05
 			name = "Lemon Lime"
 			description = "A tangy substance made of 0.5% natural citrus!"
 			id = "lemon_lime"
@@ -3049,6 +3401,7 @@ datum
 			glass_desc = "A tangy substance made of 0.5% natural citrus!"
 
 		drink/cold/lemonade
+			sweet = 0.5
 			name = "Lemonade"
 			description = "Oh the nostalgia..."
 			id = "lemonade"
@@ -3059,6 +3412,8 @@ datum
 			glass_desc = "Oh the nostalgia..."
 
 		drink/cold/kiraspecial
+			bitter = 1
+			sour = 1
 			name = "Kira Special"
 			description = "Long live the guy who everyone had mistaken for a girl. Baka!"
 			id = "kiraspecial"
@@ -3070,6 +3425,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		drink/cold/brownstar
+			sweet = 0.4
+			bitter = 0.2
 			name = "Brown Star"
 			description = "It's not what it sounds like..."
 			id = "brownstar"
@@ -3081,6 +3438,7 @@ datum
 			glass_desc = "It's not what it sounds like..."
 
 		drink/cold/milkshake
+			sweet = 0.5
 			name = "Milkshake"
 			description = "Glorious brainfreezing mixture."
 			id = "milkshake"
@@ -3106,6 +3464,8 @@ datum
 				return
 
 		drink/cold/rewriter
+			bitter = 1
+			sour = 1
 			name = "Rewriter"
 			description = "The secret of the sanctuary of the Libarian..."
 			id = "rewriter"
@@ -3123,6 +3483,9 @@ datum
 
 
 		doctor_delight
+			bitter = 0.5
+			sweet = 0.5
+			sour = 0.3
 			name = "The Doctor's Delight"
 			id = "doctorsdelight"
 			description = "A gulp a day keeps the MediBot away. That's probably for the best."
@@ -3151,6 +3514,9 @@ datum
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 		atomicbomb
+			bitter = 0.5
+			sour = 0.8
+			sweet = 0.3
 			name = "Atomic Bomb"
 			id = "atomicbomb"
 			description = "Nuclear proliferation never tasted so good."
@@ -3180,6 +3546,9 @@ datum
 				return
 
 		gargle_blaster
+			bitter = 0.4
+			sweet = 0.3
+			salty = 0.2
 			name = "Pan-Galactic Gargle Blaster"
 			id = "gargleblaster"
 			description = "Whoah, this stuff looks volatile!"
@@ -3208,6 +3577,8 @@ datum
 				..()
 
 		neurotoxin
+			salty = 0.7
+			sour = 0.7
 			name = "Neurotoxin"
 			id = "neurotoxin"
 			description = "A strong neurotoxin that puts the subject into a death-like state."
@@ -3238,6 +3609,9 @@ datum
 				..()
 
 		hippies_delight
+			sweet = 0.6
+			bitter = 0.7
+			salty = 0.2
 			name = "Hippies' Delight"
 			id = "hippiesdelight"
 			description = "You just don't get it maaaan."
@@ -3291,6 +3665,9 @@ datum
 */
 
 		ethanol
+			sweet = 0.1
+			bitter = 0.8
+			pungent = 0.2
 			name = "Ethanol" //Parent class for all alcoholic reagents.
 			id = "ethanol"
 			description = "A well-known alcohol with a variety of applications."
@@ -3328,7 +3705,7 @@ datum
 				for(var/datum/reagent/ethanol/A in holder.reagent_list)
 					if(A != src && isnum(A.data)) d += A.data
 
-				if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
+				if(alien && alien == IS_HERBIVORE) //Alicorn get very drunk very quickly.
 					d*=5
 
 				M.dizziness += dizzy_adj.
@@ -3379,6 +3756,9 @@ datum
 					M.adjust_fire_stacks(volume / 15)
 					return
 		ethanol/beer
+			salty = 0.4
+			sweet = 0.2
+			bitter = 0.4
 			name = "Beer"
 			id = "beer"
 			description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
@@ -3397,6 +3777,9 @@ datum
 				return
 
 		ethanol/kahlua
+			bitter = 0.5
+			sweet = 0.5
+			salty = 0.3
 			name = "Kahlua"
 			id = "kahlua"
 			description = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936!"
@@ -3417,6 +3800,10 @@ datum
 				return
 
 		ethanol/whiskey
+			bitter = 0.8
+			sour = 0.2
+			salty = 0.1
+			sweet = 0.2
 			name = "Whiskey"
 			id = "whiskey"
 			description = "A superb and well-aged single-malt whiskey. Damn."
@@ -3430,6 +3817,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/specialwhiskey
+			bitter = 0.7
+			sour = 0.2
+			salty = 0.2
+			sweet = 0.1
 			name = "Special Blend Whiskey"
 			id = "specialwhiskey"
 			description = "Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything."
@@ -3444,6 +3835,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/thirteenloko
+			sweet = 0.1
+			bitter = 0.5
+			salty = 0.1
 			name = "Thirteen Loko"
 			id = "thirteenloko"
 			description = "A potent mixture of caffeine and alcohol."
@@ -3464,6 +3858,9 @@ datum
 				return
 
 		ethanol/vodka
+			bitter = 1
+			salty = 0.1
+			sour = 0.2
 			name = "Vodka"
 			id = "vodka"
 			description = "Number one drink AND fueling choice for Russians worldwide."
@@ -3481,6 +3878,9 @@ datum
 				return
 
 		ethanol/bilk
+			sweet = 0.4
+			bitter = 0.6
+			salty = 0.3
 			name = "Bilk"
 			id = "bilk"
 			description = "This appears to be beer mixed with milk. Disgusting."
@@ -3493,6 +3893,9 @@ datum
 			glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 
 		ethanol/threemileisland
+			sour = 0.1
+			bitter = 0.4
+			sweet = 0.4
 			name = "Three Mile Island Iced Tea"
 			id = "threemileisland"
 			description = "Made for a woman, strong enough for a man."
@@ -3510,6 +3913,9 @@ datum
 				return
 
 		ethanol/gin
+			bitter = 0.5
+			sweet = 0.1
+			sour = 0.1
 			name = "Gin"
 			id = "gin"
 			description = "It's gin. In space. I say, good sir."
@@ -3523,6 +3929,7 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/tequilla
+			bitter = 0.2
 			name = "Tequila"
 			id = "tequilla"
 			description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
@@ -3535,6 +3942,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/vermouth
+			bitter = 0.4
+			sour = 0.4
+			sweet = 0.1
 			name = "Vermouth"
 			id = "vermouth"
 			description = "You suddenly feel a craving for a martini..."
@@ -3547,6 +3957,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/wine
+			sweet = 0.2
+			bitter = 0.3
+			sour = 0.1
 			name = "Wine"
 			id = "wine"
 			description = "An premium alchoholic beverage made from distilled grape juice."
@@ -3562,6 +3975,9 @@ datum
 			glass_center_of_mass = list("x"=15, "y"=7)
 
 		ethanol/cognac
+			sweet = 0.3
+			bitter = 0.2
+			sour = 0.3
 			name = "Cognac"
 			id = "cognac"
 			description = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
@@ -3576,6 +3992,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=6)
 
 		ethanol/hooch
+			bitter = 0.5
+			sweet = 0.1
+			sour = 0.3
 			name = "Hooch"
 			id = "hooch"
 			description = "Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?"
@@ -3591,6 +4010,9 @@ datum
 			glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 
 		ethanol/ale
+			bitter = 0.2
+			sweet = 0.3
+			salty = 0.2
 			name = "Ale"
 			id = "ale"
 			description = "A dark alchoholic beverage made by malted barley and yeast."
@@ -3603,6 +4025,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/absinthe
+			bitter = 0.6
+			salty = 0.4
+			sweet = 0.1
 			name = "Absinthe"
 			id = "absinthe"
 			description = "Watch out that the Green Fairy doesn't come for you!"
@@ -3618,6 +4043,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=5)
 
 		ethanol/pwine
+			bitter = 1
+			sour = 0.6
+			sweet = 0.2
 			name = "Poison Wine"
 			id = "pwine"
 			description = "Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!"
@@ -3680,6 +4108,10 @@ datum
 				holder.remove_reagent(src.id, FOOD_METABOLISM)
 
 		ethanol/rum
+			salty = 0.2
+			sweet = 0.1
+			bitter = 0.6
+			sour = 0.2
 			name = "Rum"
 			id = "rum"
 			description = "Yohoho and all that."
@@ -3692,6 +4124,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/deadrum
+			bitter = 0.9
+			sour = 0.9
+			salty = 0.2
 			name = "Deadrum"
 			id = "rum" // duplicate ids?
 			description = "Popular with the sailors. Not very popular with everyone else."
@@ -3709,6 +4144,9 @@ datum
 				return
 
 		ethanol/sake
+			sweet = 0.3
+			sour = 0.3
+			bitter = 0.1
 			name = "Sake"
 			id = "sake"
 			description = "Anime's favorite drink."
@@ -3724,6 +4162,9 @@ datum
 
 
 		ethanol/goldschlager
+			bitter = 0.5
+			sweet = 0.4
+			salty = 0.1
 			name = "Goldschlager"
 			id = "goldschlager"
 			description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
@@ -3736,6 +4177,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=12)
 
 		ethanol/patron
+			bitter = 0.5
+			sweet = 0.1
+			pungent = 0.1
 			name = "Patron"
 			id = "patron"
 			description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
@@ -3748,6 +4192,9 @@ datum
 			glass_center_of_mass = list("x"=7, "y"=8)
 
 		ethanol/gintonic
+			sweet = 0.3
+			sour = 0.2
+			bitter = 0.3
 			name = "Gin and Tonic"
 			id = "gintonic"
 			description = "An all time classic, mild cocktail."
@@ -3760,6 +4207,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=7)
 
 		ethanol/cuba_libre
+			sweet = 0.5
+			salty = 0.1
+			bitter = 0.3
+			sour = 0.1
 			name = "Cuba Libre"
 			id = "cubalibre"
 			description = "Rum, mixed with cola. Viva la revolucion."
@@ -3772,6 +4223,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/whiskey_cola
+			bitter = 0.5
+			sweet = 0.5
 			name = "Whiskey Cola"
 			id = "whiskeycola"
 			description = "Whiskey, mixed with cola. Surprisingly refreshing."
@@ -3784,6 +4237,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/martini
+			bitter = 0.3
+			sweet = 0.3
+			sour = 0.1
 			name = "Classic Martini"
 			id = "martini"
 			description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
@@ -3796,6 +4252,9 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/vodkamartini
+			bitter = 0.6
+			sweet = 0.3
+			sour = 0.1
 			name = "Vodka Martini"
 			id = "vodkamartini"
 			description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
@@ -3808,6 +4267,10 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/white_russian
+			bitter = 0.7
+			sweet = 0.2
+			salty = 0.3
+			sour = 0.1
 			name = "White Russian"
 			id = "whiterussian"
 			description = "That's just, like, your opinion, man..."
@@ -3820,6 +4283,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/screwdrivercocktail
+			bitter = 1
+			sour = 0.5
+			sweet = 0.3
+			pungent = 0.2
 			name = "Screwdriver"
 			id = "screwdrivercocktail"
 			description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
@@ -3832,6 +4299,7 @@ datum
 			glass_center_of_mass = list("x"=15, "y"=10)
 
 		ethanol/booger
+			sour = 0.7
 			name = "Booger"
 			id = "booger"
 			description = "Ewww..."
@@ -3843,6 +4311,9 @@ datum
 			glass_desc = "Ewww..."
 
 		ethanol/bloody_mary
+			salty = 0.3
+			sweet = 0.3
+			bitter = 0.1
 			name = "Bloody Mary"
 			id = "bloodymary"
 			description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
@@ -3854,6 +4325,9 @@ datum
 			glass_desc = "Tomato juice, mixed with Vodka and a lil' bit of lime. Tastes like liquid murder."
 
 		ethanol/brave_bull
+			bitter = 0.3
+			sour = 0.1
+			sweet = 0.1
 			name = "Brave Bull"
 			id = "bravebull"
 			description = "It's just as effective as Dutch-Courage!"
@@ -3866,6 +4340,9 @@ datum
 			glass_center_of_mass = list("x"=15, "y"=8)
 
 		ethanol/tequilla_sunrise
+			sweet = 0.1
+			bitter = 0.6
+			pungent = 0.1
 			name = "Tequila Sunrise"
 			id = "tequillasunrise"
 			description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
@@ -3877,6 +4354,7 @@ datum
 			glass_desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
 
 		ethanol/toxins_special
+			bitter = 1
 			name = "Toxins Special"
 			id = "phoronspecial"
 			description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
@@ -3895,6 +4373,10 @@ datum
 				return
 
 		ethanol/beepsky_smash
+			sour = 0.4
+			bitter = 0.3
+			pungent = 0.3
+			sweet = 0.1
 			name = "Beepsky Smash"
 			id = "beepskysmash"
 			description = "Deny drinking this and prepare for THE LAW."
@@ -3913,6 +4395,8 @@ datum
 				return
 
 		ethanol/irish_cream
+			sweet = 0.2
+			sour = 0.1
 			name = "Irish Cream"
 			id = "irishcream"
 			description = "Whiskey-imbued cream, what else would you expect from the Irish."
@@ -3925,6 +4409,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/manly_dorf
+			salty = 0.2
+			sour = 0.1
+			bitter = 0.4
+			sweet = 0.1
 			name = "The Manly Dorf"
 			id = "manlydorf"
 			description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
@@ -3936,6 +4424,9 @@ datum
 			glass_desc = "A manly concotion made from Ale and Beer. Intended for true men only."
 
 		ethanol/longislandicedtea
+			sweet = 0.4
+			bitter = 0.4
+			sour = 0.3
 			name = "Long Island Iced Tea"
 			id = "longislandicedtea"
 			description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
@@ -3948,6 +4439,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/moonshine
+			bitter = 0.1
+			sweet = 0.2
+			sour = 0.2
 			name = "Moonshine"
 			id = "moonshine"
 			description = "You've really hit rock bottom now... your liver packed its bags and left last night."
@@ -3959,6 +4453,9 @@ datum
 			glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 
 		ethanol/b52
+			sour = 0.3
+			sweet = 0.5
+			bitter = 0.5
 			name = "B-52"
 			id = "b52"
 			description = "Coffee, Irish Cream, and cognac. You will get bombed."
@@ -3970,6 +4467,8 @@ datum
 			glass_desc = "Kahlua, Irish cream, and congac. You will get bombed."
 
 		ethanol/irishcoffee
+			sweet = 0.5
+			bitter = 0.4
 			name = "Irish Coffee"
 			id = "irishcoffee"
 			description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
@@ -3982,6 +4481,9 @@ datum
 			glass_center_of_mass = list("x"=15, "y"=10)
 
 		ethanol/margarita
+			sour = 0.3
+			sweet = 0.1
+			bitter = 0.3
 			name = "Margarita"
 			id = "margarita"
 			description = "On the rocks with salt on the rim. Arriba~!"
@@ -3994,6 +4496,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/black_russian
+			bitter = 0.5
+			sour = 0.3
+			salty = 0.1
+			sweet = 0.1
 			name = "Black Russian"
 			id = "blackrussian"
 			description = "For the lactose-intolerant. Still as classy as a White Russian."
@@ -4006,6 +4512,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/manhattan
+			bitter = 0.5
+			sour = 0.4
+			sweet = 0.1
+			salty = 0.2
 			name = "Manhattan"
 			id = "manhattan"
 			description = "The Detective's undercover drink of choice. He never could stomach gin..."
@@ -4018,6 +4528,10 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/manhattan_proj
+			bitter = 0.6
+			sour = 0.4
+			sweet = 0.1
+			salty = 0.4
 			name = "Manhattan Project"
 			id = "manhattan_proj"
 			description = "A scientist's drink of choice, for pondering ways to blow up the station."
@@ -4035,6 +4549,9 @@ datum
 				return
 
 		ethanol/whiskeysoda
+			bitter = 0.6
+			sour = 0.1
+			sweet = 0.2
 			name = "Whiskey Soda"
 			id = "whiskeysoda"
 			description = "For the more refined griffon."
@@ -4047,6 +4564,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/antifreeze
+			bitter = 0.9
+			salty = 0.3
 			name = "Anti-freeze"
 			id = "antifreeze"
 			description = "Ultimate refreshment."
@@ -4065,6 +4584,9 @@ datum
 				return
 
 		ethanol/barefoot
+			bitter = 0.5
+			sweet = 0.1
+			salty = 0.1
 			name = "Barefoot"
 			id = "barefoot"
 			description = "Barefoot and pregnant"
@@ -4077,6 +4599,9 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/snowwhite
+			sour = 0.1
+			sweet = 0.1
+			bitter = 0.1
 			name = "Snow White"
 			id = "snowwhite"
 			description = "A cold refreshment"
@@ -4089,6 +4614,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/melonliquor
+			bitter = 0.5
+			sour = 0.2
+			sweet = 0.3
 			name = "Melon Liquor"
 			id = "melonliquor"
 			description = "A relatively sweet and fruity 46 proof liquor."
@@ -4101,6 +4629,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=5)
 
 		ethanol/bluecuracao
+			sweet = 0.3
+			sour = 0.1
+			bitter = 0.1
 			name = "Blue Curacao"
 			id = "bluecuracao"
 			description = "Exotically blue, fruity drink, distilled from oranges."
@@ -4113,6 +4644,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=5)
 
 		ethanol/suidream
+			sweet = 0.3
+			sour = 0.3
 			name = "Sui Dream"
 			id = "suidream"
 			description = "Comprised of: White soda, blue curacao, melon liquor."
@@ -4125,6 +4658,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=5)
 
 		ethanol/demonsblood
+			salty = 0.3
+			pungent = 0.5
+			bitter = 0.6
 			name = "Demons Blood"
 			id = "demonsblood"
 			description = "AHHHH!!!!"
@@ -4137,6 +4673,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=2)
 
 		ethanol/vodkatonic
+			bitter = 0.8
+			sweet = 0.1
+			sour = 0.1
 			name = "Vodka and Tonic"
 			id = "vodkatonic"
 			description = "For when a gin and tonic isn't russian enough."
@@ -4151,6 +4690,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=7)
 
 		ethanol/ginfizz
+			sour = 0.4
+			sweet = 0.3
+			bitter = 0.4
 			name = "Gin Fizz"
 			id = "ginfizz"
 			description = "Refreshingly lemony, deliciously dry."
@@ -4165,6 +4707,7 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=7)
 
 		ethanol/bahama_mama
+			sweet = 0.9
 			name = "Bahama mama"
 			id = "bahama_mama"
 			description = "Tropical cocktail."
@@ -4177,6 +4720,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=5)
 
 		ethanol/singulo
+			sweet = 0.3
+			bitter = 0.3
+			pungent = 0.3
 			name = "Singulo"
 			id = "singulo"
 			description = "A blue-space beverage!"
@@ -4191,6 +4737,9 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=4)
 
 		ethanol/sbiten
+			pungent = 0.3
+			bitter = 0.7
+			sour = 0.1
 			name = "Sbiten"
 			id = "sbiten"
 			description = "A spicy Vodka! Might be a little hot for the little guys!"
@@ -4209,6 +4758,8 @@ datum
 				return
 
 		ethanol/devilskiss
+			bitter = 0.2
+			sour = 0.2
 			name = "Devils Kiss"
 			id = "devilskiss"
 			description = "Creepy time!"
@@ -4221,6 +4772,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/red_mead
+			salty = 0.2
+			sweet = 0.6
+			bitter = 0.2
 			name = "Red Mead"
 			id = "red_mead"
 			description = "The true Viking's drink! Even though it has a strange red color."
@@ -4233,6 +4787,8 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=10)
 
 		ethanol/mead
+			sweet = 0.7
+			bitter = 0.1
 			name = "Mead"
 			id = "mead"
 			description = "A Viking's drink, though a cheap one."
@@ -4247,6 +4803,8 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=10)
 
 		ethanol/iced_beer
+			bitter = 0.4
+			salty = 0.1
 			name = "Iced Beer"
 			id = "iced_beer"
 			description = "A beer which is so cold the air around it freezes."
@@ -4265,6 +4823,9 @@ datum
 				return
 
 		ethanol/grog
+			salty = 0.1
+			sweet = 0.2
+			bitter = 0.6
 			name = "Grog"
 			id = "grog"
 			description = "Watered down rum, NanoTrasen approves!"
@@ -4277,6 +4838,8 @@ datum
 			glass_desc = "A fine and cepa drink for Space."
 
 		ethanol/aloe
+			sweet = 0.6
+			salty = 0.1
 			name = "Aloe"
 			id = "aloe"
 			description = "So very, very, very good."
@@ -4289,6 +4852,9 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/andalusia
+			sweet = 0.3
+			sour = 0.2
+			bitter = 0.1
 			name = "Andalusia"
 			id = "andalusia"
 			description = "A nice, strangely named drink."
@@ -4301,6 +4867,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/alliescocktail
+			sweet= 0.1
+			sour = 0.6
+			bitter = 0.1
 			name = "Allies Cocktail"
 			id = "alliescocktail"
 			description = "A drink made from your allies, not as sweet as when made from your enemies."
@@ -4313,6 +4882,7 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/acid_spit
+			sour = 1
 			name = "Acid Spit"
 			id = "acidspit"
 			description = "A drink for the daring, can be deadly if incorrectly prepared!"
@@ -4326,6 +4896,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=7)
 
 		ethanol/amasec
+			bitter = 0.3
+			sweet = 0.3
+			sour = 0.3
 			name = "Amasec"
 			id = "amasec"
 			description = "Official drink of the NanoTrasen Gun-Club!"
@@ -4339,6 +4912,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/changelingsting
+			bitter = 1
+			sour = 0.1
 			name = "Changeling Sting"
 			id = "changelingsting"
 			description = "You take a tiny sip and feel a burning sensation..."
@@ -4350,6 +4925,9 @@ datum
 			glass_desc = "A stingy drink."
 
 		ethanol/irishcarbomb
+			sweet = 0.5
+			sour = 0.1
+			bitter = 0.1
 			name = "Irish Car Bomb"
 			id = "irishcarbomb"
 			description = "Mmm, tastes like chocolate cake..."
@@ -4363,6 +4941,10 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/syndicatebomb
+			pungent = 0.2
+			sour = 0.5
+			sweet = 0.1
+			bitter = 0.5
 			name = "Syndicate Bomb"
 			id = "syndicatebomb"
 			description = "Tastes like terrorism!"
@@ -4375,6 +4957,8 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=4)
 
 		ethanol/erikasurprise
+			bitter = 1
+			sour = 1
 			name = "Erika Surprise"
 			id = "erikasurprise"
 			description = "The surprise is it's green!"
@@ -4387,6 +4971,9 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=9)
 
 		ethanol/driestmartini
+			bitter = 0.2
+			sour = 0.2
+			sweet = 0.2
 			name = "Driest Martini"
 			id = "driestmartini"
 			description = "Only for the experienced. You think you see sand floating in the glass."
@@ -4400,6 +4987,7 @@ datum
 			glass_center_of_mass = list("x"=17, "y"=8)
 
 		ethanol/bananahonk
+			sweet = 1
 			name = "Banana Mama"
 			id = "bananahonk"
 			description = "A drink from Clown Heaven."
@@ -4413,6 +5001,7 @@ datum
 			glass_center_of_mass = list("x"=16, "y"=8)
 
 		ethanol/silencer
+			bitter = 1
 			name = "Silencer"
 			id = "silencer"
 			description = "A drink from Mime Heaven."

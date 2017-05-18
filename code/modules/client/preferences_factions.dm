@@ -13,19 +13,25 @@ var/global/list/seen_religions = list()
 	return
 
 var/global/list/citizenship_choices = list(
-	"Equestria",
-	"Mars",
+	"Cantermer",
+	"Alia's Order",
+	"Appleon",
+	"Mane Hita",
+	"BaltiTaure",
+	"Ponyville's Space Republic",
 	"Moghes",
 	"Ahdomai",
 	"Qerrbalak"
 	)
 
 var/global/list/home_system_choices = list(
-	"Sol",
-	"Nyx",
+	"Alpha Centauri",
+	"Procion",
 	"Tau Ceti",
 	"Epsilon Ursae Majoris",
-	"S'randarr"
+	"S'randarr",
+	"Orion",
+	"Nyx"
 	)
 
 var/global/list/faction_choices = list(
@@ -43,11 +49,14 @@ var/global/list/faction_choices = list(
 	)
 
 var/global/list/religion_choices = list(
-	"Unitarianism",
-	"Hinduism",
-	"Buddhist",
-	"Islamic",
-	"Christian",
+	//"Unitarianism",
+	//"Hinduism",
+	//"Buddhist",
+	//"Islamic",
+	//"Christian",
 	"Agnostic",
-	"Deist"
+	"Alia's",
+	"Celestian",
+	"Lunar",
+	"Atheist"
 	)

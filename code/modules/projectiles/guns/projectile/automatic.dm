@@ -103,7 +103,7 @@
 	magazine_type = /obj/item/ammo_magazine/a556
 	auto_eject = 1
 	auto_eject_sound = 'sound/weapons/smg_empty_alarm.ogg'
-	
+
 	var/use_launcher = 0
 	var/obj/item/weapon/gun/launcher/grenade/underslung/launcher
 
@@ -122,7 +122,7 @@
 		..()
 
 /obj/item/weapon/gun/projectile/automatic/z8/attack_hand(mob/user)
-	if(user.get_inactive_hand() == src && use_launcher)
+	if(user.item_in_hands(src, user.list_hands-user.hand) && use_launcher)
 		launcher.unload(user)
 	else
 		..()

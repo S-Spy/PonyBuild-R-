@@ -379,7 +379,7 @@
 		var/datum/organ/external/affected = target.get_organ(target_zone)
 		user.visible_message("\blue [user] has transplanted \the [tool] into [target]'s [affected.display_name].", \
 		"\blue You have transplanted \the [tool] into [target]'s [affected.display_name].")
-		user.drop_item(tool)
+		user.drop_active_hand(tool)
 		var/obj/item/organ/O = tool
 		if(istype(O))
 			O.replaced(target,affected)

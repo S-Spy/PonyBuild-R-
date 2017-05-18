@@ -73,7 +73,7 @@
 
 		user << "\blue You install [O] in [src]!"
 
-		user.drop_item()
+		user.drop_active_hand()
 		src.mmi = O
 		src.transfer_personality(O)
 

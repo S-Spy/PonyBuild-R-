@@ -43,8 +43,8 @@
 
 	if(istype(user,/mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+		H.update_inv_hands()
+		H.update_inv_hands()
 
 	add_fingerprint(user)
 	return
@@ -202,7 +202,13 @@
 	spawn(1) if(src) del(src)
 
 /obj/item/weapon/melee/energy/blade/process()
-	if(!creator || loc != creator || (creator.l_hand != src && creator.r_hand != src))
+	var/item_in_hands
+	for(var/datum/hand/H in creator.list_hands)
+		if(H.item_in_hand == src)
+			item_in_hands = 1
+			break
+
+	if(!creator || loc != creator || !item_in_hands)
 		// Tidy up a bit.
 		if(istype(loc,/mob/living))
 			var/mob/living/carbon/pony/host = loc
