@@ -19,3 +19,6 @@
 	var/mob/living/carbon/home_mob
 
 	var/pulse = PULSE_NORM	//current pulse level
+	var/block_horn_light = 0
+	var/obj/effect/proc_holder/spell/active_spell
+	var/concentrate_mod = 0

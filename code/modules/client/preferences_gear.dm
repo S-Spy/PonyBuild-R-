@@ -90,7 +90,7 @@ var/global/list/uspell_datums = list()
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 /datum/spells/light
 	spell_name = "Light"
 	spell_verb = /mob/living/carbon/pony/verb/light
@@ -281,7 +281,7 @@ var/global/list/uspell_datums = list()
 	spell_verb = /mob/living/carbon/pony/verb/hoof_shield
 	cost = 3
 	color = "\red\[head-SEC]"
-	allowed_roles = list("Head of Security")
+	allowed_roles = list("Head of Security")*/
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

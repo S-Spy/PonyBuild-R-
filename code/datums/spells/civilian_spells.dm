@@ -6,177 +6,192 @@
 		if(!(S.spell_name in unicorn_spells))
 			verbs -= S.spell_verb
 
-/mob/living/carbon/pony/verb
-	strong_light()//OK
-		set category = "Unicorn"
-		set name = "Strong light"
-		set desc = "Strong light about you."
-		if(horn_light == 1)
-			SetLuminosity(luminosity-3)
-			horn_light = 0
-			cooldown[1] = 1
-			spawn(250)	cooldown[1]=0
-		else//Включение
-			if(prob(concentration(1)) || nutrition < 20 || horn_light != 0 || cooldown[1] == 1)
-				usr << "You can't use this spell!"
-				return //Проверка доступности долгосрочного заклинания
-			SetLuminosity(luminosity+3)
-			nutrition -= 6
-			horn_light = 1
-			update_icons()
-			for(var/i=1, i < 50, i++) //Постепенное отнятие сытности для долгосрочных заклинаний
-				sleep(10)
-				if(horn_light == 1)
-					if(nutrition > 2)	nutrition--
-					else	break
-			if(horn_light == 1)//Отключение с таймером
-				SetLuminosity(luminosity-3)
-				horn_light = 0
-				cooldown[1] = 1
-				spawn(250)	cooldown[1]=0
-		update_icons()
+/*
+1. Спеллы мага и единорогов должны быть одного рода
+Следовательно, нужна переменная "обычности"
 
-	light()//OK
-		set category = "Unicorn"
-		set name = "Light"
-		set desc = "Light about you."
-		if(horn_light == 2)//Отключение при повторном запуске
-			SetLuminosity(luminosity-1)
-			horn_light = 0
-			cooldown[2] = 1
-			spawn(100)	cooldown[2] = 0
-		else//Включение
-			if(prob(concentration(1)) || nutrition < 10 || horn_light != 0 || cooldown[2] == 1)
-				usr << "You can't use this spell!"
-				return  //Проверка доступности долгосрочного заклинания
-			SetLuminosity(luminosity+1)
-			nutrition -= 4
-			horn_light = 1
-			update_icons()
-			for(var/i=1, i < 90, i++) //Постепенное отнятие сытности для долгосрочных заклинаний
-				sleep(20)
-				if(horn_light == 2)
-					if(nutrition > 2)	nutrition--
-					else	break
-			if(horn_light == 2)
-				SetLuminosity(luminosity-1)
-				horn_light = 0
-				cooldown[2] = 1
-				spawn(100)	cooldown[2] = 0
-		update_icons()
+2. В обычных заклинаниях идет проверка на концентрацию
+3. Должна быть общая функция активного спелла(Обычного)
 
-	clean()//OK
-		set name = "Cleaner"
-		set desc = "Cleaning you or others."
-		set category = "Unicorn"
-		if(prob(concentration(2)) || nutrition < 30 || horn_light_short != 0 || cooldown[3] == 1)
-			usr << "You can't use this spell!"
-			return
-		cooldown[3] = 1
-		spawn(1000)	cooldown[3] = 0
-		horn_light_short = 1
-		update_icons()
-		sleep(10)
+Процесс получения заклинаний для мага и обычных:
+1. Если это civilian, то добавить через setup, но только те, которые не ограничены тегом (ONLYBOOKS)
+2. Все можно получить через книгу за SP. У мага-антагониста +30 к SP и заклинания изначально обнуляются, так как он обладает техникой управления памятью
+3. Прежде чем добавить заклинание, нужно изучить необходимую школу(1-5 SP)
+4. Знание школы не добавляет заклинаний. Только теорию о ней, что позволит изучение заклинаний из книг
+5. Стоимость заклинания = уровень концентрации(Для магов это влияет только на количество заклинаний(Еще у них действует шанс крита). Иначе на шанс успеха) * стоимость школы * маг?1|2(Нет|Да)
+6. Уровни концентрации разнятся от 1 до 8. 8 - Божественный уровень, только в особых случаях. 7 только через книги. 6 очень редкое...
+7. Заклинания делятся на AOE и TARGETED(Себя или другиз). AOE требуют концентрацию уровнем не ниже 3 и для civilian реже, чем для мага
+8. Не CIVILIAN заклинания чаще всего требуют произношения заклинаний. CIVILIAN всегда безмолвны. За исключением тех, что можно выучить через книги, да и то не всегда
+9. Так же, заклинания делятся на затрачиваемые(Вроде кражи душ) и перезаряжаемые. Перезаряжаемые CIVILIAN делятся на долгосрочные(Невозможно использовать другие CIVILIAN заклинания) и краткосрочные(То же, что и долгосрочные, но на 2-3 секунды)
+10. Заклинания для немагов тратят нутриенты*уровень концентрации. Для магов тратится мана*концентрация
+11. Для магов иногда требуется особая артефактная одежда
+12. Для магов доступны заклинания поглощения, навроде кражи здоровья
+13. Книжные или визардовские заклинания могут издавать искры
+14. Для магов расстояние заклинаний доступно до 7 метров. Для немагов максимум до 5
+15. Все заклинания могут обладать спрайтами из 'icons/obj/wizard.dmi
+16. Заклинания могут быть совместными. Но это отдельно. Требуется концентрация минимум 3
+
+
+
+
+
+*/
+/*Школы:
+Деформация (Abjuration): магия защиты и атаки.
+Призыв (Conjuration): призывает и телепортирует существ и объекты.
+Ворожба (Divination): усиление знаний и характеристик.
+Очарование (Enchantment): манипулирует сознанием.
+Проявление (Evocation): контролирует магическую энергию.
+Иллюзия (Illusion): создает обманные эффекты и изображения.
+Некромантия (Necromancy): магия нежити, смерти и высасывания физических характеристик.
+Превращение (Transmutation): манипулирует физическими телами и объектами.
+http://www.ddonline.ru/con1879.html
+*/
+
+
+
+/obj/effect/proc_holder/spell/targeted/civilian//Свет доступен по умолчанию
+	name = "Light"
+	desc = "Light about your horn."
+
+	school = "evocation" //Название школы. Пока не использовалось
+	spell_level = 1
+	cooldown = 10
+
+
+	charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
+
+	charge_max = null//время перезарядки в мс если charge_type = "recharge" или начинает зарядку если charge_type = "charges"
+	charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+
+	holder_var_type = "bruteloss" //используется только если charge_type = "holder_var"
+	holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
+
+	clothes_req = 0 //Нужна ли одежда мага
+	stat_allowed = 0 //see if it requires being conscious/alive, need to set to 1 for ghostpells
+	invocation = null //Что говорит маг при кастовании
+	invocation_type = "none" //Может быть none, whisper и shout
+	range = 5 //Расстояние действия заклинания; радиус действия массового(aoe) заклинания spells
+	message = "" //whatever it says to the guy affected by it
+	selection_type = "view" //Может быть "range" или "view"
+
+	overlay = 0
+	overlay_icon = 'icons/obj/wizard.dmi'
+	overlay_icon_state = "spell"
+	overlay_lifespan = 0
+
+	sparks_spread = 0
+	sparks_amt = 0 //cropped at 10
+	smoke_spread = 0 //1 - harmless, 2 - harmful
+	smoke_amt = 0 //cropped at 10
+
+	critfailchance = 0
+
+	New()
+		..()
+		if(!charge_max)
+			charge_max = level*level*20
+
+
+/obj/effect/proc_holder/spell/targeted/civilian/light
+	name = "Light"
+	desc = "Light about your horn."
+
+	spell_level = 1
+	cooldown = 250
+
+	cast()//list/targets
+		usr.SetLuminosity(luminosity+1)
+
+	spell_off(user)
+		SetLuminosity(luminosity-1)
+		..()
+
+
+/obj/effect/proc_holder/spell/targeted/civilian/strong_light
+	name = "Strong Light"
+	desc = "Intensive light aura about you."
+
+	spell_level = 2
+	cooldown = 250
+
+	cast()//list/targets
+		usr.SetLuminosity(luminosity+3)
+
+	spell_off(user)
+		SetLuminosity(luminosity-3)
+		..()
+
+/obj/effect/proc_holder/spell/targeted/civilian/teleport_cleaner
+	name = "Cleaner Teleport"
+	desc = "Teleport this inks to the space!"
+
+	//school =
+	spell_level = 3
+
+	cast()//list/targets
 		var/obj/item/weapon/reagent_containers/spray/cleaner/H = new/obj/item/weapon/reagent_containers/spray/cleaner
 		H.Spray_at(usr, usr, 1)
-		nutrition -= 18
 		del H
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
 
-	tele_glass()//OK
-		set name = "Telekinetic glass"
-		set desc = "Liquid telekinesis."
-		set category = "Unicorn"
-		var/obj/item/weapon/reagent_containers/glass/G
-		if(horn_light == 6)
-			if(!G)	for(var/obj/item/weapon/reagent_containers/glass/g in usr.contents)
-				if(findtext(g.name, "Tele") != 0 )
-					G = g
-					break
-			var/obj/O = locate(/turf) in G.loc
-			G.afterattack(O, usr, 1)
-			spawn(6)	del G
-			cooldown[6] = 1
-			spawn(200)	cooldown[6] = 0
-			horn_light = 0
-		else
-			if(prob(concentration(1)) || nutrition < 20 || horn_light != 0 || cooldown[6] == 1)
-				usr << "You can't use this spell!"
-				return
-			G = new/obj/item/weapon/reagent_containers/glass
-			var/icon/I = G.icon
-			I.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
-			G.icon = I
-			G.alpha = 100
-			G.Move(locate(x, y, z))
-			G.name = "Tele [name]"
-			UnarmedAttack(G)
-			nutrition -= 5
-			horn_light = 6
-			update_icons()
-			for(var/i=1, i < 180, i++) //Постепенное отнятие сытности для долгосрочных заклинаний
-				sleep(10)
-				if(horn_light == 6)
-					if(nutrition > 2)	nutrition--
-					else break
-			if(horn_light == 6)
-				var/obj/O = locate(/turf) in G.loc
-				G.afterattack(O, usr, 1)
-				spawn(6)	del G
-				cooldown[6] = 1
-				spawn(200)	cooldown[6] = 0
-				horn_light = 0
-		update_icons()
 
-	dist_light()//OK
-		set name = "Distance light"
-		set desc = "Beam of light."
-		set category = "Unicorn"
-		var/obj/item/weapon/light_spark/L
-		if(horn_light == 7)
-			if(!L)	L = locate(/obj/item/weapon/light_spark) in usr.contents
-			del L
-			cooldown[7] = 1
-			spawn(300)	cooldown[7] = 0
-			horn_light = 0
-		else
-			if(prob(concentration(1)) || nutrition < 20 || horn_light != 0 || cooldown[7] == 1)
-				usr << "You can't use this spell!"
-				return
-			L = new/obj/item/weapon/light_spark
-			var/icon/I = L.icon
-			I.Blend(rgb(r_aura, g_aura, b_aura))
-			L.icon = I
-			L.Move(locate(x, y, z))
-			nutrition -= 8
-			horn_light = 7
-			update_icons()
-			for(var/i=1, i < 40, i++) //Постепенное отнятие сытности для долгосрочных заклинаний
-				sleep(10)
-				if(horn_light == 7)
-					if(nutrition > 2)	nutrition--
-					else break
-			if(horn_light == 7)
-				del L
-				cooldown[7] = 1
-				spawn(300)	cooldown[7] = 0
-				horn_light = 0
-		update_icons()
+/obj/effect/proc_holder/spell/targeted/civilian/tele_liquid
+	name = "Tele liquid"
+	desc = "Liquid telekinesis"
 
-	hair_transform(var/mob/living/carbon/pony/P in view(1))//OK
-		set name = "Morph"
-		set desc = "Transform you hair's."
-		set category = "Unicorn"
-		if(prob(concentration(2)) || nutrition < 30 || horn_light_short != 0 || cooldown[8] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		update_icons()
-		cooldown[8] = 1
-		spawn(1300)	cooldown[8] = 0
-		sleep(10)
+	spell_level = 2
+	cooldown = 200
+	var/obj/item/weapon/reagent_containers/glass/G
+
+	cast()//list/targets
+		var/mob/living/carbon/pony/user = usr
+		G = new/obj/item/weapon/reagent_containers/glass
+		var/icon/I = new/icon(G.icon, G.icon_state)
+		I.Blend(rgb(user.r_aura, user.g_aura, user.b_aura), ICON_ADD)
+		G.icon = I
+		G.alpha = 100
+		G.Move(locate(x, y, z))
+		G.name = "Tele [name]"
+		if(usr.free_hand())
+			usr.put_in_free_hand(G)
+
+	spell_off(user)
+		var/obj/O = locate(/turf) in G.loc
+		G.afterattack(O, usr, 1)
+		del G
+		..()
+
+/obj/effect/proc_holder/spell/targeted/civilian/dist_light
+	name = "Distance light"
+	desc = "Remote light ball"
+
+	spell_level = 3
+	cooldown = 300
+	var/obj/item/weapon/light_spark/L
+
+	cast()//list/targets
+		var/mob/living/carbon/pony/user = usr
+		L = new/obj/item/weapon/light_spark
+		var/icon/I = new/icon(L.icon, L.icon_state)
+		I.Blend(rgb(user.r_aura, user.g_aura, user.b_aura))
+		L.icon = I
+		L.Move(locate(x, y, z))
+		if(usr.free_hand())
+			usr.put_in_free_hand(L)
+
+	spell_off(user)
+		del L
+		..()
+
+/obj/effect/proc_holder/spell/targeted/civilian/hair_transform
+	name = "Hair Morph"
+	desc = "Transform your hair's."
+
+	spell_level = 4
+
+	cast()//list/targets
+		var/mob/living/carbon/pony/P = usr
+		var/mob/living/carbon/pony/user = usr
 		var/list/valid_hair = list()
 		var/list/valid_facial = list()
 		var/list/valid_tail = list()
@@ -191,210 +206,173 @@
 			if(P.gender == MALE && H.gender == FEMALE)	continue
 			if(P.gender == FEMALE && H.gender == MALE)	continue
 			if(!(P.species.name in H.species_allowed))	continue
-			valid_hair += H.name
-		for(var/path in typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair)
+			valid_facial += H.name
+		for(var/path in typesof(/datum/sprite_accessory/pony_tail) - /datum/sprite_accessory/pony_tail)
 			var/datum/sprite_accessory/pony_tail/H = new path()
 			if(P.gender == MALE && H.gender == FEMALE)	continue
 			if(P.gender == FEMALE && H.gender == MALE)	continue
 			if(!(P.species.name in H.species_allowed))	continue
-			valid_hair += H.name
+			valid_tail += H.name
 
-		nutrition -= 23
-		if(prob(concentration(5)))	P.f_style = pick(valid_facial)
-		if(prob(concentration(5)))	P.h_style = pick(valid_hair)
-		if(prob(concentration(5)))	P.pony_tail_style = pick(valid_tail)
-		P.regenerate_icons()
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
+		if(prob(user.concentration(level)))	P.f_style = pick(valid_facial)
+		if(prob(user.concentration(level)))	P.h_style = pick(valid_hair)
+		if(prob(user.concentration(level)))	P.pony_tail_style = pick(valid_tail)
+		P.update_icons()
 
-	hot()//OK
-		set name = "Heat"
-		set desc = "Heating food, ponies and you."
-		set category = "Unicorn"
-		if(prob(concentration(2)) || nutrition < 30 || horn_light_short != 0 || cooldown[9] == 1)
-			usr << "You can't use this spell!"
-			return
-		var/list/Li = list()
+
+/obj/effect/proc_holder/spell/targeted/civilian/hot_aura
+	name = "Hot Aura"
+	desc = "Heating food, ponies and sometime you."
+
+	spell_level = 3
+	var/list/Li = list()
+
+	cast()//list/targets
 		for(var/atom/A in view(1))
 			if(istype(A, /obj/item/weapon/reagent_containers/food) || istype(A, /mob/living/carbon/pony))
 				Li += A
-		if(Li.len == 0)	return
 		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
-		if(target in view(1))
-			horn_light_short = 1
-			cooldown[9] = 1
-			spawn(210)	cooldown[9] = 0
-			update_icons()
-			sleep(10)
-			if(istype(target, /obj/item/weapon/reagent_containers/food))	target:heat_food(target:heating+1)
-			else	target:bodytemperature += 5
-			nutrition -= 22
-			sleep(5)
-			horn_light_short = 0
-			update_icons()
-
-	concentrate()
-		set name = "High concentration"
-		set desc = "Very high concentration for strong telekinesis."
-		set category = "Unicorn"
-		if(horn_light == 10)
-			cooldown[10] = 1
-			spawn(700)	cooldown[10] = 0
-			horn_light = 0
+		if(istype(target, /obj/item/weapon/reagent_containers/food))
+			target:heat_food(target:heating+1)
 		else
-			if(prob(concentration(3)) || nutrition < 40 || horn_light != 0 || cooldown[10] == 1)
-				usr << "You can't use this spell!"
-				return
-			nutrition -= 12
-			horn_light = 10
-			update_icons()
-			for(var/i=1, i < 300, i++) //Постепенное отнятие сытности для долгосрочных заклинаний
+			target:bodytemperature += 5
+		usr.nutrition -= 20
+
+
+/obj/effect/proc_holder/spell/targeted/civilian/cold_aura
+	name = "Cold Aura"
+	desc = "Makes ponies to 20% cooler... Khm, colder."
+
+	spell_level = 3
+	var/list/Li = list()
+
+	cast()//list/targets
+		for(var/mob/living/carbon/pony/P in view(1))
+			Li += P
+		var/target = input(usr, "Choose your target", "Target")  as null|anything in Li
+		target:bodytemperature -= 10
+		usr.nutrition -= 20
+
+
+/obj/effect/proc_holder/spell/targeted/civilian/concentrate
+	name = "High concentration"
+	desc = "Very high concentration of your mind for strong spells."
+
+	spell_level = 6
+	var/LC = 0
+
+	cast()//list/targets
+		var/mob/living/carbon/pony/user = usr
+		if(!user.concentrate_mod)
+			user.nutrition -= 70
+			user.concentrate_mod = 1
+			LC = 1
+			spawn(1)	for(var/i=1, i < 300, i++)
 				sleep(10)
-				if(horn_light == 10)
-					if(nutrition > 2)	nutrition--
-					else break
-			if(horn_light == 10)
-				cooldown[10] = 1
-				spawn(700)	cooldown[10] = 0
-				horn_light = 0
-		update_icons()
+				if(user.nutrition > 50 && user.concentrate_mod)
+					user.nutrition--
+				else
+					LC = 0
+					spell_off()
+		else
+			LC = 0
+			spell_off()
 
-	fruit_transform(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in view(1))//OK
-		set name = "Organic transformation"
-		set desc = "Banana to potato, yeah."
-		set category = "Unicorn"
-		if(prob(concentration(3)) || nutrition < 40 || horn_light_short != 0 || cooldown[11] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		update_icons()
-		cooldown[11] = 1
-		spawn(900)	cooldown[11] = 0
-		sleep(10)
+	spell_off()
+		..()
+		if(LC)	name = "High concentration \[ACTIVE\]"
+		else
+			var/mob/living/carbon/pony/user = usr
+			user.concentrate_mod = 0
+
+
+
+/*
+/obj/effect/proc_holder/spell/targeted/civilian/fruit_transform
+	name = "Organic transformation"
+	desc = "Banana to potato, yeah."
+
+	spell_level = 5
+
+	cast()
 		G = new(G.loc, pick("chili", "potato", "tomato", "apple", "banana", "mushrooms", "plumphelmet", "towercap", "harebells", "poppies", "sunflowers", "grapes", "peanut", "cabbage", "corn", "carrot", "whitebeet", "watermelon", "pumpkin", "lime", "lemon", "orange", "ambrosia"))
-		if(prob(50))	del G
-		nutrition -= 26
-		sleep(5)
-		horn_light_short = 1
-		update_icons()
+		if(prob(50))	del G*/
 
-	cold(var/mob/living/carbon/pony/P in view(1))//OK
-		set name = "Cooling"
-		set desc = "Makes ponies 20% cooler... Khm, colder."
-		set category = "Unicorn"
-		if(prob(concentration(1)) || nutrition < 20 || horn_light_short != 0 || cooldown[12] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		cooldown[12] = 1
-		spawn(250)	cooldown[12] = 0
-		update_icons()
-		sleep(10)
-		P.bodytemperature -= 10
-		nutrition -= 13
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
 
-	health_scan()//OK
-		set name = "Health scan"
-		set desc = "Analogy of using health analyzer."
-		set category = "Unicorn"
-		if(prob(concentration(1)) || nutrition < 20 || horn_light_short != 0 || cooldown[4] == 1)
-			usr << "You can't use this spell!"
-			return
-		cooldown[4] = 1
-		spawn(200)	cooldown[4] = 0
-		horn_light_short = 4
-		update_icons()
-		sleep(10)
-		var/list/mobs = list()
+/obj/effect/proc_holder/spell/targeted/civilian/health_scan
+	name = "Health scan"
+	desc = "Analogy of using health analyzer."
+
+	spell_level = 2
+
+	cast()//list/targets
+		var/list/mob/living/carbon/mobs = list()
 		for(var/mob/living/carbon/M in view(1))
-			if(M != usr)	mobs += M
+			if(M != usr)	mobs += M//Нерф магов
 		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
 		var/obj/item/device/healthanalyzer/H = new/obj/item/device/healthanalyzer
 		H.attack(M, usr)
-		nutrition -= 10
 		del H
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
 
-	blood_dam(var/mob/living/carbon/pony/P in view(1))
-		set name = "Heel bleeding"
-		set desc = "Analogy of bandages."
-		set category = "Unicorn"
-		if(prob(concentration(2)) || nutrition < 30 || horn_light_short != 0 || cooldown[13] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		cooldown[13] = 1
-		spawn(700)	cooldown[13] = 0
-		update_icons()
-		sleep(10)
+/*/obj/effect/proc_holder/spell/targeted/civilian/organ_scan
+	name = "Organ analyze"
+	desc = "Analogy of using organ analyzer."
+
+	level = 3
+
+	cast()//list/targets
+		for(var/mob/living/carbon/M in view(1))
+			if(M != usr)	mobs += M//Нерф магов
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
+		var/obj/item/device/healthanalyzer/H = new/obj/item/device/healthanalyzer
+		H.attack(M, usr)
+		del H*/
+
+/obj/effect/proc_holder/spell/targeted/civilian/heel_bleeding
+	name = "Heel bleeding"
+	desc = "Analogy of bandages."
+
+	spell_level = 5
+
+	cast()//list/targets
+		var/list/mob/living/carbon/mobs = list()
+		for(var/mob/living/carbon/M in view(1))//Таргетирование можно сделать через общий код
+			if(M != usr)	mobs += M//Нерф магов
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
 		var/obj/item/stack/medical/bruise_pack/B = new/obj/item/stack/medical/bruise_pack
-		B.attack(P, usr)
-		nutrition -= 22
+		B.attack(M, usr)
 		del B
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
 
-	notpain(var/mob/living/carbon/pony/P in view(1))
-		set name = "Pain relief"
-		set desc = "Easing of pain."
-		set category = "Unicorn"
-		if(prob(concentration(2)) || nutrition < 30 || horn_light_short != 0 || cooldown[14] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		cooldown[14] = 1
-		spawn(700)	cooldown[14] = 0
-		update_icons()
-		sleep(10)
-		P.reagents.add_reagent("tramadol", 3)
-		P.reagents.add_reagent("adrenalin", 1)
-		nutrition -= 21
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
+/obj/effect/proc_holder/spell/targeted/civilian/notpain
+	name = "Pain relief"
+	desc = "Easing of pain."
 
-	light_heel(var/mob/living/carbon/P in view(1))//Можно добавить настройку для аликорнов
-		set name = "Light heel"
-		set desc = "Little heel ponies."
-		set category = "Unicorn"
-		if(prob(concentration(3)) || nutrition < 40 || horn_light_short != 0 || cooldown[15] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		cooldown[12] = 1
-		spawn(1200)	cooldown[15] = 0
-		update_icons()
-		sleep(10)
-		P.apply_damages(-5, -5)
-		nutrition -= 33
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
+	spell_level = 5
 
-	organ_scan(var/mob/living/carbon/pony/P in view(1))
-		set name = "Organ analyze"
-		set desc = "Analogy of using organ analyzer."
-		set category = "Unicorn"
-		return
-		if(prob(concentration(3)) || nutrition < 40 || horn_light_short != 0 || cooldown[16] == 1)
-			usr << "You can't use this spell!"
-			return
-		horn_light_short = 1
-		cooldown[16] = 1
-		spawn(600)	cooldown[16] = 0
-		update_icons()
-		sleep(10)
-		nutrition -= 27
-		sleep(5)
-		horn_light_short = 0
-		update_icons()
+	cast()//list/targets
+		var/list/mob/living/carbon/mobs = list()
+		for(var/mob/living/carbon/M in view(1))//Таргетирование можно сделать через общий код
+			if(M != usr)	mobs += M//Нерф магов
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
+		M.reagents.add_reagent("tramadol", 3)
+		M.reagents.add_reagent("adrenalin", 1)
+
+/obj/effect/proc_holder/spell/targeted/civilian/light_heal
+	name = "Light heal"
+	desc = "Little heel for anything creatures."
+
+	level = 4
+
+	cast()//list/targets
+		var/list/mob/living/carbon/mobs = list()
+		for(var/mob/living/carbon/M in view(1))//Таргетирование можно сделать через общий код
+			if(M != usr)	mobs += M//Нерф магов
+		var/mob/living/carbon/M = input(usr, "Choose your target", "Target")  as null|anything in mobs
+		M.apply_damages(-5, -5)
+
+
+/*
+/mob/living/carbon/pony/verb
 
 	crowbar()
 		set name = "Telekinetic crowbar"
@@ -884,4 +862,4 @@
 				del C
 				cooldown[30] = 1
 				spawn(900) cooldown[30] = 0
-		update_icons()
+		update_icons()*/

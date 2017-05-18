@@ -31,8 +31,8 @@ var/list/bagreports = list()
 	var/dat = "<html><body>"
 	for(var/message in bagreports)
 		if(message)
-			dat += sanitize_simple(message)
-			if(check_rights(R_ADMIN, 0))
+			dat += message
+			if(check_rights(R_ADMIN, 0) || findtext(message, key))
 				dat += " - <a href='?src=\ref[src];bugreport=remove;msg=[bagreports.Find(message)]'> Remove</a>"
 			dat += "<br><br>"
 	dat += "<a href='?src=\ref[src];bugreport=add'><b>\[Add Report\]</a></b><br>"
@@ -57,10 +57,10 @@ var/list/bagreports = list()
 		if("add")
 			var/message = input("¬ведите описание ошибки.","—ообщение")
 			if(message)
-				bagreports += "<b>[usr.key]:</b> [message]"
+				bagreports += "<b>[usr.key]:</b> [replacetext(message, "€", "я")]"
 			fast_bug_report()
 		if("remove")
-			if((input("You're sure?", "Yes or No", "No") in list("Yes", "No"))=="Yes")
+			if(alert("You're sure?", null, "Yes", "No")=="Yes")
 				bagreports -= bagreports[text2num(href_list["msg"])]
 				fast_bug_report()
 		else ..()

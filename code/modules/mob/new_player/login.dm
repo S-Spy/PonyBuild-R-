@@ -1,3 +1,7 @@
+/mob/Login()
+	..()
+	world << {"<p style="color:#0000cc"><b>[client.key] entered the game.</b></p>"}
+
 /mob/new_player/Login()
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 	if(join_motd)
@@ -27,6 +31,7 @@
 		loc = pick(watch_locations)
 */
 	new_player_panel()
+
 	spawn(40)
 		if(client)
 			handle_privacy_poll()

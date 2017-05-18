@@ -438,7 +438,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			if(H.item_in_hand)
 				has_item = 1
 				break
-		if(has_item || horn_light || horn_light_short)
+		if(has_item || block_horn_light)
 			var/icon/aura = new/icon('icons/mob/pony.dmi', "icon_state" = "horn_light")
 			aura.Blend(rgb(r_aura, g_aura, b_aura))
 			face_standing.Blend(aura, ICON_OVERLAY)
