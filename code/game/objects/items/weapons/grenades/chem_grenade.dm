@@ -104,7 +104,7 @@
 			else
 				if(W.reagents.total_volume)
 					user << "\blue You add \the [W] to the assembly."
-					user.drop_item()
+					user.drop_active_hand()
 					W.loc = src
 					beakers += W
 					stage = 1

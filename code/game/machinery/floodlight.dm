@@ -89,7 +89,7 @@
 			if(cell)
 				user << "There is a power cell already installed."
 			else
-				user.drop_item()
+				user.drop_active_hand()
 				W.loc = src
 				cell = W
 				user << "You insert the power cell."

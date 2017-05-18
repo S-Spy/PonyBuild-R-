@@ -395,10 +395,10 @@
 		if ("signal")
 			if (!src.restrained())
 				var/t1 = round(text2num(param))
-				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
+				if (isnum(t1) && src.free_hand())
+					if (t1 <= 5)
 						message = "<B>[src]</B> raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
+					else if (t1 <= 10)
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = 1
 
@@ -499,7 +499,7 @@
 
 		if ("handshake")
 			m_type = 1
-			if (!src.restrained() && !src.r_hand)
+			if (!src.restrained() && src.free_hand())
 				var/mob/M = null
 				if (param)
 					for (var/mob/A in view(1, null))
@@ -510,7 +510,7 @@
 					M = null
 
 				if (M)
-					if (M.canmove && !M.r_hand && !M.restrained())
+					if (M.canmove && !M.free_hand() && !M.restrained())
 						message = "<B>[src]</B> shakes hands with [M]."
 					else
 						message = "<B>[src]</B> holds out \his hand to [M]."

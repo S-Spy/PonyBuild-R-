@@ -38,7 +38,8 @@
 	I'll make some notes on where certain variable defines should probably go.
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
-	var/obj/screen/zone_sel/zone_sel = null
+	var/obj/screen/zone/zone_sel = null
+	var/datum/species/species //Contains icon generation and language information, set during New().
 
 	var/use_me = 1 //Allows all mobs to use the me verb by default, will have to manually specify they cannot
 	var/damageoverlaytemp = 0
@@ -57,7 +58,7 @@
 	var/next_move = null
 	var/monkeyizing = null	//Carbon
 	var/other = 0.0
-	var/hand = null
+	var/datum/hand/hand = null
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
@@ -94,6 +95,8 @@
 
 	var/name_archive //For admin things like possession
 
+	var/obj/item/handcuffed
+
 	var/timeofdeath = 0.0//Living
 	var/cpr_time = 1.0//Carbon
 
@@ -122,8 +125,6 @@
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/obj/buckled = null//Living
-	var/obj/item/l_hand = null//Living
-	var/obj/item/r_hand = null//Living
 	var/obj/item/weapon/back = null//pony/Monkey
 	var/obj/item/weapon/tank/internal = null//pony/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon

@@ -148,7 +148,8 @@
 				usr << "\red The round is either not ready, or has already finished..."
 				return
 
-			if(client.prefs.species != "Earthpony" && !check_rights(R_ADMIN, 0))
+			var/there_will_be_set_white_list2
+			/*if(client.prefs.species != "Earthpony" && !check_rights(R_ADMIN, 0))
 				if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 					src << alert("You are currently not whitelisted to play [client.prefs.species].")
 					return 0
@@ -156,7 +157,7 @@
 				var/datum/species/S = all_species[client.prefs.species]
 				if(!(S.flags & IS_WHITELISTED))
 					src << alert("Your current species,[client.prefs.species], is not available for play on the station.")
-					return 0
+					return 0*/
 
 			LateChoices()
 
@@ -468,6 +469,10 @@
 		new_character.name = real_name
 		new_character.dna.ready_dna(new_character)
 		new_character.dna.b_type = client.prefs.b_type
+
+		if(client.prefs.custom_cutiemark)
+			new_character.cutiemark_paint_east = client.prefs.cutiemark_paint_east
+			new_character.cutiemark_paint_west = client.prefs.cutiemark_paint_west
 
 		if(client.prefs.disabilities)
 			// Set defer to 1 if you add more crap here so it only recalculates struc_enzymes once. - N3X

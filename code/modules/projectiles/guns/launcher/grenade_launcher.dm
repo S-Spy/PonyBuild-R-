@@ -70,7 +70,7 @@
 		..()
 
 /obj/item/weapon/gun/launcher/grenade/attack_hand(mob/user)
-	if(user.get_inactive_hand() == src)
+	if(user.item_in_hands(src, user.list_hands-user.hand))
 		unload(user)
 	else
 		..()
@@ -80,7 +80,7 @@
 		chambered.det_time = 10
 		chambered.activate(null)
 	return chambered
-		
+
 /obj/item/weapon/gun/launcher/grenade/handle_post_fire(mob/user)
 	message_admins("[key_name_admin(user)] fired a grenade ([chambered.name]) from a grenade launcher ([src.name]).")
 	log_game("[key_name_admin(user)] used a grenade ([chambered.name]).")

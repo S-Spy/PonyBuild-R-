@@ -28,12 +28,10 @@
 
 	if(!canremove)
 		return
-
 	if (ispony(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
 
 		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
 			return
-
 		if(over_object == usr && Adjacent(usr)) // this must come before the screen objects only block
 			src.open(usr)
 			return
@@ -47,13 +45,11 @@
 			return
 
 		if (!( usr.restrained() ) && !( usr.stat ))
-			switch(over_object.name)
-				if("r_hand")
+			for(var/datum/hand/H in usr.list_hands)
+				if(over_object == H.slot)
 					usr.u_equip(src)
-					usr.put_in_r_hand(src)
-				if("l_hand")
-					usr.u_equip(src)
-					usr.put_in_l_hand(src)
+					usr.put_in_active_hand(src, H)
+					break
 			src.add_fingerprint(usr)
 			return
 	return

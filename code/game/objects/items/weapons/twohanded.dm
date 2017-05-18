@@ -50,9 +50,8 @@
 /obj/item/weapon/twohanded/dropped(mob/user as mob)
 	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
-		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
-		if(istype(O))
-			O.unwield()
+		var/obj/item/weapon/twohanded/O = user.type_in_hands(/obj/item/weapon/twohanded, user.list_hands-user.hand)
+		if(O)	O.unwield()
 	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
@@ -75,12 +74,11 @@
 		if (src.unwieldsound)
 			playsound(src.loc, unwieldsound, 50, 1)
 
-		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
+		var/obj/item/weapon/twohanded/offhand/O = user.type_in_hands(/obj/item/weapon/twohanded/offhand, user.list_hands-user.hand)
+		if(O)	O.unwield()
 
 	else //Trying to wield it
-		if(user.get_inactive_hand())
+		if(!user.free_hand())
 			user << "<span class='warning'>You need your other hand to be empty</span>"
 			return
 		wield()
@@ -91,12 +89,12 @@
 		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
-		user.put_in_inactive_hand(O)
+		user.put_in_free_hand(O)
 
 	if(istype(user,/mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+		H.update_inv_hands()
+		H.update_inv_hands()
 
 	return
 

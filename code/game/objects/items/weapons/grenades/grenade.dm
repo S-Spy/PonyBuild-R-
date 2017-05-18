@@ -36,7 +36,7 @@
 			prime()
 			return
 		user.set_dir(get_dir(user, target))
-		user.drop_item()
+		user.drop_active_hand()
 		var/t = (isturf(target) ? target : target.loc)
 		walk_towards(src, t, 3)
 	return*/

@@ -147,7 +147,15 @@
 		H.g_eyes   = dna.GetUIValueRange(DNA_UI_EYES_G,    255)
 		H.b_eyes   = dna.GetUIValueRange(DNA_UI_EYES_B,    255)
 
-		H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
+		H.r_tail   = dna.GetUIValueRange(DNA_UI_HAIR_R,    255)
+		H.g_tail   = dna.GetUIValueRange(DNA_UI_HAIR_G,    255)
+		H.b_tail   = dna.GetUIValueRange(DNA_UI_HAIR_B,    255)
+
+		H.r_aura   = dna.GetUIValueRange(DNA_UI_AURA_R,    255)
+		H.g_aura   = dna.GetUIValueRange(DNA_UI_AURA_G,    255)
+		H.b_aura   = dna.GetUIValueRange(DNA_UI_AURA_B,    255)
+
+		//H.s_tone   = 35 - dna.GetUIValueRange(DNA_UI_SKIN_TONE, 220) // Value can be negative.
 
 		if (dna.GetUIState(DNA_UI_GENDER))
 			H.gender = FEMALE
@@ -163,6 +171,10 @@
 		var/beard = dna.GetUIValueRange(DNA_UI_BEARD_STYLE,facial_hair_styles_list.len)
 		if((0 < beard) && (beard <= facial_hair_styles_list.len))
 			H.f_style = facial_hair_styles_list[beard]
+
+		var/tail = dna.GetUIValueRange(DNA_UI_BEARD_STYLE,pony_tail_styles_list.len)
+		if((0 < tail) && (tail <= pony_tail_styles_list.len))
+			H.pony_tail_style = pony_tail_styles_list[tail]
 
 		H.update_body(0)
 		H.update_hair()

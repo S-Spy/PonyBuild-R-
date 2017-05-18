@@ -174,7 +174,7 @@
 	else if(istype(W, /obj/item/pipe))
 		var/obj/item/pipe/P = W
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
-			user.drop_item()
+			user.drop_active_hand()
 			P.loc = src.loc
 			user << "\blue You fit the pipe into the [src]!"
 	else

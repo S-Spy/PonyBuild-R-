@@ -181,7 +181,7 @@
 
 		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
 
-		var/t = user:zone_sel.selecting
+		var/t = user:zone_sel.selecting.name
 		if (t == "head")
 			if(ispony(M))
 				var/mob/living/carbon/pony/H = M

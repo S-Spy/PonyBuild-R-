@@ -21,13 +21,10 @@
 			return ..()
 
 		if(!M.restrained() && !M.stat)
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
+			for(var/datum/hand/H in usr.list_hands)
+				if(over_object.name in H.connect_organ_names)
+					usr.u_equip(src)
+					usr.put_in_active_hand(src, H)
 
 			add_fingerprint(usr)
 			return
@@ -45,7 +42,7 @@
 /obj/item/weapon/clipboard/attackby(obj/item/weapon/W as obj, mob/user as mob)
 
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo))
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		if(istype(W, /obj/item/weapon/paper))
 			toppaper = W
@@ -99,7 +96,7 @@
 			if(!haspen)
 				var/obj/item/weapon/pen/W = usr.get_active_hand()
 				if(istype(W, /obj/item/weapon/pen))
-					usr.drop_item()
+					usr.drop_active_hand()
 					W.loc = src
 					haspen = W
 					usr << "<span class='notice'>You slot the pen into \the [src].</span>"

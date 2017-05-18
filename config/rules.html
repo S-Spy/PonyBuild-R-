@@ -1,11 +1,31 @@
 <html>
-<head><title>Server Rules</title></head>
+<head>
+<title>Server Rules</title>
+<script>
+  var rus_rules;
+  var eng_rules;
+  function switch_rus() {document.getElementById("rules_text").innerHTML = window.rus_rules;}
+  function switch_eng() {document.getElementById("rules_text").innerHTML = window.eng_rules;}
+</script>
+</head>
+
 <body>
+<input type="button" value="RUS" id="rus_but" onclick="switch_rus()"> <input type="button" value="ENG" id="eng_but" onclick="switch_eng()"><br><br>
+<p id="rules_text"></p>
 
-<!--
-Example: baystation12 rules embed.
-<iframe width='100%' height='100%' src="http://baystation12.net/wiki/index.php?title=Rules&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
--->
 
+<script>//В кавычках пишется русский или английский текст. Чтобы переходить на новую строку здесь, пиши: \ . Если для пользователя, пиши: <br>
+	window.rus_rules = 'Правило 1: <br>\
+\
+Правило 2: ';
+
+	window.eng_rules = 'Rule 1: <br>\
+\
+Rule 2';
+
+
+
+switch_rus();
+</script>
 </body>
 </html>

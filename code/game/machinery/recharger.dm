@@ -42,7 +42,7 @@ obj/machinery/recharger/attackby(obj/item/weapon/G as obj, mob/user as mob)
 			if(!L.stored_computer.battery)
 				user << "There's no battery in it!"
 				return
-		user.drop_item()
+		user.drop_active_hand()
 		G.loc = src
 		charging = G
 		update_icon()

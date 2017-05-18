@@ -791,12 +791,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		if(!photo_data.is_synth)
 			photo_data.photo.loc = src.loc
 			if(!issilicon(user))
-				user.put_in_inactive_hand(photo_data.photo)
+				user.put_in_free_hand(photo_data.photo)
 		del(photo_data)
 
 	if(istype(user.get_active_hand(), /obj/item/weapon/photo))
 		var/obj/item/photo = user.get_active_hand()
-		user.drop_item()
+		user.drop_active_hand()
 		photo.loc = src
 		photo_data = new(photo, 0)
 	else if(istype(user,/mob/living/silicon))

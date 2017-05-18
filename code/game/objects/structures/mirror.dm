@@ -46,7 +46,7 @@
 				if(userloc != H.loc) return
 				if(new_style)
 					H.pony_tail_style = new_style
-				H.update_horn_showing()
+				H.update_icons()
 
 		//var/global/list/pony_tail
 		//datum/sprite_accessory/pony_tail

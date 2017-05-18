@@ -25,7 +25,7 @@
 	if(istype(I,/obj/item/weapon/anobattery))
 		if(!inserted_battery)
 			user << "\blue You insert [I] into [src]."
-			user.drop_item()
+			user.drop_active_hand()
 			I.loc = src
 			src.inserted_battery = I
 			updateDialog()

@@ -3,11 +3,7 @@ Add fingerprints to items when we put them in our hands.
 This saves us from having to call add_fingerprint() any time something is put in a pony's hands programmatically.
 
 */
-/mob/living/carbon/pony/put_in_l_hand(var/obj/item/W)
-	. = ..()
-	if(.) W.add_fingerprint(src)
-
-/mob/living/carbon/pony/put_in_r_hand(var/obj/item/W)
+/mob/living/carbon/pony/put_in_active_hand(var/obj/item/W)
 	. = ..()
 	if(.) W.add_fingerprint(src)
 
@@ -23,9 +19,9 @@ This saves us from having to call add_fingerprint() any time something is put in
 			return
 		if(H.equip_to_appropriate_slot(I))
 			if(hand)
-				update_inv_l_hand(0)
+				update_inv_hands(0)
 			else
-				update_inv_r_hand(0)
+				update_inv_hands(0)
 		else
 			H << "\red You are unable to equip that."
 
@@ -188,16 +184,15 @@ This saves us from having to call add_fingerprint() any time something is put in
 		legcuffed = null
 		success = 1
 		update_inv_legcuffed()
-	else if (W == r_hand)
-		r_hand = null
-		success = 1
-		update_inv_r_hand()
-	else if (W == l_hand)
-		l_hand = null
-		success = 1
-		update_inv_l_hand()
 	else
-		return 0
+		for(var/datum/hand/H in list_hands)
+			if(W == H.item_in_hand)
+				H.item_in_hand = null
+				success = 1
+				update_inv_hands()
+				break
+		if(!success)
+			return 0
 
 	if(success)
 		if (W)
@@ -215,12 +210,17 @@ This saves us from having to call add_fingerprint() any time something is put in
 //This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
 //set redraw_mob to 0 if you don't wish the hud to be updated - if you're doing it manually in your own proc.
 /mob/living/carbon/pony/equip_to_slot(obj/item/W as obj, slot, redraw_mob = 1)
-
 	if(!slot) return
 	if(!istype(W)) return
 	if(!has_organ_for_slot(slot)) return
 	if(!species || !species.hud || !(slot in species.hud.equip_slots)) return
 	W.loc = src
+	for(var/datum/hand/H in list_hands)
+		if(H.slot_place == slot)
+			H.item_in_hand = W
+			W.equipped(src, slot)
+			update_inv_hands(redraw_mob)
+
 	switch(slot)
 		if(slot_back)
 			src.back = W
@@ -240,14 +240,6 @@ This saves us from having to call add_fingerprint() any time something is put in
 			src.legcuffed = W
 			W.equipped(src, slot)
 			update_inv_legcuffed(redraw_mob)
-		if(slot_l_hand)
-			src.l_hand = W
-			W.equipped(src, slot)
-			update_inv_l_hand(redraw_mob)
-		if(slot_r_hand)
-			src.r_hand = W
-			W.equipped(src, slot)
-			update_inv_r_hand(redraw_mob)
 		if(slot_belt)
 			src.belt = W
 			W.equipped(src, slot)
@@ -329,12 +321,10 @@ This saves us from having to call add_fingerprint() any time something is put in
 			src << "\red You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it..."
 			return
 
-	if((W == src.l_hand) && (slot != slot_l_hand))
-		src.l_hand = null
-		update_inv_l_hand() //So items actually disappear from hands.
-	else if((W == src.r_hand) && (slot != slot_r_hand))
-		src.r_hand = null
-		update_inv_r_hand()
+	for(var/datum/hand/H in list_hands)
+		if(W == H.item_in_hand && slot != H.slot_place)
+			H.item_in_hand = null
+			update_inv_hands() //So items actually disappear from hands.
 
 	W.layer = 20
 
@@ -374,15 +364,14 @@ This saves us from having to call add_fingerprint() any time something is put in
 	if (item)
 		item.add_fingerprint(source)
 	else
-		switch(place)
+		for(var/datum/hand/H in target.list_hands)
+			if(place in H.connect_organ_names)
+				if(!H.item_in_hand)
+					del(src)
+
+		if(src)	switch(place)
 			if("mask")
 				if (!( target.wear_mask ))
-					del(src)
-			if("l_hand")
-				if (!( target.l_hand ))
-					del(src)
-			if("r_hand")
-				if (!( target.r_hand ))
 					del(src)
 			if("suit")
 				if (!( target.wear_suit ))
@@ -438,16 +427,16 @@ This saves us from having to call add_fingerprint() any time something is put in
 		var/obj/item/target_item = null
 		var/message = null
 
+		for(var/datum/hand/H in target.list_hands)
+			if(place in H.connect_organ_names)
+				var/datum/organ/O = pick(H.connect_organs)
+				target_part = O.name
+				target_item = H.item_in_hand
+
 		switch(place)
 			if("mask")
 				target_part = "head"
 				target_item = target.wear_mask
-			if("l_hand")
-				target_part = "left hand"
-				target_item = target.l_hand
-			if("r_hand")
-				target_part = "right hand"
-				target_item = target.r_hand
 			if("gloves")
 				target_part = "hands"
 				target_item = target.gloves
@@ -591,6 +580,15 @@ It can still be worn/put on as normal.
 	var/slot_to_process
 	var/strip_item //this will tell us which item we will be stripping - if any.
 
+	for(var/datum/hand/H in source.list_hands)
+		if(place in H.connect_organ_names)
+			if(istype(target, /obj/item/clothing/suit/straight_jacket))
+				del(src)
+			if (H.item_in_hand)
+				strip_item = H.item_in_hand
+			break
+
+
 	switch(place)	//here we go again...
 		if("mask")
 			slot_to_process = slot_wear_mask
@@ -628,18 +626,6 @@ It can still be worn/put on as normal.
 			slot_to_process = slot_shoes
 			if (target.shoes && target.shoes.canremove)
 				strip_item = target.shoes
-		if("l_hand")
-			if (istype(target, /obj/item/clothing/suit/straight_jacket))
-				del(src)
-			slot_to_process = slot_l_hand
-			if (target.l_hand)
-				strip_item = target.l_hand
-		if("r_hand")
-			if (istype(target, /obj/item/clothing/suit/straight_jacket))
-				del(src)
-			slot_to_process = slot_r_hand
-			if (target.r_hand)
-				strip_item = target.r_hand
 		if("uniform")
 			slot_to_process = slot_w_uniform
 			if(target.w_uniform && target.w_uniform.canremove)

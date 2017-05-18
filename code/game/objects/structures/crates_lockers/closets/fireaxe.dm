@@ -61,7 +61,7 @@
 					user << "\red Unwield the axe first."
 					return
 				fireaxe = O
-				user.drop_item(O)
+				user.drop_active_hand(O)
 				src.contents += O
 				user << "\blue You place the fire axe back in the [src.name]."
 				update_icon()

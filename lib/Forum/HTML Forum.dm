@@ -3,8 +3,6 @@ var/Forum_ID_Number = 0
 mob/var/tmp/obj/Forums/Forum/Selected_Forum = null
 mob/var/switch_language = "ENG"
 mob/var/tmp/list/closed_sections = list()
-mob/verb/forum()
-	src.Display_HTML_Forum()
 
 
 proc

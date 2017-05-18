@@ -51,8 +51,8 @@
 // Description: On creation automatically connects to active sensors. This is delayed to ensure sensors already exist.
 /obj/machinery/computer/power_monitor/New()
 	..()
-	spawn(50)
-		power_monitor = new(src)
+	//spawn(50)
+	power_monitor = new(src)
 
 // Proc: attack_hand()
 // Parameters: None

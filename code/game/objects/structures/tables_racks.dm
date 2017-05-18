@@ -352,7 +352,7 @@
 		return ..()
 	if(isrobot(user))
 		return
-	user.drop_item()
+	user.drop_active_hand()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return
@@ -435,7 +435,7 @@
 		user.visible_message("<span class='danger'>The [src] was sliced apart by [user]!</span>")
 		destroy()
 
-	user.drop_item(src)
+	user.drop_active_hand(src)
 	return
 
 /obj/structure/table/proc/straight_table_check(var/direction)

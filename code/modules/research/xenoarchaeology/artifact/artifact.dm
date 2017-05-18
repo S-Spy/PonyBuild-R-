@@ -108,10 +108,9 @@
 	. = ..()
 	if(istype(AM,/mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = AM
-		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			attackby(H.l_hand,H)
-		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			attackby(H.r_hand,H)
+		var/datum/hand/selhand = H.type_in_hands(/obj/item/weapon/pickaxe)
+		if(H)
+			attackby(selhand.item_in_hand,H)
 
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM

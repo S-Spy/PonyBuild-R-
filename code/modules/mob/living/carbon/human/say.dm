@@ -92,9 +92,10 @@
 			if(r_ear && istype(r_ear,/obj/item/device/radio))
 				R = r_ear
 				has_radio = 1
-			if(r_hand && istype(r_hand, /obj/item/device/radio))
-				R = r_hand
-				has_radio = 1
+			for(var/datum/hand/H in list_hands)
+				if(H.item_in_hand && istype(H.item_in_hand, /obj/item/device/radio))
+					R = H.item_in_hand
+					has_radio = 1
 			if(has_radio)
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += R
@@ -106,9 +107,10 @@
 			if(l_ear && istype(l_ear,/obj/item/device/radio))
 				R = l_ear
 				has_radio = 1
-			if(l_hand && istype(l_hand,/obj/item/device/radio))
-				R = l_hand
-				has_radio = 1
+			for(var/datum/hand/H in list_hands)
+				if(H.item_in_hand && istype(H.item_in_hand, /obj/item/device/radio))
+					R = H.item_in_hand
+					has_radio = 1
 			if(has_radio)
 				R.talk_into(src,message,null,verb,speaking)
 				used_radios += R

@@ -516,7 +516,7 @@ obj/structure/cable/proc/cableColor(var/colorC)
 /obj/item/stack/cable_coil/attack(mob/M as mob, mob/user as mob)
 	if(istype(M,/mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/S = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/S = H.get_organ(user.zone_sel.selecting.name)
 		if(!(S.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 

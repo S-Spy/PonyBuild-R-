@@ -69,7 +69,7 @@
 	if(!istype(i))
 		return
 
-	user.drop_item()
+	user.drop_active_hand()
 	i.loc = src
 	user << "<span class='notice'>You put [i] in [src].</span>"
 	papers.Add(i)

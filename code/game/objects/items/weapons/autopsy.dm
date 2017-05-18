@@ -161,19 +161,16 @@
 
 	if(istype(usr,/mob/living/carbon))
 		// place the item in the usr's hand if possible
-		if(!usr.r_hand)
-			P.loc = usr
-			usr.r_hand = P
-			P.layer = 20
-		else if(!usr.l_hand)
-			P.loc = usr
-			usr.l_hand = P
-			P.layer = 20
+		for(var/datum/hand/H in usr.list_hands)
+			if(!H.item_in_hand)
+				P.loc = usr
+				H.item_in_hand = P
+				P.layer = 20
+				break
 
 	if (ismob(src.loc))
 		var/mob/M = src.loc
-		M.update_inv_l_hand()
-		M.update_inv_r_hand()
+		M.update_inv_hands()
 
 /obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/pony/M as mob, mob/living/carbon/user as mob)
 	if(!istype(M))
@@ -191,7 +188,7 @@
 
 	src.timeofdeath = M.timeofdeath
 
-	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting)
+	var/datum/organ/external/S = M.get_organ(user.zone_sel.selecting.name)
 	if(!S)
 		usr << "<b>You can't scan this body part.</b>"
 		return

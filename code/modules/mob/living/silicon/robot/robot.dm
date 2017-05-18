@@ -624,7 +624,7 @@ var/list/robot_verbs_default = list(
 				C.installed = 1
 				C.wrapped = W
 				C.install()
-				user.drop_item()
+				user.drop_active_hand()
 				W.loc = null
 
 				var/obj/item/robot_parts/robot_component/WC = W
@@ -729,7 +729,7 @@ var/list/robot_verbs_default = list(
 		else if(cell)
 			user << "There is a power cell already installed."
 		else
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			cell = W
 			user << "You insert the power cell."
@@ -851,7 +851,7 @@ var/list/robot_verbs_default = list(
 		else
 			if(U.action(src))
 				usr << "You apply the upgrade to [src]!"
-				usr.drop_item()
+				usr.drop_active_hand()
 				U.loc = src
 			else
 				usr << "Upgrade error!"

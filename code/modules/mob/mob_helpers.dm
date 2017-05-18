@@ -414,10 +414,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 
 /mob/proc/abiotic(var/full_body = 0)
-	if(full_body && ((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )) || (src.back || src.wear_mask)))
-		return 1
+	for(var/datum/hand/H in list_hands)
+		if(H.item_in_hand && !H.item_in_hand.abstract)
+			return 1
 
-	if((src.l_hand && !( src.l_hand.abstract )) || (src.r_hand && !( src.r_hand.abstract )))
+	if(full_body && (src.back || src.wear_mask))
 		return 1
 
 	return 0

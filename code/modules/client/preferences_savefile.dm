@@ -32,10 +32,12 @@
 	savefile_version = SAVEFILE_VERSION_MAX
 
 /datum/preferences/proc/load_preferences()
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)			return 0
+	if(!fexists(path))	return 0
+
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S )				return 0
+
 	S.cd = "/"
 
 	S["version"] >> savefile_version
@@ -60,7 +62,7 @@
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
-	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
+	UI_style		= sanitize_inlist(UI_style, list("White", "old"), initial(UI_style))
 	be_special		= sanitize_integer(be_special, 0, 65535, initial(be_special))
 	default_slot	= sanitize_integer(default_slot, 1, config.character_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
@@ -88,10 +90,12 @@
 	return 1
 
 /datum/preferences/proc/load_character(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
+	if(!path)			return 0
+	if(!fexists(path))	return 0
+
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S )				return 0
+
 	S.cd = "/"
 	if(!slot)	slot = default_slot
 	slot = sanitize_integer(slot, 1, config.character_slots, initial(default_slot))
@@ -191,8 +195,10 @@
 	S["uplinklocation"] >> uplinklocation
 	S["exploit_record"]	>> exploit_record
 
-	S["UI_style_color"]		<< UI_style_color
-	S["UI_style_alpha"]		<< UI_style_alpha
+	S["UI_style_color"]		>> UI_style_color
+	S["UI_style_alpha"]		>> UI_style_alpha
+
+	S["cutie_paint"]		>> colors4x4
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -201,13 +207,16 @@
 	if(isnull(species) || !(species in playable_species))
 		species = "Earthpony"
 
-	if(isnum(cutie_mark))
-		cutie_mark = cutie_mark_t[cutie_mark_t[cutie_mark]]
+	if(isnull(cutie_mark))
+		cutie_mark = "Blank"
 
 	if(isnull(language)) language = "None"
 	if(isnull(spawnpoint)) spawnpoint = "Arrivals Shuttle"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
-	if(!real_name) real_name = random_name(gender)
+	if(!real_name)
+		randomize_appearance_for()
+		real_name = random_name(gender)
+
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
@@ -330,7 +339,7 @@
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record
 	S["gen_record"]			<< gen_record
-	S["player_alt_titles"]		<< player_alt_titles
+	S["player_alt_titles"]	<< player_alt_titles
 	S["be_special"]			<< be_special
 	S["disabilities"]		<< disabilities
 	S["used_skillpoints"]	<< used_skillpoints
@@ -352,6 +361,8 @@
 
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha
+
+	S["cutie_paint"]		<< colors4x4
 
 	return 1
 

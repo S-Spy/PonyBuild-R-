@@ -67,7 +67,7 @@
 	switch(build_step)
 		if(0,1)
 			if( istype(W, /obj/item/robot_parts/l_leg) || istype(W, /obj/item/robot_parts/r_leg) )
-				user.drop_item()
+				user.drop_active_hand()
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the robot leg to [src].</span>"
@@ -85,7 +85,7 @@
 			else if( istype(W, /obj/item/clothing/suit/bluetag) )
 				lasercolor = "b"
 			if( lasercolor || istype(W, /obj/item/clothing/suit/storage/vest) )
-				user.drop_item()
+				user.drop_active_hand()
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the armor to [src].</span>"
@@ -102,7 +102,7 @@
 					user << "<span class='notice'>You welded the vest to [src].</span>"
 		if(4)
 			if( istype(W, /obj/item/clothing/head/helmet) )
-				user.drop_item()
+				user.drop_active_hand()
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the helmet to [src].</span>"
@@ -112,7 +112,7 @@
 
 		if(5)
 			if( isprox(W) )
-				user.drop_item()
+				user.drop_active_hand()
 				del(W)
 				build_step++
 				user << "<span class='notice'>You add the prox sensor to [src].</span>"
@@ -154,7 +154,7 @@
 			user << "<span class='notice'>You add [W] to [src].</span>"
 			src.item_state = "[lasercolor]ed209_taser"
 			src.icon_state = "[lasercolor]ed209_taser"
-			user.drop_item()
+			user.drop_active_hand()
 			del(W)
 
 		if(8)
@@ -174,7 +174,7 @@
 				user << "<span class='notice'>You complete the ED-209.</span>"
 				var/turf/T = get_turf(src)
 				new /obj/machinery/bot/secbot/ed209(T,created_name,lasercolor)
-				user.drop_item()
+				user.drop_active_hand()
 				del(W)
 				user.drop_from_inventory(src)
 				del(src)

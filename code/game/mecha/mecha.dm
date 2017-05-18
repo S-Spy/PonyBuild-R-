@@ -195,7 +195,7 @@
 	return
 
 
-/obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
+/obj/mecha/proc/drop_active_hand()//Derpfix, but may be useful in future for engineering exosuits.
 	return
 
 /obj/mecha/hear_talk(mob/M as mob, text)
@@ -691,7 +691,7 @@
 		var/obj/item/mecha_parts/mecha_equipment/E = W
 		spawn()
 			if(E.can_attach(src))
-				user.drop_item()
+				user.drop_active_hand()
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
 			else
@@ -768,7 +768,7 @@
 		if(state==4)
 			if(!src.cell)
 				user << "You install the powercell"
-				user.drop_item()
+				user.drop_active_hand()
 				W.forceMove(src)
 				src.cell = W
 				src.log_message("Powercell installed")
@@ -822,7 +822,7 @@
 		src.initial_icon = P.new_icon
 		src.reset_icon()
 
-		user.drop_item()
+		user.drop_active_hand()
 		del(P)
 
 	else

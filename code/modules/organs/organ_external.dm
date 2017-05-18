@@ -851,7 +851,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	W.add_blood(owner)
 	if(ismob(W.loc))
 		var/mob/living/H = W.loc
-		H.drop_item()
+		H.drop_active_hand()
 	W.loc = owner
 
 /****************************************************
@@ -887,7 +887,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	process()
 		..()
-		process_grasp(owner.l_hand, "left hand")
+		for(var/datum/hand/H in owner.list_hands)
+			if(name in H.connect_organ_names)
+				process_grasp(H.item_in_hand, display_name)
 
 /datum/organ/external/l_leg
 	name = "l_leg"
@@ -908,7 +910,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	process()
 		..()
-		process_grasp(owner.r_hand, "right hand")
+		for(var/datum/hand/H in owner.list_hands)
+			if(name in H.connect_organ_names)
+				process_grasp(H.item_in_hand, display_name)
 
 /datum/organ/external/r_leg
 	name = "r_leg"
@@ -947,7 +951,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	process()
 		..()
-		process_grasp(owner.r_hand, "right hand")
+		for(var/datum/hand/H in owner.list_hands)
+			if(name in H.connect_organ_names)
+				process_grasp(H.item_in_hand, display_name)
 
 /datum/organ/external/l_hand
 	name = "l_hand"
@@ -959,7 +965,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	process()
 		..()
-		process_grasp(owner.l_hand, "left hand")
+		for(var/datum/hand/H in owner.list_hands)
+			if(name in H.connect_organ_names)
+				process_grasp(H.item_in_hand, display_name)
 
 /datum/organ/external/head
 	name = "head"
@@ -1042,14 +1050,6 @@ obj/item/weapon/organ/New(loc, mob/living/carbon/pony/H)
 
 	if(base)
 		//Changing limb's skin tone to match owner
-		if(!H.species || H.species.flags & HAS_SKIN_TONE)
-			if (H.s_tone >= 0)
-				base.Blend(rgb(H.s_tone, H.s_tone, H.s_tone), ICON_ADD)
-			else
-				base.Blend(rgb(-H.s_tone,  -H.s_tone,  -H.s_tone), ICON_SUBTRACT)
-
-	if(base)
-		//Changing limb's skin color to match owner
 		if(!H.species || H.species.flags & HAS_SKIN_COLOR)
 			base.Blend(rgb(H.r_skin, H.g_skin, H.b_skin), ICON_ADD)
 
@@ -1135,7 +1135,7 @@ obj/item/weapon/organ/attackby(obj/item/weapon/W as obj, mob/user as mob)
 				if(contents.len)
 					var/obj/item/removing = pick(contents)
 					removing.loc = get_turf(user.loc)
-					if(!(user.l_hand && user.r_hand))
+					if(user.free_hand())
 						user.put_in_hands(removing)
 					if(istype(removing,/obj/item/organ))
 						var/obj/item/organ/removed_organ = removing

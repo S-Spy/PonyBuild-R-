@@ -119,29 +119,6 @@
 	..()
 	ninjastart += src
 
-/obj/effect/landmark/dreams/cementery_spider1
-	name = "c_spider1"
-
-/obj/effect/landmark/dreams/stranger1
-	name = "stranger1"
-
-/obj/effect/landmark/dreams/cementery_zombie1
-	name = "c_zombie1"
-
-/obj/effect/landmark/dreams/stranger2
-	name = "stranger2"
-
-/obj/effect/landmark/dreams/stranger3
-	name = "stranger3"
-
-/obj/effect/landmark/dreams/stranger4
-	name = "stranger4"
-
-/obj/effect/landmark/dreams/stranger5
-	name = "stranger5"
-
-/obj/effect/landmark/dreams/stranger6
-	name = "stranger6"
 
 //Costume spawner landmarks
 

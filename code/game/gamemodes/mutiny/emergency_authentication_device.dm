@@ -79,7 +79,7 @@
 	check_key_existence()
 	if(istype(O, /obj/item/weapon/mutiny/auth_key/captain) && !captains_key)
 		captains_key = O
-		user.drop_item()
+		user.drop_active_hand()
 		O.loc = src
 
 		state("Key received. Thank you, Captain [mode.head_loyalist].")
@@ -89,7 +89,7 @@
 
 	if(istype(O, /obj/item/weapon/mutiny/auth_key/secondary) && !secondary_key)
 		secondary_key = O
-		user.drop_item()
+		user.drop_active_hand()
 		O.loc = src
 
 		state("Key received. Thank you, Secondary Authenticator [mode.head_mutineer].")

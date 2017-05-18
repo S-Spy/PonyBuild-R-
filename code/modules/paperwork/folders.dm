@@ -30,7 +30,7 @@
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/weapon/paper_bundle))
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		user << "<span class='notice'>You put the [W] into \the [src].</span>"
 		update_icon()

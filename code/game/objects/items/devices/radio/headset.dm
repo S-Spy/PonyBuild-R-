@@ -246,12 +246,12 @@
 			return
 
 		if(!keyslot1)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			keyslot1 = W
 
 		else
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			keyslot2 = W
 

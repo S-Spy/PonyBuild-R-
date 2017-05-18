@@ -51,7 +51,7 @@ datum/genesequence
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src.loc
 		switch(scan_fossil(W))
 			if(1)

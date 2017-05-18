@@ -155,7 +155,8 @@
 	del(wizard_mob.wear_suit)
 	del(wizard_mob.head)
 	del(wizard_mob.shoes)
-	del(wizard_mob.r_hand)
+	for(var/datum/hand/H in wizard_mob.list_hands)
+		del(H.item_in_hand)
 	del(wizard_mob.r_store)
 	del(wizard_mob.l_store)
 

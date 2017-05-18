@@ -307,7 +307,7 @@ var/global/ManifestJSON
 	flags = CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		user.drop_item()
+		user.drop_active_hand()
 		src.throw_at(target, throw_range, throw_speed, user)
 
 /obj/effect/stop

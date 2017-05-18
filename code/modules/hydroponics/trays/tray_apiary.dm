@@ -50,14 +50,14 @@
 		else
 			health = 10
 			nutrilevel += 10
-			user.drop_item()
+			user.drop_active_hand()
 			del(O)
 			user << "\blue You carefully insert the queen into [src], she gets busy making a hive."
 			bees_in_hive = 0
 	else if(istype(O, /obj/item/beezeez))
 		beezeez += 100
 		nutrilevel += 10
-		user.drop_item()
+		user.drop_active_hand()
 		if(health > 0)
 			user << "\blue You insert [O] into [src]. A relaxed humming appears to pick up."
 		else

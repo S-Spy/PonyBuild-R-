@@ -2696,7 +2696,7 @@
 		return
 
 	if( boxes.len > 0 )
-		if( user.get_inactive_hand() != src )
+		if(!user.item_in_hands(src, user.list_hands-user.hand))
 			..()
 			return
 
@@ -2734,7 +2734,7 @@
 				boxestoadd += i
 
 			if( (boxes.len+1) + boxestoadd.len <= 5 )
-				user.drop_item()
+				user.drop_active_hand()
 
 				box.loc = src
 				box.boxes = list() // Clear the box boxes so we don't have boxes inside boxes. - Xzibit
@@ -2754,7 +2754,7 @@
 	if( istype(I, /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/) ) // Long ass fucking object name
 
 		if( src.open )
-			user.drop_item()
+			user.drop_active_hand()
 			I.loc = src
 			src.pizza = I
 

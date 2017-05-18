@@ -22,12 +22,66 @@
 		src << "\red The github URL is not set in the server configuration."
 	return
 
+var/list/bagreports = list()
+
+/client/verb/fast_bug_report()//Не забыть про чейнжлог
+	set name = "fast_bug_report"
+	set desc = "You can read and write here about actual errors."
+	set hidden = 1
+	var/dat = "<html><body>"
+	for(var/message in bagreports)
+		if(message)
+			dat += message
+			if(check_rights(R_ADMIN, 0) || findtext(message, key))
+				dat += " - <a href='?src=\ref[src];bugreport=remove;msg=[bagreports.Find(message)]'> Remove</a>"
+			dat += "<br><br>"
+	dat += "<a href='?src=\ref[src];bugreport=add'><b>\[Add Report\]</a></b><br>"
+	dat += "</body></html>"
+	usr << browse(dat, "window=bugreport;size=300x400")
+
+/world/New()
+	..()
+	var/file = file2text("data/bagreport.txt")
+	bagreports = splittext(file, "\n")
+
+
+/world/Del()
+	fdel("data/bagreport.txt")
+	for(var/message in bagreports)
+		if(message)	text2file("[message]\n","data/bagreport.txt")
+	..()
+
+
+/client/Topic(href, href_list[])
+	switch(href_list["bugreport"])
+		if("add")
+			var/message = input("Введите описание ошибки.","Сообщение")
+			if(message)
+				bagreports += "<b>[usr.key]:</b> [replacetext(message, "я", "Я")]"
+			fast_bug_report()
+		if("remove")
+			if(alert("You're sure?", null, "Yes", "No")=="Yes")
+				bagreports -= bagreports[text2num(href_list["msg"])]
+				fast_bug_report()
+		else ..()
+
 /client/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum ingame."
 	set hidden = 1
 	if(mob.Selected_Forum)	mob.Display_HTML_Forum()
 	else	mob.Display_HTML_SubForum()
+
+#define BACKSTORY_FILE "config/backstory.html"
+/client/verb/backstory()
+	set name = "backstory"
+	set desc = "Show our backstories."
+	set hidden = 1
+
+	src << browse(file(BACKSTORY_FILE), "window=backstory;size=480x320")
+	return
+#undef BACKSTORY_FILE
+
 
 #define RULES_FILE "config/rules.html"
 /client/verb/rules()

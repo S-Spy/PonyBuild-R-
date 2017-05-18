@@ -43,7 +43,7 @@
 				user << "\blue You place the circuit board inside the frame."
 				icon_state = "1"
 				circuit = P
-				user.drop_item()
+				user.drop_active_hand()
 				P.loc = src
 			if(istype(P, /obj/item/weapon/screwdriver) && circuit)
 				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -140,7 +140,7 @@
 					ticker.mode.remove_cultist(M.brainmob.mind, 1)
 					ticker.mode.remove_revolutionary(M.brainmob.mind, 1)
 
-				user.drop_item()
+				user.drop_active_hand()
 				P.loc = src
 				brain = P
 				usr << "Added [P]."

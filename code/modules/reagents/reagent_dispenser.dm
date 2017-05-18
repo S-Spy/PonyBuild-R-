@@ -134,7 +134,7 @@
 				log_game("[key_name(user)] rigged fueltank at [loc.loc.name] ([loc.x],[loc.y],[loc.z]) for explosion.")
 
 			rig = W
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 
 			var/icon/test = getFlatIcon(W)

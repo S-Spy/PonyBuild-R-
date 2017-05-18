@@ -21,7 +21,7 @@
 		if(notices < 5)
 			O.add_fingerprint(user)
 			add_fingerprint(user)
-			user.drop_item()
+			user.drop_active_hand()
 			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
@@ -57,15 +57,12 @@
 		var/obj/item/P = locate(href_list["write"])
 
 		if((P && P.loc == src)) //ifthe paper's on the board
-			if(istype(usr.r_hand, /obj/item/weapon/pen)) //and you're holding a pen
+			var/datum/hand/H = usr.type_in_hands(/obj/item/weapon/pen)
+			if(H)
 				add_fingerprint(usr)
-				P.attackby(usr.r_hand, usr) //then do ittttt
+				P.attackby(H.item_in_hand, usr) //then do ittttt
 			else
-				if(istype(usr.l_hand, /obj/item/weapon/pen)) //check other hand for pen
-					add_fingerprint(usr)
-					P.attackby(usr.l_hand, usr)
-				else
-					usr << "<span class='notice'>You'll need something to write with!</span>"
+				usr << "<span class='notice'>You'll need something to write with!</span>"
 
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])

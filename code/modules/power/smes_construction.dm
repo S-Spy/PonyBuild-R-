@@ -306,7 +306,7 @@
 					return
 
 				usr << "You install the coil into the SMES unit!"
-				user.drop_item()
+				user.drop_active_hand()
 				cur_coils ++
 				component_parts += W
 				W.loc = src
