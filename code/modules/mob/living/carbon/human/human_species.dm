@@ -6,9 +6,9 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/pony/skrell/New(var/new_loc)
-	h_style = "Skrell Male Tentacles"
-	..(new_loc, "Skrell")
+/mob/living/carbon/pony/alicorn/New(var/new_loc)
+	h_style = "Alicorn Male Tentacles"
+	..(new_loc, "Alicorn")
 
 /mob/living/carbon/pony/pegasus/New(var/new_loc)
 	h_style = "Pegasus Ears"

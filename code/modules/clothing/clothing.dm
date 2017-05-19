@@ -49,7 +49,7 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Earthpony", "Skrell")	//ponyoid bodytypes
+		if("Earthpony", "Alicorn")	//ponyoid bodytypes
 			species_restricted = list("exclude","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		else
 			species_restricted = list(target_species)
@@ -71,10 +71,10 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Skrell")
+		if("Alicorn")
 			species_restricted = list("exclude","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		if("Earthpony")
-			species_restricted = list("exclude","Skrell","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
+			species_restricted = list("exclude","Alicorn","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		else
 			species_restricted = list(target_species)
 

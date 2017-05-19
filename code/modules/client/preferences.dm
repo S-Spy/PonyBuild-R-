@@ -60,10 +60,10 @@ datum/preferences
 	var/age = 30						//age of character
 	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
 	var/b_type = "A+"					//blood type (not-chooseable)
-	var/ptail_style = "Bald"				//ptail type
-	var/r_ptail = 0						//Face hair color
-	var/g_ptail = 0						//Face hair color
-	var/b_ptail = 0						//Face hair color
+	var/pony_tail_style = "Bald"				//pony_tail type
+	var/r_tail = 0						//Face hair color
+	var/g_tail = 0						//Face hair color
+	var/b_tail = 0						//Face hair color
 	var/cutie_mark						//Cutie mark type
 	var/backbag = 2						//backpack type
 	var/h_style = "Bald"				//Hair type
@@ -154,6 +154,8 @@ datum/preferences
 					return
 	gender = pick(MALE, FEMALE)
 	real_name = random_name(gender,species)
+
+	randomize_appearance_for()//случайный персонаж при первом открывании сетапа
 
 	gear = list()
 
@@ -247,7 +249,7 @@ datum/preferences
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
-	if(!ptail_style)	ptail_style = "Short Tail"
+	if(!pony_tail_style)	pony_tail_style = "Short Tail"
 	update_preview_icon()
 	user << browse_rsc(preview_icon_front, "previewicon.png")
 	user << browse_rsc(preview_icon_side, "previewicon2.png")
@@ -379,7 +381,7 @@ datum/preferences
 			switch(organ_name)
 				if("heart")
 					dat += "\tPacemaker-assisted [organ_name]"
-				if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+				if("voicebox") //on adding voiceboxes for speaking alicorn/similar replacements
 					dat += "\tSurgically altered [organ_name]"
 				if("eyes")
 					dat += "\tRetinal overlayed [organ_name]"
@@ -390,7 +392,7 @@ datum/preferences
 	else
 		dat += "<br><br>"
 
-	//var/list/undies = gender == MALE ? ptail_m : ptail_f
+	//var/list/undies = gender == MALE ? pony_tail_m : pony_tail_f
 
 
 	dat += "Cutie Mark: <a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[get_key_by_value(cutie_mark_t,cutie_mark)]</b></a><br>"
@@ -433,8 +435,8 @@ datum/preferences
 	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 
 	dat += "<br><b>Tail</b><br>"
-	dat += "<a href='?_src_=prefs;preference=ptail;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_ptail, 2)][num2hex(g_ptail, 2)][num2hex(b_ptail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_ptail, 2)][num2hex(g_ptail, 2)][num2hex(b_ptail)]'><tr><td>__</td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=ptail_style;task=input'>[ptail_style]</a><br>"
+	dat += "<a href='?_src_=prefs;preference=pony_tail;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail)]'><tr><td>__</td></tr></table></font> "
+	dat += " Style: <a href='?_src_=prefs;preference=pony_tail_style;task=input'>[pony_tail_style]</a><br>"
 
 	dat += "<br><b>Eyes</b><br>"
 	dat += "<a href='?_src_=prefs;preference=eyes;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td>__</td></tr></table></font><br>"
@@ -667,13 +669,13 @@ datum/preferences
 		else if((current_species.flags & IS_WHITELISTED) && !is_alien_whitelisted(user,current_species))
 			restricted = 1
 
-	if(restricted)
-		if(restricted == 1)
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
-		else if(restricted == 2)
-			dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
-	if(!restricted || check_rights(R_ADMIN, 0))
-		dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
+	//if(restricted)
+	//	if(restricted == 1)
+	//		dat += "<font color='red'><b>You cannot play as this species.</br><small>If you wish to be whitelisted, you can make an application post on <a href='?src=\ref[user];preference=open_whitelist_forum'>the forums</a>.</small></b></font></br>"
+	//	else if(restricted == 2)
+	//		dat += "<font color='red'><b>You cannot play as this species.</br><small>This species is not available for play as a station race..</small></b></font></br>"
+	//if(!restricted || check_rights(R_ADMIN, 0))
+	dat += "\[<a href='?src=\ref[user];preference=species;task=input;newspecies=[species_preview]'>select</a>\]"
 	dat += "</center></body>"
 
 	user << browse(null, "window=preferences")
@@ -1297,23 +1299,24 @@ datum/preferences
 					g_hair = rand(0,255)
 					b_hair = rand(0,255)
 				if("h_style")
-					h_style = random_hair_style(gender, species)
+					h_style = random_style(gender, species)
 				if("facial")
 					r_facial = rand(0,255)
 					g_facial = rand(0,255)
 					b_facial = rand(0,255)
 				if("f_style")
-					f_style = random_facial_hair_style(gender, species)
-				if("ptail")
-					ptail_style = pick(ptail)
-					r_ptail = rand(0,255)
-					g_ptail = rand(0,255)
-					b_ptail = rand(0,255)
-					ShowChoices(user)
+					f_style = random_style(gender, species, facial_hair_styles_list)
+				if("pony_tail_style")
+					pony_tail_style = random_style(gender, species, pony_tail_styles_list)
+				if("pony_tail_color")
+					r_tail = rand(0,255)
+					g_tail = rand(0,255)
+					b_tail = rand(0,255)
+					//ShowChoices(user)
 				if("cutie_mark")
 					var/r = pick(cutie_mark_t)
 					cutie_mark = cutie_mark_t[r]
-					ShowChoices(user)
+					//ShowChoices(user)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -1429,7 +1432,7 @@ datum/preferences
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					if(species == "Earthpony" || species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference", rgb(r_hair, g_hair, b_hair)) as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -1484,10 +1487,10 @@ datum/preferences
 					if(new_f_style)
 						f_style = new_f_style
 
-				if("ptail_style")
-					var/list/valid_ptailstyles = list()
-					for(var/ptailstyle in ptail)
-						var/datum/sprite_accessory/S = ptail[ptailstyle]
+				if("pony_tail_style")
+					var/list/valid_pony_tailstyles = list()
+					for(var/pony_tailstyle in pony_tail_styles_list)
+						var/datum/sprite_accessory/S = pony_tail_styles_list[pony_tailstyle]
 						if(gender == MALE && S.gender == FEMALE)
 							continue
 						if(gender == FEMALE && S.gender == MALE)
@@ -1495,19 +1498,19 @@ datum/preferences
 						if( !(species in S.species_allowed))
 							continue
 
-						valid_ptailstyles[ptailstyle] = ptail[ptailstyle]
+						valid_pony_tailstyles[pony_tailstyle] = pony_tail_styles_list[pony_tailstyle]
 
-					var/new_pt_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in valid_ptailstyles
+					var/new_pt_style = input(user, "Choose your character's tail style:", "Character Preference")  as null|anything in valid_pony_tailstyles
 					if(new_pt_style)
-						ptail_style = new_pt_style
+						pony_tail_style = new_pt_style
 					ShowChoices(user)
 
-				if("ptail")
-					var/new_tail = input(user, "Choose your character's tail colour:", "Character Preference", rgb(r_ptail, g_ptail, b_ptail)) as color|null
+				if("pony_tail")
+					var/new_tail = input(user, "Choose your character's tail colour:", "Character Preference", rgb(r_tail, g_tail, b_tail)) as color|null
 					if(new_tail)
-						r_ptail = hex2num(copytext(new_tail, 2, 4))
-						g_ptail = hex2num(copytext(new_tail, 4, 6))
-						b_ptail = hex2num(copytext(new_tail, 6, 8))
+						r_tail = hex2num(copytext(new_tail, 2, 4))
+						g_tail = hex2num(copytext(new_tail, 4, 6))
+						b_tail = hex2num(copytext(new_tail, 6, 8))
 
 				if("cutie_mark")
 					var/list/cutie_mark_options
@@ -1533,7 +1536,7 @@ datum/preferences
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					//if(species == "Unicorn" || species == "Pegasus" || species == "Skrell")
+					//if(species == "Unicorn" || species == "Pegasus" || species == "Alicorn")
 					var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference", rgb(r_skin, g_skin, b_skin)) as color|null
 					if(new_skin)
 						r_skin = hex2num(copytext(new_skin, 2, 4))
@@ -1830,9 +1833,9 @@ datum/preferences
 	character.g_skin = g_skin
 	character.b_skin = b_skin
 
-	character.r_ptail = r_ptail
-	character.g_ptail = g_ptail
-	character.b_ptail = b_ptail
+	character.r_tail = r_tail
+	character.g_tail = g_tail
+	character.b_tail = b_tail
 
 	character.s_tone = s_tone
 
@@ -1871,7 +1874,7 @@ datum/preferences
 				else if(status == "mechanical")
 					I.mechanize()
 
-	character.ptail_style = ptail_style
+	character.pony_tail_style = pony_tail_style
 
 	character.cutie_mark = cutie_mark
 

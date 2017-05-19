@@ -442,7 +442,7 @@ var/list/sacrificed = list()
 			D.b_eyes = 200
 			D.r_eyes = 200
 			D.g_eyes = 200
-			D.ptail_style = "Short Tail"
+			D.pony_tail_style = "Short Tail"
 
 			D.key = ghost.key
 

@@ -159,6 +159,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		if(istype(I))	overlays += I
 	else if (icon_update)
 		icon = stand_icon
+		if(lying && !species.prone_icon)	dir = SOUTH
 		for(var/image/I in overlays_standing)
 			overlays += I
 
@@ -376,14 +377,22 @@ proc/get_damage_icon_part(damage_state, body_part)
 		if(lip_style && (species && species.flags & HAS_LIPS))	//skeletons are allowed to wear lipstick no matter what you think, agouri.
 			stand_icon.Blend(new/icon('icons/mob/pony_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
-	if(cutie_mark && species.flags & HAS_ptail)
+	if(cutie_mark && species.flags & HAS_pony_tail)
 		stand_icon.Blend(new /icon('icons/mob/pony.dmi', cutie_mark), ICON_OVERLAY)
+
+
+
+	//Pony tail
+	if(species.flags & HAS_pony_tail)//Если есть флаг хвоста
+		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа берется нужная прическа
+		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
+		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
+		stand_icon.Blend(p_tail, ICON_OVERLAY)
+
+	update_horn_showing(0)
 
 	if(update_icons)
 		update_icons()
-
-	//tail
-	update_tail_showing(0)
 
 //HAIR OVERLAY
 /mob/living/carbon/pony/proc/update_hair(var/update_icons=1)
@@ -516,7 +525,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	update_inv_pockets(0)
 	update_fire(0)
 	update_surgery(0)
-	update_tail_showing()
+	update_horn_showing(0)
 	UpdateDamageIcon()
 	update_icons()
 	//Hud Stuff
@@ -782,13 +791,11 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 		overlays_standing[SUIT_LAYER]	= standing
 
-		update_tail_showing(0)
-
 	else
 		overlays_standing[SUIT_LAYER]	= null
 
-		update_tail_showing(0)
 
+	update_horn_showing(0)
 	update_collar(0)
 
 	if(update_icons)   update_icons()
@@ -912,33 +919,26 @@ proc/get_damage_icon_part(damage_state, body_part)
 	else
 		overlays_standing[L_HAND_LAYER] = null
 
-	if(update_icons) update_icons()
+	if(update_icons)
+		update_icons()
 
-/mob/living/carbon/pony/proc/update_tail_showing(var/update_icons=1)
-	overlays_standing[TAIL_LAYER] = null
-	var/icon/ICON
-	update_unicorn_verbs()
-	if(species.tail)
+/mob/living/carbon/pony/proc/update_horn_showing(var/update_icons=1)
+	overlays_standing[TAIL_LAYER] = null//Уровень хвоста обнуляется
+	update_unicorn_verbs()//Обновление списка вербов заклинаний
+	if(species.tail)//Если есть рог или крылья
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space) || species.name == "Unicorn")
-			ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			var/icon/ICON = new/icon("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
 			ICON.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
 			if(species.name == "Unicorn")
 				if(l_hand || r_hand || switch_ulight || switch_ulight_short)
 					var/icon/aura = new/icon("icon" = 'icons/mob/pony.dmi', "icon_state" = "unicorn_light")
 					aura.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 					ICON.Blend(aura, ICON_OVERLAY)
-	//Pony tail
-	var/datum/sprite_accessory/ptailstyle = ptail[ptail_style]
-	if(species.flags)
-		var/icon/p_tail = new/icon("icon" = ptailstyle.icon, "icon_state" = "[ptailstyle.icon_state]_s")
-		p_tail.Blend(rgb(r_ptail, g_ptail, b_ptail), ICON_ADD)
-		if(ICON)	ICON.Blend(p_tail, ICON_OVERLAY)
-		else 		ICON = p_tail
-
-	overlays_standing[R_HAND_LAYER+0.1] = image(ICON)
+					overlays_standing[TAIL_LAYER] = image(ICON)
 
 	if(update_icons)
 		update_icons()
+
 
 
 //Adds a collar overlay above the helmet layer if the suit has one

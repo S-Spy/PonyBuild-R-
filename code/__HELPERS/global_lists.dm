@@ -23,7 +23,7 @@ var/global/list/joblist = list()					//list of all jobstypes, minus borg and AI
 var/global/list/all_species[0]
 var/global/list/all_languages[0]
 var/global/list/language_keys[0]					// Table of say codes for all languages
-var/global/list/whitelisted_species = list() // Species that require a whitelist check.
+var/global/list/whitelisted_species = list("Earthpony", "Unicorn", "Pegasus") // Species that require a whitelist check.
 var/global/list/playable_species = list("Earthpony", "Unicorn", "Pegasus")    // A list of ALL playable species, whitelisted, latejoin or otherwise.
 
 // Posters
@@ -41,8 +41,10 @@ var/global/list/facial_hair_styles_list = list()	//stores /datum/sprite_accessor
 var/global/list/facial_hair_styles_male_list = list()
 var/global/list/facial_hair_styles_female_list = list()
 var/global/list/skin_styles_female_list = list()		//unused
-	//ptail
-var/global/list/ptail = list() //Curse whoever made male/female ptail diffrent colours
+	//pony_tail
+var/global/list/pony_tail_styles_list = list()
+var/global/list/pony_tail_styles_male_list = list() //Curse whoever made male/female pony_tail diffrent colours
+var/global/list/pony_tail_styles_female_list = list()
 	//cutie_mark
 var/global/list/cutie_mark_t = list("Apple's" = "u1", "Headphones" = "u2", "Black shirt" = "u3", "White shirt" = "u4", "None")
 	//Backpacks
@@ -55,10 +57,10 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 /proc/makeDatumRefLists()
 	var/list/paths
 
-	paths = typesof(/datum/sprite_accessory/ptail) - /datum/sprite_accessory/ptail
+	paths = typesof(/datum/sprite_accessory/pony_tail) - /datum/sprite_accessory/pony_tail
 	for(var/path in paths)
-		var/datum/sprite_accessory/ptail/P = new path()
-		ptail[P.name] = P
+		var/datum/sprite_accessory/pony_tail/P = new path()
+		pony_tail_styles_list[P.name] = P
 
 
 	//Hair - Initialise all /datum/sprite_accessory/hair into an list indexed by hair-style name
@@ -84,6 +86,17 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 			else
 				facial_hair_styles_male_list += H.name
 				facial_hair_styles_female_list += H.name
+
+	paths = typesof(/datum/sprite_accessory/pony_tail) - /datum/sprite_accessory/pony_tail
+	for(var/path in paths)
+		var/datum/sprite_accessory/pony_tail/H = new path()
+		pony_tail_styles_list[H.name] = H
+		switch(H.gender)
+			if(MALE)	pony_tail_styles_male_list += H.name
+			if(FEMALE)	pony_tail_styles_female_list += H.name
+			else
+				pony_tail_styles_male_list += H.name
+				pony_tail_styles_female_list += H.name
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list
 	paths = typesof(/datum/surgery_step)-/datum/surgery_step
