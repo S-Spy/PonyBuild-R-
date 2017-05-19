@@ -11,7 +11,7 @@
 	slot_flags = 0
 	origin_tech = "combat=8;materials=5"
 	fire_sound = 'sound/effects/bang.ogg'
-	
+
 	release_force = 15
 	throw_distance = 30
 	var/max_rockets = 1
@@ -25,7 +25,7 @@
 /obj/item/weapon/gun/launcher/rocket/attackby(obj/item/I as obj, mob/user as mob)
 	if(istype(I, /obj/item/ammo_casing/rocket))
 		if(rockets.len < max_rockets)
-			user.drop_item()
+			user.drop_active_hand()
 			I.loc = src
 			rockets += I
 			user << "\blue You put the rocket in [src]."

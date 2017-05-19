@@ -61,7 +61,7 @@
 			dead_mob_list -= brainmob//Update dem lists
 			living_mob_list += brainmob
 
-			user.drop_item()
+			user.drop_active_hand()
 			brainobj = O
 			brainobj.loc = src
 

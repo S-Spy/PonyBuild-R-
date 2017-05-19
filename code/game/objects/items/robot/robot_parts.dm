@@ -109,36 +109,36 @@
 			var/obj/item/weapon/secbot_assembly/ed209_assembly/B = new /obj/item/weapon/secbot_assembly/ed209_assembly
 			B.loc = get_turf(src)
 			user << "<span class='notice'>You armed the robot frame.</span>"
-			if (user.get_inactive_hand()==src)
+			if (user.item_in_hands(src, user.list_hands-user.hand))
 				user.before_take_item(src)
-				user.put_in_inactive_hand(B)
+				user.put_in_free_hand(B)
 			del(src)
 		else
 			user << "<span class='warning'>You need one sheet of metal to arm the robot frame.</span>"
 	if(istype(W, /obj/item/robot_parts/l_leg))
 		if(src.l_leg)	return
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		src.l_leg = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_leg))
 		if(src.r_leg)	return
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		src.r_leg = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/l_arm))
 		if(src.l_arm)	return
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		src.l_arm = W
 		src.updateicon()
 
 	if(istype(W, /obj/item/robot_parts/r_arm))
 		if(src.r_arm)	return
-		user.drop_item()
+		user.drop_active_hand()
 		W.loc = src
 		src.r_arm = W
 		src.updateicon()
@@ -146,7 +146,7 @@
 	if(istype(W, /obj/item/robot_parts/chest))
 		if(src.chest)	return
 		if(W:wires && W:cell)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.chest = W
 			src.updateicon()
@@ -158,7 +158,7 @@
 	if(istype(W, /obj/item/robot_parts/head))
 		if(src.head)	return
 		if(W:flash2 && W:flash1)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.head = W
 			src.updateicon()
@@ -200,7 +200,7 @@
 			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
 			if(!O)	return
 
-			user.drop_item()
+			user.drop_active_hand()
 
 			O.mmi = W
 			O.invisibility = 0
@@ -250,7 +250,7 @@
 			user << "\blue You have already inserted a cell!"
 			return
 		else
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.cell = W
 			user << "\blue You insert the cell!"
@@ -275,19 +275,19 @@
 			user << "\blue You have already inserted the eyes!"
 			return
 		else if(src.flash1)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.flash2 = W
 			user << "\blue You insert the flash into the eye socket!"
 		else
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			src.flash1 = W
 			user << "\blue You insert the flash into the eye socket!"
 	else if(istype(W, /obj/item/weapon/stock_parts/manipulator))
 		user << "\blue You install some manipulators and modify the head, creating a functional spider-bot!"
 		new /mob/living/simple_animal/spiderbot(get_turf(loc))
-		user.drop_item()
+		user.drop_active_hand()
 		del(W)
 		del(src)
 		return

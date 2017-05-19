@@ -126,7 +126,7 @@
 	if(!I)
 		return
 
-	user.drop_item()
+	user.drop_active_hand()
 	if(I)
 		I.loc = src
 

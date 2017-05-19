@@ -227,7 +227,7 @@
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
+	var/t = shooter:zone_sel.selecting.name
 	if ((t in list( "eyes", "mouth" )))
 		t = "head"
 	var/datum/organ/external/def_zone = ran_zone(t)

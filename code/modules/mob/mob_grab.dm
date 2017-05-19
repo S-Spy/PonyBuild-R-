@@ -53,10 +53,14 @@
 //This makes sure that the grab screen object is displayed in the correct hand.
 /obj/item/weapon/grab/proc/synch()
 	if(affecting)
-		if(assailant.r_hand == src)
-			hud.screen_loc = ui_rhand
-		else
-			hud.screen_loc = ui_lhand
+		var/first
+		for(var/datum/hand/H in assailant.list_hands)
+			if(!first)
+				first = 1
+				hud.screen_loc = H.screen_loc
+			if(H.item_in_hand == src)
+				hud.screen_loc = H.screen_loc
+				break
 
 
 /obj/item/weapon/grab/process()
@@ -72,17 +76,12 @@
 	if(state <= GRAB_AGGRESSIVE)
 		allow_upgrade = 1
 		//disallow upgrading if we're grabbing more than one person
-		if((assailant.l_hand && assailant.l_hand != src && istype(assailant.l_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.l_hand
-			if(G.affecting != affecting)
-				allow_upgrade = 0
-		if((assailant.r_hand && assailant.r_hand != src && istype(assailant.r_hand, /obj/item/weapon/grab)))
-			var/obj/item/weapon/grab/G = assailant.r_hand
-			if(G.affecting != affecting)
-				allow_upgrade = 0
+		for(var/datum/hand/H in assailant.list_hands)
+			if(H.item_in_hand != src && istype(H.item_in_hand, /obj/item/weapon/grab))
+				if(H.item_in_hand:affecting != affecting)
+					allow_upgrade = 0
 		if(state == GRAB_AGGRESSIVE)
-			affecting.drop_l_hand()
-			affecting.drop_r_hand()
+			affecting.drop_all_hands()
 			//disallow upgrading past aggressive if we're being grabbed aggressively
 			for(var/obj/item/weapon/grab/G in affecting.grabbed_by)
 				if(G == src) continue

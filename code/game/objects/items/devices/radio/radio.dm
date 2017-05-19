@@ -536,7 +536,7 @@
 			return
 
 		if(!keyslot)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			keyslot = W
 

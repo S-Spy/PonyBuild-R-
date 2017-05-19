@@ -25,7 +25,7 @@
 
 	if (istype(M,/mob/living/carbon/pony))		//Repairing robolimbs
 		var/mob/living/carbon/pony/H = M
-		var/datum/organ/external/S = H.get_organ(user.zone_sel.selecting)
+		var/datum/organ/external/S = H.get_organ(user.zone_sel.selecting.name)
 
 		if(S.open == 1)
 			if (S && (S.status & ORGAN_ROBOT))

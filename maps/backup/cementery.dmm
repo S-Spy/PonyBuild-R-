@@ -1,0 +1,111 @@
+"aa" = (/turf/unsimulated/wall{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"; name = "grass"},/area/space)
+"ab" = (/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ac" = (/turf/simulated/wall{icon = 'icons/turf/walls.dmi'; icon_state = "rockwall"; name = "stone wall"},/area/space)
+"ad" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence1"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ae" = (/turf/simulated/wall{dir = 8; icon = 'icons/turf/walls.dmi'; icon_state = "rockwall"; name = "stone wall"; tag = "icon-rockwall (WEST)"},/area/space)
+"af" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence3"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ag" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence2"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ah" = (/obj/structure/tombstone,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ai" = (/turf/simulated/wall{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldwall1"; name = "stone wall"},/area/space)
+"aj" = (/obj/structure/closet/groowe,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ak" = (/obj/effect/landmark/dreams/stranger1,/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"al" = (/obj/structure/lattice{desc = ""; icon = 'icons/obj/cemetery.dmi'; icon_state = "light-pot"; l_color = "#ED9200"; luminosity = 2},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"am" = (/obj/structure/closet{anchored = 1; desc = "Stone box for dead bodies."; icon = 'icons/obj/cemetery.dmi'; icon_closed = "sarcophagus"; icon_opened = "sarcophagus-open"; icon_state = "sarcophagus"; name = "sarcophagus"; open_sound = 'sound/effects/stonedoor_openclose.ogg'},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"an" = (/obj/effect/landmark/dreams/stranger1,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ao" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom1"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ap" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"aq" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_2"; name = "stone path"; tag = "icon-rootfloor_2"},/area/space)
+"ar" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom6"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"as" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom5"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"at" = (/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"au" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_1"; name = "stone path"; tag = "icon-rootfloor_1"},/area/space)
+"av" = (/obj/structure/mineral_door/oldstone,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"aw" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat3"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ax" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "smallfence1"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ay" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "smallfence2"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"az" = (/obj/structure/closet/groowe{icon_state = "grooweopen"; name = "pit"; opened = 1},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aA" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence2"; name = "old fence"},/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"aB" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat2"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aC" = (/obj/structure/girder{desc = "Здесь лежит не Путин. Чесна."; icon = 'icons/obj/cemetery.dmi'; icon_state = "tombstone1"; name = "tombstone"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aD" = (/obj/structure/closet/groowe,/mob/living/simple_animal/crab{desc = "This crab is not Putin. Honesty."; health = 2.14748e+009; name = "Ne Putin chesna"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aE" = (/obj/structure/closet{anchored = 1; desc = "Stone box for dead bodies."; icon = 'icons/obj/cemetery.dmi'; icon_closed = "coffin1"; icon_opened = "coffin1-open"; icon_state = "coffin1"; name = "stone coffin"; open_sound = 'sound/effects/stonedoor_openclose.ogg'},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"aF" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat4"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aG" = (/turf/simulated/wall{icon = 'icons/turf/walls.dmi'; icon_state = "woodwall"; name = "wood wall"; tag = "icon-woodwall"},/area/space)
+"aH" = (/obj/structure/girder{climbable = 1; icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall3"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aI" = (/obj/structure/mineral_door/wood/oldwood,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aJ" = (/obj/structure/girder{icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall2"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aK" = (/obj/structure/table/woodentable,/obj/item/ashtray/bronze,/obj/item/weapon/cigbutt,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aL" = (/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aM" = (/obj/structure/girder{desc = "Old fashionable clocks."; icon_state = "ghostclock0"; name = "old clocks"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aN" = (/obj/item/weapon/staff{desc = "Old sawed-off shotgun. It is completely unusable and useless."; icon = 'icons/obj/gun.dmi'; icon_state = "sawnshotgun"; name = "sawed-off shotgun"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aO" = (/obj/effect/decal/remains,/obj/effect/decal/cleanable/blood{desc = "Lumps of brain on the wall. It's dry and crusty."; dryname = "lumps of brain"; layer = 3; name = "lumps of brain"; pixel_x = 30},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aP" = (/obj/item/trash/candle,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"aQ" = (/obj/item/weapon/flame/candle,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"aR" = (/obj/structure/table/woodentable,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aS" = (/obj/structure/bed/chair/wood/normal{dir = 8},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aT" = (/obj/item/ammo_casing/shotgun,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aU" = (/obj/structure/closet/cabinet{desc = "It's a... toilet?"; icon = 'icons/obj/cemetery.dmi'; icon_closed = "oldtoilet"; icon_opened = "oldtoilet-open"; icon_state = "oldtoilet"; name = "old toilet"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"aV" = (/obj/structure/closet/cabinet,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aW" = (/obj/structure/table/woodentable,/obj/item/device/flashlight/lamp,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"aX" = (/obj/effect/landmark/dreams/stranger1,/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_2"; name = "stone path"; tag = "icon-rootfloor_2"},/area/space)
+"aY" = (/obj/item/weapon/flame/candle{l_color = "#ED3200"; luminosity = 2},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"aZ" = (/obj/structure/barricade/wooden,/obj/structure/girder{climbable = 0; density = 0; icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall4"; layer = 3; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"ba" = (/obj/structure/bed,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"bb" = (/obj/structure/closet/coffin,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bc" = (/obj/structure/closet/crate/miningcar{desc = "Old wooden box with wheels. Can be pulled somewhere."; name = "old box"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bd" = (/obj/item/seeds/pumpkinseed,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"be" = (/obj/item/toy/spinningtoy{desc = "OH GOD! IT'S LEVITATING!!!"; icon = 'icons/obj/structures.dmi'; icon_state = "ghostclock01"; name = "hand clocks"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bf" = (/obj/item/weapon/reagent_containers/glass/bucket{amount_per_transfer_from_this = 50},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bg" = (/obj/item/weapon/shovel,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bh" = (/obj/item/weapon/minihoe,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bi" = (/obj/structure/sink/puddle,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bj" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"bk" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/obj/effect/landmark/dreams/cementery_spider1,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaababababacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadaeababababaa
+aaababababafabababababababababababababababababababababababababababababababababababababababagababababaa
+aaababababafabahahahahahahahahababahahahahahahahahababahahahahahahahahababaiaiaiaiaiabababagababababaa
+aaababababafabajajajajajajajajakabajajajajajajajajabakajajajajajajajajabaiaialamalaiaiababagababababaa
+aaababababafababanababaoabababapaqabababarabanababapapabababasabarabababaiamatatatamaiababagababababaa
+aaababababafabahahahahahahahahapapahahahahahahahahapauahahahahahahahahabaiamatatatamaiababagababababaa
+aaababababafabajajajajajajajajaqapajajajajajajajajabapajajajajajajajajabaiaiaiavaiaiaiababagababababaa
+aaababababafababababasababababapabababaoababababababaqaoababababababababababawapawababababagababababaa
+aaababababafabahahahahahahahahapapahahahahahahahahabapahahahahahahahahahahababaqababahahabagababababaa
+aaababababafabajajajajajajajajaqapajajajajajajajajapapajajajajajajajajajajababapababajajabagababababaa
+aaababababafabanabanabababababaqapabababababababababapababababababababababababababababababagababababaa
+aaababababacabahahahahabacaxaeapabacaxaxaxaxaxaxacapabacaxaxaxaxaxaxaxaxaxaxaeapacaxaxaxaxaeababababaa
+aaababababafabajajajajabayapapapabapapapapapapabapapaqabapapapapapapaqababazapapapapapabapaAababababaa
+aaababababafababababababayapapapapapapaqabapabapapapapapaqapapababapapapaqabapabababapapakaAababababaa
+aaababababaeadadadadadadaeapapacadadadadadadacapauaeaxaxaxaxaxaxaxaxacabacaxaxaxaxaxaxaxaxacababababaa
+aaababababafababababababaBapapaBababababababagabapayabahahahahahahahahabahahahahahahahahabagababababaa
+aaababababafabaiaiaiaiaiabapababababababarabagapapayabajajajajajajajajabajajajajajajajajabagababababaa
+aaababababafabaiamatamaiabapaqabahahaCahahabagapaqayabababanababanaoabababarababanasabababagababababaa
+aaababababafabaiatatatavapapapabajajaDajajabagauapayabahahahahahahahahabahahahahahahahahabagababababaa
+aaababababafabaiamaEataiabaqapababababaoababagapapayabajajajajajajajajabajajajajajajajajabagababababaa
+aaababababafabaiaiaiaiaiabauapabahahahahahabagapabayabababababababababababababababababababagababababaa
+aaababababafabababababababapapabajajajajajabagapabaeaxaxaxaxaxaxaxaxaeabacaxaxaxaxaxaxaxaxacababababaa
+aaababababafabaiaiaiaiaiababapababasababababagapapabababababababababababababababaFababababagababababaa
+aaababababafabaialamamaiabapaqabahahahahahabagabapapapauapapapazapapapapabapapapaqababababagababababaa
+aaababababafabaiatatatavapapapabajajajajajabaeadadadacaqapacadadadaeababababababaparabababagababababaa
+aaababababafabaiaiaiaiaiababapabababababababagababababapapababababagababaGaGaHaGaIaGaJaGabagababababaa
+aaababababafababababababababababaiaiaiaiaiabagababaiaiavavaiaiababagababaJaKaLaMaLaNaOaGabagababababaa
+aaababababafababaoabababababapabaiaPataQaiabagababaiamatatamaiababagababaGaRaSaLaLaTaLaHabagababababaa
+aaababababafabaiaiaiaiaiabapapapavataEataiabagababaiamatataEaiababagaUabaGaVaLaTaLaLaWaGabagababababaa
+aaababababafabaiamamalaiabapaXabaiaQataYaiabagaoabaiamatatalaiababagababaZaLaLaLaLaLbaaGabagababababaa
+aaababababafabaiatatatavapabababaiaiaiaiaiabagababaiaEatatamaiababagababaGaJaGaGaIaHaJaGabagababababaa
+aaababababafabaiaiaiaiaiababababababababababagababaiaiaiaiaiaiababagababbbbbbcabababbdababagababababaa
+aaababababafabababababababababababarababababagababazababbeababababagbfababababbgabbhabbdabagababababaa
+aaababababafababababababababababababababababagababababababababababagabbiabazaoabbjbkbkbjbkagababababaa
+aaababababacadadadadadadadadadadadadadadadadacadadadadadadadadadadacadadadadadadadadadadadaeababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababababaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

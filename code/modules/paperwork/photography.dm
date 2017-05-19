@@ -96,13 +96,10 @@ var/global/photo_count = 0
 			return ..()
 		playsound(loc, "rustle", 50, 1, -5)
 		if((!( M.restrained() ) && !( M.stat ) && M.back == src))
-			switch(over_object.name)
-				if("r_hand")
-					M.u_equip(src)
-					M.put_in_r_hand(src)
-				if("l_hand")
-					M.u_equip(src)
-					M.put_in_l_hand(src)
+			for(var/datum/hand/H in usr.list_hands)
+				if(over_object.name in H.connect_organ_names)
+					usr.u_equip(src)
+					usr.put_in_active_hand(src, H)
 			add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
@@ -158,7 +155,7 @@ var/global/photo_count = 0
 			user << "<span class='notice'>[src] still has some film in it!</span>"
 			return
 		user << "<span class='notice'>You insert [I] into [src].</span>"
-		user.drop_item()
+		user.drop_active_hand()
 		del(I)
 		pictures_left = pictures_max
 		return
@@ -219,13 +216,12 @@ var/global/photo_count = 0
 	for(var/mob/living/carbon/A in the_turf)
 		if(A.invisibility) continue
 		var/holding = null
-		if(A.l_hand || A.r_hand)
-			if(A.l_hand) holding = "They are holding \a [A.l_hand]"
-			if(A.r_hand)
-				if(holding)
-					holding += " and \a [A.r_hand]"
+		for(var/datum/hand/H in A.list_hands)
+			if(H.item_in_hand)
+				if(!holding)
+					holding = "They are holding \a [H.item_in_hand]"
 				else
-					holding = "They are holding \a [A.r_hand]"
+					holding += " and \a [H.item_in_hand]"
 
 		if(!mob_detail)
 			mob_detail = "You can see [A] on the photo[A:health < 75 ? " - [A] looks hurt":""].[holding ? " [holding]":"."]. "
@@ -304,8 +300,8 @@ var/global/photo_count = 0
 
 /obj/item/device/camera/proc/printpicture(mob/user, obj/item/weapon/photo/p)
 	p.loc = user.loc
-	if(!user.get_inactive_hand())
-		user.put_in_inactive_hand(p)
+	if(user.free_hand())
+		user.put_in_free_hand(p)
 
 /obj/item/weapon/photo/proc/copy(var/copy_id = 0)
 	var/obj/item/weapon/photo/p = new/obj/item/weapon/photo()

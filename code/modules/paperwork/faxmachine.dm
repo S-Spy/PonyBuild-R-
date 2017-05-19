@@ -115,7 +115,7 @@ var/list/adminfaxes = list()	//cache for faxes that have been sent to admins
 		else
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
-				usr.drop_item()
+				usr.drop_active_hand()
 				I.loc = src
 				scan = I
 		authenticated = 0

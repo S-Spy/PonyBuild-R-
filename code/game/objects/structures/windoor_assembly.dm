@@ -34,7 +34,7 @@ obj/structure/windoor_assembly/New(Loc, start_dir=NORTH, constructed=0)
 			set_dir(start_dir)
 		else //If the user is facing northeast. northwest, southeast, southwest or north, default to north
 			set_dir(NORTH)
-	
+
 	update_nearby_tiles(need_rebuild=1)
 
 obj/structure/windoor_assembly/Del()
@@ -171,7 +171,7 @@ obj/structure/windoor_assembly/Del()
 				if(do_after(user, 40))
 					if(!src) return
 
-					user.drop_item()
+					user.drop_active_hand()
 					W.loc = src
 					user << "\blue You've installed the airlock electronics!"
 					src.name = "Near finished Windoor Assembly"

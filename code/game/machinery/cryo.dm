@@ -173,7 +173,7 @@
 			return
 
 		beaker =  G
-		user.drop_item()
+		user.drop_active_hand()
 		G.loc = src
 		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
 	else if(istype(G, /obj/item/weapon/grab))

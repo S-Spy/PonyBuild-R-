@@ -104,7 +104,7 @@
 /obj/machinery/photocopier/attackby(obj/item/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
 		if(!copyitem)
-			user.drop_item()
+			user.drop_active_hand()
 			copyitem = O
 			O.loc = src
 			user << "<span class='notice'>You insert \the [O] into \the [src].</span>"
@@ -114,7 +114,7 @@
 			user << "<span class='notice'>There is already something in \the [src].</span>"
 	else if(istype(O, /obj/item/device/toner))
 		if(toner <= 10) //allow replacing when low toner is affecting the print darkness
-			user.drop_item()
+			user.drop_active_hand()
 			user << "<span class='notice'>You insert the toner cartridge into \the [src].</span>"
 			var/obj/item/device/toner/T = O
 			toner += T.toner_amount

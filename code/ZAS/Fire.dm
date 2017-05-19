@@ -330,8 +330,12 @@ datum/gas_mixture/proc/calculate_firelevel(obj/effect/decal/cleanable/liquid_fue
 	//Get heat transfer coefficients for clothing.
 
 	for(var/obj/item/clothing/C in src)
-		if(l_hand == C || r_hand == C)
-			continue
+		var/has_clothing
+		for(var/datum/hand/H in list_hands)
+			if(H.item_in_hand == C)
+				has_clothing = 1
+				break
+		if(has_clothing)	continue
 
 		if( C.max_heat_protection_temperature >= last_temperature )
 			if(C.body_parts_covered & HEAD)

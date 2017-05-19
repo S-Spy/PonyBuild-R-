@@ -21,7 +21,7 @@
 	if (can_hang && !coat)
 		user.visible_message("[user] hangs [W] on \the [src].", "You hang [W] on the \the [src]")
 		coat = W
-		user.drop_item(src)
+		user.drop_active_hand(src)
 		coat.loc = src
 		update_icon()
 	else

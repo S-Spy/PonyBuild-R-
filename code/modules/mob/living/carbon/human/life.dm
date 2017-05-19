@@ -102,6 +102,8 @@
 
 		handle_medical_side_effects()
 
+		update_happiness()
+
 	handle_stasis_bag()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
@@ -188,7 +190,7 @@
 				make_jittery(1000)
 		if (disabilities & COUGHING)
 			if ((prob(5) && paralysis <= 1))
-				drop_item()
+				drop_active_hand()
 				spawn( 0 )
 					emote("cough")
 					return
@@ -238,7 +240,7 @@
 			if(getBrainLoss() >= 35)
 				if(7 <= rn && rn <= 9) if(hand && equipped())
 					src << "\red Your hand won't respond properly, you drop what you're holding."
-					drop_item()
+					drop_active_hand()
 			if(getBrainLoss() >= 50)
 				if(10 <= rn && rn <= 12) if(!lying)
 					src << "\red Your legs won't respond properly, you fall down."

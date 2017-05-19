@@ -14,7 +14,7 @@
 	var/max_w_class = 3                                 // Hopper intake size.
 	var/max_combined_w_class = 20                       // Total internal storage size.
 	var/obj/item/weapon/tank/tank = null                // Tank of gas for use in firing the cannon.
-	
+
 	var/obj/item/weapon/storage/item_storage
 	var/pressure_setting = 10                           // Percentage of the gas in the tank used to fire the projectile.
 	var/possible_pressure_amounts = list(5,10,20,25,50) // Possible pressure settings.
@@ -42,7 +42,7 @@
 	if(!tank)
 		user << "There's no tank in [src]."
 		return
-	
+
 	user << "You twist the valve and pop the tank out of [src]."
 	user.put_in_hands(tank)
 	tank = null
@@ -58,7 +58,7 @@
 		user << "There is nothing to remove in \the [src]."
 
 /obj/item/weapon/gun/launcher/pneumatic/attack_hand(mob/user as mob)
-	if(user.get_inactive_hand() == src)
+	if(user.item_in_hands(src, user.list_hands-user.hand))
 		unload_hopper(user)
 	else
 		return ..()
@@ -82,13 +82,13 @@
 		user << "There is no gas tank in [src]!"
 		return null
 
-	var/environment_pressure = 10 
+	var/environment_pressure = 10
 	var/turf/T = get_turf(src)
 	if(T)
 		var/datum/gas_mixture/environment = T.return_air()
 		if(environment)
 			environment_pressure = environment.return_pressure()
-	
+
 	fire_pressure = (tank.air_contents.return_pressure() - environment_pressure)*pressure_setting/100
 	if(fire_pressure < 10)
 		user << "There isn't enough gas in the tank to fire [src]."
@@ -118,7 +118,7 @@
 	if(tank)
 		var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)
 		var/datum/gas_mixture/removed = tank.air_contents.remove(lost_gas_amount)
-		
+
 		var/turf/T = get_turf(src.loc)
 		if(T) T.assume_air(removed)
 	..()
@@ -133,8 +133,8 @@
 
 	if (ismob(src.loc))
 		var/mob/M = src.loc
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
+		M.update_inv_hands()
+		M.update_inv_hands()
 
 //Constructable pneumatic cannon.
 

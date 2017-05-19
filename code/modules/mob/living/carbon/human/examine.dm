@@ -112,19 +112,13 @@
 		else
 			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
 
-	//left hand
-	if(l_hand)
-		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] [(l_hand.blood_color != "#030303") ? "blood" : "oil"]-stained [l_hand.name] in [t_his] left hand!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding \icon[l_hand] \a [l_hand] in [t_his] left hand.\n"
-
-	//right hand
-	if(r_hand)
-		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] [(r_hand.blood_color != "#030303") ? "blood" : "oil"]-stained [r_hand.name] in [t_his] right hand!</span>\n"
-		else
-			msg += "[t_He] [t_is] holding \icon[r_hand] \a [r_hand] in [t_his] right hand.\n"
+	//hands
+	for(var/datum/hand/H in list_hands)
+		if(H.item_in_hand)
+			if(H.item_in_hand.blood_DNA)
+				msg += "<span class='warning'>[t_He] [t_is] holding \icon[H.item_in_hand] [H.item_in_hand.gender==PLURAL?"some":"a"] [(H.item_in_hand.blood_color != "#030303") ? "blood" : "oil"]-stained [H.item_in_hand.name] in [t_his] left hand!</span>\n"
+			else
+				msg += "[t_He] [t_is] holding \icon[H.item_in_hand] \a [H.item_in_hand] in [t_his] left hand.\n"
 
 	//gloves
 	if(gloves && !skipgloves)

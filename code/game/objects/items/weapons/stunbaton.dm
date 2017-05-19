@@ -63,7 +63,7 @@
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/cell))
 		if(!bcell)
-			user.drop_item()
+			user.drop_active_hand()
 			W.loc = src
 			bcell = W
 			user << "<span class='notice'>You install a cell in [src].</span>"
@@ -113,7 +113,7 @@
 	var/stun = stunforce
 	var/mob/living/L = M
 
-	var/target_zone = check_zone(user.zone_sel.selecting)
+	var/target_zone = check_zone(user.zone_sel.selecting.name)
 	if(user.a_intent == "hurt")
 		if (!..())	//item/attack() does it's own messaging and logs
 			return 0	// item/attack() will return 1 if they hit, 0 if they missed.
@@ -127,7 +127,7 @@
 			L.lastattacker = user
 
 			if (user != L) // Attacking yourself can't miss
-				target_zone = get_zone_with_miss_chance(user.zone_sel.selecting, L)
+				target_zone = get_zone_with_miss_chance(user.zone_sel.selecting.name, L)
 
 			if(!target_zone)
 				L.visible_message("\red <B>[user] misses [L] with \the [src]!")

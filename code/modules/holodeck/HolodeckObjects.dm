@@ -241,8 +241,8 @@
 
 	if(istype(user,/mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = user
-		H.update_inv_l_hand()
-		H.update_inv_r_hand()
+		H.update_inv_hands()
+		H.update_inv_hands()
 
 	add_fingerprint(user)
 	return
@@ -278,7 +278,7 @@
 		del(W)
 		return
 	else if (istype(W, /obj/item) && get_dist(src,user)<2)
-		user.drop_item(src)
+		user.drop_active_hand(src)
 		visible_message("<span class='notice'>[user] dunks [W] into the [src]!</span>", 3)
 		return
 

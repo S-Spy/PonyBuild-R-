@@ -13,7 +13,7 @@
 		var/mob/living/carbon/C = user
 		if(!container)
 			container = I
-			C.drop_item()
+			C.drop_active_hand()
 			I.loc = src
 		return
 	if(istype(I,/obj/item/weapon/virusdish))

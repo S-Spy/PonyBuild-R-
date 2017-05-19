@@ -58,7 +58,11 @@
 			RG.add_to_stacks(user)
 			var/obj/item/stack/sheet/glass/G = src
 			src = null
-			var/replace = (user.get_inactive_hand()==G)
+			var/replace = FALSE
+			for(var/datum/hand/H in user.list_hands-user.hand)
+				if(H.item_in_hand == G)
+					replace = TRUE
+					break
 			V.use(1)
 			G.use(1)
 			if (!G && replace)
@@ -185,7 +189,11 @@
 		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
-		var/replace = (user.get_inactive_hand()==G)
+		var/replace = 0
+		for(var/datum/hand/H in user.list_hands-user.hand)
+			if(H.item_in_hand == G)
+				replace = 1
+				break
 		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)

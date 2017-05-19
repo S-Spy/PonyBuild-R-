@@ -438,8 +438,8 @@
 	update_icon()
 	if (ismob(src.loc))
 		var/mob/M = src.loc
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
+		M.update_inv_hands()
+		M.update_inv_hands()
 
 /obj/item/weapon/gun/projectile/chameleon/verb/change(picked in gun_choices)
 	set name = "Change Gun Appearance"
@@ -463,5 +463,5 @@
 	//so our overlays update.
 	if (ismob(src.loc))
 		var/mob/M = src.loc
-		M.update_inv_r_hand()
-		M.update_inv_l_hand()
+		M.update_inv_hands()
+		M.update_inv_hands()

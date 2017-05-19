@@ -14,7 +14,7 @@
 		if(held_container)
 			user << "\red You must remove the [held_container] first."
 		else
-			user.drop_item(src)
+			user.drop_active_hand(src)
 			held_container = W
 			held_container.loc = src
 			user << "\blue You put the [held_container] onto the [src]."
@@ -25,7 +25,7 @@
 					try_heating()
 	else
 		user << "\red You can't put the [W] onto the [src]."
-        
+
 /obj/machinery/bunsen_burner/attack_ai()
     return
 

@@ -68,10 +68,8 @@
 /obj/item/proc/update_held_icon()
 	if(ismob(src.loc))
 		var/mob/M = src.loc
-		if(M.l_hand == src)
-			M.update_inv_l_hand()
-		if(M.r_hand == src)
-			M.update_inv_r_hand()
+		if(M.item_in_hands(src))
+			M.update_inv_hands()
 
 /obj/item/ex_act(severity)
 	switch(severity)
@@ -254,15 +252,19 @@
 		if(H.species && !(slot in mob_equip))
 			return 0
 
+		//for(var/datum/hand/H in list_hands)
+
+
+
 		switch(slot)
-			if(slot_l_hand)
+			/*if(slot_l_hand)
 				if(H.l_hand)
 					return 0
 				return 1
 			if(slot_r_hand)
 				if(H.r_hand)
 					return 0
-				return 1
+				return 1*/
 			if(slot_wear_mask)
 				if(H.wear_mask)
 					return 0
@@ -433,7 +435,7 @@
 	else if(ismonkey(M))
 		//START MONKEY
 		var/mob/living/carbon/monkey/MO = M
-		switch(slot)
+		switch(slot)/*
 			if(slot_l_hand)
 				if(MO.l_hand)
 					return 0
@@ -441,7 +443,7 @@
 			if(slot_r_hand)
 				if(MO.r_hand)
 					return 0
-				return 1
+				return 1*/
 			if(slot_wear_mask)
 				if(MO.wear_mask)
 					return 0
@@ -477,11 +479,8 @@
 	if(src.anchored) //Object isn't anchored
 		usr << "\red You can't pick that up!"
 		return
-	if(!usr.hand && usr.r_hand) //Right hand is not full
-		usr << "\red Your right hand is full."
-		return
-	if(usr.hand && usr.l_hand) //Left hand is not full
-		usr << "\red Your left hand is full."
+	if(usr.hand.item_in_hand)
+		usr << "\red Your [usr.hand.item_in_hand] is full."
 		return
 	if(!istype(src.loc, /turf)) //Object is on a turf
 		usr << "\red You can't pick that up!"
@@ -569,7 +568,7 @@
 			if(prob(50))
 				if(M.stat != 2)
 					M << "\red You drop what you're holding and clutch at your eyes!"
-					M.drop_item()
+					M.drop_active_hand()
 				M.eye_blurry += 10
 				M.Paralyse(1)
 				M.Weaken(4)

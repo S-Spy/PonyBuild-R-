@@ -52,7 +52,7 @@
 		if(!C.get_active_hand())
 			usr << "\red You have nothing to drop in your hand."
 			return
-		drop_item()
+		drop_active_hand()
 	else
 		usr << "\red This mob type cannot drop items."
 	return
@@ -68,11 +68,11 @@
 
 /client/verb/swap_hand()
 	set hidden = 1
-	if(istype(mob, /mob/living/carbon))
-		mob:swap_hand()
 	if(istype(mob,/mob/living/silicon/robot))
-		var/mob/living/silicon/robot/R = mob
-		R.cycle_modules()
+		mob:cycle_modules()
+	else
+		mob:swap_hand()
+
 	return
 
 
@@ -94,7 +94,7 @@
 		return
 
 
-/client/verb/drop_item()
+/client/verb/drop_active_hand()
 	set hidden = 1
 	if(!isrobot(mob))
 		mob.drop_item_v()
@@ -353,7 +353,7 @@
 ///Called by client/Move()
 ///Checks to see if you are grabbing anything and if moving will affect your grab.
 /client/proc/Process_Grab()
-	for(var/obj/item/weapon/grab/G in list(mob.l_hand, mob.r_hand))
+	for(var/obj/item/weapon/grab/G in mob.list_items_in_hands())
 		if(G.state == GRAB_KILL) //no wandering across the station/asteroid while choking someone
 			mob.visible_message("<span class='warning'>[mob] lost \his tight grip on [G.affecting]'s neck!</span>")
 			G.hud.icon_state = "disarm/kill"

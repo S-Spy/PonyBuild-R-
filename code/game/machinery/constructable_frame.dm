@@ -61,7 +61,7 @@
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						user << "\blue You add the circuit board to the frame."
 						circuit = P
-						user.drop_item()
+						user.drop_active_hand()
 						P.loc = src
 						icon_state = "box_2"
 						state = 3
@@ -147,7 +147,7 @@
 											req_components[I] -= camt
 											update_desc()
 											break
-									user.drop_item()
+									user.drop_active_hand()
 									P.loc = src
 									components += P
 									req_components[I]--

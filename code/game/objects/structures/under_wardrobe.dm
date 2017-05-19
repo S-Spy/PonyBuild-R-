@@ -8,7 +8,7 @@
 /obj/structure/undies_wardrobe/attack_hand(mob/user as mob)
 	src.add_fingerprint(user)
 	/*var/mob/living/carbon/pony/H = user
-	if(!ispony(user) || (H.species && !(H.species.flags & HAS_pony_tail)))
+	if(!ispony(user) || (H.species && !(H.species.flags & HAS_HORN)))
 		user << "<span class='warning'>Sadly there's nothing in here for you to wear.</span>"
 		return 0
 

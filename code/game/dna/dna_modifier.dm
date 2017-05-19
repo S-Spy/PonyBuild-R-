@@ -124,7 +124,7 @@
 			return
 
 		beaker = item
-		user.drop_item()
+		user.drop_active_hand()
 		item.loc = src
 		user.visible_message("[user] adds \a [item] to \the [src]!", "You add \a [item] to \the [src]!")
 		return
@@ -244,7 +244,7 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I as obj, mob/user as mob)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!src.disk)
-			user.drop_item()
+			user.drop_active_hand()
 			I.loc = src
 			src.disk = I
 			user << "You insert [I]."

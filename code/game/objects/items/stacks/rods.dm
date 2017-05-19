@@ -38,7 +38,7 @@
 				M.show_message("\red [src] is shaped into metal by [user.name] with the weldingtool.", 3, "\red You hear welding.", 2)
 			var/obj/item/stack/rods/R = src
 			src = null
-			var/replace = (user.get_inactive_hand()==R)
+			var/replace = (user.item_in_hands(R, user.list_hands-user.hand))
 			R.use(2)
 			if (!R && replace)
 				user.put_in_hands(new_item)

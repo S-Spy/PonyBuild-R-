@@ -41,7 +41,7 @@
 					src.imp.implanted = 1
 					if (ispony(M))
 						var/mob/living/carbon/pony/H = M
-						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting)
+						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting.name)
 						affected.implants += src.imp
 						imp.part = affected
 

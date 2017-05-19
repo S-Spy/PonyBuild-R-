@@ -262,7 +262,7 @@
 						I.icon_state = "evidenceobj"
 					else
 						scanning = I
-						M.drop_item()
+						M.drop_active_hand()
 						I.loc = src
 				else
 					usr << "<spawn class='warning'>Invalid object, rejected.</span>"
@@ -276,7 +276,7 @@
 			var/obj/item/I = M.get_active_hand()
 			if(istype(I, /obj/item/weapon/f_card))
 				if(process_card(I))
-					M.drop_item()
+					M.drop_active_hand()
 					del(I)
 			else
 				usr << "<spawn class='warning'>Invalid fingerprint card, rejected.</span>"

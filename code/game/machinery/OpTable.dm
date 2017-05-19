@@ -66,7 +66,7 @@
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	user.drop_item()
+	user.drop_active_hand()
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))
 	return

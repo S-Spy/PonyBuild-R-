@@ -21,6 +21,8 @@
  * Text sanitization
  */
 
+
+
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)
 	var/list/strip_chars = list("<",">")
@@ -30,7 +32,7 @@
 		while(index)
 			t = copytext(t, 1, index) + copytext(t, index+1)
 			index = findtext(t, char)
-	return t
+	return fix_255(t)
 
 /*
 proc/sanitize_russian(var/msg)
@@ -41,24 +43,29 @@ proc/sanitize_russian(var/msg)
 	return msg
 */
 
+proc/fix_255(var/text)
+	return replacetext(text, "ÿ", "&#255;")
+
 //Removes a few problematic characters
-/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="#","\t"="#","ÿ"="ß"))
+/proc/sanitize_simple(var/t,var/list/repl_chars = list("\n"="","\t"="", "ÿ"="&#255;") )
 	for(var/char in repl_chars)
 		t = replacetext(t, char, repl_chars[char])
+	//t = readd_quotes(t)
 	return t
 
 /proc/readd_quotes(var/t)
-	var/list/repl_chars = list("&#34;" = "\"")
+	var/list/repl_chars = list("&#34;" = "\"", "&#255;" = "ÿ")
 	for(var/char in repl_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
-			index = findtext(t, char)
-	return t
+		t = replacetext(t, char, repl_chars[char])
+	return fix_255(t)
 
 //Runs byond's sanitization proc along-side sanitize_simple
 /proc/sanitize(var/t,var/list/repl_chars = null)
-	return html_encode(sanitize_simple(t,repl_chars))
+	t = html_encode(sanitize_simple(t,repl_chars))
+	t = replacetext(t, "&amp;#255;", "&#255;")
+	t = replacetext(t, "&#39;", "'")
+	t = replacetext(t, "&#34;", "\"")
+	return t
 
 //Runs sanitize and strip_html_simple
 //I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()

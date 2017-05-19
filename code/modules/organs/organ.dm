@@ -23,15 +23,11 @@
 /datum/organ/proc/handle_antibiotics()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
 
-	if (!germ_level || antibiotics < 5)
-		return
+	if (!germ_level || antibiotics < 5)			return
 
-	if (germ_level < INFECTION_LEVEL_ONE)
-		germ_level = 0	//cure instantly
-	else if (germ_level < INFECTION_LEVEL_TWO)
-		germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
-	else
-		germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
+	if (germ_level < INFECTION_LEVEL_ONE)		germ_level = 0	//cure instantly
+	else if (germ_level < INFECTION_LEVEL_TWO)	germ_level -= 6	//at germ_level == 500, this should cure the infection in a minute
+	else										germ_level -= 2 //at germ_level == 1000, this will cure the infection in 5 minutes
 
 //Handles chem traces
 /mob/living/carbon/pony/proc/handle_trace_chems()
@@ -52,9 +48,9 @@
 	W.damage += damage
 	W.time_inflicted = world.time
 
-/mob/living/carbon/pony/var/list/organs = list()
-/mob/living/carbon/pony/var/list/organs_by_name = list() // map organ names to organs
-/mob/living/carbon/pony/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
+/mob/var/list/organs = list()
+/mob/var/list/organs_by_name = list() // map organ names to organs
+/mob/var/list/internal_organs_by_name = list() // so internal organs have less ickiness too
 
 // Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/pony/proc/handle_organs()
@@ -77,12 +73,10 @@
 	//losing a limb stops it from processing, so this has to be done separately
 	handle_stance()
 
-	if(!force_process && !bad_external_organs.len)
-		return
+	if(!force_process && !bad_external_organs.len)		return
 
 	for(var/datum/organ/external/E in bad_external_organs)
-		if(!E)
-			continue
+		if(!E)		continue
 		if(!E.need_process())
 			bad_external_organs -= E
 			continue
@@ -98,22 +92,18 @@
 					I.take_damage(rand(3,5))
 
 				//Moving makes open wounds get infected much faster
-				if (E.wounds.len)
-					for(var/datum/wound/W in E.wounds)
-						if (W.infection_check())
-							W.germ_level += 1
+				if(E.wounds.len)	for(var/datum/wound/W in E.wounds)
+					if(W.infection_check())		W.germ_level += 1
 
 /mob/living/carbon/pony/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
-	if (!stance_damage && (lying || resting) && (life_tick % 4) == 0)
-		return
+	if (!stance_damage && (lying || resting) && (life_tick % 4) == 0)	return
 
 	stance_damage = 0
 
 	// Buckled to a bed/chair. Stance damage is forced to 0 since they're sitting on something solid
-	if (istype(buckled, /obj/structure/bed))
-		return
+	if (istype(buckled, /obj/structure/bed))	return
 
 	for (var/organ in list("l_leg","l_foot","r_leg","r_foot"))
 		var/datum/organ/external/E = organs_by_name[organ]
@@ -125,15 +115,13 @@
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
 	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
-	if (istype(l_hand, /obj/item/weapon/cane))
-		stance_damage -= 2
-	if (istype(l_hand, /obj/item/weapon/cane))
-		stance_damage -= 2
+	for(var/datum/hand/H in list_hands)
+		if(istype(H.item_in_hand, /obj/item/weapon/cane))
+			stance_damage -= 2
 
 	// standing is poor
 	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
 		if(!(lying || resting))
-			if(species && !(species.flags & NO_PAIN))
-				emote("scream")
+			if(species && !(species.flags & NO_PAIN))	emote("scream")
 			custom_emote(1, "collapses!")
 		Weaken(5) //can't emote while weakened, apparently.

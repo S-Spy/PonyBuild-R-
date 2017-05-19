@@ -143,7 +143,7 @@
 			if(cell)
 				user << "There is a [cell] already installed here."
 			else
-				user.drop_item()
+				user.drop_active_hand()
 				W.loc = src
 				cell = W
 				user << "You insert the [cell]."

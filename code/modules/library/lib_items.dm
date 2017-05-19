@@ -27,7 +27,7 @@
 
 /obj/structure/bookcase/attackby(obj/O as obj, mob/user as mob)
 	if(istype(O, /obj/item/weapon/book))
-		user.drop_item()
+		user.drop_active_hand()
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
@@ -156,7 +156,7 @@
 	if(carved)
 		if(!store)
 			if(W.w_class < 3)
-				user.drop_item()
+				user.drop_active_hand()
 				W.loc = src
 				store = W
 				user << "<span class='notice'>You put [W] in [title].</span>"
@@ -237,7 +237,7 @@
 		..()
 
 /obj/item/weapon/book/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(user.zone_sel.selecting == "eyes")
+	if(user.zone_sel.selecting.name == "eyes")
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
 		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")

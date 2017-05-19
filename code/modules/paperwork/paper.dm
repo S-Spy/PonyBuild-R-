@@ -128,12 +128,12 @@
 	return
 
 /obj/item/weapon/paper/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
-	if(user.zone_sel.selecting == "eyes")
+	if(user.zone_sel.selecting.name == "eyes")
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
 		M.examinate(src)
 
-	else if(user.zone_sel.selecting == "mouth") // lipstick wiping
+	else if(user.zone_sel.selecting.name == "mouth") // lipstick wiping
 		if(ispony(M))
 			var/mob/living/carbon/pony/H = M
 			if(H == user)
@@ -316,8 +316,10 @@
 				user.visible_message("[class][user] burns right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.", \
 				"[class]You burn right through \the [src], turning it to ash. It flutters through the air before settling on the floor in a heap.")
 
-				if(user.get_inactive_hand() == src)
-					user.drop_from_inventory(src)
+				for(var/datum/hand/H in user.list_hands-user.hand)
+					if(H.item_in_hand == src)
+						user.drop_from_inventory(src)
+						break
 
 				new /obj/effect/decal/cleanable/ash(src.loc)
 				del(src)
@@ -417,31 +419,34 @@
 		user.drop_from_inventory(P)
 		if (istype(user, /mob/living/carbon/pony))
 			var/mob/living/carbon/pony/h_user = user
-			if (h_user.r_hand == src)
-				h_user.drop_from_inventory(src)
-				h_user.put_in_r_hand(B)
-			else if (h_user.l_hand == src)
-				h_user.drop_from_inventory(src)
-				h_user.put_in_l_hand(B)
-			else if (h_user.l_store == src)
-				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = 20
-				h_user.l_store = B
-				h_user.update_inv_pockets()
-			else if (h_user.r_store == src)
-				h_user.drop_from_inventory(src)
-				B.loc = h_user
-				B.layer = 20
-				h_user.r_store = B
-				h_user.update_inv_pockets()
-			else if (h_user.head == src)
-				h_user.u_equip(src)
-				h_user.put_in_hands(B)
-			else if (!istype(src.loc, /turf))
-				src.loc = get_turf(h_user)
-				if(h_user.client)	h_user.client.screen -= src
-				h_user.put_in_hands(B)
+			var/has_active_item
+			for(var/datum/hand/H in usr.list_hands)
+				if(H.item_in_hand == src)
+					h_user.drop_from_inventory(src)
+					usr.put_in_active_hand(src, H)
+					has_active_item = 1
+					break
+
+			if(!has_active_item)
+				if (h_user.l_store == src)
+					h_user.drop_from_inventory(src)
+					B.loc = h_user
+					B.layer = 20
+					h_user.l_store = B
+					h_user.update_inv_pockets()
+				else if (h_user.r_store == src)
+					h_user.drop_from_inventory(src)
+					B.loc = h_user
+					B.layer = 20
+					h_user.r_store = B
+					h_user.update_inv_pockets()
+				else if (h_user.head == src)
+					h_user.u_equip(src)
+					h_user.put_in_hands(B)
+				else if (!istype(src.loc, /turf))
+					src.loc = get_turf(h_user)
+					if(h_user.client)	h_user.client.screen -= src
+					h_user.put_in_hands(B)
 		user << "<span class='notice'>You clip the [P.name] to [(src.name == "paper") ? "the paper" : src.name].</span>"
 		src.loc = B
 		P.loc = B

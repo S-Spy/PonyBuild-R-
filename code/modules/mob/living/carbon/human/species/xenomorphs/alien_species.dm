@@ -281,23 +281,22 @@
 		H.name = H.real_name
 
 /datum/hud_data/alien
-
 	icon = 'icons/mob/screen1_alien.dmi'
-	has_a_intent =  1
-	has_m_intent =  1
-	has_warnings =  1
-	has_hands =     1
-	has_drop =      1
-	has_throw =     1
-	has_resist =    1
-	has_pressure =  0
-	has_nutrition = 0
-	has_bodytemp =  0
-	has_internals = 0
 
-	gear = list(
-		"o_clothing" =   list("loc" = ui_belt,      "slot" = slot_wear_suit, "state" = "equip",  "dir" = SOUTH),
-		"head" =         list("loc" = ui_id,        "slot" = slot_head,      "state" = "hair"),
-		"storage1" =     list("loc" = ui_storage1,  "slot" = slot_l_store,   "state" = "pocket"),
-		"storage2" =     list("loc" = ui_storage2,  "slot" = slot_r_store,   "state" = "pocket"),
+	adding_gear = list(//Полный контроль. "Руки" вставляются через другую функцию
+		"o_clothing"    =  list("type"=/obj/screen/inventory,"loc" = ui_oclothing, 	"slot" = slot_wear_suit, "state" = "equip",  "dir" = SOUTH,	"toggle" = 1),
+		"head" 		    =  list("type"=/obj/screen/inventory,"loc" = ui_head,      	"slot" = slot_head,      "state" = "hair",   				"toggle" = 1),
+		"storage1" 		=  list("type"=/obj/screen/inventory,"loc" = ui_storage1,  	"slot" = slot_l_store,   "state" = "pocket"								),
+		"storage2"		=  list("type"=/obj/screen/inventory,"loc" = ui_storage2,  	"slot" = slot_r_store,   "state" = "pocket"								),
+		"hand_"			=  list("type"=/obj/screen/inventory,"loc" = ui_swaphand1, 						     "state" = "hand1",  "dir" = SOUTH				),
+		"_hand"			=  list("type"=/obj/screen/inventory,"loc" = ui_swaphand2,  					     "state" = "hand2"								)
 		)
+
+	hud_add = list(
+		"throw"			=  list("loc" = ui_drop_throw, 	"state" = "act_throw_off"),
+		"pull"			=  list("loc" = ui_pull_resist, "state" = "pull0" 		 ),
+		"toxin"			=  list("loc" = ui_toxin,	 	"state" = "tox0" 		 ),
+		"fire"			=  list("loc" = ui_fire, 		"state" = "fire0" 		 ),
+		"health"		=  list("loc" = ui_health, 		"state" = "health0" 	 ),
+		"damage zone"	=  list("type"=/obj/screen/zone, "loc" = ui_nutrition, 	"noicon"= 1, "noname" = 1)
+	)

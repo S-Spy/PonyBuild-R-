@@ -1,0 +1,372 @@
+"aa" = (/turf/space,/area/space)
+"ab" = (/turf/unsimulated/wall{icon = 'icons/turf/space.dmi'; icon_state = "0"; name = "space"},/area/space)
+"ac" = (/obj/structure/flora/tree/dead{tag = "icon-tree4"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree4"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"ad" = (/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"ae" = (/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"af" = (/obj/structure/flora/tree/dead{tag = "icon-tree_winter1"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree_winter1"},/obj/effect/mist,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"ag" = (/obj/effect/mist,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"ah" = (/obj/structure/flora/tree/dead{tag = "icon-tree9"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree9"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"ai" = (/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"aj" = (/obj/structure/table/gamblingtable,/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"ak" = (/obj/item/toy/plushie/spider,/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"al" = (/obj/structure/inflatable,/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"am" = (/obj/structure/flora/tree/dead{tag = "icon-tree8"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree8"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"an" = (/obj/structure/table/woodentable,/obj/item/weapon/banhammer,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"ao" = (/obj/structure/table/gamblingtable,/turf/unsimulated/floor{tag = "icon-bloodfloor_1"; icon_state = "bloodfloor_1"},/area/space)
+"ap" = (/obj/structure/table/gamblingtable,/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-bloodfloor_1"; icon_state = "bloodfloor_1"},/area/space)
+"aq" = (/obj/item/weapon/stool,/turf/space,/area/space)
+"ar" = (/turf/unsimulated/floor{tag = "icon-L6"; icon_state = "L6"},/area/space)
+"as" = (/turf/unsimulated/floor{tag = "icon-L11"; icon_state = "L11"},/area/space)
+"at" = (/turf/unsimulated/floor{tag = "icon-L1"; icon_state = "L1"},/area/space)
+"au" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"av" = (/obj/item/weapon/stool,/obj/structure/plushie/drone,/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"aw" = (/turf/unsimulated/floor{tag = "icon-bloodfloor_1"; icon_state = "bloodfloor_1"},/area/space)
+"ax" = (/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-bloodfloor_1"; icon_state = "bloodfloor_1"},/area/space)
+"ay" = (/obj/item/weapon/stool,/obj/structure/plushie/beepsky,/turf/unsimulated/floor{tag = "icon-bloodfloor_1"; icon_state = "bloodfloor_1"},/area/space)
+"az" = (/obj/item/weapon/stool,/obj/structure/plushie/ian{dir = 4; name = "corgi"},/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"aA" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-bloodfloor_2"; icon_state = "bloodfloor_2"},/area/space)
+"aB" = (/obj/effect/mist,/obj/effect/decal/remains/pony,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"aC" = (/turf/unsimulated/floor{tag = "icon-L14"; icon_state = "L14"},/area/space)
+"aD" = (/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-L14"; icon_state = "L14"},/area/space)
+"aE" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-L3"; icon_state = "L3"},/area/space)
+"aF" = (/turf/unsimulated/wall{tag = "icon-darksandstone"; icon_state = "darksandstone"},/area/space)
+"aG" = (/turf/unsimulated/floor{tag = "icon-dirttograss (NORTH)"; icon_state = "dirttograss"; dir = 1},/area/space)
+"aH" = (/turf/unsimulated/floor{tag = "icon-grasstodirt (SOUTHWEST)"; icon_state = "grasstodirt"; dir = 10},/area/space)
+"aI" = (/obj/item/weapon/inflatable_duck,/turf/unsimulated/floor{tag = "icon-L12"; icon_state = "L12"},/area/space)
+"aJ" = (/turf/unsimulated/floor{tag = "icon-L13"; icon_state = "L13"},/area/space)
+"aK" = (/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-L8"; icon_state = "L8"},/area/space)
+"aL" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-L14"; icon_state = "L14"},/area/space)
+"aM" = (/turf/unsimulated/floor{tag = "icon-1grass"; icon_state = "1grass"},/area/space)
+"aN" = (/turf/unsimulated/floor{tag = "icon-dirttograss (NORTHEAST)"; icon_state = "dirttograss"; dir = 5},/area/space)
+"aO" = (/turf/unsimulated/wall{tag = "icon-bloodwall_2"; icon_state = "bloodwall_2"},/area/space)
+"aP" = (/turf/unsimulated/wall{tag = "icon-bloodwall_3"; icon_state = "bloodwall_3"},/area/space)
+"aQ" = (/turf/unsimulated/wall{tag = "icon-bloodwall_4"; icon_state = "bloodwall_4"},/area/space)
+"aR" = (/turf/unsimulated/wall{tag = "icon-bloodwall_5"; icon_state = "bloodwall_5"},/area/space)
+"aS" = (/obj/structure/inflatable/door,/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"aT" = (/turf/unsimulated/floor{tag = "icon-L7"; icon_state = "L7"},/area/space)
+"aU" = (/turf/unsimulated/floor{tag = "icon-L9"; icon_state = "L9"},/area/space)
+"aV" = (/obj/structure/flora/tree/dead{tag = "icon-cactus"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "cactus"},/turf/unsimulated/floor{tag = "icon-1grass"; icon_state = "1grass"},/area/space)
+"aW" = (/turf/unsimulated/floor{tag = "icon-dirttograss (EAST)"; icon_state = "dirttograss"; dir = 4},/area/space)
+"aX" = (/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"aY" = (/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"aZ" = (/obj/structure/flora/tree/dead{tag = "icon-scarytree2"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "scarytree2"},/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"ba" = (/obj/structure/flora/tree/dead{tag = "icon-scarytree1"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "scarytree1"},/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"bb" = (/turf/unsimulated/floor{tag = "icon-L10"; icon_state = "L10"},/area/space)
+"bc" = (/turf/unsimulated/floor{tag = "icon-L15"; icon_state = "L15"},/area/space)
+"bd" = (/obj/structure/bed/chair{dir = 1},/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"be" = (/obj/item/toy/katana,/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"bf" = (/obj/effect/decal/remains/xeno,/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"bg" = (/obj/effect/mist,/obj/structure/flora/pottedplant,/turf/unsimulated/floor{tag = "icon-lava"; name = "plating"; icon_state = "lava"},/area/space)
+"bh" = (/turf/unsimulated/floor{tag = "icon-L2"; icon_state = "L2"},/area/space)
+"bi" = (/turf/unsimulated/floor{tag = "icon-L12"; icon_state = "L12"},/area/space)
+"bj" = (/obj/structure/flora/tree/dead{tag = "icon-tree12"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree12"},/turf/unsimulated/floor{tag = "icon-1grass"; icon_state = "1grass"},/area/space)
+"bk" = (/obj/structure/bed/chair{dir = 8},/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"bl" = (/obj/structure/AIcore/deactivated,/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"bm" = (/obj/structure/bed/chair{dir = 4},/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"bn" = (/turf/unsimulated/floor{tag = "icon-1"; icon_state = "1"},/turf/unsimulated/floor{tag = "icon-wood_bridge (EAST)"; icon_state = "wood_bridge"; dir = 4},/area/space)
+"bo" = (/obj/structure/table/woodentable,/obj/item/weapon/stool,/turf/unsimulated/floor{tag = "icon-L13"; icon_state = "L13"},/area/space)
+"bp" = (/turf/unsimulated/floor{tag = "icon-dirttograss (SOUTHEAST)"; icon_state = "dirttograss"; dir = 6},/area/space)
+"bq" = (/turf/unsimulated/floor{tag = "icon-grasstodirt (NORTHWEST)"; icon_state = "grasstodirt"; dir = 9},/area/space)
+"br" = (/obj/structure/bed/chair,/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"bs" = (/obj/structure/toilet{dir = 4},/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"bt" = (/obj/effect/decal/remains/pony,/obj/item/toy/cultsword,/turf/unsimulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"bu" = (/turf/unsimulated/floor{tag = "icon-1"; icon_state = "1"},/turf/unsimulated/floor{tag = "icon-wood_bridge"; icon_state = "wood_bridge"},/area/space)
+"bv" = (/obj/structure/table/woodentable,/turf/unsimulated/floor{tag = "icon-L5"; icon_state = "L5"},/area/space)
+"bw" = (/turf/unsimulated/floor{tag = "icon-L16"; icon_state = "L16"},/area/space)
+"bx" = (/turf/unsimulated/floor{tag = "icon-dirttograss (SOUTHWEST)"; icon_state = "dirttograss"; dir = 10},/area/space)
+"by" = (/turf/unsimulated/floor{tag = "icon-dirttograss"; icon_state = "dirttograss"},/area/space)
+"bz" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "smallfence1"; name = "old fence"},/turf/unsimulated/floor{tag = "icon-beach0-0"; icon = 'icons/misc/beach.dmi'; icon_state = "beach0-0"},/area/space)
+"bA" = (/turf/unsimulated/floor{tag = "icon-L8"; icon_state = "L8"},/area/space)
+"bB" = (/turf/unsimulated/floor{tag = "icon-grasstodirt (NORTHEAST)"; icon_state = "grasstodirt"; dir = 5},/area/space)
+"bC" = (/turf/unsimulated/floor{tag = "icon-1"; icon_state = "1"},/area/space)
+"bD" = (/obj/structure/flora/tree/dead{tag = "icon-tree7"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree7"},/turf/unsimulated/floor{tag = "icon-rootfloor_3"; icon_state = "rootfloor_3"},/area/space)
+"bE" = (/turf/unsimulated/floor{tag = "icon-rootfloor_2"; icon_state = "rootfloor_2"},/area/space)
+"bF" = (/obj/structure/holohoop,/turf/unsimulated/floor{tag = "icon-ground2"; icon_state = "ground2"},/area/space)
+"bG" = (/turf/unsimulated/floor{tag = "icon-ground5"; icon_state = "ground5"},/area/space)
+"bH" = (/turf/unsimulated/floor{tag = "icon-rootfloor_1"; icon_state = "rootfloor_1"},/area/space)
+"bI" = (/turf/unsimulated/floor{tag = "icon-ground2"; icon_state = "ground2"},/area/space)
+"bJ" = (/obj/item/toy/nanotrasenballoon,/turf/unsimulated/floor{tag = "icon-ground2"; icon_state = "ground2"},/area/space)
+"bK" = (/turf/simulated/mineral,/area/space)
+"bL" = (/obj/structure/bookcase/manuals/research_and_development{name = "bookcase (Adult)"},/turf/unsimulated/floor{tag = "icon-desert1"; icon = 'icons/misc/beach.dmi'; icon_state = "desert1"},/area/space)
+"bM" = (/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"bN" = (/obj/structure/flora/tree/dead{tag = "icon-tree6"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree6"},/turf/unsimulated/floor{tag = "icon-rootfloor_3"; icon_state = "rootfloor_3"},/area/space)
+"bO" = (/obj/structure/flora/pottedplant{tag = "icon-plant-06"; icon_state = "plant-06"},/turf/unsimulated/floor{tag = "icon-ground2"; icon_state = "ground2"},/area/space)
+"bP" = (/turf/unsimulated/floor{tag = "icon-ground4"; icon_state = "ground4"},/area/space)
+"bQ" = (/obj/item/weapon/beach_ball,/turf/unsimulated/floor{tag = "icon-ground6"; icon_state = "ground6"},/area/space)
+"bR" = (/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"bS" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat2"; name = "old statue"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"bT" = (/turf/unsimulated/floor{tag = "icon-desert4"; icon = 'icons/misc/beach.dmi'; icon_state = "desert4"},/area/space)
+"bU" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat3"; name = "old statue"},/turf/unsimulated/floor{tag = "icon-desert2"; icon = 'icons/misc/beach.dmi'; icon_state = "desert2"},/area/space)
+"bV" = (/turf/unsimulated/floor{tag = "icon-ground1"; icon_state = "ground1"},/area/space)
+"bW" = (/turf/unsimulated/floor{tag = "icon-ground3"; icon_state = "ground3"},/area/space)
+"bX" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/under/swimsuit/red,/obj/item/clothing/under/shorts/red,/obj/item/clothing/head/fez,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"bY" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/under/shorts/grey,/obj/item/clothing/under/swimsuit/purple,/obj/item/clothing/head/pirate,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"bZ" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/head/greenbandana,/obj/item/clothing/under/shorts/green,/obj/item/clothing/under/swimsuit/green,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"ca" = (/turf/unsimulated/floor{tag = "icon-desert3"; icon = 'icons/misc/beach.dmi'; icon_state = "desert3"},/area/space)
+"cb" = (/turf/unsimulated/floor{tag = "icon-grasstodirt (SOUTHEAST)"; icon_state = "grasstodirt"; dir = 6},/area/space)
+"cc" = (/obj/structure/holohoop{dir = 1},/turf/unsimulated/floor{tag = "icon-ground2"; icon_state = "ground2"},/area/space)
+"cd" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/head/collectable/petehat,/obj/item/clothing/under/shorts/blue,/obj/item/clothing/under/swimsuit/blue,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"ce" = (/obj/item/weapon/shovel,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cf" = (/obj/structure/cult/tome,/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cg" = (/turf/unsimulated/floor{tag = "icon-dirttograss (NORTHWEST)"; icon_state = "dirttograss"; dir = 9},/area/space)
+"ch" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/under/swimsuit/black,/obj/item/clothing/under/shorts/black,/obj/item/clothing/head/festive,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"ci" = (/obj/structure/closet/groowe{icon = 'icons/misc/beach.dmi'; icon_closed = "desert"; icon_opened = "desert_dug"; icon_state = "desert"; name = "sand"; opened = 0},/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c1000,/obj/item/weapon/spacecash/c200,/obj/item/weapon/spacecash/c500,/obj/item/weapon/spacecash/c500,/obj/item/weapon/spacecash/c100,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cj" = (/turf/unsimulated/floor{tag = "icon-beach11-12"; icon = 'icons/misc/beach.dmi'; icon_state = "beach11-12"},/area/space)
+"ck" = (/obj/structure/undies_wardrobe,/turf/unsimulated/floor{tag = "icon-desert3"; icon = 'icons/misc/beach.dmi'; icon_state = "desert3"},/area/space)
+"cl" = (/obj/structure/flora/tree/dead{tag = "icon-pine"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "pine"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cm" = (/turf/unsimulated/floor{tag = "icon-desert1"; icon = 'icons/misc/beach.dmi'; icon_state = "desert1"},/area/space)
+"cn" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/unsimulated/floor{tag = "icon-desert2"; icon = 'icons/misc/beach.dmi'; icon_state = "desert2"},/area/space)
+"co" = (/obj/structure/flora/tree/dead{tag = "icon-darkoak"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "darkoak"},/turf/unsimulated/floor{tag = "icon-dirttograss (NORTHWEST)"; icon_state = "dirttograss"; dir = 9},/area/space)
+"cp" = (/obj/structure/flora/tree/dead{tag = "icon-oak-rev"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "oak-rev"},/turf/unsimulated/floor{tag = "icon-dirttograss (SOUTHWEST)"; icon_state = "dirttograss"; dir = 10},/area/space)
+"cq" = (/turf/unsimulated/floor{tag = "icon-greystone"; icon_state = "greystone"},/area/space)
+"cr" = (/obj/machinery/smartfridge,/turf/unsimulated/floor{tag = "icon-greystone"; icon_state = "greystone"},/area/space)
+"cs" = (/obj/structure/sink/puddle,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"ct" = (/obj/structure/flora/tree/dead{icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "palm"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cu" = (/obj/structure/flora/tree/dead{tag = "icon-tree_winter1"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree_winter1"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cv" = (/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/area/space)
+"cw" = (/turf/unsimulated/floor{tag = "icon-dirttograss (WEST)"; icon_state = "dirttograss"; dir = 8},/area/space)
+"cx" = (/obj/item/weapon/caution,/turf/unsimulated/floor{tag = "icon-dirt-dug"; icon_state = "dirt-dug"},/area/space)
+"cy" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/unsimulated/floor{tag = "icon-greystone"; icon_state = "greystone"},/area/space)
+"cz" = (/obj/item/weapon/stool,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cA" = (/obj/structure/table/woodentable,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cB" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/cherrypie,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cC" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cD" = (/obj/machinery/smartfridge/drinks{req_access_txt = null},/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cE" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/muffin,/obj/item/weapon/reagent_containers/food/snacks/muffin,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cF" = (/obj/structure/girder{icon = 'icons/obj/cemetery.dmi'; icon_state = "firepit-a"; name = "firepit"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cG" = (/obj/structure/flora/tree/dead{tag = "icon-darkoak"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "darkoak"},/turf/unsimulated/floor{tag = "icon-dirttograss (SOUTHWEST)"; icon_state = "dirttograss"; dir = 10},/area/space)
+"cH" = (/obj/structure/flora/tree/dead{tag = "icon-darkoak"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "darkoak"},/turf/unsimulated/floor{tag = "icon-1grass"; icon_state = "1grass"},/area/space)
+"cI" = (/obj/machinery/vending/boozeomat{req_access_txt = null},/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cJ" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/taco,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cK" = (/obj/structure/table/woodentable,/obj/item/weapon/bananapeel,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cL" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/sliceable/bananabread,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cM" = (/obj/item/weapon/beach_ball/holoball,/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cN" = (/obj/structure/flora/pottedplant{tag = "icon-plant-10"; icon_state = "plant-10"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"cO" = (/turf/unsimulated/floor{tag = "icon-snow"; icon_state = "snow"},/area/space)
+"cP" = (/obj/structure/table/woodentable,/obj/machinery/microwave,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cQ" = (/obj/effect/overlay/palmtree_l,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cR" = (/turf/unsimulated/floor{tag = "icon-desert0"; icon = 'icons/misc/beach.dmi'; icon_state = "desert0"},/area/space)
+"cS" = (/turf/unsimulated/floor{tag = "icon-desert2"; icon = 'icons/misc/beach.dmi'; icon_state = "desert2"},/area/space)
+"cT" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence1"; name = "old fence"},/turf/unsimulated/floor{tag = "icon-grasstodirt (NORTHEAST)"; icon_state = "grasstodirt"; dir = 5},/area/space)
+"cU" = (/obj/structure/mineral_door/iron,/turf/unsimulated/floor{tag = "icon-dirttograss"; icon_state = "dirttograss"},/area/space)
+"cV" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence1"; name = "old fence"},/turf/unsimulated/floor{tag = "icon-dirttograss"; icon_state = "dirttograss"},/area/space)
+"cW" = (/obj/structure/flora/tree/dead{tag = "icon-tree4"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree4"},/turf/unsimulated/floor{tag = "icon-snow"; icon_state = "snow"},/area/space)
+"cX" = (/turf/simulated/floor{icon_state = "snow"; name = "snow"; tag = "icon-snow"},/area/space)
+"cY" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/dionaroast,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"cZ" = (/obj/structure/table/woodentable,/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/vegetablepizza,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"da" = (/obj/structure/closet,/obj/item/clothing/mask/snorkel,/obj/item/clothing/mask/snorkel,/obj/item/clothing/shoes/swimmingfins,/obj/item/clothing/shoes/swimmingfins,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"db" = (/obj/effect/overlay/coconut,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dc" = (/obj/structure/flora/tree/dead{tag = "icon-cactus"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "cactus"},/turf/unsimulated/floor{tag = "icon-desert"; icon = 'icons/misc/beach.dmi'; icon_state = "desert"},/area/space)
+"dd" = (/obj/structure/flora/tree/dead{icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "palm"},/turf/unsimulated/floor{tag = "icon-snow"; icon_state = "snow"},/area/space)
+"de" = (/obj/structure/flora/tree/dead{tag = "icon-oak"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "oak"},/turf/unsimulated/floor{tag = "icon-snow"; icon_state = "snow"},/area/space)
+"df" = (/obj/structure/closet/crate/freezer,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dg" = (/obj/item/weapon/bananapeel,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dh" = (/turf/simulated/wall{tag = "icon-bloodwall_3"; icon_state = "bloodwall_3"},/area/space)
+"di" = (/obj/structure/flora/tree/dead{tag = "icon-pine-rev"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "pine-rev"},/turf/space,/area/space)
+"dj" = (/obj/structure/flora/tree/dead{tag = "icon-oak"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "oak"},/turf/simulated/floor{icon_state = "snow"; name = "snow"; tag = "icon-snow"},/area/space)
+"dk" = (/turf/simulated/floor/beach/sand{tag = "icon-beachcorner"; icon_state = "beachcorner"; dir = 2},/area/space)
+"dl" = (/turf/simulated/floor/beach/sand{tag = "icon-beach10-8"; icon_state = "beach10-8"},/area/space)
+"dm" = (/obj/structure/bed/chair,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dn" = (/mob/living/simple_animal/crab{desc = "This crab is not Putin. Honesty."; health = 2.14748e+009; name = "Ne Putin chesna"},/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"do" = (/turf/simulated/wall{tag = "icon-bloodwall_2"; icon_state = "bloodwall_2"},/area/space)
+"dp" = (/turf/simulated/wall{tag = "icon-bloodwall_4"; icon_state = "bloodwall_4"},/area/space)
+"dq" = (/turf/simulated/wall{icon = 'icons/turf/walls.dmi'; icon_state = "rockwall"; name = "stone wall"},/area/space)
+"dr" = (/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/turf/unsimulated/floor{tag = "icon-river (NORTHWEST)"; icon_state = "river"; dir = 9},/area/space)
+"ds" = (/turf/unsimulated/floor{tag = "icon-swampgrass"; icon_state = "swampgrass"},/area/space)
+"dt" = (/obj/structure/flora/tree/dead{tag = "icon-pine"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "pine"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"du" = (/obj/structure/flora/tree/dead{tag = "icon-tree2"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree2"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"dv" = (/obj/structure/closet/cabinet,/obj/item/clothing/shoes/sandal,/obj/item/clothing/under/shorts/red,/obj/item/clothing/under/shorts/black,/obj/item/clothing/under/dress/dress_saloon,/obj/item/clothing/suit/poncho/red,/obj/item/clothing/suit/wcoat,/obj/item/clothing/mask/smokable/pipe,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dw" = (/obj/effect/overlay/palmtree_l,/obj/effect/overlay/coconut,/turf/simulated/floor/beach/sand{tag = "icon-desert"; icon_state = "desert"},/area/space)
+"dx" = (/turf/simulated/floor/beach/sand{tag = "icon-beach (SOUTHEAST)"; icon_state = "beach"; dir = 6},/area/space)
+"dy" = (/turf/simulated/floor/beach/sand{tag = "icon-beach11-12"; icon_state = "beach11-12"},/area/space)
+"dz" = (/turf/simulated/floor/beach/sand{tag = "icon-beach"; icon_state = "beach"},/area/space)
+"dA" = (/turf/simulated/wall{tag = "icon-bloodwall_5"; icon_state = "bloodwall_5"},/area/space)
+"dB" = (/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/turf/unsimulated/floor{tag = "icon-river (WEST)"; icon_state = "river"; dir = 8},/area/space)
+"dC" = (/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/turf/unsimulated/floor{tag = "icon-river (SOUTHEAST)"; icon_state = "river"; dir = 6},/area/space)
+"dD" = (/obj/structure/flora/tree/dead{tag = "icon-tree3gl"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "tree3gl"},/turf/unsimulated/floor{tag = "icon-swampgrass"; icon_state = "swampgrass"},/area/space)
+"dE" = (/obj/structure/flora/tree/dead{tag = "icon-tree1gl"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "tree1gl"},/turf/unsimulated/floor{tag = "icon-swampgrass"; icon_state = "swampgrass"},/area/space)
+"dF" = (/obj/structure/plushie/carp{dir = 4; name = "space carp"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"dG" = (/obj/structure/flora/tree/dead{tag = "icon-oak-rev"; icon = 'icons/obj/flora/flora96x128.dmi'; icon_state = "oak-rev"},/turf/unsimulated/floor{tag = "icon-snow"; icon_state = "snow"},/area/space)
+"dH" = (/turf/simulated/floor/beach/water{tag = "icon-beach0-0"; icon_state = "beach0-0"},/turf/simulated/floor/beach/water{alpha = 130; icon_state = "seashallowcut"; layer = 4.1; tag = "icon-seashallowcut"},/area/space)
+"dI" = (/turf/simulated/floor/beach/sand{tag = "icon-beach (SOUTHWEST)"; icon_state = "beach"; dir = 10},/area/space)
+"dJ" = (/turf/unsimulated/floor{tag = "icon-light_on-g"; icon_state = "light_on-g"},/area/space)
+"dK" = (/obj/structure/bed/psych,/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/area/space)
+"dL" = (/turf/simulated/floor/beach/water{tag = "icon-beach0-0"; icon_state = "beach0-0"},/obj/item/weapon/inflatable_duck,/turf/simulated/floor/beach/water{alpha = 130; icon_state = "seashallowcut"; layer = 4.1; tag = "icon-seashallowcut"},/area/space)
+"dM" = (/mob/living/simple_animal/parrot{faction = "pirate"; name = "\improper Pirate Parrot"},/turf/simulated/floor/beach/sand{tag = "icon-desert5"; icon_state = "desert5"},/area/space)
+"dN" = (/obj/item/weapon/reagent_containers/food/snacks/sausage,/turf/simulated/floor/beach/sand{tag = "icon-desert5"; icon_state = "desert5"},/area/space)
+"dO" = (/obj/item/weapon/soap/deluxe,/turf/unsimulated/floor{dir = 1; icon_state = "chapel"},/area/space)
+"dP" = (/turf/unsimulated/floor{dir = 4; icon_state = "chapel"},/area/space)
+"dQ" = (/obj/structure/bed/chair/comfy/brown{dir = 1},/turf/unsimulated/floor{tag = "icon-dirt"; icon_state = "dirt"},/area/space)
+"dR" = (/obj/structure/flora/tree/dead{tag = "icon-nesttree_red"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "nesttree_red"},/turf/unsimulated/floor{tag = "icon-swampgrass"; icon_state = "swampgrass"},/area/space)
+"dS" = (/obj/structure/flora/tree/dead{tag = "icon-tree_winter1"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree_winter1"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"dT" = (/obj/structure/flora/tree/dead{tag = "icon-tree7"; icon = 'icons/obj/flora/flora96.dmi'; icon_state = "tree7"},/turf/unsimulated/floor{tag = "icon-longgrass"; icon_state = "longgrass"},/area/space)
+"dU" = (/obj/effect/decal/cleanable/dirt{alpha = 130; desc = "Water is warm."; icon = 'icons/misc/beach.dmi'; icon_state = "seadeep"; layer = 4.1; name = "water"},/turf/simulated/floor/beach/water{tag = "icon-seadeep"; icon_state = "seadeep"},/area/space)
+"dV" = (/turf/simulated/floor/beach/sand{tag = "icon-desert5"; icon_state = "desert5"},/area/space)
+"dW" = (/mob/living/simple_animal/hostile/pirate,/turf/simulated/floor/beach/sand{tag = "icon-desert5"; icon_state = "desert5"},/area/space)
+"dX" = (/turf/unsimulated/floor{tag = "icon-light_on-r"; icon_state = "light_on-r"},/area/space)
+"dY" = (/turf/unsimulated/floor{dir = 8; icon_state = "chapel"},/area/space)
+"dZ" = (/turf/unsimulated/floor{icon_state = "chapel"},/area/space)
+"ea" = (/obj/item/weapon/spacecash/c1,/turf/unsimulated/floor{tag = "icon-light_on-y"; icon_state = "light_on-y"},/area/space)
+"eb" = (/obj/structure/flora/tree/dead{tag = "icon-tree2gl"; icon = 'icons/obj/flora/flora64.dmi'; icon_state = "tree2gl"},/turf/unsimulated/floor{tag = "icon-swampgrass"; icon_state = "swampgrass"},/area/space)
+"ec" = (/obj/item/weapon/reagent_containers/food/snacks/sausage,/turf/unsimulated/floor{tag = "icon-light_on-p"; icon_state = "light_on-p"},/area/space)
+"ed" = (/turf/simulated/mineral{opacity = 0},/area/space)
+"ee" = (/turf/unsimulated/wall{icon = 'icons/misc/beach.dmi'; icon_state = "seadeep"; name = "water"},/area/space)
+"ef" = (/turf/unsimulated/wall,/area/space)
+"eg" = (/turf/unsimulated/wall{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"; name = "grass"},/area/space)
+"eh" = (/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ei" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence1"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ej" = (/turf/simulated/wall{dir = 8; icon = 'icons/turf/walls.dmi'; icon_state = "rockwall"; name = "stone wall"; tag = "icon-rockwall (WEST)"},/area/space)
+"ek" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence3"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"el" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence2"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"em" = (/obj/structure/tombstone,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"en" = (/turf/simulated/wall{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldwall1"; name = "stone wall"},/area/space)
+"eo" = (/obj/structure/closet/groowe,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ep" = (/obj/effect/landmark/dreams/stranger,/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"eq" = (/obj/structure/lattice{desc = ""; icon = 'icons/obj/cemetery.dmi'; icon_state = "light-pot"; l_color = "#ED9200"; luminosity = 2},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"er" = (/obj/structure/closet{anchored = 1; desc = "Stone box for dead bodies."; icon = 'icons/obj/cemetery.dmi'; icon_closed = "sarcophagus"; icon_opened = "sarcophagus-open"; icon_state = "sarcophagus"; name = "sarcophagus"; open_sound = 'sound/effects/stonedoor_openclose.ogg'},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"es" = (/obj/effect/landmark/dreams/stranger,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"et" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom1"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eu" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"ev" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_2"; name = "stone path"; tag = "icon-rootfloor_2"},/area/space)
+"ew" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom6"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ex" = (/obj/item/toy/spinningtoy{desc = "Yammy!"; icon = 'icons/obj/structures.dmi'; icon_state = "mushroom5"; name = "mushroom"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ey" = (/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"ez" = (/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_1"; name = "stone path"; tag = "icon-rootfloor_1"},/area/space)
+"eA" = (/obj/structure/mineral_door/oldstone,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"eB" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat3"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eC" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "smallfence1"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eD" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "smallfence2"; name = "old fence"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eE" = (/obj/structure/closet/groowe{icon_state = "grooweopen"; name = "pit"; opened = 1},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eF" = (/obj/structure/cultgirder{icon = 'icons/obj/cemetery.dmi'; icon_state = "fence2"; name = "old fence"},/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "greystone"; name = "stone path"},/area/space)
+"eG" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat2"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eH" = (/obj/structure/girder{desc = "Здесь лежит не Путин. Чесна."; icon = 'icons/obj/cemetery.dmi'; icon_state = "tombstone1"; name = "tombstone"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eI" = (/obj/structure/closet/groowe,/mob/living/simple_animal/crab{desc = "This crab is not Putin. Honesty."; health = 2.14748e+009; name = "Ne Putin chesna"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eJ" = (/obj/structure/closet{anchored = 1; desc = "Stone box for dead bodies."; icon = 'icons/obj/cemetery.dmi'; icon_closed = "coffin1"; icon_opened = "coffin1-open"; icon_state = "coffin1"; name = "stone coffin"; open_sound = 'sound/effects/stonedoor_openclose.ogg'},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"eK" = (/obj/structure/boulder{desc = "Old statue mad of stone. It's... spooky."; icon = 'icons/obj/structures.dmi'; icon_state = "stat4"; name = "old statue"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"eL" = (/turf/simulated/wall{tag = "icon-sandstone0"; icon_state = "sandstone0"},/area/space)
+"eM" = (/turf/simulated/floor{tag = "icon-bluefull"; icon_state = "bluefull"},/area/space)
+"eN" = (/turf/simulated/wall{icon = 'icons/turf/walls.dmi'; icon_state = "woodwall"; name = "wood wall"; tag = "icon-woodwall"},/area/space)
+"eO" = (/obj/structure/girder{climbable = 1; icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall3"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eP" = (/obj/structure/mineral_door/wood/oldwood,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eQ" = (/obj/structure/girder{icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall2"; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eR" = (/obj/structure/table/woodentable,/obj/item/ashtray/bronze,/obj/item/weapon/cigbutt,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eS" = (/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eT" = (/obj/structure/girder{desc = "Old fashionable clocks."; icon_state = "ghostclock0"; name = "old clocks"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eU" = (/obj/item/weapon/staff{desc = "Old sawed-off shotgun. It is completely unusable and useless."; icon = 'icons/obj/gun.dmi'; icon_state = "sawnshotgun"; name = "sawed-off shotgun"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eV" = (/obj/effect/decal/remains,/obj/effect/decal/cleanable/blood{desc = "Lumps of brain on the wall. It's dry and crusty."; dryname = "lumps of brain"; layer = 3; name = "lumps of brain"; pixel_x = 30},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"eW" = (/turf/simulated/floor{tag = "icon-alienvault"; icon_state = "alienvault"},/area/space)
+"eX" = (/turf/simulated/floor{tag = "icon-carpet1-0"; icon_state = "carpet1-0"},/area/space)
+"eY" = (/obj/item/trash/candle,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"eZ" = (/obj/item/weapon/flame/candle,/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"fa" = (/obj/structure/table/woodentable,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fb" = (/obj/structure/bed/chair/wood/normal{dir = 8},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fc" = (/obj/item/ammo_casing/shotgun,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fd" = (/obj/structure/closet/cabinet{desc = "It's a... toilet?"; icon = 'icons/obj/cemetery.dmi'; icon_closed = "oldtoilet"; icon_opened = "oldtoilet-open"; icon_state = "oldtoilet"; name = "old toilet"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fe" = (/obj/structure/closet/cabinet,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"ff" = (/obj/structure/table/woodentable,/obj/item/device/flashlight/lamp,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fg" = (/turf/simulated/floor{tag = "icon-bloodfloor_3"; icon_state = "bloodfloor_3"},/area/space)
+"fh" = (/turf/simulated/floor{tag = "icon-carpet0-0"; icon_state = "carpet0-0"},/area/space)
+"fi" = (/obj/effect/landmark/dreams/stranger,/turf/simulated/floor{icon = 'icons/turf/floors.dmi'; icon_state = "rootfloor_2"; name = "stone path"; tag = "icon-rootfloor_2"},/area/space)
+"fj" = (/obj/item/weapon/flame/candle{l_color = "#ED3200"; luminosity = 2},/turf/simulated/floor{icon = 'icons/obj/cemetery.dmi'; icon_state = "oldfloor1"; name = "stone floor"},/area/space)
+"fk" = (/obj/structure/barricade/wooden,/obj/structure/girder{climbable = 0; density = 0; icon = 'icons/obj/doors/door1.dmi'; icon_state = "woodwall4"; layer = 3; name = "wooden wall"},/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fl" = (/obj/structure/bed,/turf/simulated/floor/wood{icon = 'icons/turf/floors.dmi'; icon_state = "wood1"},/area/space)
+"fm" = (/turf/simulated/floor{tag = "icon-carpet-broken"; icon_state = "carpet-broken"},/area/space)
+"fn" = (/obj/structure/closet/coffin,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fo" = (/obj/structure/closet/crate/miningcar{desc = "Old wooden box with wheels. Can be pulled somewhere."; name = "old box"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fp" = (/obj/item/seeds/pumpkinseed,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fq" = (/obj/item/toy/spinningtoy{desc = "OH GOD! IT'S LEVITATING!!!"; icon = 'icons/obj/structures.dmi'; icon_state = "ghostclock01"; name = "hand clocks"},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fr" = (/obj/item/weapon/reagent_containers/glass/bucket{amount_per_transfer_from_this = 50},/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fs" = (/obj/item/weapon/shovel,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"ft" = (/obj/item/weapon/minihoe,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fu" = (/obj/structure/sink/puddle,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fv" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fw" = (/obj/machinery/portable_atmospherics/hydroponics/soil,/obj/effect/landmark/dreams/cementery_spider,/turf/simulated/floor/grass{icon = 'icons/turf/floors.dmi'; icon_state = "1grass"},/area/space)
+"fx" = (/turf/simulated/wall{tag = "icon-sandstonefwall_opening"; icon_state = "sandstonefwall_opening"},/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeaeaeaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaafagaaaaaaaaaaaaaaaaaaadahadaaaaaaaaaaaiaaaaaaaaaaajaeaeakaeajaeaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaagalalalaaaaaaaaaaaaaaamadadaaaaaaaaaaaianaiaaaaaaaeajajajaoapajaeaeaaaaaaaqaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaagagalarasataaaaaaaaaaaaaaaaadaaaaaaaaaaaiauaiaaaaaeaeaeavawaxawayaeazaAaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaBagalalaCaDaEaFaGaHaaaaaaaaaaaaaaaaaaaaaaaaaiaaaaaaaeaeawawawawawawawaeaAaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaagagalaIaJaKaLaFaMaNaGaHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaOaOaPaQawaPaOaRaOaOaaaqaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaFagagaSaTaUaFaFaFaMaMaVaWaaaaaaaaaaaaaaaaaXaXaaaaaaaaaaaYaYaZaYaYaYbaaYaYaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaagagalbbbcaFaMaMaMaMaMaNaHaaaaaaaaaaaaaXbdaXaaaaaaaaaaaaaYaYaYaYaYaYbebfaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaabgalbhbiaSaMaMbjaMaMaVaWaaaaaaaaaaaXbkblbmaXbnbnbnbnbnaYaYaYaYaYaYaYaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaagalboaTaFaMaMaMaMaMbpbqbnbnbnbnbnaXaXbraXaXaaaaaaaaaaaabsbtaYaYaabuaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaalbvbwaFbxaVbpbybybqaaaaaaaaaaaaaaaabzaXaaaaaaaaaaaaaaaaaaaaaaaabuaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaabAaUaqbBbybqaaaabCaaaaaaaaaaaaaaaabuaaaaaabDbEaaaaaaaaaaaaaaaabubFbGaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaqaaaaaaaabuaaaaaaaaaaaaaaaaaaaaaaaabuaaaaaabHbHbEaaaaaaaaaaaaaabIbIbJaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaabKbKbKbKaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaabuaaaaaaaaaabLbMaaaaaaaaaabuaaaaaaaabNbHaaaaaaaaaaaabObPbIbQbIaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaabKbKbKbKbRbRbKbKaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaabuaaaaaaaabSbTbUaaaaaaaaaabuaaaaaaaaaaaaaaaaaaaaaaaaaabVbPbWbIaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaabKbKbXbYbZbRbRbRbKaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaabMbMbMaaaaaacabMaaaaaaaacbaGaGaHaaaaaaaaaaaaaaaaaaaaaaaaaaccbIaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaabKcdbRbRbRbRcebRbKaaaaaaaaaaaaaaabaaaaaaaaaaaaaabMbMbMbMbMcfaaaaaaaaaaaaaacbcgaMaMaNaGaHaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaabKbKbKbKchbRbRbRcibRbRbKbKaaaaaaaaaaaaabaaaaaaaaaaaXcjckclbMcmbMcnaaaaaaaaaaaacbcobpbycpaMbpbqbnbnbnbncqcraaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKbKbKbRcsbRbRbRbRbRbRbRbRbRbKaaaaaaaaaaaaabaaaaaaaaaaaXcjctbMbMbMcubMbMaaaaaaaacvcwaMaWcxcwaMaWaaaaaaaaaacqcyaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabKbKbRbRbRbRbRczcAcBczbRbRcCbKbKaaaaaaaaaaaaabaaaaaaaaaXaXcjbMbMcmbMbMbTbMaaaaaaaaaacwaMaNaGcgaMaWaaaaaaaaaacqaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabKcDbRcAczbRbRczcEcAczbRbRbRbKbKaaaaaaaaaaaaabaaaaaaaaaXaXcjbMbMbMcFbTbMbMbMbnbnbnbnbBcGaMaMcHbpbqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabKbKcIbRcJczbRbRczcKcLczbRbRbRbRbKaaaaaaaaaaaaabaaaaaaaaaaaXcjbMcMbMbTbMbMbMcNaaaaaaaaaabBbxaMaMaWaaaaaaaaaaaaaaaacOcOcOcOcOaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabKcPbRbRcAczbRbRbRbRbRbRbRcQbRbRbKaaaaaaaaaaaaabaaaaaaaaaaaaaabMbMcRbMbMcSbMaaaaaaaaaaaaaacTcUcVbqaaaaaaaaaaaaaacOcOcOcWcOcOcXaaaaaabCaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabKcYbRczcZczbRbRbRdadabRbRdbbRbRbKbKaaaaaaaaaaabaaaaaaaaaaaaaadcbMbMbMbMbMaaaaaaaaaaaaaaaaaabuaaaaaaaaaaaaaaaaaaddcOcOcOcOdecXaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabKdfbRbRcAczbRdgbRbRbRbRbRbRbRbRbRbKaaaaaaaaaaabaaaaaaaadhaaaaaabMbMbMdiaaaaaaaaaaaaaaaaaaaabuaaaaaaaaaaaaaaaaadadaddjcOcOcOcOcOcOaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabKbKbRbRbRbRbRdkdlbRbRdmbRbRdnbRbRbKaaaaaaaaaaabaaaaaadododpaaaaaabuaaaaaaaaaadqdraaaaaaaadsdsaaaaaaaaaaaaaadtadadadadadducOddcOcOcOaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabKdvbRbRdwdkdxdydmbRbRdmdkdzdzdzbKaaaaaaaaaaabaaaadpdhdodhdAaaaabuaaaaaaaadrdBdCaaaaaadDdsdsdEaaaaaaaaaaaaadaddFadadadadadaddGcOcOaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaabKbKdzdzdzdxdHdIdzdzdzdzdxdHdHdHbKbKbKbKaaaaabaaaaaadhdhaaaaaaaadJaaaadrdBdCdKaaaaaadsdsdsdsdsbnbnbnbnbnbnadadadadadadadadadadadcOaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKdHdHdHdHdHdHdHdHdHdHdHdHdLdHbKdMdNbKaaaaabaaaaaadAaaaaaaaadOdPaaaaaacvdQaaaaaaaadsdRdsdsdsaaaaaaaaaaaaaaaaadadaddSadadadaddTadaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKdHdHdHdHdHdHdHdUdUdHdHdHdHdHbKdVdWbKaaaaabaaaaaaaaaaaaaadXdYdZeaaaaaaaaaaaaaaaaaaadsdsebaaaaaaaaaaaaaaaaaaaadtadadadaddtadadaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKdHdHdUdUdUdHdUdUdUdHdHdUdUdUbKbKdVbKaaaaabaaaaaaaaaaaaaaaaecaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadaddtadaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKbKdUdUdUdUdUdUdUdUdHdUdUdUdUdUbKedbKaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaadiaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKbKdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUbKbKaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaabKdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUdUeeaaababababababababababababababababababababababababababababababababababababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+efaaaaaabKeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehdqeieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieieiejehehehehegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+egehehehehekehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehelehehehehegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegeg
+egehehehehekehememememememememehehememememememememehehememememememememehehenenenenenehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheoeoeoeoeoeoeoeoepeheoeoeoeoeoeoeoeoehepeoeoeoeoeoeoeoeoeheneneqereqenenehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheheseheheteheheheueveheheheweheseheheueuehehehexehewehehehenereyeyeyerenehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehememememememememeueuememememememememeuezememememememememehenereyeyeyerenehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheoeoeoeoeoeoeoeoeveueoeoeoeoeoeoeoeoeheueoeoeoeoeoeoeoeoeheneneneAenenenehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehehehehexeheheheheueheheheteheheheheheheveteheheheheheheheheheheBeueBehehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehememememememememeueuememememememememeheuememememememememememehehevehehememehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheoeoeoeoeoeoeoeoeveueoeoeoeoeoeoeoeoeueueoeoeoeoeoeoeoeoeoeoeheheueheheoeoehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheseheseheheheheheveueheheheheheheheheheuehehehehehehehehehehehehehehehehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehdqehememememehdqeCejeuehdqeCeCeCeCeCeCdqeuehdqeCeCeCeCeCeCeCeCeCeCejeudqeCeCeCeCejehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheoeoeoeoeheDeueueueheueueueueueueheueueveheueueueueueueveheheEeueueueueueheueFehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheheheheheheDeueueueueueueveheueheueueueueueveueueheheueueueveheueheheheueuepeFehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehejeieieieieieiejeueudqeieieieieieidqeuezejeCeCeCeCeCeCeCeCdqehdqeCeCeCeCeCeCeCeCdqehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheheheheheheGeueueGeheheheheheheleheueDehememememememememehememememememememehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheneneneneneheueheheheheheheweheleueueDeheoeoeoeoeoeoeoeoeheoeoeoeoeoeoeoeoehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehenereyereneheuevehememeHememeheleueveDehehehesehehesetehehehewehehesexehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheneyeyeyeAeueueueheoeoeIeoeoehelezeueDehememememememememehememememememememehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehenereJeyeneheveueheheheheteheheleueueDeheoeoeoeoeoeoeoeoeheoeoeoeoeoeoeoeoehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekehenenenenenehezeuehemememememeheleueheDehehehehehehehehehehehehehehehehehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheheheheheheheueueheoeoeoeoeoeheleuehejeCeCeCeCeCeCeCeCejehdqeCeCeCeCeCeCeCeCdqehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheneneneneneheheuehehexeheheheheleueueheheheheheheheheheheheheheheheKehehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehekeheneqerereneheuevehemememememeheleheueueuezeueueueEeueueueueheueueuevehehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeLeLeLeLeLeLeLeLeLeLeLeLeLeLeLaaaaaaaaaaaaeg
+egehehehehekeheneyeyeyeAeueueueheoeoeoeoeoehejeieieidqeveudqeieieiejeheheheheheheuewehehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeMeMeMeLeMeMeMeMeMeMeMeMeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheneneneneneheheueheheheheheheheleheheheheueueheheheheleheheNeNeOeNePeNeQeNehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeMeMeMeLeMeMeMeMeMeMeMeLeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheheheheheheheheheheneneneneneheleheheneneAeAeneneheheleheheQeReSeTeSeUeVeNehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeMeMeMeWeMeMeMeMeXeXeXeWeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheheteheheheheheueheneYeyeZenehelehehenereyeyereneheheleheheNfafbeSeSfceSeOehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeLeLeLeLeMeMeMeMeMeMeMeLeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheneneneneneheueueueAeyeJeyenehelehehenereyeyeJenehehelfdeheNfeeSfceSeSffeNehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLfgeXfgeLeLfhfhfhfheMeMeLeLeLeLaaaaaaaaaaaaeg
+egehehehehekehenerereqeneheufieheneZeyfjeneheletehenereyeyeqenehehelehehfkeSeSeSeSeSfleNehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLfgeXfgfmeMeMeMeMeMeMeMeMeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheneyeyeyeAeueheheheneneneneneheleheheneJeyeyereneheheleheheNeQeNeNePeOeQeNehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLfgfgfgfmeMeMeMeMeMeMeMeMeMeMeLaaaaaaaaaaaaeg
+egehehehehekehenenenenenehehehehehehehehehehelehehenenenenenenehehelehehfnfnfoehehehfpehehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLfgfgfgfgeXeMeMeMeMeMeMeMeMeMeLaaaaaaaaaaaaeg
+egehehehehekeheheheheheheheheheheheweheheheheleheheEehehfqehehehehelfrehehehehfsehftehfpehelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLfgfgfgfmeMeMeMeMeMeMeMeMeMeMeLaaaaaaaaaaaaeg
+egehehehehekehehehehehehehehehehehehehehehehelehehehehehehehehehehelehfueheEetehfvfwfwfvfwelehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeLeLeLeLeLeLeLeLeWfxfxfxfxfxeLeLaaaaaaaaaaaaeg
+egehehehehdqeieieieieieieieieieieieieieieieidqeieieieieieieieieieidqeieieieieieieieieieieiejehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehehegegaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaeg
+egegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegegeg
+"}
