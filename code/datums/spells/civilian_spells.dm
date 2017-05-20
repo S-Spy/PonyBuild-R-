@@ -1,10 +1,11 @@
 //H.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H)
 
 /mob/living/carbon/pony/proc/update_unicorn_verbs()
+	return/*
 	for(var/type in typesof(/datum/spells)-/datum/spells)
 		var/datum/spells/S = new type()
 		if(!(S.spell_name in unicorn_spells))
-			verbs -= S.spell_verb
+			verbs -= S.spell_verb*/
 
 /*
 1. —пеллы мага и единорогов должны быть одного рода
@@ -160,6 +161,12 @@ http://www.ddonline.ru/con1879.html
 		G.afterattack(O, usr, 1)
 		del G
 		..()
+
+/obj/item/weapon/light_spark
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "light"
+	alpha = 200
+	luminosity = 2
 
 /obj/effect/proc_holder/spell/targeted/civilian/dist_light
 	name = "Distance light"

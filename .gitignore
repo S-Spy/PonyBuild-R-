@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 *.int
+*.ini
 *.rsc
 *.lk
 *.backup

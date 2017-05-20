@@ -24,6 +24,37 @@
 
 var/list/bagreports = list()
 
+/client/verb/changes()
+	set name = "Changelog"
+	set category = "OOC"
+	set hidden = 1
+	getFiles(
+		'html/postcardsmall.jpg',
+		'html/somerights20.png',
+		'html/88x31.png',
+		'html/bug-minus.png',
+		'html/cross-circle.png',
+		'html/hard-hat-exclamation.png',
+		'html/image-minus.png',
+		'html/image-plus.png',
+		'html/music-minus.png',
+		'html/music-plus.png',
+		'html/tick-circle.png',
+		'html/wrench-screwdriver.png',
+		'html/spell-check.png',
+		'html/burn-exclamation.png',
+		'html/chevron.png',
+		'html/chevron-expand.png',
+		'html/changelog.css',
+		'html/changelog.js',
+		'html/changelog.html'
+		)
+	src << browse('html/changelog.html', "window=changes;size=675x650")
+	if(prefs.lastchangelog != changelog_hash)
+		prefs.lastchangelog = changelog_hash
+		prefs.save_preferences()
+		winset(src, "rpane.changelog", "background-color=none;font-style=;")
+
 /client/verb/fast_bug_report()//Не забыть про чейнжлог
 	set name = "fast_bug_report"
 	set desc = "You can read and write here about actual errors."
@@ -50,6 +81,24 @@ var/list/bagreports = list()
 	for(var/message in bagreports)
 		if(message)	text2file("[message]\n","data/bagreport.txt")
 	..()
+
+/client/var/welcome_dat
+/client/verb/welcome_window()
+	set hidden = 1
+	if(!welcome_dat)
+		welcome_dat = "<html><body>"
+		for(var/message in bagreports)
+			if(message)
+				welcome_dat += message
+				if(check_rights(R_ADMIN, 0) || findtext(message, key))
+					welcome_dat += " - <a href='?src=\ref[src];bugreport=remove;msg=[bagreports.Find(message)]'> Remove</a>"
+				welcome_dat += "<br><br>"
+		welcome_dat += "<a href='?src=\ref[src];bugreport=add'><b>\[Add Report\]</a></b><br>"
+		welcome_dat += "</body></html>"
+
+
+	usr << browse(welcome_dat, "window=bugreport;size=300x400")
+
 
 
 /client/Topic(href, href_list[])

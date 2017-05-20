@@ -1,27 +1,7 @@
 var/global/list/gear_datums = list()
-var/global/list/uspell_datums = list()
 
 
-/obj/item/weapon/light_spark
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "light"
-	alpha = 200
-	luminosity = 2
-
-/*
-Общая система заклинаний(1):
-  Структура заклинания:
-     Окрас предмета в ауру до надевания - недоступно
-     Удаление предмета - недоступно
-*/
-
-
-/mob/living/carbon/pony/var/tmp/horn_light = 0
-/mob/living/carbon/pony/var/tmp/horn_light_short = 0
-/mob/living/carbon/pony/var/tmp/list/cooldown = list(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)//30 заклинаний
 /mob/living/carbon/pony/var/tmp/record_loc
-
-
 
 
 /hook/startup/proc/populate_gear_list()
@@ -53,14 +33,6 @@ var/global/list/uspell_datums = list()
 	return 1
 
 
-/hook/startup/proc/populate_spells_list()
-
-	//create a list of gear datums to sort
-	for(var/type in typesof(/datum/spells)-/datum/spells)
-		var/datum/spells/S = new type()
-		uspell_datums[S.spell_name] = S
-	return 1
-
 /datum/gear
 	var/display_name       //Name/index. Must be unique.
 	var/path               //Path to item.
@@ -70,12 +42,6 @@ var/global/list/uspell_datums = list()
 	var/whitelisted        //Term to check the whitelist for..
 	var/sort_category
 
-/datum/spells
-	var/spell_name
-	var/verb/spell_verb
-	var/cost
-	var/list/allowed_roles
-	var/color
 
 
 /datum/gear/New()

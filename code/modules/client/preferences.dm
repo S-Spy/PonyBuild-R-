@@ -784,16 +784,17 @@ datum/preferences
 	return
 
 /datum/preferences/proc/SetSpelloptions(mob/user)
-	var/HTML = "<body>"
+	/*var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Spell Options</b> <hr /><br>"
 	free_SP = total_SP
 	HTML += "<br><b>Spells:</b><br><table>"
-	for(var/i = 1; i <= unicorn_spells.len; i++)
-		var/datum/spells/G = uspell_datums[unicorn_spells[i]]
+
+	for(var/i = 1; i <= user.spell_paths.len; i++)
+		var/obj/effect/proc_holder/spell/targeted/civilian/G = spell_paths[i]
 		free_SP -= G.cost
 		HTML += "<tr><td>[i]. </td>"
-		HTML += "<td> [G.spell_name] </td>"
+		HTML += "<td> [G.name] </td>"
 		HTML += "<td>  [G.cost] SP </td>"
 		HTML += "<td bgcolor=[G.color] width=30> [G.color] </td>"
 		HTML += "<td> <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell;spellname=[G.spell_name];active=1'>Remove</a></td></tr>"
@@ -812,7 +813,7 @@ datum/preferences
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=spelloptions;size=300x250")
 
-	return
+	return*/
 
 /datum/preferences/proc/SetFlavorText(mob/user)
 	var/HTML = "<body>"
@@ -1307,7 +1308,7 @@ datum/preferences
 		return 1
 
 	else if (href_list["preference"] == "spelloptions")
-		if(text2num(href_list["active"]) == 0)
+		/*if(text2num(href_list["active"]) == 0)
 			SetSpelloptions(user)
 			return
 		if (href_list["spelltask"] == "addspell")
@@ -1327,7 +1328,7 @@ datum/preferences
 		if (href_list["spelltask"] == "done")
 			//user << browse(null, "window=spelloptions")
 			ShowChoices(user)
-		return 1
+		return 1*/
 
 	else if (href_list["preference"] == "loadout")
 
