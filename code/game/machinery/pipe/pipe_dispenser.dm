@@ -139,7 +139,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 
 
 /obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
