@@ -379,11 +379,11 @@
 				if (!in_range(src, usr))
 					return
 
-				if(lentext(t) >= 3072)
+				if(lentext(t) >= 10240)
 					var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
 					if(cont == "no")
 						break
-			while(lentext(t) > 3072)
+			while(lentext(t) > 10240)
 
 			//split into lines
 			spawn()
@@ -391,10 +391,9 @@
 				var/tempo = 5
 				if(copytext(lines[1],1,6) == "BPM: ")
 					tempo = 600 / text2num(copytext(lines[1],6))
-					lines.Cut(1,2)
-				if(lines.len > 50)
+					lines.Cut(203)
 					usr << "Too many lines!"
-					lines.Cut(51)
+					lines.Cut(204)
 				var/linenum = 1
 				for(var/l in lines)
 					if(lentext(l) > 50)
