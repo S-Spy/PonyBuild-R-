@@ -183,7 +183,7 @@
 	S["skill_specialization"] >> skill_specialization
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
-	S["unicorn_spells"]		>> unicorn_spells
+	S["unicorn_spells"]		>> spell_paths
 	S["home_system"] 		>> home_system
 	S["citizenship"] 		>> citizenship
 	S["faction"] 			>> faction
@@ -347,7 +347,7 @@
 	S["skill_specialization"] << skill_specialization
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
-	S["unicorn_spells"]		<< unicorn_spells
+	S["unicorn_spells"]		<< spell_paths
 	S["home_system"] 		<< home_system
 	S["citizenship"] 		<< citizenship
 	S["faction"] 			<< faction

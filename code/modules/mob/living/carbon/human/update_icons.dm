@@ -443,7 +443,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			aura.Blend(rgb(r_aura, g_aura, b_aura))
 			face_standing.Blend(aura, ICON_OVERLAY)
 
-		update_unicorn_verbs()//Обновление списка вербов заклинаний
+
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]

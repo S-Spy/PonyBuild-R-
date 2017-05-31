@@ -1,5 +1,6 @@
 /mob/Login()
 	..()
+	if(ispony(usr)) usr:add_unicorn_verbs()
 	world << {"<p style="color:#0000cc"><b>[client.key] entered the game.</b></p>"}
 
 /mob/new_player/Login()
