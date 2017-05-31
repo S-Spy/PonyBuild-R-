@@ -26,57 +26,87 @@
 
 		switch(ptype)
 			if(0)
+				name = "Disposal pipe"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-s"
 				dpdir = dir | flip
 			if(1)
+				name = "Disposal bent pipe"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-c"
 				dpdir = dir | right
 			if(2)
+				name = "Junction"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-j1"
 				dpdir = dir | right | flip
 			if(3)
+				name = "Junction"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-j2"
 				dpdir = dir | left | flip
 			if(4)
+				name = "Y-Junction"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-y"
 				dpdir = dir | left | right
 			if(5)
+				name = "Trunk"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-t"
 				dpdir = dir
 			 // disposal bin has only one dir, thus we don't need to care about setting it
 			if(6)
+				name = "Disposal bin"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				if(anchored)
 					base_state = "disposal"
 				else
 					base_state = "condisposal"
 
 			if(7)
+				name = "Outlet"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "outlet"
 				dpdir = dir
 
 			if(8)
+				name = "Inlet"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "intake"
 				dpdir = dir
 
 			if(9)
+				name = "Junction"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-j1s"
 				dpdir = dir | right | flip
 
 			if(10)
+				name = "Junction"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-j2s"
 				dpdir = dir | left | flip
 ///// Z-Level stuff
 			if(11)
+				name = "Upwards"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-u"
 				dpdir = dir
 			if(12)
+				name = "Downwards"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-d"
 				dpdir = dir
 ///// Z-Level stuff
 			if(13)
+				name = "Tagger"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-tagger"
 				dpdir = dir | flip
 			if(14)
+				name = "Tagger partial"
+				desc = "A huge pipe segment used for constructing disposal systems."
 				base_state = "pipe-tagger-partial"
 				dpdir = dir | flip
 

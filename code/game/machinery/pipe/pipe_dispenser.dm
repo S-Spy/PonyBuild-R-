@@ -139,7 +139,35 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
 	density = 1
-	anchored = 1.0
+	anchored = 1
+
+
+/obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
+	if(..())
+		return
+
+///// Z-Level stuff
+	var/dat = {"<b>Disposal Pipes</b><br><br>
+<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
+<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
+<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
+<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
+<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
+<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+<A href='?src=\ref[src];dmake=21'>Upwards</A><BR>
+<A href='?src=\ref[src];dmake=22'>Downwards</A><BR>
+"}
+///// Z-Level stuff
+	if(unwrenched || !usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+		user << browse(null, "window=pipedispenser")
+		return
+
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	return
+
+// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -160,32 +188,10 @@ Nah
 
 	if (pipe.anchored)
 		return
-
+	var/obj/item/D as obj
+	D = pipe.name
 	del(pipe)
-
-/obj/machinery/pipedispenser/disposal/attack_hand(user as mob)
-	if(..())
-		return
-
-///// Z-Level stuff
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=21'>Upwards</A><BR>
-<A href='?src=\ref[src];dmake=22'>Downwards</A><BR>
-"}
-///// Z-Level stuff
-
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	return
-
-// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
+	usr << "\blue You put the [D] back to [src]."
 
 
 /obj/machinery/pipedispenser/disposal/Topic(href, href_list)
