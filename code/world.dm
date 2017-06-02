@@ -267,12 +267,12 @@ var/world_topic_spam_protect_time = world.timeofday
 	F << the_mode
 
 
-/hook/startup/proc/loadMOTD()
+/*/hook/startup/proc/loadMOTD()
 	world.load_motd()
 	return 1
 
 /world/proc/load_motd()
-	join_motd = sanitize_simple(file2text("config/motd.txt"))
+	join_motd = file("config/information/motd.html")*/
 
 
 /proc/load_configuration()

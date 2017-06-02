@@ -792,22 +792,21 @@ window "rpane"
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
-	elem "rulesb"
+	elem "refsb"
 		type = BUTTON
 		pos = 220,0
-		size = 60x16
+		size = 68x16
 		anchor1 = none
 		anchor2 = none
 		font-style = "bold"
-		text-color = #990000
 		background-color = none
 		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
+		text = "Reference"
+		command = "welcome"
 		group = "rpanemode"
 	elem "bagreport"
 		type = BUTTON
-		pos = 341,0
+		pos = 285,0
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
@@ -826,17 +825,6 @@ window "rpane"
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
-		group = "rpanemode"
-	elem "wikib"
-		type = BUTTON
-		pos = 280,0
-		size = 60x16
-		anchor1 = none
-		anchor2 = none
-		background-color = none
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
 		group = "rpanemode"
 	elem "textb"
 		type = BUTTON
@@ -886,6 +874,7 @@ window "browserwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Browser"
 		is-pane = true
