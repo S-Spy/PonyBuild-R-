@@ -687,7 +687,8 @@ datum/preferences
 
 	dat += "<td><table padding='8px'>"
 	dat += "<tr>"
-	dat += {"<td width = 400>[current_species.blurb]</td>"}
+	if(user.client.language!="ru")	dat += {"<td width = 400>[current_species.blurb]</td>"}
+	else							dat += {"<td width = 400>[current_species.blurb_ru]</td>"}
 	dat += "<td width = 200 align='center'>"
 	if("preview" in icon_states(current_species.icobase))
 		usr << browse_rsc(icon(current_species.icobase,"preview", NORTH), "species_preview_[current_species.name]_n.png")

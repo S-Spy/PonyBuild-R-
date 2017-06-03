@@ -8,6 +8,7 @@
 	var/name                                             // Species name.
 	var/name_plural                                      // Pluralized name (since "[name]s" is not always valid)
 	var/blurb = "A completely nondescript species."      // A brief lore summary for use in the chargen screen.
+	var/blurb_ru = "Совершенно неописуемый вид"
 
 	// Icon/appearance vars.
 	var/icobase = 'icons/mob/pony_races/r_pony.dmi'    // Normal icon set.

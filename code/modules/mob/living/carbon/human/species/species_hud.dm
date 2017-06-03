@@ -21,8 +21,7 @@
 		"storage1" 		=  list("loc" = ui_storage1,  	"slot" = slot_l_store,   "state" = "pocket"										),
 		"storage2"		=  list("loc" = ui_storage2,  	"slot" = slot_r_store,   "state" = "pocket"										),
 		"belt"			=  list("loc" = ui_belt,      	"slot" = slot_belt,      "state" = "belt"										),
-		"hand_"			=  list("loc" = ui_swaphand1, 						     "state" = "hand1",  		"dir" = SOUTH				),
-		"_hand"			=  list("loc" = ui_swaphand2, 						     "state" = "hand2"										)
+		"swap"			=  list("loc" = ui_swaphand, 						     "state" = "swap",  		"dir" = SOUTH				),
 		)
 
 	var/list/adding_intent = list(

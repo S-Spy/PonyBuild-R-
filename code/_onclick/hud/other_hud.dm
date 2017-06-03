@@ -16,8 +16,7 @@
 		//"storage1" 	  =  list("type"=/obj/screen/inventory,"loc" = ui_storage1,  	"slot" = slot_l_store,   "state" = "pocket"										),
 		//"storage2"	  =  list("type"=/obj/screen/inventory,"loc" = ui_storage2,  	"slot" = slot_r_store,   "state" = "pocket"										),
 		//"belt"		  =  list("type"=/obj/screen/inventory,"loc" = ui_belt,      	"slot" = slot_belt,      "state" = "belt"										),
-		"hand_"			  =  list("type"=/obj/screen/inventory,"loc" = ui_swaphand1, 						     "state" = "hand1",  		"dir" = SOUTH				),
-		"_hand"			  =  list("type"=/obj/screen/inventory,"loc" = ui_swaphand2,  					  		 "state" = "hand2"										)
+		"swap"			  =  list("type"=/obj/screen/inventory,"loc" = ui_swaphand, 						     "state" = "swap",  		"dir" = SOUTH				),
 		)
 	adding_intent = list(
 		"background"	=  list(				 		"state" = "back_inventory-edge", "toggle" = 1					 ),

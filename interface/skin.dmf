@@ -806,7 +806,7 @@ window "rpane"
 		group = "rpanemode"
 	elem "bagreport"
 		type = BUTTON
-		pos = 285,0
+		pos = 293,0
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
@@ -874,7 +874,6 @@ window "browserwindow"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Browser"
 		is-pane = true

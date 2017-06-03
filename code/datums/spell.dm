@@ -78,8 +78,6 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(user.block_horn_light || (user.species.flags && !(user.species.flags & HAS_HORN)))
 		return 0//&& ismage(usr)
 
-	world << "check1"
-
 	if(ispony(usr) || ismonkey(usr))
 		if(invocation_type != "none" && istype(usr.wear_mask, /obj/item/clothing/mask/muzzle))
 			usr << "Mmmf mrrfff!"

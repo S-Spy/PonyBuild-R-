@@ -133,7 +133,7 @@ var/list/bagreports = list()
 
 </body></html>
 	"}
-	usr << browse(replacetext(dat, "ÿ", "ß"), "window=welcome;size=800x400")
+	usr << browse(replacetext(dat, "ÿ", "ß"), "window=welcome;size=850x400")
 
 
 /client/Topic(href, href_list[])
@@ -159,7 +159,8 @@ var/list/bagreports = list()
 
 /client/verb/welcome()
 	set hidden = 1
-	show_motd()
+	if(language=="ru")	show_motd("welcome_ru")
+	else				show_motd()
 
 
 

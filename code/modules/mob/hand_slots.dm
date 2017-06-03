@@ -92,24 +92,23 @@
 //Принцип такой, что для управления рукой используется датум. И из него все референсы
 
 /mob/proc/swap_hand(var/obj/screen/inventory/hand/H)
-	if(H && H.parent.item_in_hand) //this segment checks if the item in your hand is twohanded.
+	/*if(H && H.parent.item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(H.parent.item_in_hand,/obj/item/weapon/twohanded))
 			if(H.parent.item_in_hand:wielded == 1)
 				usr << "<span class='warning'>Your other hand is too busy holding the [H.parent.item_in_hand.name]</span>"
-				return
+				return*/
 
 	if(!H)
 		if(list_hands.len==0)	return
 		var/datum/hand/dathand
 		var/has_active
 		for(var/ih=1, ih<= list_hands.len, ih++)//Перебор по порядку
-			var/datum/hand/selhand = list_hands[ih]
 			if(has_active)
-				dathand = selhand
+				dathand = list_hands[ih]
 				break
-			else if(selhand == hand)
+			else if(list_hands[ih] == hand)
 				has_active = 1
-		if(!H)	dathand = list_hands[1]
+		if(!dathand)	dathand = list_hands[1]
 		H = dathand.slot
 
 	hand = H.parent
