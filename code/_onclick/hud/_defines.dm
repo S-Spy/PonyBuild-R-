@@ -30,12 +30,11 @@
 #define ui_belt "5:14,1:5"
 
 #define ui_equip null
-#define ui_swaphand1 "7,1:2"
-#define ui_swaphand2 "8,1:2"
+#define ui_swaphand "7:16,2:8"
 #define ui_storage1 "9:18,1:5"
 #define ui_storage2 "10:20,1:5"
 
-#define ui_alien_head "4:12,1:5"	//aliens
+#define ui_alien_head "4:12,1:5"		//aliens
 #define ui_alien_oclothing "5:14,1:5"	//aliens
 
 #define ui_inv1 "7,1:5"			//borgs

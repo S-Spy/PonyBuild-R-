@@ -344,9 +344,19 @@
 		var/mob/living/carbon/pony/H = M
 		if(H.species.siemens_coefficient == 0)
 			return
-		if(H.gloves)
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.siemens_coefficient == 0)	return 0		//to avoid spamming with insulated glvoes on
+		switch(H.hand.type)
+			if(/datum/hand/mouth)
+				var/obj/item/clothing/G = H.head
+				if(G.siemens_coefficient == 0)	return 0
+
+			if(/datum/hand/hoofkinesis)
+				var/obj/item/clothing/G = H.shoes
+				if(G.siemens_coefficient == 0)	return 0
+
+			if(/datum/hand/telekinesis)
+				return 0
+			else
+				return 0
 
 	//Checks again. If we are still here subject will be shocked, trigger standard 20 tick warning
 	//Since this one is longer it will override the original one.

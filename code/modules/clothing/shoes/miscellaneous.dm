@@ -59,6 +59,7 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
+	siemens_coefficient = 0
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"

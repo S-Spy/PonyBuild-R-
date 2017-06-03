@@ -9,6 +9,9 @@
 	While the central Sol government maintains control of its far-flung people, powerful corporate \
 	interests, rampant cyber and bio-augmentation and secretive factions make life on most pony \
 	worlds tumultous at best."
+	blurb_ru = "ќдни из многих исконных жителей Ёквестрии - земные пони. ѕусть они не владеют магией или крыль€ми, \
+	они с лихвой компенсируют их изобретательностью и трудолюбием. Ѕольша€ часть ферм так или иначе принадлежит земным пони,\
+	на коих они же и работают. “акже зачастую несколько сильнее других пони."
 
 	flags = CAN_JOIN | HAS_SKIN_COLOR | HAS_LIPS | HAS_EYE_COLOR
 	brute_mod = 0.9
@@ -32,6 +35,10 @@
 	desert planet, they mostly hold ideals of honesty, virtue, martial combat and bravery above all \
 	else, frequently even their own lives. They prefer warmer temperatures than most species and \
 	their native tongue is a heavy hissing laungage called Sinta'Unicorn."
+	blurb_ru = "ѕони с рогом - или же единороги - зародившиес€ в горах раса пони, научившиес€ обращатьс€ с магией. \
+	¬ свое врем€ они даже управл€ли ходом дн€ и ночи в Ёквестрии. ќблада€ способностью к магии, \
+	единороги активно используют еЄ в своей жизни, кем бы он не был - портным, механиком или даже обычным разнорабочим. \
+	”мелый маг может быть очень опасным противником."
 
 	//cold_level_1 = 280 //Default 260 - Lower is better
 	//cold_level_2 = 220 //Default 200
@@ -80,6 +87,9 @@
 	influenced heavily by their long history of Slavemaster rule. They have a structured, clan-influenced way \
 	of family and politics. They prefer colder environments, and speak a variety of languages, mostly Siik'Maas, \
 	using unique inflections their mouths form."
+	blurb_ru = "ѕегасы - жители облаков и неба. ќни обладают врожденной способностью к полетам и управлению погодой.\
+	¬тора€ способность очень помогает земным пони в земледелии. \
+	“ак же пегасы прославились своим милитаристичным прошлым, от чего считаютс€ лучшими воинами."
 
 	//cold_level_1 = 200 //Default 260
 	//cold_level_2 = 140 //Default 200
@@ -119,6 +129,12 @@
 	of the Qerr'Katish, a caste within their society which keeps the empire of the Alicorn running smoothly. Alicorn are \
 	herbivores on the whole and tend to be co-operative with the other species of the galaxy, although they rarely reveal \
 	the secrets of their empire to their allies."
+	blurb_ru = "ќчень редкое стечение обсто€тельств и генов позвол€ет родитьс€ совершенно уникальному пони - аликорну. \
+	ќт рождени€ обладают всеми возможност€ми пегасов, они также обладают рогом и способност€ми к магии во много раз \
+	превосход€щие р€дового единорога. ј ещЄ они не стареют. ѕо этой причине, —елести€ стараетс€ держать \
+	молодых аликорнов р€дом, дабы дать им правильное воспитание и научить их обращатьс€ со своей мощью.\
+¬Ќ»ћјЌ»≈: Ёта раса - неверо€тно редка€. ¬о всем (государстве) их всего единицы. »-вы-сами-знаете-кто-они. \
+¬ы точно уверены что хотите сыграть за них?"
 
 	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_WINGS | HAS_EYE_COLOR
 

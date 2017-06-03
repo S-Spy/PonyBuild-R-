@@ -1,3 +1,5 @@
+/mob/var/happiness = 100
+
 /obj/screen/emoji
 	name = "emoji"
 	layer = 19
@@ -10,15 +12,15 @@
 	if(!emoji_hud)	return
 
 
-
 	var/health_level = 100 * health/maxHealth
 	var/nutrition_level = 100 * nutrition/450
 
 
-
-
-
 	var/happy_level = (health_level + nutrition_level)/2  // 0-100%
+
+	for(var/mob/M in range(1)-src)//Помехи
+		happy_level -= 5
+
 	happy_level = round(max(0, min(100, happy_level)))
 	/*
 	Есть основной режим - счастье. Вычисляется по формуле. Колебания вычисляют процентным рандомом
@@ -42,13 +44,8 @@
 	if(stat != CONSCIOUS)
 		emoji_hud.icon_state = "sleep"
 
-	return happy_level
+	happiness = happy_level
 
 
-
-/mob/living/carbon/pony/proc/concentration(var/level=1)
-		var/health_level = health/maxHealth
-		var/starving = nutrition/500
-		level = 1/level
-		return 100-round((health_level+starving+level)*33)
-
+/mob/living/carbon/pony/proc/concentration(var/s_level=1)
+		return happiness*min(1, 0.4+1/s_level)

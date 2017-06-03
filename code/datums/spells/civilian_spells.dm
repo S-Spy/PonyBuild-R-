@@ -1,11 +1,17 @@
 //H.spell_list += new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H)
 
-/mob/living/carbon/pony/proc/update_unicorn_verbs()
-	return/*
-	for(var/type in typesof(/datum/spells)-/datum/spells)
-		var/datum/spells/S = new type()
-		if(!(S.spell_name in unicorn_spells))
-			verbs -= S.spell_verb*/
+/mob/living/carbon/pony/proc/add_unicorn_verbs()
+	if(!client.prefs)	return
+	for(var/type in client.prefs.spell_paths)
+		feedback_add_details("wizard_spell_learned","CS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
+		var/check = 1
+		for(var/obj/effect/proc_holder/spell/S in spell_list)
+			if(istype(S, type))
+				check = 0
+				break
+		if(check)
+			spell_list += new type
+
 
 /*
 1. Спеллы мага и единорогов должны быть одного рода
@@ -62,8 +68,8 @@ http://www.ddonline.ru/con1879.html
 
 	charge_type = "recharge" //can be recharge or charges, see charge_max and charge_counter descriptions; can also be based on the holder's vars now, use "holder_var" for that
 
-	charge_max = null//время перезарядки в мс если charge_type = "recharge" или начинает зарядку если charge_type = "charges"
-	charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
+	//charge_max = 1//время перезарядки в мс если charge_type = "recharge" или начинает зарядку если charge_type = "charges"
+	//charge_counter = 0 //can only cast spells if it equals recharge, ++ each decisecond if charge_type = "recharge" or -- each cast if charge_type = "charges"
 
 	holder_var_type = "bruteloss" //используется только если charge_type = "holder_var"
 	holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
@@ -90,8 +96,8 @@ http://www.ddonline.ru/con1879.html
 
 	New()
 		..()
-		if(!charge_max)
-			charge_max = level*level*20
+		charge_max = spell_level*spell_level*20
+		charge_counter = charge_max
 
 
 /obj/effect/proc_holder/spell/targeted/civilian/light

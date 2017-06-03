@@ -113,20 +113,20 @@ Please contact me on #coderbus IRC. ~Carn x
 #define SHOES_LAYER				6
 #define GLOVES_LAYER			7
 #define SUIT_LAYER				8
-#define TAIL_LAYER				9		//bs12 specific. this hack is probably gonna come back to haunt me
-#define GLASSES_LAYER			10
-#define BELT_LAYER				11		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				13
-#define HAIR_LAYER				14		//TODO: make part of head layer?
-#define EARS_LAYER				15
-#define FACEMASK_LAYER			16
-#define HEAD_LAYER				17
-#define COLLAR_LAYER			18
-#define HANDCUFF_LAYER			19
-#define LEGCUFF_LAYER			20
-#define L_HAND_LAYER			21
-#define R_HAND_LAYER			22
+#define GLASSES_LAYER			9
+#define BELT_LAYER				10		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		11
+#define BACK_LAYER				12
+#define HAIR_LAYER				13		//TODO: make part of head layer?
+#define EARS_LAYER				14
+#define FACEMASK_LAYER			15
+#define HEAD_LAYER				16
+#define COLLAR_LAYER			17
+#define HANDCUFF_LAYER			18
+#define LEGCUFF_LAYER			19
+#define L_HAND_LAYER			20
+#define R_HAND_LAYER			21
+#define TAIL_LAYER				22
 #define FIRE_LAYER				23		//If you're on fire
 #define TARGETED_LAYER			24		//BS12: Layer for the target overlay from weapon targeting system
 #define TOTAL_LAYERS			24
@@ -402,6 +402,15 @@ proc/get_damage_icon_part(damage_state, body_part)
 /mob/living/carbon/pony/proc/update_hair(var/update_icons=1)
 	//Reset our hair
 	overlays_standing[HAIR_LAYER]	= null
+	overlays_standing[TAIL_LAYER]	= null
+
+	//Pony tail
+	if(get_organ("groin"))//≈сли есть флаг хвоста и тело, на котором он может держатьс€
+		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа беретс€ нужна€ прическа
+		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
+		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
+		overlays_standing[TAIL_LAYER]	= image(p_tail)
+
 
 	var/datum/organ/external/head/head_organ = get_organ("head")
 	if( !head_organ || (head_organ.status & ORGAN_DESTROYED) )
@@ -443,7 +452,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 			aura.Blend(rgb(r_aura, g_aura, b_aura))
 			face_standing.Blend(aura, ICON_OVERLAY)
 
-		update_unicorn_verbs()//ќбновление списка вербов заклинаний
+
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
@@ -455,16 +464,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 
 			face_standing.Blend(hair_s, ICON_OVERLAY)
-
-
-
-	//Pony tail
-	if(get_organ("groin"))//≈сли есть флаг хвоста и тело, на котором он может держатьс€
-		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа беретс€ нужна€ прическа
-		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
-		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
-		face_standing.Blend(p_tail, ICON_OVERLAY)
-
 
 
 	overlays_standing[HAIR_LAYER]	= image(face_standing)

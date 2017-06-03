@@ -90,7 +90,6 @@ datum/preferences
 	var/species_preview                 //Used for the species selection window.
 	var/language = "None"				//Secondary language
 	var/list/gear						//Custom/fluff item loadout.
-	var/list/unicorn_spells
 	var/total_SP = 0
 	var/free_SP = 0
 		//Some faction information.
@@ -151,6 +150,7 @@ datum/preferences
 	var/custom_cutiemark = 0
 	var/icon/cutiemark_paint_west
 	var/icon/cutiemark_paint_east
+	var/list/spell_paths = list()
 
 /datum/preferences/New(client/C)
 	for(var/i1=1, i1<=4, i1++)	for(var/i2=1, i2<=4, i2++)
@@ -687,7 +687,8 @@ datum/preferences
 
 	dat += "<td><table padding='8px'>"
 	dat += "<tr>"
-	dat += {"<td width = 400>[current_species.blurb]</td>"}
+	if(user.client.language!="ru")	dat += {"<td width = 400>[current_species.blurb]</td>"}
+	else							dat += {"<td width = 400>[current_species.blurb_ru]</td>"}
 	dat += "<td width = 200 align='center'>"
 	if("preview" in icon_states(current_species.icobase))
 		usr << browse_rsc(icon(current_species.icobase,"preview", NORTH), "species_preview_[current_species.name]_n.png")
@@ -727,7 +728,7 @@ datum/preferences
 	dat += "</small></td>"
 	dat += "</tr>"
 	dat += "</table></td></tr></table><center><hr/>"
-	unicorn_spells = list()
+	spell_paths = list()
 	if(current_species.flags & HAS_HORN)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
@@ -784,36 +785,37 @@ datum/preferences
 	return
 
 /datum/preferences/proc/SetSpelloptions(mob/user)
-	/*var/HTML = "<body>"
+	var/HTML = "<body>"
 	HTML += "<tt><center>"
 	HTML += "<b>Spell Options</b> <hr /><br>"
 	free_SP = total_SP
 	HTML += "<br><b>Spells:</b><br><table>"
 
-	for(var/i = 1; i <= user.spell_paths.len; i++)
-		var/obj/effect/proc_holder/spell/targeted/civilian/G = spell_paths[i]
-		free_SP -= G.cost
+	for(var/i = 1; i <= spell_paths.len; i++)
+		var/spell_type = spell_paths[i]
+		var/obj/effect/proc_holder/spell/targeted/civilian/G = new spell_type()
+		free_SP -= G.spell_level
 		HTML += "<tr><td>[i]. </td>"
 		HTML += "<td> [G.name] </td>"
-		HTML += "<td>  [G.cost] SP </td>"
-		HTML += "<td bgcolor=[G.color] width=30> [G.color] </td>"
-		HTML += "<td> <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell;spellname=[G.spell_name];active=1'>Remove</a></td></tr>"
+		HTML += "<td>  [G.spell_level] SP </td>"
+		//HTML += "<td bgcolor=[G.color] width=30> [G.color] </td>"
+		HTML += "<td> <a href='?src=\ref[user];preference=spelloptions;spelltask=removespell;spellname=[spell_type]'>Remove</a></td></tr>"
 	HTML += "</table>"
 
 	if(free_SP > 0)
-		HTML +="<br><a href='?src=\ref[user];preference=spelloptions;spelltask=addspell;active=1'>Add Spell</a>"
+		HTML +="<br><a href='?src=\ref[user];preference=spelloptions;spelltask=addspell'>Add Spell</a>"
 	HTML +="<br>"
 	HTML +="<br>"
 	HTML +="Free Spell Points: [free_SP]/[total_SP]<br>"
 	HTML +="<br><br>"
 	HTML +="<hr />"
-	HTML +="<a href='?src=\ref[user];preference=spelloptions;spelltask=done;active=1'>\[Done\]</a>"
+	HTML +="<a href='?src=\ref[user];preference=spelloptions;spelltask=done'>\[Done\]</a>"
 	HTML += "</center></tt>"
 
 	user << browse(null, "window=preferences")
 	user << browse(HTML, "window=spelloptions;size=300x250")
 
-	return*/
+	return
 
 /datum/preferences/proc/SetFlavorText(mob/user)
 	var/HTML = "<body>"
@@ -1308,27 +1310,27 @@ datum/preferences
 		return 1
 
 	else if (href_list["preference"] == "spelloptions")
-		/*if(text2num(href_list["active"]) == 0)
+		if(text2num(href_list["active"]) == 0)
 			SetSpelloptions(user)
 			return
 		if (href_list["spelltask"] == "addspell")
 			var/list/valid_spell_choices = list()
-			if(isnull(unicorn_spells) || !islist(unicorn_spells)) unicorn_spells = list()
+			if(isnull(spell_paths) || !islist(spell_paths)) spell_paths = list()
 
-			for(var/spell_name in uspell_datums)
-				var/datum/spells/S = uspell_datums[spell_name]
-				if(!unicorn_spells.Find(spell_name) && S.cost <= free_SP)	valid_spell_choices += spell_name
+			for(var/spell_name in typesof(/obj/effect/proc_holder/spell/targeted/civilian)-/obj/effect/proc_holder/spell/targeted/civilian)
+				var/obj/effect/proc_holder/spell/targeted/civilian/S = new spell_name
+				if(!spell_paths.Find(spell_name) && S.spell_level <= free_SP)	valid_spell_choices += S
 			if(valid_spell_choices.len > 0)
-				var/choice = input(user, "Select unicorn spell to add: ") as null|anything in valid_spell_choices
-				unicorn_spells[choice] = uspell_datums[choice]
+				var/obj/effect/proc_holder/spell/targeted/civilian/choice = input(user, "Select spell to add: ") as null|anything in valid_spell_choices
+				spell_paths += choice.type
 			SetSpelloptions(user)
 		if (href_list["spelltask"] == "removespell")
-			unicorn_spells -= uspell_datums[href_list["spellname"]]
+			spell_paths.Remove(text2path(href_list["spellname"]))
 			SetSpelloptions(user)
 		if (href_list["spelltask"] == "done")
-			//user << browse(null, "window=spelloptions")
+			user << browse(null, "window=spelloptions")
 			ShowChoices(user)
-		return 1*/
+		return 1
 
 	else if (href_list["preference"] == "loadout")
 
@@ -1895,7 +1897,6 @@ datum/preferences
 
 	character.skills = skills
 	character.used_skillpoints = used_skillpoints
-	character.unicorn_spells = unicorn_spells
 	character.free_SP = free_SP
 	character.total_SP = total_SP
 

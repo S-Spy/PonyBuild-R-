@@ -71,11 +71,11 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		usr << "Not when you're incapacitated."
 		return 0
 
-	if(!prob(user.concentration(level)) || usr.nutrition < 50)
+	if(!prob(user.concentration(spell_level)) || usr.nutrition < 50)
 		usr << "You can't use this spell! Maybe you must eat something?"
 		return 0//ѕроверка доступности долгосрочного заклинани€
 
-	if(user.block_horn_light || !(usr.species & HAS_HORN))
+	if(user.block_horn_light || (user.species.flags && !(user.species.flags & HAS_HORN)))
 		return 0//&& ismage(usr)
 
 	if(ispony(usr) || ismonkey(usr))

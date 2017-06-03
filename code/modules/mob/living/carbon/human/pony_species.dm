@@ -17,10 +17,10 @@
 /mob/living/carbon/pony/unicorn/New(var/new_loc)
 	h_style = "Unicorn Horns"
 	..(new_loc, "Unicorn")
-
+/*
 /mob/living/carbon/pony/vox/New(var/new_loc)
 	h_style = "Short Vox Quills"
-	..(new_loc, "Vox")
+	..(new_loc, "Vox")*/
 
 /mob/living/carbon/pony/diona/New(var/new_loc)
 	..(new_loc, "Diona")

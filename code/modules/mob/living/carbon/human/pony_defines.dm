@@ -69,7 +69,6 @@
 	var/used_skillpoints = 0
 	var/skill_specialization = null
 	var/list/skills = list()
-	var/list/unicorn_spells = list()
 	var/free_SP
 	var/total_SP
 
