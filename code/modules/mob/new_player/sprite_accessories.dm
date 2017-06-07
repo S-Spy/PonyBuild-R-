@@ -96,22 +96,6 @@
 		gender = FEMALE
 
 
-/datum/sprite_accessory/cutiemark
-	icon = 'icons/mob/cutiemarks.dmi'	  // default icon for all hairs
-
-	blank
-		name = "Blank"
-		icon_state = "blank"
-
-	apples
-		name = "Three Red Apples"
-		icon_state = "3rapples"
-
-	music
-		name = "Music Note"
-		icon_state = "music"
-
-
 /datum/sprite_accessory/hair
 
 	icon = 'icons/mob/pony_face.dmi'	  // default icon for all hairs

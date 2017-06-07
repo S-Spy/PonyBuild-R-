@@ -268,10 +268,8 @@ datum/preferences
 			preview_icon.Blend(rgb(r_skin, g_skin, b_skin))
 
 		if(cutie_mark && !(cutiemark_paint_east && custom_cutiemark))
-			var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
-			if(CM)
-				var/icon/cutie_mark_s = new/icon(CM.icon, "icon_state" = CM.icon_state)
-				preview_icon.Blend(cutie_mark_s, ICON_OVERLAY)
+			var/icon/cutie_mark_s = new/icon('icons/mob/cutiemarks.dmi', "icon_state" = cutie_mark)
+			preview_icon.Blend(cutie_mark_s, ICON_OVERLAY)
 
 		//Wings of pegasus
 		if(current_species && (current_species.flags & HAS_WINGS))

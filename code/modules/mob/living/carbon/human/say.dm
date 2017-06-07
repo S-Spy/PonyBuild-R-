@@ -154,7 +154,75 @@
 			if (speech_sound)
 				sound_vol *= 0.5
 
+	if(wear_suit && wear_suit.type==/obj/item/clothing/suit/armor/archmage)
+		if(findtext(message, "Dore "))
+			if(findtext(message, " Az "))
+				if(findtext(message, " For "))	if(!wear_suit:orbs[1])	wear_suit:orbs[1]=1
+				if(findtext(message, " Echo "))	if(!wear_suit:orbs[1])	wear_suit:orbs[1]=2
+				if(findtext(message, " Got "))	if(!wear_suit:orbs[1])	wear_suit:orbs[1]=3
+			if(findtext(message, " Lithen "))
+				if(findtext(message, " For "))	if(!wear_suit:orbs[2])	wear_suit:orbs[2]=1
+				if(findtext(message, " Echo "))	if(!wear_suit:orbs[2])	wear_suit:orbs[2]=2
+				if(findtext(message, " Got "))	if(!wear_suit:orbs[2])	wear_suit:orbs[2]=3
+			if(findtext(message, " Icle "))
+				if(findtext(message, " For "))	if(!wear_suit:orbs[3])	wear_suit:orbs[3]=1
+				if(findtext(message, " Echo "))	if(!wear_suit:orbs[3])	wear_suit:orbs[3]=2
+				if(findtext(message, " Got "))	if(!wear_suit:orbs[3])	wear_suit:orbs[3]=3
+		if(findtext(message, "Medow "))
+			if(findtext(message, " For "))		wear_suit:orbs[1]=0
+			if(findtext(message, " Lithen "))	wear_suit:orbs[2]=0
+			if(findtext(message, " Icle "))		wear_suit:orbs[3]=0
+		if(findtext(message, "Noren "))
+			if(findtext(message, " Az "))
+				if(findtext(message, " For "))	if(wear_suit:orbs[1])	wear_suit:orbs[1]=1
+				if(findtext(message, " Echo "))	if(wear_suit:orbs[1])	wear_suit:orbs[1]=2
+				if(findtext(message, " Got "))	if(wear_suit:orbs[1])	wear_suit:orbs[1]=3
+			if(findtext(message, " Lithen "))
+				if(findtext(message, " For" ))	if(wear_suit:orbs[2])	wear_suit:orbs[2]=1
+				if(findtext(message, " Echo "))	if(wear_suit:orbs[2])	wear_suit:orbs[2]=2
+				if(findtext(message, " Got "))	if(wear_suit:orbs[2])	wear_suit:orbs[2]=3
+			if(findtext(message, " Icle "))
+				if(findtext(message, " For "))	if(wear_suit:orbs[3])	wear_suit:orbs[3]=1
+				if(findtext(message, " Echo "))	if(wear_suit:orbs[3])	wear_suit:orbs[3]=2
+				if(findtext(message, " Got "))	if(wear_suit:orbs[3])	wear_suit:orbs[3]=3
+		if(findtext(message, "Magnus "))
+			if(findtext(message, " Akme Lorus Defin"))
+				if(wear_suit:orbs[1]==1 && wear_suit:orbs[2]==1 && wear_suit:orbs[3]==1)
+					spell_shi()
+			if(findtext(message, " Greatest Show"))
+				if(wear_suit:orbs[1]==3 && wear_suit:orbs[2]==1 && wear_suit:orbs[3]==2)
+					spell_inv()
+			if(findtext(message, " Kallum Light"))
+				if(wear_suit:orbs[1]==2 && wear_suit:orbs[2]==2 && wear_suit:orbs[3]==3)
+					spell_fla()
+			if(findtext(message, " Knight Doremain"))
+				if(wear_suit:orbs[1]==1 && wear_suit:orbs[2]==2 && wear_suit:orbs[3]==1)
+					spell_tel()
+			if(findtext(message, " Peacen Light"))
+				if(wear_suit:orbs[3]==3 && wear_suit:orbs[2]==3 && wear_suit:orbs[3]==1)
+					spell_lit()
+
+		wear_suit:update_orbs(usr)
+
+
 	..(message, speaking, verb, alt_name, italics, message_range, speech_sound, sound_vol)	//ohgod we should really be passing a datum here.
+
+/mob/living/carbon/pony/proc/spell_shi()
+	usr << "GOOD!"
+
+/mob/living/carbon/pony/proc/spell_inv()
+	usr << "Wow..."
+
+/mob/living/carbon/pony/proc/spell_tel()
+	usr << "Were I am?"
+
+/mob/living/carbon/pony/proc/spell_lit()
+	usr << "So much better"
+
+/mob/living/carbon/pony/proc/spell_fla()
+	usr << "Ouch!"
+
+
 
 /mob/living/carbon/pony/proc/forcesay(list/append)
 	if(stat == CONSCIOUS)

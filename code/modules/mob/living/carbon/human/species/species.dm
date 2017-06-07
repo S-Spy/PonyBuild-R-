@@ -163,6 +163,11 @@
 	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
 	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
 	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
+	H.organs_by_name["horn"] = new/datum/organ/external/r_foot(H.organs_by_name["horn"])
+	H.organs_by_name["wings"] = new/datum/organ/external/r_foot(H.organs_by_name["wings"])
+	H.organs_by_name["ears"] = new/datum/organ/external/r_foot(H.organs_by_name["ears"])
+	H.organs_by_name["tail"] = new/datum/organ/external/r_foot(H.organs_by_name["tail"])
+	H.organs_by_name["neck"] = new/datum/organ/external/r_foot(H.organs_by_name["neck"])
 
 	for(var/organ in has_organ)
 		var/organ_type = has_organ[organ]

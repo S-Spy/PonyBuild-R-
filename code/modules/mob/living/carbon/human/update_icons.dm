@@ -383,8 +383,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 	if(cutie_mark)
 		if(!cutiemark_paint_east)
-			var/datum/sprite_accessory/cutiemark/CM = cutiemarks_list[cutie_mark]
-			stand_icon.Blend(new/icon(CM.icon, "icon_state" = CM.icon_state), ICON_OVERLAY)
+			stand_icon.Blend(new/icon('icons/mob/cutiemarks.dmi', "icon_state" = cutie_mark), ICON_OVERLAY)
 
 	if(species.flags & HAS_WINGS)
 		var/icon/IW = new/icon(species.icobase, "wings")

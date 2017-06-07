@@ -102,10 +102,7 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Satchel", "Satchel Al
 
 
 	// ьютимарки!
-	paths = typesof(/datum/sprite_accessory/cutiemark) - /datum/sprite_accessory/cutiemark
-	for(var/path in paths)
-		var/datum/sprite_accessory/cutiemark/H = new path()
-		cutiemarks_list[H.name] = H
+	cutiemarks_list = icon_states('icons/mob/cutiemarks.dmi')
 
 
 	//Surgery Steps - Initialize all /datum/surgery_step into a list

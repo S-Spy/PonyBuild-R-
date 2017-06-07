@@ -858,6 +858,46 @@ Note that amputating the affected organ does in fact remove the infection from t
 			   ORGAN DEFINES
 ****************************************************/
 
+/datum/organ/external/horn
+	name = "horn"
+	icon_name = "horn"
+	display_name = "horn"
+	max_damage = 30
+	min_broken_damage = 15
+	body_part = HEAD
+
+/datum/organ/external/neck
+	name = "neck"
+	icon_name = "neck"
+	display_name = "neck"
+	max_damage = 30
+	min_broken_damage = 15
+	body_part = HEAD
+
+/datum/organ/external/ears
+	name = "ears"
+	icon_name = "ears"
+	display_name = "ears"
+	max_damage = 30
+	min_broken_damage = 15
+	body_part = HEAD
+
+/datum/organ/external/wings
+	name = "wings"
+	icon_name = "wings"
+	display_name = "wings"
+	max_damage = 30
+	min_broken_damage = 15
+	body_part = UPPER_TORSO
+
+/datum/organ/external/tail
+	name = "tail"
+	icon_name = "tail"
+	display_name = "tail"
+	max_damage = 30
+	min_broken_damage = 15
+	body_part = LOWER_TORSO
+
 /datum/organ/external/chest
 	name = "chest"
 	icon_name = "torso"

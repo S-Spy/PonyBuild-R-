@@ -49,8 +49,8 @@
 
 	//Set species_restricted list
 	switch(target_species)
-		if("Earthpony", "Alicorn")	//ponyoid bodytypes
-			species_restricted = list("exclude","Unicorn","Pegasus","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
+		if("Earthpony", "Alicorn","Unicorn","Pegasus")	//ponyoid bodytypes
+			species_restricted = list("exclude","Diona","Vox", "Xenomorph", "Xenomorph Drone", "Xenomorph Hunter", "Xenomorph Sentinel", "Xenomorph Queen")
 		else
 			species_restricted = list(target_species)
 
