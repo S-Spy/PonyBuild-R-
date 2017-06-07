@@ -9,6 +9,7 @@ Thumbs.db
 *.dmb
 *.sav
 *~
+
 data/
 Forum/
 Forum/Forum.sav
