@@ -1,4 +1,4 @@
-#ignore misc BYOND files
+Ó#ignore misc BYOND files
 Thumbs.db
 *.log
 *.int
@@ -10,6 +10,7 @@ Thumbs.db
 *.sav
 *~
 
-data/
-Forum/
-Forum/Forum.sav
+*/*.ini
+data/*
+Forum/*
+Forum/*.sav

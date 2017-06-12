@@ -11,7 +11,7 @@
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 
 
-	client.show_motd()
+	spawn(20)	client.show_motd()
 
 	if(!mind)
 		mind = new /datum/mind(key)

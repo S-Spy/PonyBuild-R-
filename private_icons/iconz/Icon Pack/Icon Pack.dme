@@ -6,16 +6,6 @@
 // END_INTERNALS
 // BEGIN_FILE_DIR
 #define FILE_DIR .
-#define FILE_DIR "Icons"
-#define FILE_DIR "Icons/Cars"
-#define FILE_DIR "Icons/Dragonball"
-#define FILE_DIR "Icons/Fianl Fantasy"
-#define FILE_DIR "Icons/Mario"
-#define FILE_DIR "Icons/Pokemon"
-#define FILE_DIR "Icons/Random"
-#define FILE_DIR "Icons/Sonic+chao"
-#define FILE_DIR "Icons/Turf+obj"
-#define FILE_DIR "Icons/Turf+obj/Weapons"
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
