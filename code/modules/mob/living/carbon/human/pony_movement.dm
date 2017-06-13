@@ -49,7 +49,7 @@
 
 	if(shock_stage >= 10)
 		tally += 3
-		if(species.name == "Earthpony")	tally --
+		if(species.name == "Earthpony")	tally--
 
 	if(FAT in src.mutations)
 		tally += 1.5
@@ -61,7 +61,7 @@
 	if(mRun in mutations)
 		tally = 0
 
-	if(m_intent == "fly")	tally--
+	if(m_intent == "fly")	tally = max(tally-1, 0)
 
 	return (tally+config.pony_delay)
 
