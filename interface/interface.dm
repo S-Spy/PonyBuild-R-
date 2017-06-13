@@ -133,7 +133,7 @@ var/list/bagreports = list()
 
 </body></html>
 	"}
-	usr << browse(replacetext(dat, "€", "я"), "window=welcome;size=850x400")
+	usr << browse(replacetext(dat, "€", "&#1103;"), "window=welcome;size=850x400")
 
 
 /client/Topic(href, href_list[])
@@ -156,12 +156,9 @@ var/list/bagreports = list()
 	..()
 
 
-
 /client/verb/welcome()
 	set hidden = 1
-	if(language=="ru")	show_motd("welcome_ru")
-	else				show_motd()
-
+	show_motd("welcome_[language]")
 
 
 /client/Topic(href, href_list[])
@@ -169,7 +166,7 @@ var/list/bagreports = list()
 		if("add")
 			var/message = input("¬ведите описание ошибки.","—ообщение")
 			if(message)
-				bagreports += "<b>[usr.key]:</b> [replacetext(message, "€", "я")]"
+				bagreports += "<b>[usr.key]:</b> [replacetext(message, "€", "&#1103;")]"
 			fast_bug_report()
 		if("remove")
 			if(alert("You're sure?", null, "Yes", "No")=="Yes")
