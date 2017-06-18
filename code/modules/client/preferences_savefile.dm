@@ -200,7 +200,7 @@
 
 
 	for(var/ix=1, ix<=4, ix++)	for(var/iy=1, iy<=4, iy++)
-		S["cutie_paint_[ix]-[iy]"]	>> colors4x4[ix][iy]
+		S["cutie_paint_[ix]-[iy]"]	>> colors5x5[ix][iy]
 	update_custom_cutiemark()
 
 	//Sanitize
@@ -366,7 +366,7 @@
 	S["UI_style_alpha"]		<< UI_style_alpha
 
 	for(var/ix=1, ix<=4, ix++)	for(var/iy=1, iy<=4, iy++)
-		S["cutie_paint_[ix]-[iy]"]	<< colors4x4[ix][iy]
+		S["cutie_paint_[ix]-[iy]"]	<< colors5x5[ix][iy]
 
 	return 1
 

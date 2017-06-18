@@ -146,15 +146,15 @@ datum/preferences
 	var/slot_name = ""
 
 	var/brush_color
-	var/colors4x4[4][4]//Для записи в лист сохранений
+	var/colors5x5[5][5]//Для записи в лист сохранений
 	var/custom_cutiemark = 0
 	var/icon/cutiemark_paint_west
 	var/icon/cutiemark_paint_east
 	var/list/spell_paths = list()
 
 /datum/preferences/New(client/C)
-	for(var/i1=1, i1<=4, i1++)	for(var/i2=1, i2<=4, i2++)
-		colors4x4[i1][i2]="#00000000"
+	for(var/i1=1, i1<=5, i1++)	for(var/i2=1, i2<=5, i2++)
+		colors5x5[i1][i2]="#00000000"
 
 
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
@@ -1047,9 +1047,9 @@ datum/preferences
 	del(cutiemark_paint_west)
 	cutiemark_paint_west = new/icon('icons/mob/cutiemarks.dmi', "blank")
 	cutiemark_paint_east = new/icon('icons/mob/cutiemarks.dmi', "blank")
-	for(var/ix=1, ix<=4, ix++)	for(var/iy=1, iy<=4, iy++)
-		cutiemark_paint_east.DrawBox(colors4x4[ix][iy], 11+ix, 9+iy)
-		cutiemark_paint_west.DrawBox(colors4x4[ix][iy], 16+5-ix, 9+iy)
+	for(var/ix=1, ix<=5, ix++)	for(var/iy=1, iy<=5, iy++)
+		cutiemark_paint_east.DrawBox(colors5x5[ix][iy], 11+ix, 9+iy)
+		cutiemark_paint_west.DrawBox(colors5x5[ix][iy], 16+6-ix, 9+iy)
 
 	if(user)
 		user << browse_rsc(cutiemark_paint_east,"cutiemark_paint.png")
@@ -1069,11 +1069,9 @@ datum/preferences
 		if("2")
 			var/ix = text2num(href_list["x"])
 			var/iy = text2num(href_list["y"])
-
-			if( !(ix==1 && (iy==4 || iy==3)) && !(ix==2 && iy==4) )
-				colors4x4[ix][iy] = brush_color+"ff"
-				CustomCutiemarkPaint(user)
-				return
+			colors5x5[ix][iy] = brush_color
+			CustomCutiemarkPaint(user)
+			return
 		if("3")
 			user << browse(null,  "window=cutie_paint")
 		if("switch")

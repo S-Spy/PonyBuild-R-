@@ -1,7 +1,3 @@
-/mob/var/icon/cutiemark_paint_west//Если стоит галочка, то эта переменная заполнится и будет использоваться заместо
-/mob/var/icon/cutiemark_paint_east
-
-
 /datum/preferences
 	proc/CustomCutiemarkPaint(mob/user)
 		if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
@@ -10,18 +6,14 @@
 		var/dat = {"
 <html>
 <body>
-<b>Brush color:<b> <table><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
-<table border=0 cellspacing=0>"}
+<b>Brush color:<b> <table border=1><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
+<table border=1 cellspacing=0>"}
 
-		for(var/iy=4, iy>=1, iy--)
+		for(var/iy=5, iy>=1, iy--)
 			dat += "<tr>"
-			for(var/ix=1, ix<=4, ix++)
-				if(!colors4x4[ix][iy] || colors4x4[ix][iy]=="#00000000")
-					if(!( (ix==1 && (iy==4||iy==3)) || (ix==2 && iy==4) ))
-						colors4x4[ix][iy] = rgb(150, 150, 150)
-
-				dat += "<td bgcolor='[colors4x4[ix][iy]]'>"
-				dat += "<font face='fixedsys' size='3' color='[colors4x4[ix][iy]]'><a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors4x4[ix][iy]]'>__</a></font>"
+			for(var/ix=1, ix<=5, ix++)
+				dat += "<td bgcolor='[colors5x5[ix][iy]]'>"
+				dat += "<a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors5x5[ix][iy]]'><font face='fixedsys' size='3' color='[colors5x5[ix][iy]]'>__</font></a>"
 				dat += "</td>"
 			dat += "</tr>"
 
@@ -33,7 +25,7 @@
 </body>
 </html>
 "}
-		user << browse(dat, "window=cutie_paint;size=150x200")
+		user << browse(dat, "window=cutie_paint;size=300x350")
 
 	//The mob should have a gender you want before running this proc. Will run fine without H
 	proc/check_color()

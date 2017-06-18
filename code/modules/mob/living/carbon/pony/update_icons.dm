@@ -383,8 +383,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 			stand_icon.Blend(new/icon('icons/mob/pony_face.dmi', "lips_[lip_style]_s"), ICON_OVERLAY)
 
 	if(cutie_mark)
-		if(!cutiemark_paint_east)
+		if(!cutiemark_paint)
 			stand_icon.Blend(new/icon('icons/mob/cutiemarks.dmi', "icon_state" = cutie_mark), ICON_OVERLAY)
+		else
+			stand_icon.Blend(cutiemark_paint, ICON_OVERLAY)
 
 	if(species.flags & HAS_WINGS)
 		var/icon/IW

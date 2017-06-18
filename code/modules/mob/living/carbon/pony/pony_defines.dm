@@ -93,3 +93,4 @@
 	var/hand_blood_color
 
 	var/list/flavor_texts = list()
+	var/icon/cutiemark_paint
