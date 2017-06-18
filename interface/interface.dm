@@ -82,8 +82,10 @@ var/list/bagreports = list()
 		if(message)	text2file("[message]\n","data/bagreport.txt")
 	..()
 
+
+
 /client/var/language = "eng"
-/client/proc/show_motd(var/source = "welcome_[language]")
+/client/proc/show_motd(var/source = "welcome_eng")
 	var/label_lang 		= (language == "ru") ? "язык" 			: "Language"
 	var/label_home 		= (language == "ru") ? "√лавна€" 		: "Home"
 	var/label_changelog = (language == "ru") ? "ќбновлени€" 	: "Changelog"
