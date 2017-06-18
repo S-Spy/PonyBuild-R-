@@ -83,7 +83,7 @@ var/list/bagreports = list()
 	..()
 
 /client/var/language = "eng"
-/client/proc/show_motd(var/source = "welcome_eng")
+/client/proc/show_motd(var/source = "welcome_[language]")
 	var/label_lang 		= (language == "ru") ? "язык" 			: "Language"
 	var/label_home 		= (language == "ru") ? "√лавна€" 		: "Home"
 	var/label_changelog = (language == "ru") ? "ќбновлени€" 	: "Changelog"
@@ -115,7 +115,7 @@ var/list/bagreports = list()
 <body>
 <table><tr>
 <td width = 80><input type="button" value="[label_home]" id="button1_home" onclick="page_home()">				</td>
-<td width = 40>																							</td>
+<td width = 40>																									</td>
 <td><input type="button" value="[label_changelog]" 		id="button2_changelog" onclick="page_changelog()">		</td>
 <td><input type="button" value="[label_rules]" 			id="button3_rules" onclick="page_rules()">				</td>
 <td><input type="button" value="[label_stories]" 		id="button4_stories" onclick="page_stories()">			</td>
@@ -123,7 +123,7 @@ var/list/bagreports = list()
 <td><input type="button" value="[label_admin]" 			id="button6_admin" onclick="page_admin()">				</td>
 <td align="right"><input type="button" value="[label_credits]" id="button7_credits" onclick="page_credits()">	</td>
 </tr><tr>
-<td>[label_lang]: 											</td>
+<td>[label_lang]: 															</td>
 <td><a href='?_src_=welcome;motd=switch_lang;old=[source]'>[language]</a> 	</td>
 </tr><table>
 

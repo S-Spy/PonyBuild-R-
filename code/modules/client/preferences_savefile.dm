@@ -198,7 +198,10 @@
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
 
-	S["cutie_paint"]		>> colors4x4
+
+	for(var/ix=1, ix<=4, ix++)	for(var/iy=1, iy<=4, iy++)
+		S["cutie_paint_[ix]-[iy]"]	>> colors4x4[ix][iy]
+	update_custom_cutiemark()
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -296,10 +299,10 @@
 	S["eyes_red"]			<< r_eyes
 	S["eyes_green"]			<< g_eyes
 	S["eyes_blue"]			<< b_eyes
-	S["pony_tail_red"]			<< r_tail
-	S["pony_tail_green"]		<< g_tail
-	S["pony_tail_blue"]			<< b_tail
-	S["pony_tail_style"]		<< pony_tail_style
+	S["pony_tail_red"]		<< r_tail
+	S["pony_tail_green"]	<< g_tail
+	S["pony_tail_blue"]		<< b_tail
+	S["pony_tail_style"]	<< pony_tail_style
 	S["cutie_mark"]			<< cutie_mark
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
@@ -362,7 +365,8 @@
 	S["UI_style_color"]		<< UI_style_color
 	S["UI_style_alpha"]		<< UI_style_alpha
 
-	S["cutie_paint"]		<< colors4x4
+	for(var/ix=1, ix<=4, ix++)	for(var/iy=1, iy<=4, iy++)
+		S["cutie_paint_[ix]-[iy]"]	<< colors4x4[ix][iy]
 
 	return 1
 

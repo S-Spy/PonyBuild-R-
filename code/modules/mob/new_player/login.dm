@@ -11,7 +11,13 @@
 	update_Login_details()	//handles setting lastKnownIP and computer_id for use by the ban systems as well as checking for multikeying
 
 
-	spawn(20)	client.show_motd()
+	spawn(20)
+		client.language = alert("Language: ",,"ru", "eng")
+		if(client.language == "eng")
+			alert("We have actual rules and strongly recommend you read them before to play. Ignorance of the rules does not exempt from liability.")
+		else
+			alert("ћы имеем актуальные правила и насто€тельно рекомендуем ¬ам ознакомитьс€ с ними перед началом игры. Ќезнание правил не освобождает от ответственности.")
+		client.show_motd()
 
 	if(!mind)
 		mind = new /datum/mind(key)

@@ -344,11 +344,15 @@ proc/get_pixel_list(var/obj/screen/zone_sel/O)
 					return 1
 				switch(usr.m_intent)
 					if("fly")
+						usr.make_floating(0)
+						usr.update_icons()
 						usr.m_intent = "walk"
 						usr.hud_used.move_intent.icon_state = "walking"
 					if("run")
 						if(C.species.flags & HAS_WINGS)
 							usr.m_intent = "fly"
+							usr.make_floating(1)
+							usr.update_icons()
 							usr.hud_used.move_intent.icon_state = "flying"
 						else
 							usr.m_intent = "walk"

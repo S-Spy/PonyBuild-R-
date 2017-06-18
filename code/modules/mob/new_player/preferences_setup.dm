@@ -1,9 +1,45 @@
-datum/preferences
+/mob/var/icon/cutiemark_paint_west//≈сли стоит галочка, то эта переменна€ заполнитс€ и будет использоватьс€ заместо
+/mob/var/icon/cutiemark_paint_east
+
+
+/datum/preferences
+	proc/CustomCutiemarkPaint(mob/user)
+		if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
+		update_custom_cutiemark(user)
+
+		var/dat = {"
+<html>
+<body>
+<b>Brush color:<b> <table><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
+<table border=0 cellspacing=0>"}
+
+		for(var/iy=4, iy>=1, iy--)
+			dat += "<tr>"
+			for(var/ix=1, ix<=4, ix++)
+				if(!colors4x4[ix][iy] || colors4x4[ix][iy]=="#00000000")
+					if(!( (ix==1 && (iy==4||iy==3)) || (ix==2 && iy==4) ))
+						colors4x4[ix][iy] = rgb(150, 150, 150)
+
+				dat += "<td bgcolor='[colors4x4[ix][iy]]'>"
+				dat += "<font face='fixedsys' size='3' color='[colors4x4[ix][iy]]'><a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors4x4[ix][iy]]'>__</a></font>"
+				dat += "</td>"
+			dat += "</tr>"
+
+		dat += {"</table>
+<img src=cutiemark_paint.png height=128 width=128>
+<img src=cutiemark_paint2.png height=128 width=128>
+<br>
+<a href='?_src_=prefs;cutie_paint=3'>\[Done\]</a>
+</body>
+</html>
+"}
+		user << browse(dat, "window=cutie_paint;size=150x200")
+
 	//The mob should have a gender you want before running this proc. Will run fine without H
 	proc/check_color()
 		var/r_dif = abs(r_hair-r_skin)
-		var/g_dif = abs(r_hair-r_skin)
-		var/b_dif = abs(r_hair-r_skin)
+		var/g_dif = abs(g_hair-g_skin)
+		var/b_dif = abs(b_hair-b_skin)
 		if(r_dif+g_dif+b_dif < 60)		//ѕроверка одинаковости
 			return 0
 
@@ -293,8 +329,7 @@ datum/preferences
 
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
-			var/un
-			if(current_species.flags & HAS_HORN)	un = "_un"
+			var/un = (current_species.flags & HAS_HORN) ? "_un" : ""
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
