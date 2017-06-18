@@ -133,7 +133,7 @@ var/list/bagreports = list()
 
 </body></html>
 	"}
-	usr << browse(replacetext(dat, "ÿ", "&#1103;"), "window=welcome;size=850x400")
+	usr << browse(fix_html(dat), "window=welcome;size=850x400")
 
 
 /client/Topic(href, href_list[])
