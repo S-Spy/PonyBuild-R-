@@ -17,7 +17,7 @@ var/list/accept_list = list()
 			if(client.language == "eng")
 				alert("We have actual rules and strongly recommend you read them before to play. Ignorance of the rules does not exempt from liability.")
 			else
-				alert(fix_html("ћы имеем актуальные правила и насто€тельно рекомендуем ¬ам ознакомитьс€ с ними перед началом игры. Ќезнание правил не освобождает от ответственности."))
+				alert("ћы имеем актуальные правила и насто€тельно рекомендуем ¬ам ознакомиться с ними перед началом игры. Ќезнание правил не освобождает от ответственности.")
 			accept_list += key
 		client.show_motd("welcome_[client.language]")
 
@@ -50,3 +50,4 @@ var/list/accept_list = list()
 		if(client)
 			handle_privacy_poll()
 			client.playtitlemusic()
+	//AddRep(ckey)

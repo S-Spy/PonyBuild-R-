@@ -718,8 +718,8 @@ datum/preferences
 		dat += "</br><b>Has excellent traction.</b>"
 	if(current_species.flags & NO_POISON)
 		dat += "</br><b>Immune to most poisons.</b>"
-	if(current_species.flags & HAS_WINGS)
-		dat += "</br><b>Has a variety of skin tones.</b>"
+	if(/datum/organ/external/r_wing in current_species.has_external_organ && /datum/organ/external/l_wing in current_species.has_external_organ)
+		dat += "</br><b>Has a wings and can fly.</b>"
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "</br><b>Has a variety of skin colours.</b>"
 	if(current_species.flags & HAS_EYE_COLOR)
@@ -732,9 +732,10 @@ datum/preferences
 	dat += "</tr>"
 	dat += "</table></td></tr></table><center><hr/>"
 	spell_paths = list()
-	if(current_species.flags & HAS_HORN)
+	if(/datum/organ/external/horn in current_species.has_external_organ)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
+		dat += "</br><b>Has a horn and can make magic \[[total_SP]\].</b>"
 
 
 	var/there_will_be_set_white_list

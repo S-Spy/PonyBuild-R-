@@ -94,6 +94,7 @@ var/list/bagreports = list()
 	var/label_wiki 		= (language == "ru") ? "Вики" 			: "Wiki"
 	var/label_admin 	= (language == "ru") ? "Администрация" : "Administration"
 	var/label_credits 	= (language == "ru") ? "Благодарности" : "Credits"
+	var/label_donut 	= (language == "ru") ? "Донат" : "Donut"
 
 
 	var/dat = {"
@@ -109,6 +110,7 @@ var/list/bagreports = list()
 	function page_stories()		{location.href='?_src_=welcome;motd=stories';}
 	function page_wiki() 		{location.href='?_src_=welcome;motd=wiki';}
 	function page_admin() 		{location.href='?_src_=welcome;motd=admins;';}
+	function page_donut() 		{location.href='?_src_=welcome;motd=donut;';}
 
 </script>
  </head>
@@ -123,6 +125,7 @@ var/list/bagreports = list()
 <td><input type="button" value="[label_stories]" 		id="button4_stories" onclick="page_stories()">			</td>
 <td><input type="button" value="[label_wiki]" 			id="button5_wiki" onclick="page_wiki()">				</td>
 <td><input type="button" value="[label_admin]" 			id="button6_admin" onclick="page_admin()">				</td>
+<td><input type="button" value="[label_donut]" 			id="button6_admin" onclick="page_donut()">				</td>
 <td align="right"><input type="button" value="[label_credits]" id="button7_credits" onclick="page_credits()">	</td>
 </tr><tr>
 <td>[label_lang]: 															</td>
@@ -135,7 +138,7 @@ var/list/bagreports = list()
 
 </body></html>
 	"}
-	usr << browse(fix_html(dat), "window=welcome;size=850x400")
+	usr << browse(fix_html(dat), "window=welcome;size=850x450")
 
 
 /client/Topic(href, href_list[])
@@ -168,7 +171,7 @@ var/list/bagreports = list()
 		if("add")
 			var/message = input("Введите описание ошибки.","Сообщение")
 			if(message)
-				bagreports += "<b>[usr.key]:</b> [replacetext(message, "я", "&#1103;")]"
+				bagreports += "<b>[usr.key]:</b> [fix_html(message)]"
 			fast_bug_report()
 		if("remove")
 			if(alert("You're sure?", null, "Yes", "No")=="Yes")

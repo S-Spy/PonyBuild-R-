@@ -349,15 +349,6 @@ proc/get_damage_icon_part(damage_state, body_part)
 			husk_over.Blend(mask, ICON_ADD)
 			base_icon.Blend(husk_over, ICON_OVERLAY)
 
-
-		//Skin tone.
-		if(!husk && !hulk)
-			if(species.flags & HAS_WINGS)
-				if(s_tone >= 0)
-					base_icon.Blend(rgb(s_tone, s_tone, s_tone), ICON_ADD)
-				else
-					base_icon.Blend(rgb(-s_tone,  -s_tone,  -s_tone), ICON_SUBTRACT)
-
 		pony_icon_cache[icon_key] = base_icon
 
 		//log_debug("Generated new cached mob icon ([icon_key] \icon[pony_icon_cache[icon_key]]) for [src]. [pony_icon_cache.len] cached mob icons.")
@@ -388,12 +379,18 @@ proc/get_damage_icon_part(damage_state, body_part)
 		else
 			stand_icon.Blend(cutiemark_paint, ICON_OVERLAY)
 
-	if(species.flags & HAS_WINGS)
-		var/icon/IW
+	if(get_organ("r_wing") || get_organ("l_wing"))
+		var/icon/IW = new/icon
 		if(floatiness)		IW = new/icon(species.icobase, "wings_active")
-		else				IW = new/icon(species.icobase, "wings")
-
-		IW.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+		else
+			if(get_organ("r_wing"))
+				var/icon/IWS = new/icon(species.icobase, "r_wing")
+				IWS.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+				IW.Blend(IWS, ICON_OVERLAY)
+			if(get_organ("l_wing"))
+				var/icon/IWS = new/icon(species.icobase, "l_wing")
+				IWS.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+				IW.Blend(IWS, ICON_OVERLAY)
 		overlays_standing[WINGS_LAYER] = image(IW)
 
 
@@ -409,7 +406,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 	overlays_standing[TAIL_LAYER]	= null
 
 	//Pony tail
-	if(get_organ("groin"))//≈сли есть флаг хвоста и тело, на котором он может держатьс€
+	if(get_organ("tail"))//≈сли есть флаг хвоста и тело, на котором он может держатьс€
 		var/datum/sprite_accessory/pony_tailstyle = pony_tail_styles_list[pony_tail_style] //из глобального листа беретс€ нужна€ прическа
 		var/icon/p_tail = new/icon('icons/mob/pony_face.dmi', "icon_state" = "[pony_tailstyle.icon_state]_s")
 		p_tail.Blend(rgb(r_tail, g_tail, b_tail), ICON_ADD)
@@ -441,10 +438,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 			face_standing.Blend(facial_s, ICON_OVERLAY)
 
-	if(species.flags & HAS_HORN)
-		var/icon/ICON = new/icon(species.icobase, "icon_state" = "horn")
-		ICON.Blend(rgb(r_skin, g_skin, b_skin))
-		face_standing.Blend(ICON, ICON_OVERLAY)
+	if(get_organ("horn"))
+		//var/icon/ICON = new/icon(species.icobase, "icon_state" = "horn")
+		//ICON.Blend(rgb(r_skin, g_skin, b_skin))
+		//face_standing.Blend(ICON, ICON_OVERLAY)
 
 		var/has_item
 		for(var/datum/hand/H in list_hands)
@@ -462,7 +459,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && src.species.name in hair_style.species_allowed)
 			var/un
-			if(species.flags & HAS_HORN)	un = "_un"
+			if(get_organ("horn"))	un = "_un"
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			if(hair_style.do_colouration)
 				hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)

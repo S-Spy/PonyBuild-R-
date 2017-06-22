@@ -14,6 +14,9 @@
  * Roundend hook.
  * Called in gameticker.dm when a round ends.
  */
+
+/hook/worlddel
+
 /hook/roundend
 
 /**

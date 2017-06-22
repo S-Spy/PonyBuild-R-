@@ -105,6 +105,27 @@
 		"appendix" = /datum/organ/internal/appendix,
 		"eyes" =     /datum/organ/internal/eyes
 		)
+	var/list/has_external_organ = list(
+		/datum/organ/external/chest 	= "main",
+
+		/datum/organ/external/neck 		= "chest",
+		/datum/organ/external/head 		= "neck",
+		/datum/organ/external/r_ear		= "head",
+		/datum/organ/external/l_ear		= "head",
+
+		/datum/organ/external/groin 	= "chest",
+		/datum/organ/external/tail 		= "groin",
+		/datum/organ/external/r_leg 	= "groin",
+		/datum/organ/external/r_foot 	= "r_leg",
+		/datum/organ/external/l_leg		= "groin",
+		/datum/organ/external/l_foot 	= "l_leg",
+
+		/datum/organ/external/l_arm 	= "chest",
+		/datum/organ/external/l_hand 	= "l_arm",
+
+		/datum/organ/external/r_arm 	= "chest",
+		/datum/organ/external/r_hand 	= "r_arm"
+	)
 
 /datum/species/New()
 	if(hud_type)
@@ -152,22 +173,11 @@
 	H.internal_organs_by_name = list()
 
 	//This is a basic ponyoid limb setup.
-	H.organs_by_name["chest"] = new/datum/organ/external/chest()
-	H.organs_by_name["groin"] = new/datum/organ/external/groin(H.organs_by_name["chest"])
-	H.organs_by_name["head"] = new/datum/organ/external/head(H.organs_by_name["chest"])
-	H.organs_by_name["l_arm"] = new/datum/organ/external/l_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_arm"] = new/datum/organ/external/r_arm(H.organs_by_name["chest"])
-	H.organs_by_name["r_leg"] = new/datum/organ/external/r_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_leg"] = new/datum/organ/external/l_leg(H.organs_by_name["groin"])
-	H.organs_by_name["l_hand"] = new/datum/organ/external/l_hand(H.organs_by_name["l_arm"])
-	H.organs_by_name["r_hand"] = new/datum/organ/external/r_hand(H.organs_by_name["r_arm"])
-	H.organs_by_name["l_foot"] = new/datum/organ/external/l_foot(H.organs_by_name["l_leg"])
-	H.organs_by_name["r_foot"] = new/datum/organ/external/r_foot(H.organs_by_name["r_leg"])
-	H.organs_by_name["horn"] = new/datum/organ/external/r_foot(H.organs_by_name["horn"])
-	H.organs_by_name["wings"] = new/datum/organ/external/r_foot(H.organs_by_name["wings"])
-	H.organs_by_name["ears"] = new/datum/organ/external/r_foot(H.organs_by_name["ears"])
-	H.organs_by_name["tail"] = new/datum/organ/external/r_foot(H.organs_by_name["tail"])
-	H.organs_by_name["neck"] = new/datum/organ/external/r_foot(H.organs_by_name["neck"])
+	for(var/path in has_external_organ)
+		var/datum/organ/external/O
+		if(has_external_organ[path] == "main")	O = new path()
+		else									O = new path(H.organs_by_name[has_external_organ[path]])
+		H.organs_by_name[O.name] = O
 
 	for(var/organ in has_organ)
 		var/organ_type = has_organ[organ]

@@ -18,6 +18,7 @@
 	reagent_tag = IS_HERBIVORE
 
 
+
 /datum/species/unicorn
 	name = "Unicorn"
 	name_plural = "Unicorn"
@@ -47,7 +48,7 @@
 	//heat_level_2 = 480 //Default 400
 	//heat_level_3 = 1100 //Default 1000
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_EYE_COLOR
+	flags = CAN_JOIN | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#34AF10"
 
@@ -67,6 +68,28 @@
 	//	"Your scales bristle against the cold."
 	//	)
 	reagent_tag = IS_HERBIVORE
+	has_external_organ = list(
+		/datum/organ/external/chest 	= "main",
+
+		/datum/organ/external/neck 		= "chest",
+		/datum/organ/external/head 		= "neck",
+		/datum/organ/external/r_ear		= "head",
+		/datum/organ/external/l_ear		= "head",
+		/datum/organ/external/horn 		= "head",
+
+		/datum/organ/external/groin 	= "chest",
+		/datum/organ/external/tail 		= "groin",
+		/datum/organ/external/r_leg 	= "groin",
+		/datum/organ/external/r_foot 	= "r_leg",
+		/datum/organ/external/l_leg		= "groin",
+		/datum/organ/external/l_foot 	= "l_leg",
+
+		/datum/organ/external/l_arm 	= "chest",
+		/datum/organ/external/l_hand 	= "l_arm",
+
+		/datum/organ/external/r_arm 	= "chest",
+		/datum/organ/external/r_hand 	= "r_arm"
+	)
 
 /datum/species/pegasus
 	name = "Pegasus"
@@ -101,7 +124,7 @@
 
 	primitive = /mob/living/carbon/monkey/pegasus
 
-	flags = CAN_JOIN | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_WINGS
+	flags = CAN_JOIN | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#AFA59E"
 	//base_color = "#333333"
@@ -114,6 +137,30 @@
 	//	)
 	//cold_discomfort_level = 275
 	reagent_tag = IS_HERBIVORE
+	has_external_organ = list(
+		/datum/organ/external/chest 	= "main",
+
+		/datum/organ/external/neck 		= "chest",
+		/datum/organ/external/head 		= "neck",
+		/datum/organ/external/r_ear		= "head",
+		/datum/organ/external/l_ear		= "head",
+
+		/datum/organ/external/groin 	= "chest",
+		/datum/organ/external/tail 		= "groin",
+		/datum/organ/external/r_leg 	= "groin",
+		/datum/organ/external/r_foot 	= "r_leg",
+		/datum/organ/external/l_leg		= "groin",
+		/datum/organ/external/l_foot 	= "l_leg",
+
+		/datum/organ/external/r_wing 	= "chest",
+		/datum/organ/external/l_wing 	= "chest",
+
+		/datum/organ/external/l_arm 	= "chest",
+		/datum/organ/external/l_hand 	= "l_arm",
+
+		/datum/organ/external/r_arm 	= "chest",
+		/datum/organ/external/r_hand 	= "r_arm"
+	)
 
 /datum/species/alicorn
 	name = "Alicorn"
@@ -136,13 +183,38 @@
 ВНИМАНИЕ: Эта раса - невероятно редкая. Во всем (государстве) их всего единицы. И-вы-сами-знаете-кто-они. \
 Вы точно уверены что хотите сыграть за них?"
 
-	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_HORN | HAS_SKIN_COLOR | HAS_WINGS | HAS_EYE_COLOR
+	flags = CAN_JOIN | IS_WHITELISTED | HAS_LIPS | HAS_SKIN_COLOR | HAS_EYE_COLOR
 
 	//flesh_color = "#8CD7A3"
 	//blood_color = "#1D2CBF"
 	//base_color = "#006666"
 
 	reagent_tag = IS_HERBIVORE
+	has_external_organ = list(
+		/datum/organ/external/chest 	= "main",
+
+		/datum/organ/external/neck 		= "chest",
+		/datum/organ/external/head 		= "neck",
+		/datum/organ/external/r_ear		= "head",
+		/datum/organ/external/l_ear		= "head",
+		/datum/organ/external/horn 		= "head",
+
+		/datum/organ/external/groin 	= "chest",
+		/datum/organ/external/tail 		= "groin",
+		/datum/organ/external/r_leg 	= "groin",
+		/datum/organ/external/r_foot 	= "r_leg",
+		/datum/organ/external/l_leg		= "groin",
+		/datum/organ/external/l_foot 	= "l_leg",
+
+		/datum/organ/external/r_wing 	= "chest",
+		/datum/organ/external/l_wing 	= "chest",
+
+		/datum/organ/external/l_arm 	= "chest",
+		/datum/organ/external/l_hand 	= "l_arm",
+
+		/datum/organ/external/r_arm 	= "chest",
+		/datum/organ/external/r_hand 	= "r_arm"
+	)
 
 /datum/species/diona
 	name = "Diona"

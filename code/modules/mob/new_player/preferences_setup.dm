@@ -285,7 +285,7 @@
 
 
 		//Magic horn
-		if(current_species && current_species.flags & HAS_HORN)
+		if(current_species && /datum/organ/external/horn in current_species.has_external_organ)
 			var/icon/I = new/icon(current_species.icobase, "horn")
 			preview_icon.Blend(I, ICON_OVERLAY)
 
@@ -300,13 +300,17 @@
 			preview_icon.Blend(cutie_mark_s, ICON_OVERLAY)
 
 		//Wings of pegasus
-		if(current_species && (current_species.flags & HAS_WINGS))
-			var/icon/I = new/icon(current_species.icobase, "wings")
+		if(current_species && /datum/organ/external/r_wing in current_species.has_external_organ)
+			var/icon/I = new/icon(current_species.icobase, "r_wing")
+			I.Blend(rgb(r_skin, g_skin, b_skin))
+			preview_icon.Blend(I, ICON_OVERLAY)
+		if(current_species && /datum/organ/external/l_wing in current_species.has_external_organ)
+			var/icon/I = new/icon(current_species.icobase, "l_wing")
 			I.Blend(rgb(r_skin, g_skin, b_skin))
 			preview_icon.Blend(I, ICON_OVERLAY)
 
 		//Magic aura
-		if(current_species && current_species.flags & HAS_HORN)
+		if(current_species && current_species && /datum/organ/external/horn in current_species.has_external_organ)
 			var/icon/I = new/icon('icons/mob/pony.dmi', "icon_state" = "horn_light")
 			I.Blend(rgb(r_aura, g_aura, b_aura), ICON_ADD)
 			preview_icon.Blend(I, ICON_OVERLAY)
@@ -321,7 +325,7 @@
 
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style)
-			var/un = (current_species.flags & HAS_HORN) ? "_un" : ""
+			var/un = (/datum/organ/external/horn in current_species.has_external_organ) ? "_un" : ""
 			var/icon/hair_s = new/icon("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state][un]_s")
 			hair_s.Blend(rgb(r_hair, g_hair, b_hair), ICON_ADD)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)

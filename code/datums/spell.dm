@@ -75,7 +75,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 		usr << "You can't use this spell! Maybe you must eat something?"
 		return 0//ѕроверка доступности долгосрочного заклинани€
 
-	if(user.block_horn_light || (user.species.flags && !(user.species.flags & HAS_HORN)))
+	if(user.block_horn_light || !user.get_organ("horn"))
 		return 0//&& ismage(usr)
 
 	if(ispony(usr) || ismonkey(usr))

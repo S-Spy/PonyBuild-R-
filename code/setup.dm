@@ -617,16 +617,15 @@ var/list/be_special_flags = list(
 #define NO_PAIN        8     // Cannot suffer halloss/recieves deceptive health indicator.
 #define NO_SLIP        16    // Cannot fall over.
 #define NO_POISON      32    // Cannot not suffer toxloss.
-#define HAS_WINGS  64    	 // Skin tone selectable in chargen. (0-255)
-#define HAS_SKIN_COLOR 128   // Skin colour selectable in chargen. (RGB)
-#define HAS_LIPS       256   // Lips are drawn onto the mob icon. (lipstick)
-#define HAS_HORN       512   // pony_tail is drawn onto the mob icon.
-#define IS_PLANT       1024  // Is a treeperson.
-#define IS_WHITELISTED 2048  // Must be whitelisted to play.
-#define IS_SYNTHETIC   4096  // Is a machine race.
-#define HAS_EYE_COLOR  8192  // Eye colour selectable in chargen. (RGB)
-#define CAN_JOIN       16384 // Species is selectable in chargen.
-#define IS_RESTRICTED  32768 // Is not a core/normally playable species. (castes, mutantraces)
+#define HAS_SKIN_COLOR 64   // Skin colour selectable in chargen. (RGB)
+#define HAS_LIPS       128   // Lips are drawn onto the mob icon. (lipstick)
+#define IS_PLANT       256  // Is a treeperson.
+#define IS_WHITELISTED 512  // Must be whitelisted to play.
+#define IS_SYNTHETIC   1024  // Is a machine race.
+#define HAS_EYE_COLOR  2048  // Eye colour selectable in chargen. (RGB)
+#define CAN_JOIN       4096 // Species is selectable in chargen.
+#define IS_RESTRICTED  8192 // Is not a core/normally playable species. (castes, mutantraces)
+//MAXIMUM: 16384 & 32768
 
 // Language flags.
 #define WHITELISTED 1   // Language is available if the speaker is whitelisted.

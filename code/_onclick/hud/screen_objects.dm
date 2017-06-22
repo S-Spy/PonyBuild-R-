@@ -350,13 +350,15 @@ proc/get_pixel_list(var/obj/screen/zone_sel/O)
 					C.hud_used.move_intent.icon_state = "walking"
 					return 1
 				switch(usr.m_intent)
+
 					if("fly")
 						usr.make_floating(0)
 						usr.update_icons()
 						usr.m_intent = "walk"
 						usr.hud_used.move_intent.icon_state = "walking"
 					if("run")
-						if(C.species.flags & HAS_WINGS)
+						var/mob/living/carbon/pony/P = usr
+						if(P.get_organ("r_wing") && P.get_organ("l_wing"))
 							usr.m_intent = "fly"
 							usr.make_floating(1)
 							usr.update_icons()
