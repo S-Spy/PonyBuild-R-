@@ -136,6 +136,7 @@ var/list/admin_verbs_server = list(
 	/datum/admins/proc/toggle_space_ninja,
 	/client/proc/toggle_random_events,
 	/client/proc/check_customitem_activity,
+	/client/proc/edit_recipes,
 	/client/proc/nanomapgen_DumpImage
 	)
 var/list/admin_verbs_debug = list(
@@ -323,6 +324,90 @@ var/list/admin_verbs_mentor = list(
 		debug_verbs
 		)
 
+
+/client/proc/edit_recipes()
+	set name = "Show Recipes"
+	set category = "Server"
+
+	var/dat = "<html><body>"
+	dat += "<h3>Recipes Table</h3><br><table border=1>"
+	dat += "<tr><td></td><td><b>Ingredients</b></td> <td><b>Reagents</b></td> <td><b>Fruits</b></td> <td><b>Modificator</b></td>"
+	dat += "<td><b>Max S&S</b></td><td><b>Time</b></td><td><b>Path of recipes</b></td><td><b>Result</b></td><tr>"
+	var/i = 1
+	for(var/datum/recipe/R in data_recipes)
+		dat += "<tr>"
+		dat += {"<td><a href=\"byond://?src=\ref[usr];recipes=edit;num=[i]">\[E\]</a>"}
+		if(R.changed==1)	dat += "(E)"
+		if(R.changed==2)	dat += "(A)"
+		dat += "</td>"
+
+		dat += "<td><table>"
+		for(var/type in R.items)
+			dat += "<tr><td><small>[replacetext("[type]", "/obj/item", "..")]</small></td></tr>"
+		dat += "</table></td>"
+
+		dat += "<td><table>"
+		for(var/type in R.reagents)
+			dat += "<tr><td><small>[type]=[R.reagents[type]]</small></td></tr>"
+		dat += "</table></td>"
+
+		dat += "<td><table>"
+		for(var/type in R.fruit)
+			dat += "<tr><td><small>[type]=[R.fruit[type]]</small></td></tr>"
+		dat += "</table></td>"
+
+		dat += "<td><table>"
+		for(var/type in R.modificator)
+			if(R.modificator[type] != 0)
+				dat += "<tr><td><small>[type]: "
+				if(R.modificator[type]>0)
+					dat += "+"
+				dat += "[R.modificator[type]]</small></td></tr>"
+		dat += "</table></td>"
+
+		dat += "<td><table>"
+		dat += "<tr><td><small>Salt: [R.max_salt_sugar[1]]</small></td></tr>"
+		dat += "<tr><td><small>Sugar: [R.max_salt_sugar[2]]</small></td></tr>"
+		dat += "</table></td>"
+
+		dat += "<td><small>[R.time]</small></td>"
+		dat += "<td><small>[replacetext("[R.type]", "/datum/recipe", "..")]</small></td>"
+		dat += "<td><small>[replacetext("[R.result]", "/obj/item/weapon", "..")]</small></td></tr>"
+		i++
+
+
+
+	dat += "</table></body></html>"
+	usr << browse(dat, "window=recipes;size=800x500")
+
+/*i/client/Topic(href,href_list[])
+	..()
+	switch(href_list["recipes"])
+		f("edit")
+			var/datum/recipe/R = data_recipes[href_list["num"]]
+			switch(alert("Do you want add new ingredient?",,"Add","Remove","Next","Cancel"))
+				if("Cancel")	return
+				if("Add")
+					while(alert("Do you want add new ingredient",,"Yes","No")=="Yes")
+						R.items.Add(input("Select a new item in code", "Item", /obj/item/weapon/reagent_containers/food/snacks/dough) in typesof(/obj/item)-/obj/item)
+
+				if("Remove")
+					R.items.Remove(input("Select item in list", "Item", pick(R.items)) in R.items)
+
+			switch(alert("Do you want add new need reagent?",,"Add","Remove","Next"))
+				if("Add")
+					do
+						var/reagent = input("What reagent?", "Reagent", "nutriment")
+						var/amount = input("What amount?", "Reagent", 1) as num
+						R.reagents[reagent]=amount
+					while(alert("Do you want add new reagent?",,"Yes","No")=="Yes")
+				if("Remove")
+					do
+						R.reagents.Remove(input("What reagent?", "Reagent", pick(R.reagents)) in R.reagents)
+					while(R.reagents.len && alert("Do you want remove another reagent?",,"Yes","No")=="Yes")
+
+
+*/
 /client/proc/hide_most_verbs()//Allows you to keep some functionality while hiding some verbs
 	set name = "Adminverbs - Hide Most"
 	set category = "Admin"

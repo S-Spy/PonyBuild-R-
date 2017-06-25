@@ -350,3 +350,17 @@
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
 	siemens_coefficient = 1
+
+/obj/item/clothing/suit/armor/archmage
+	name = "Archmage mantle"
+	desc = "It's maaaagic."
+	icon_state = "archmage"
+	item_state = "archmage"
+	var/orbs[3]
+	siemens_coefficient = 0
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+
+	proc/update_orbs(var/mob/living/carbon/pony/P)
+		P.update_icons()
+

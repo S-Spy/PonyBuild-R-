@@ -1,3 +1,46 @@
+var/list/data_recipes = list()
+
+
+
+/hook/startup/proc/loadRecipes()
+	if(fexists("data/recipes.sav"))
+		var/savefile/recipes_file = new /savefile("data/microwave_recipes.sav")
+		recipes_file["microwave"] >> data_recipes
+
+
+	//Нужно все записать в лист рецептов
+	for(var/type in (typesof(/datum/recipe)-/datum/recipe))
+		var/datum/recipe/R = new type
+		var/has_same = 0
+		for(var/datum/recipe/UR in data_recipes)
+			var/same = 0
+			if(UR.items			==R.items)				same++;
+			if(UR.reagents		==R.reagents)			same++;
+			if(UR.fruit			==R.fruit)				same++;
+			if(UR.time			==R.time)				same++;
+			if(UR.result		==R.result)				same++;
+			if(UR.max_salt_sugar==R.max_salt_sugar)		same++;
+			if(UR.modificator	==R.modificator)		same++;
+			if(UR.type			==R.type)				same++;
+			if(same == 8)
+				has_same = 1
+				break
+		if(!has_same)
+			data_recipes += R
+
+	for(var/datum/recipe/R in data_recipes)
+		if(R.reagents==list() && R.fruit==list() && R.items==list())
+			data_recipes.Remove(R)
+		else if(!R.result)
+			data_recipes.Remove(R)
+
+	return 1
+
+/hook/roundend/proc/saveRecipes()
+	var/savefile/S = new /savefile("data/microwave_recipes.sav")
+	S["microwave"] << data_recipes
+	return 1
+
 
 /obj/machinery/microwave
 	name = "Microwave"
@@ -13,10 +56,9 @@
 	var/operating = 0 // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
-	var/global/list/datum/recipe/available_recipes // List of the recipes you can use
-	var/global/list/acceptable_items // List of the items you can put in
-	var/global/list/acceptable_reagents // List of the reagents you can put in
-	var/global/max_n_of_items = 0
+	var/list/acceptable_items = list()// List of the items you can put in
+	var/list/acceptable_reagents = list()// List of the reagents you can put in
+	var/max_n_of_items = 0
 
 
 // see code/modules/food/recipes_microwave.dm for recipes
@@ -29,24 +71,24 @@
 	..()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
-	if (!available_recipes)
-		available_recipes = new
-		for (var/type in (typesof(/datum/recipe)-/datum/recipe))
-			available_recipes+= new type
-		acceptable_items = new
-		acceptable_reagents = new
-		for (var/datum/recipe/recipe in available_recipes)
-			for (var/item in recipe.items)
-				acceptable_items |= item
-			for (var/reagent in recipe.reagents)
-				acceptable_reagents |= reagent
-			if (recipe.items)
-				max_n_of_items = max(max_n_of_items,recipe.items.len)
+	for (var/list/L in data_recipes)
+		var/datum/recipe/R = new L["path"]
+		R.items = L["items"]
+		R.reagents = L["reagents"]
+
+		for (var/item in R.items)
+			acceptable_items |= item
+		for (var/reagent in R.reagents)
+			acceptable_reagents |= reagent
+		if (R.items)
+			max_n_of_items = max(max_n_of_items, R.items.len)
 		// This will do until I can think of a fun recipe to use dionaea in -
 		// will also allow anything using the holder item to be microwaved into
 		// impure carbon. ~Z
-		acceptable_items |= /obj/item/weapon/holder
-		acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
+	acceptable_items |= /obj/item/weapon/holder
+	acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
+
+
 
 /*******************
 *   Item Adding
@@ -228,7 +270,7 @@
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(available_recipes,src)
+	var/datum/recipe/recipe = select_recipe(src)
 	var/obj/cooked
 	if (!recipe)
 		dirty += 1
@@ -269,6 +311,40 @@
 			cooked.loc = src.loc
 			return
 		cooked = recipe.make_food(src)
+		cooked.reagents.clear_reagents()
+
+		//Сначала нужно собрать все содержимое ингредиентов
+		for(var/obj/O in contents+src)
+			O.reagents.trans_to(cooked, 100)
+
+		cooked.reagents.add_reagent("nutriment", round(cooked.reagents.get_reagent_amount("nutriment")*0.2))
+		cooked.reagents.add_reagent("protein", round(cooked.reagents.get_reagent_amount("protein")*0.2))
+
+		var/salt = cooked.reagents.get_reagent_amount("sodiumchloride")
+		var/sugar = cooked.reagents.get_reagent_amount("sugar")
+		var/capsaicin = cooked.reagents.get_reagent_amount("capsaicin")
+
+		if(salt > recipe.max_salt_sugar[1])
+			cooked.reagents.add_reagent("toxin", min(1, salt))
+			cooked.reagents.remove_reagent("sodiumchloride", min(1, salt))
+		else
+			cooked.reagents.add_reagent("nutriment", min(1, salt))
+			cooked.reagents.remove_reagent("sodiumchloride", min(1, salt))
+
+		if(sugar > recipe.max_salt_sugar[2])
+			if(recipe.max_salt_sugar[2]<10 && recipe.max_salt_sugar[1]>1)
+				cooked.reagents.add_reagent("toxin", 1)
+				cooked.reagents.remove_reagent("sugar", 1)
+		else
+			cooked.reagents.add_reagent("nutriment", min(1, sugar))
+			cooked.reagents.remove_reagent("sugar", min(1, sugar))
+
+		cooked.reagents.add_reagent("nutriment", min(1, capsaicin))
+		cooked.reagents.remove_reagent("capsaicin", min(1, capsaicin))
+
+		for(var/reagent in recipe.modificator)
+			cooked.reagents.add_reagent(reagent, recipe.modificator[reagent])
+
 		stop()
 		if(cooked)
 			cooked.loc = src.loc

@@ -21,7 +21,8 @@
  * Text sanitization
  */
 
-
+proc/fix_html(var/t)
+	return replacetext(t, "ÿ", "&#1103;")
 
 //Simply removes < and > and limits the length of the message
 /proc/strip_html_simple(var/t,var/limit=MAX_MESSAGE_LEN)

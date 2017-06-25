@@ -40,7 +40,7 @@ mob/living/carbon/proc/dream()
 				return 0
 		usr:dreaming = 0
 		if(ispony(usr))
-			if(!home_mob && prob(30))	usr:goto_dream()
+			if(!home_mob && prob(40))	usr:goto_dream()
 		return 1
 
 mob/living/carbon/proc/handle_dreams()

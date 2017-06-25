@@ -9,6 +9,8 @@ Thumbs.db
 *.dmb
 *.sav
 *~
-data/
-Forum/
-Forum/Forum.sav
+
+*/*.ini
+data/*
+Forum/*
+Forum/*.sav

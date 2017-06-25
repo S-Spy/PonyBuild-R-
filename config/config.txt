@@ -186,7 +186,7 @@ GUEST_JOBBAN
 
 ## set a server URL for the IRC bot to use; like SERVER, don't include the byond://
 ## Unlike SERVER, this one shouldn't break auto-reconnect
-#SERVERURL server.net:port
+SERVERURL ponystation.com:3337
 
 ## forum address
 # FORUMURL http://example.com

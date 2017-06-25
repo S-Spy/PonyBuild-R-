@@ -146,15 +146,16 @@ datum/preferences
 	var/slot_name = ""
 
 	var/brush_color
-	var/list/colors4x4[4][4]//ƒл€ записи в лист сохранений
+	var/colors5x5[5][5]//ƒл€ записи в лист сохранений
 	var/custom_cutiemark = 0
 	var/icon/cutiemark_paint_west
 	var/icon/cutiemark_paint_east
 	var/list/spell_paths = list()
 
 /datum/preferences/New(client/C)
-	for(var/i1=1, i1<=4, i1++)	for(var/i2=1, i2<=4, i2++)
-		colors4x4[i1][i2]="#00000000"
+	for(var/i1=1, i1<=5, i1++)	for(var/i2=1, i2<=5, i2++)
+		colors5x5[i1][i2]="#00000000"
+
 
 	b_type = pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 	if(istype(C) && !IsGuestKey(C.key))
@@ -166,6 +167,7 @@ datum/preferences
 	real_name = random_name(gender,species)
 
 	gear = list()
+	update_custom_cutiemark()
 
 /datum/preferences/proc/ZeroSkills(var/forced = 0)
 	for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
@@ -403,14 +405,15 @@ datum/preferences
 	else
 		dat += "<br><br>"
 
-	dat += "CutieMark:<br><a href='?_src_=prefs;preference=cutie_mark;task=input'><b>[cutie_mark]</b></a><br>"
-	/*dat += "Custom CutieMark: <a href='?_src_=prefs;cutie_paint=switch'><b>"
+
+	dat += "CutieMark:<br>"
 	if(custom_cutiemark)
-		dat += "Yes</b></a> "
-		dat += " <a href='?_src_=prefs;cutie_paint=set'><b>Draw Cutiemark"
+		dat += "<a href='?_src_=prefs;cutie_paint=draw'><b>Draw Custom</b>"
 	else
-		dat += "No"
-	dat += "</b></a><br><br>"*/
+		dat += "<a href='?_src_=prefs;preference=cutie_mark;task=input'>[cutie_mark]"
+	dat += "</a><br>(Custom: <a href='?_src_=prefs;cutie_paint=switch'>"
+	dat += (custom_cutiemark) ? "Yes" : "No"
+	dat += "</a>)<br><br>"
 
 
 	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
@@ -715,8 +718,8 @@ datum/preferences
 		dat += "</br><b>Has excellent traction.</b>"
 	if(current_species.flags & NO_POISON)
 		dat += "</br><b>Immune to most poisons.</b>"
-	if(current_species.flags & HAS_WINGS)
-		dat += "</br><b>Has a variety of skin tones.</b>"
+	if(/datum/organ/external/r_wing in current_species.has_external_organ && /datum/organ/external/l_wing in current_species.has_external_organ)
+		dat += "</br><b>Has a wings and can fly.</b>"
 	if(current_species.flags & HAS_SKIN_COLOR)
 		dat += "</br><b>Has a variety of skin colours.</b>"
 	if(current_species.flags & HAS_EYE_COLOR)
@@ -729,9 +732,10 @@ datum/preferences
 	dat += "</tr>"
 	dat += "</table></td></tr></table><center><hr/>"
 	spell_paths = list()
-	if(current_species.flags & HAS_HORN)
+	if(/datum/organ/external/horn in current_species.has_external_organ)
 		total_SP = current_species.name == "Alicorn" ? 10 : 5
 		free_SP = total_SP
+		dat += "</br><b>Has a horn and can make magic \[[total_SP]\].</b>"
 
 
 	var/there_will_be_set_white_list
@@ -1007,45 +1011,51 @@ datum/preferences
 					job_engsec_low |= job.flag
 	return 1
 
-/mob/var/icon/cutiemark_paint_west//≈сли стоит галочка, то эта переменна€ заполнитс€ и будет использоватьс€ заместо
-/mob/var/icon/cutiemark_paint_east
-
-/datum/preferences/proc/CustomCutiemarkPaint(mob/user)
-	if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	if(!cutiemark_paint_west)
-		cutiemark_paint_east = new/icon('icons/mob/cutiemarks.dmi', "blank")
-		cutiemark_paint_west = new/icon('icons/mob/cutiemarks.dmi', "blank")
 
 
-	var/dat = {"
-<html>
-<body>
-<b>Brush color:<b> <table><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
-<table border=0 cellspacing=0>"}
 
-	for(var/iy=4, iy>=1, iy--)
-		dat += "<tr>"
-		for(var/ix=1, ix<=4, ix++)
-			if(colors4x4[ix][iy]=="#00000000")
-				if(!( (ix==1 && (iy==4||iy==3)) || (ix==2 && iy==4) ))
-					colors4x4[ix][iy] = rgb(150, 150, 150)
 
-			dat += "<td bgcolor='[colors4x4[ix][iy]]'>"
-			dat += "<font face='fixedsys' size='3' color='[colors4x4[ix][iy]]'><a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors4x4[ix][iy]]'>__</a></font>"
-			dat += "</td>"
-		dat += "</tr>"
-	usr << browse_rsc(cutiemark_paint_east,"cutiemark_paint.png")
-	usr << browse_rsc(cutiemark_paint_west,"cutiemark_paint2.png")
-	dat += {"</table>
-<img src=cutiemark_paint.png height=128 width=128>
-<img src=cutiemark_paint2.png height=128 width=128>
-<br>
-<a href='?_src_=prefs;cutie_paint=3'>\[Done\]</a>
-</body>
-</html>
-"}
 
-	user << browse(dat, "window=cutie_paint;size=150x200")
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------------------------------------------//
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+/datum/preferences/proc/update_custom_cutiemark(mob/user)
+	del(cutiemark_paint_east)
+	del(cutiemark_paint_west)
+	cutiemark_paint_west = new/icon('icons/mob/cutiemarks.dmi', "blank")
+	cutiemark_paint_east = new/icon('icons/mob/cutiemarks.dmi', "blank")
+	for(var/ix=1, ix<=5, ix++)	for(var/iy=1, iy<=5, iy++)
+		cutiemark_paint_east.DrawBox(colors5x5[ix][iy], 11+ix, 9+iy)
+		cutiemark_paint_west.DrawBox(colors5x5[ix][iy], 16+6-ix, 9+iy)
+
+	if(user)
+		user << browse_rsc(cutiemark_paint_east,"cutiemark_paint.png")
+		user << browse_rsc(cutiemark_paint_west,"cutiemark_paint2.png")
+
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)	return
@@ -1060,27 +1070,18 @@ datum/preferences
 		if("2")
 			var/ix = text2num(href_list["x"])
 			var/iy = text2num(href_list["y"])
-
-			if( !(ix==1 && (iy==4 || iy==3)) && !(ix==2 && iy==4) )
-				colors4x4[ix][iy] = brush_color
-				cutiemark_paint_east.DrawBox(brush_color, 11+ix, 9+iy)
-				cutiemark_paint_west.DrawBox(brush_color, 16+5-ix, 9+iy)
+			colors5x5[ix][iy] = brush_color
 			CustomCutiemarkPaint(user)
 			return
 		if("3")
 			user << browse(null,  "window=cutie_paint")
 		if("switch")
+			update_custom_cutiemark()
 			custom_cutiemark = !custom_cutiemark
-		if("set")
+		if("draw")
 			CustomCutiemarkPaint(user)
 			return
 
-	if(href_list["preference"] == "cutie_paint")
-		if(config.forumurl)
-			user << link(config.forumurl)
-		else
-			user << "<span class='danger'>The forum URL is not set in the server configuration.</span>"
-			return
 
 	if(href_list["preference"] == "open_whitelist_forum")
 		if(config.forumurl)

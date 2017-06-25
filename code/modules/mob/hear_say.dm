@@ -1,5 +1,4 @@
 // At minimum every mob has a hear_say proc.
-
 /mob/proc/hear_say(var/message, var/verb = "says", var/datum/language/language = null, var/alt_name = "",var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
 	if(!client)
 		return
@@ -42,12 +41,18 @@
 					message = stars(message)
 
 	var/speaker_name = speaker.name
+
 	if(istype(speaker, /mob/living/carbon/pony))
 		var/mob/living/carbon/pony/H = speaker
 		speaker_name = H.GetVoice()
 
+	if(speaker.gender==FEMALE)
+		verb = "<i>[verb]</i>"
+		message = {"<font face="Arial">[message]</font>"}
+
 	if(italics)
 		message = "<i>[message]</i>"
+
 
 	var/track = null
 	if(istype(src, /mob/dead/observer))
@@ -69,7 +74,7 @@
 		if(language)
 			on_hear_say("<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
 		else
-			on_hear_say("<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			on_hear_say("<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb] <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
@@ -128,6 +133,10 @@
 		speaker_name = "unknown"
 
 	var/changed_voice
+
+	if(speaker.gender==FEMALE)
+		verb = "<i>[verb]</i>"
+		message = {"<font face="Arial">[message]</font>"}
 
 	if(istype(src, /mob/living/silicon/ai) && !hard_to_hear)
 		var/jobname // the mob's "job"

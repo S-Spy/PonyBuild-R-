@@ -36,6 +36,11 @@
 	var/list/fruit    // example: = list("fruit" = 3)
 	var/result        // example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100    // 1/10 part of second
+	var/max_salt_sugar = list(5, 1)
+	var/modificator = list("nutriment" = 2)
+	var/changed = 0
+
+/datum/recipe/new_recipe
 
 /datum/recipe/proc/check_reagents(var/datum/reagents/avail_reagents)
 	. = 1
@@ -114,10 +119,10 @@
 	container.reagents.clear_reagents()
 	return result_obj
 
-/proc/select_recipe(var/list/datum/recipe/avaiable_recipes, var/obj/obj as obj, var/exact)
+/proc/select_recipe(var/obj/obj as obj, var/exact)
 	var/list/datum/recipe/possible_recipes = new
 	var/target = exact ? 0 : 1
-	for (var/datum/recipe/recipe in avaiable_recipes)
+	for (var/datum/recipe/recipe in data_recipes)
 		if((recipe.check_reagents(obj.reagents) < target) || (recipe.check_items(obj) < target) || (recipe.check_fruit(obj) < target))
 			continue
 		possible_recipes |= recipe
@@ -134,3 +139,5 @@
 				highest_count = count
 				. = recipe
 		return .
+
+
