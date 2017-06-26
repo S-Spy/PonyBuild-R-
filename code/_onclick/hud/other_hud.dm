@@ -41,7 +41,7 @@
 		)
 	hud_splash_add = list(
 		"flash"				=  list("loc" = "1,1 to 15,15", "state" = "blank", 			 				),
-		"blind"				=  list("loc" = "1,1", 			"state" = "blackimageoverlay",	"noicon" = 1),
+		//"blind"			=  list("loc" = "1,1", 			"state" = "blackimageoverlay",	"noicon" = 1),
 		//"dmg"				=  list("loc" = "1,1",	 		"state" = "oxydamageoverlay0",	"noicon" = 1)
 		)
 
@@ -118,12 +118,14 @@
 		)
 	hud_splash_add = list(
 		"flash"				=  list("loc" = "1,1 to 15,15", "state" = "blank", 			 				),
-		"blind"				=  list("loc" = "1,1", 			"state" = "blackimageoverlay",	"noicon" = 1)
+		//"blind"				=  list("loc" = "1,1", 			"state" = "blackimageoverlay",	"noicon" = 1)
 		)
 var/obj/screen/robot_inventory
 
 
 
+
+//Эти функции вызываются при нажатии на кнопку в рамках hud'a
 /datum/hud/proc/toggle_show_robot_modules()
 	if(!isrobot(mymob))
 		return

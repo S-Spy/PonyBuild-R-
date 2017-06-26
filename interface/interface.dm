@@ -138,7 +138,7 @@ var/list/bagreports = list()
 
 </body></html>
 	"}
-	usr << browse(fix_html(dat), "window=welcome;size=850x450")
+	usr << browse(fix_html(dat), "window=welcome;size=950x450")
 
 
 /client/Topic(href, href_list[])

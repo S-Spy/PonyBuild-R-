@@ -46,6 +46,8 @@
 		var/mob/living/carbon/pony/H = speaker
 		speaker_name = H.GetVoice()
 
+	speaker_name = sanitize_simple(speaker.name)
+
 	if(speaker.gender==FEMALE)
 		verb = "<i>[verb]</i>"
 		message = {"<font face="Arial">[message]</font>"}
@@ -131,6 +133,8 @@
 
 	if(hard_to_hear)
 		speaker_name = "unknown"
+
+	speaker_name = sanitize_simple(speaker_name)
 
 	var/changed_voice
 

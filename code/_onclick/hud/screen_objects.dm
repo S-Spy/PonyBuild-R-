@@ -104,8 +104,8 @@
 
 /obj/screen/zone_rotate              // Стрелочки для переключения псевдо 3д режима куклы
 	icon = 'icons/mob/zone_sel.dmi'
-	screen_loc = ui_zonemode
 	var/obj/screen/zone/connect
+	pixel_y = 32
 
 	left_arrow
 		name = "left arrow"
@@ -135,7 +135,7 @@
 	name = "switch mode"
 	icon = 'icons/mob/zone_sel.dmi'
 	icon_state = "zone_sel_ab"
-	screen_loc = ui_zonemode
+	pixel_y = 32
 	var/obj/screen/zone/connect
 
 	proc/switch_mode()
@@ -184,7 +184,6 @@ proc/get_pixel_list(var/obj/screen/zone_sel/O)
 	name = "damage zone"
 	icon = 'icons/mob/zone_sel.dmi'
 	icon_state = "zone"
-	screen_loc = ui_zonesel
 	layer = 19
 	dir = WEST
 	var/obj/screen/zone_sel/selecting
@@ -210,35 +209,26 @@ proc/get_pixel_list(var/obj/screen/zone_sel/O)
 
 		var/obj/screen/zone_switch/ZS = new /obj/screen/zone_switch()
 		ZS.color = color
-		ZS.alpha = alpha
-		ZS.connect = src
 		connect_list += ZS
 
 		var/obj/screen/zone_rotate/left_arrow/ZA1 = new /obj/screen/zone_rotate/left_arrow()
 		ZA1.connect = src
-		ZA1.color = color
-		ZA1.alpha = alpha
 		connect_list += ZA1
 
 		var/obj/screen/zone_rotate/right_arrow/ZA2 = new /obj/screen/zone_rotate/right_arrow()
 		ZA2.connect = src
-		ZA2.color = color
-		ZA2.alpha = alpha
 		connect_list += ZA2
 
 		update_icon()
 
+	Del()
+		for(var/obj/screen/S in connect_list)
+			del S
+		..()
+
 	update_icon()
 		var/icon/I = icon(icon, icon_state)
 		if(selecting)
-			//if(d3_mode=="")
-			switch(selecting.name)//Перенаправление с невидимых иконок
-				if("ears")	selecting = locate(/obj/screen/zone_sel/head) in connect
-				if("neck")	selecting = locate(/obj/screen/zone_sel/head) in connect
-				if("horn")	selecting = locate(/obj/screen/zone_sel/head) in connect
-				if("wings")	selecting = locate(/obj/screen/zone_sel/chest) in connect
-				if("tail")	selecting = locate(/obj/screen/zone_sel/groin) in connect
-
 			name = "damage zone: [selecting.name]"
 			var/icon/I_add = icon(selecting.icon, selecting.icon_state)
 			I.Blend(I_add, ICON_OVERLAY)

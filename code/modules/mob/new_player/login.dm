@@ -15,7 +15,7 @@ var/list/accept_list = list()
 		if(!(key in accept_list))
 			client.language = alert("Language: ",,"ru", "eng")
 			if(client.language == "eng")
-				alert("We have actual rules and strongly recommend you read them before to play. Ignorance of the rules does not exempt from liability.")
+				alert("We have actual rules and strongly recommend you read them before playing. Ignorance of the rules does not exempt from liability.")
 			else
 				alert("ћы имеем актуальные правила и насто€тельно рекомендуем ¬ам ознакомиться с ними перед началом игры. Ќезнание правил не освобождает от ответственности.")
 			accept_list += key
