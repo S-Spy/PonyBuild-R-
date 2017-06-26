@@ -85,8 +85,7 @@
 	if(mind)
 		mind.transfer_to(O)
 		O.mind.original = O
-	else
-		O.key = key
+	O.key = key
 
 	if(move)
 		var/obj/loc_landmark
@@ -121,6 +120,11 @@
 		del(src)
 	return O
 
+
+/obj/item/weapon/cell/New()
+	..()
+	world << "check"
+
 //pony -> robot
 /mob/living/carbon/pony/proc/Robotize()
 	if (monkeyizing)
@@ -138,10 +142,9 @@
 	var/mob/living/silicon/robot/O = new /mob/living/silicon/robot( loc )
 
 	// cyborgs produced by Robotize get an automatic power cell
-	O.cell = new(O)
+	O.cell = new /obj/item/weapon/cell(O)
 	O.cell.maxcharge = 7500
 	O.cell.charge = 7500
-
 
 	O.gender = gender
 	O.invisibility = 0
@@ -152,8 +155,8 @@
 			O.mind.original = O
 		else if(mind && mind.special_role)
 			O.mind.store_memory("In case you look at this after being borged, the objectives are only here until I find a way to make them not show up for you, as I can't simply delete them without screwing up round-end reporting. --NeoFite")
-	else
-		O.key = key
+
+	O.key = key
 
 	O.loc = loc
 	O.job = "Cyborg"

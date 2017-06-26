@@ -24,6 +24,7 @@
 		else if(response == "No")
 			return
 	*/
+
 	message = sanitize_simple(message)
 	set_typing_indicator(0)
 	usr.say(message)

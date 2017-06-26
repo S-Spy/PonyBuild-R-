@@ -38,7 +38,7 @@
 
 	. = src.emote_dead(message)
 
-/*
+
 	for (var/mob/M in hearers(null, null))
 		if (!M.stat)
 			if(M.job == "Chaplain")
@@ -62,4 +62,4 @@
 					M.show_message("<span class='game'><i>You hear muffled speech... you can almost make out some words...</i></span>", 2)
 //				M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
 					playsound(src.loc, pick('sound/effects/ghost.ogg','sound/effects/ghost2.ogg'), 10, 1)
-*/
+
