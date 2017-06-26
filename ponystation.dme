@@ -1583,6 +1583,11 @@
 #include "lib\Forum\Forum Lib.dm"
 #include "lib\Forum\HTML Forum.dm"
 #include "lib\Forum\setup_forum.dm"
+#include "maps\dreams.dmm"
 #include "maps\exodus-1.dmm"
 #include "maps\exodus-2.dmm"
+#include "maps\exodus-3.dmm"
+#include "maps\exodus-4.dmm"
+#include "maps\exodus-5.dmm"
+#include "maps\exodus-6.dmm"
 // END_INCLUDE
