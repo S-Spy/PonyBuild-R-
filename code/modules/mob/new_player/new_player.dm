@@ -24,21 +24,56 @@
 
 
 	proc/new_player_panel_proc()
-		var/output = "<div align='center'><B>New Player Options</B>"
-		output +="<hr>"
-		output += "<p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</A></p>"
+		var/lang_mod = client.language=="ru" ? 1 : 2
+		var/font1 = client.language=="ru" ? "bold" : "normal"
+		var/font2 = client.language=="eng" ? "bold" : "normal"
+		var/list/word1 = list("Опции", "New Player Options")
+		var/list/word2 = list("Настройка Персонажа", "Setup Character")
+		var/list/word3 = list("Не Готов", "Not Ready")
+		var/list/word4 = list("Готов", "Ready")
+		var/list/word5 = list("Посмотреть Список Персонала", "View the Crew Manifest")
+		var/list/word6 = list("Присоединиться к Игре", "Join Game!")
+		var/list/word7 = list("Наблюдать", "Observe")
+		var/list/word8 = list("Показать Опросы Игроков", "Show Player Polls")
+		var/list/word9 = list(
+"Входя в игру, вы соглашаетесь с нашими <a href='?_src_=welcome;motd=rules_[client.language]'>правилами</a>.",
+"By entering the game, you are agreeing to our <a href='?_src_=welcome;motd=rules_[client.language]'>rules</a>.")
+
+
+		var/output = {"
+		<html><head>
+			<script>
+			function switch_language(lang) 		{
+				switch(lang) {
+					case "ru":
+						location.href='byond://?src=\ref[src];language_from_welcome=ru';
+						break;
+
+					case "eng":
+						location.href='byond://?src=\ref[src];language_from_welcome=eng';
+						break;
+				}
+			}
+
+			</script>
+		</head>
+
+		<body>
+		<div align='center'><B>[word1[lang_mod]]</B>
+		<hr>
+		<p><a href='byond://?src=\ref[src];show_preferences=1'>[word2[lang_mod]]</A></p>"}
 
 		if(!ticker || ticker.current_state <= GAME_STATE_PREGAME)
 			if(ready)
-				output += "<p>\[ <b>Ready</b> | <a href='byond://?src=\ref[src];ready=0'>Not Ready</a> \]</p>"
+				output += {"<p>\[ <b>[word4[lang_mod]]</b> | <a href='byond://?src=\ref[src];ready=0'>[word3[lang_mod]]</a> \]</p>"}
 			else
-				output += "<p>\[ <a href='byond://?src=\ref[src];ready=1'>Ready</a> | <b>Not Ready</b> \]</p>"
+				output += {"<p>\[ <a href='byond://?src=\ref[src];ready=1'>[word4[lang_mod]]</a> | <b>[word3[lang_mod]]</b> \]</p>"}
 
 		else
-			output += "<a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</A><br><br>"
-			output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</A></p>"
+			output += {"<a href='byond://?src=\ref[src];manifest=1'>[word5[lang_mod]]</A><br><br>"}
+			output += {"<p><a href='byond://?src=\ref[src];late_join=1'>[word6[lang_mod]]</A></p>"}
 
-		output += "<p><a href='byond://?src=\ref[src];observe=1'>Observe</A></p>"
+		output += {"<p><a href='byond://?src=\ref[src];observe=1'>[word7[lang_mod]]</A></p>"}
 
 		if(!IsGuestKey(src.key))
 			establish_db_connection()
@@ -55,13 +90,20 @@
 					break
 
 				if(newpoll)
-					output += "<p><b><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+					output += {"<p><b><a href='byond://?src=\ref[src];showpoll=1'>[word8[lang_mod]]</A> (NEW!)</b></p>"}
 				else
-					output += "<p><a href='byond://?src=\ref[src];showpoll=1'>Show Player Polls</A></p>"
+					output += {"<p><a href='byond://?src=\ref[src];showpoll=1'>[word8[lang_mod]]</A></p>"}
 
-		output += "</div>"
+		output += {"<hr>
+		<span style='font-weight:italic|100'>[word9[lang_mod]]</span>
+		<br><br>
+		<input type="button" value="ENG" onclick='switch_language("eng")' style='font-weight:[font2]'>
+		<input type="button" value="RUS" onclick='switch_language("ru")' style='font-weight:[font1]'></td></tr></table>
+		</div>
+		</body></html>
+		"}
 
-		src << browse(output,"window=playersetup;size=210x280;can_close=0")
+		src << browse(fix_html(output),"window=playersetup;size=220x318;can_close=0")
 		return
 
 	Stat()
@@ -91,6 +133,11 @@
 
 	Topic(href, href_list[])
 		if(!client)	return 0
+
+		if(href_list["language_from_welcome"])
+			client.language = href_list["language_from_welcome"]
+			new_player_panel_proc()
+			return 1
 
 		if(href_list["show_preferences"])
 			client.prefs.ShowChoices(src)
