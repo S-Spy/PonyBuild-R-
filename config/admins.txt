@@ -9,6 +9,8 @@
 S_Spy - Host
 Aphimag - Host
 
+Nicknam - Head Admin
+
 GENERALLEGION - Game Admin
 
 Dudeman1011 - Moderator
@@ -22,4 +24,6 @@ MyGhosst - Spriter
 IWuna - Spriter
 Luna Solar - Writer
 Cryptic - Writer
-
+XxSamMaxxX - Spriter
+ZeSoFFa - Spriter
+Kettenhund - Moderator

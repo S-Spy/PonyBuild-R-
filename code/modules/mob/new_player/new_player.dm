@@ -103,7 +103,7 @@
 		</body></html>
 		"}
 
-		src << browse(fix_html(output),"window=playersetup;size=220x318;can_close=0")
+		src << browse(fix_html(output),"window=playersetup;size=220x350;can_close=0")
 		return
 
 	Stat()
