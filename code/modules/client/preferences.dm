@@ -258,69 +258,6 @@ datum/preferences
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)
-	var/lm =user.client.language=="ru" ? 1 : 2
-	var/list/w1 = list("Слот", "Slot")
-	var/list/w2 = list("Загрузить слот", "Load slot")
-	var/list/w3 = list("Сохранить слот", "Save slot")
-	var/list/w4 = list("Перезагрузить слот", "Reload slot")
-	var/list/w5 = list("Имя", "Name")
-	var/list/w6 = list("Случайное имя", "Random Name")
-	var/list/w7 = list("Всегда cлучайное имя", "Always Random Name")
-	var/list/w8 = list("Пол", "Gender")
-	var/list/w9 = list("Возраст", "Age")
-	var/list/w10 = list("Место прибытия", "Spawn Point")
-	var/list/w11 = list("Стиль интерфейса", "UI Style")
-	var/list/w12 = list("Цвет интерфейса", "Custom UI")
-	var/list/w60 = list("Цвет", "Color")
-	var/list/w13 = list("Альфа(прозрачность)", "Alpha(transparency")
-	var/list/w14 = list("Системные звуки", "Play admin midis")
-	var/list/w15 = list("Музыка в лобби", "Hear lobby music")
-	var/list/w16 = list("Слух призрака", "Ghost ears")
-	var/list/w17 = list("Зрение призрака", "Ghost sight")
-	var/list/w18 = list("Радио призрака", "Ghost radio")
-	var/list/w19 = list("Да", "Yes")
-	var/list/w20 = list("Нет", "No")
-	var/list/w21 = list("Мужской", "Male")
-	var/list/w22 = list("Женский", "Female")
-	var/list/w23 = list("Ближние Существа", "Nearest Creatures")
-	var/list/w24 = list("Ближние Говорящие", "Nearest Speakers")
-	var/list/w25 = list("Вся Речь", "All Speech")
-	var/list/w26 = list("Все Эмоции", "All Emotes")
-	var/list/w27 = list("Пожалуйста, зарегистрируйтесь, чтобы сохранить настройки", "Please create an account to save your preferences.")
-	var/list/w28 = list("Заметки", "Notes")
-	var/list/w29 = list("Изменить", "Edit")
-	var/list/w30 = list("Пользовательские предметы", "Custom Loadout")
-	var/list/w31 = list("удалить", "remove")
-	var/list/w32 = list("Использовано", "Used")
-	var/list/w33 = list("очков", "points")
-	var/list/w34// = list("Механический", "Mechanical")
-	var/list/w35 = list("добавить", "add")
-	var/list/w36 = list("очистить", "clear")
-	var/list/w37 = list("Выбор Профессии", "Occupation Choices")
-	var/list/w38 = list("Настроить Предпочтения", "Set Preferences")
-	var/list/w39 = list("Тело", "Body")
-	var/list/w40 = list("Выбрать Заклинания", "Set Spells")
-	var/list/w41 = list("Раса", "Species")
-	var/list/w42 = list("Дополнительный Язык", "Secondary Language")
-	var/list/w43 = list("Группа Крови", "Blood Type")
-	var/list/w44 = list("Очки", "Glasses")
-	var/list/w45 = list("Конечности", "Limbs")
-	var/list/w46 = list("Необходимы", "Necessary")
-	var/list/w47 = list("Не нужны", "Not necessary")
-	var/list/w48 = list("Внутренние Органы", "Internal Organs")
-	var/list/w49 = list("Adjust", "Adjust")
-	var/list/w50 = list("левая передняя нога", "left foreleg")
-	var/list/w51 = list("правая передняя нога", "right foreleg")
-	var/list/w52 = list("левая задняя нога", "left back leg")
-	var/list/w53 = list("левое заднее копыто", "left back hoof")
-	var/list/w54 = list("правое заднее копыто", "right back hoof")
-	var/list/w55 = list("левое переднее копыто", "left forehoof")
-	var/list/w56 = list("правое переднее копыто", "right forehoof")
-	var/list/w57 = list("сердце", "heart")
-	var/list/w59 = list("глаза", "eyes")
-	var/list/w58 = list("правая задняя нога", "right back leg")
-
-
 	if(!show_choices)
 		show_choices = 1
 		return
@@ -333,42 +270,42 @@ datum/preferences
 
 	if(path)
 		dat += "<center>"
-		dat += "[w1[lm]] <b>[slot_name]</b> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">[w2[lm]]</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=save\">[w3[lm]]</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">[w4[lm]]</a>"
+		dat += "[local("Slot")] <b>[slot_name]</b> - "
+		dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">[local("Load slot")]</a> - "
+		dat += "<a href=\"byond://?src=\ref[user];preference=save\">[local("Save slot")]</a> - "
+		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">[local("Reload slot")]</a>"
 		dat += "</center>"
 
 	else
-		dat += "[w27[lm]]"
+		dat += local("Please create an account to save your preferences.")
 
 	dat += "</center><hr><table><tr><td width='340px' height='320px'>"
 
-	dat += "<b>[w5[lm]]:</b> "
+	dat += "<b>[local("Name")]:</b> "
 	dat += "<a href='?_src_=prefs;preference=name;task=input'><b>[real_name]</b></a><br>"
-	dat += "(<a href='?_src_=prefs;preference=name;task=random'>[w6[lm]]</A>) "
-	dat += "(<a href='?_src_=prefs;preference=name'>[w7[lm]]: [be_random_name ? w19[lm] : w20[lm]]</a>)"
+	dat += "(<a href='?_src_=prefs;preference=name;task=random'>[local("Random name")]</A>) "
+	dat += "(<a href='?_src_=prefs;preference=name'>[local("Always random name")]: [be_random_name ? local("Yes") : local("No")]</a>)"
 	dat += "<br>"
 
-	dat += "<b>[w8[lm]]:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? w21[lm] : w22[lm]]</b></a><br>"
-	dat += "<b>[w9[lm]]:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
-	dat += "<b>[w10[lm]]</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
+	dat += "<b>[local("Gender")]:</b> <a href='?_src_=prefs;preference=gender'><b>[gender == MALE ? local("Male") : local("Female")]</b></a><br>"
+	dat += "<b>[local("Age")]:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><br>"
+	dat += "<b>[local("Spawn Point")]</b>: <a href='byond://?src=\ref[user];preference=spawnpoint;task=input'>[spawnpoint]</a>"
 
 	dat += "<br>"
-	dat += "<b>[w11[lm]]:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
-	dat += "<b>[w12[lm]]</b>(recommended for White UI):<br>"
-	dat += "-[w60[lm]]: <b><table style='display:inline;' bgcolor='[UI_style_color]'><tr><td><a href='?_src_=prefs;preference=UIcolor'>__</a></td></tr></table></b> <br>"
-	dat += "-[w13[lm]]: <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
-	dat += "<b>[w14[lm]]:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? w19[lm] : w20[lm]]</b></a><br>"
-	dat += "<b>[w15[lm]]:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? w19[lm] : w20[lm]]</b></a><br>"
-	dat += "<b>[w16[lm]]:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? w25[lm] : w23[lm]]</b></a><br>"
-	dat += "<b>[w17[lm]]:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? w26[lm] : w23[lm]]</b></a><br>"
-	dat += "<b>[w18[lm]]:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? w25[lm] : w24[lm]]</b></a><br>"
+	dat += "<b>[local("UI Style")]:</b> <a href='?_src_=prefs;preference=ui'><b>[UI_style]</b></a><br>"
+	dat += "<b>[local("Custom UI")]</b>(recommended for White UI):<br>"
+	dat += "-[local("Color")]: <b><table style='display:inline;' bgcolor='[UI_style_color]'><tr><td><a href='?_src_=prefs;preference=UIcolor'>__</a></td></tr></table></b> <br>"
+	dat += "-[local("Transparency")]: <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a><br>"
+	dat += "<b>[local("Play admin midis")]:</b> <a href='?_src_=prefs;preference=hear_midis'><b>[(toggles & SOUND_MIDI) ? local("Yes") : local("No")]</b></a><br>"
+	dat += "<b>[local("Hear lobby music")]:</b> <a href='?_src_=prefs;preference=lobby_music'><b>[(toggles & SOUND_LOBBY) ? local("Yes") : local("No")]</b></a><br>"
+	dat += "<b>[local("Ghost ears")]:</b> <a href='?_src_=prefs;preference=ghost_ears'><b>[(toggles & CHAT_GHOSTEARS) ? local("All Speech") : local("Nearest Creatures")]</b></a><br>"
+	dat += "<b>[local("Ghost sight")]:</b> <a href='?_src_=prefs;preference=ghost_sight'><b>[(toggles & CHAT_GHOSTSIGHT) ? local("All Emotes") : local("Nearest Creatures")]</b></a><br>"
+	dat += "<b>[local("Ghost radio")]:</b> <a href='?_src_=prefs;preference=ghost_radio'><b>[(toggles & CHAT_GHOSTRADIO) ? local("All Speech") : local("Nearest Speakers")]</b></a><br>"
 
 	if(config.allow_Metadata)
-		dat += "<b>OOC [w28[lm]]:</b> <a href='?_src_=prefs;preference=metadata;task=input'> [w29[lm]] </a><br>"
+		dat += "<b>OOC [local("Notes")]:</b> <a href='?_src_=prefs;preference=metadata;task=input'> [local("Edit")] </a><br>"
 
-	dat += "<br><b>[w30[lm]]:</b> "
+	dat += "<br><b>[local("Custom Loadout")]:</b> "
 	var/total_cost = 0
 
 	if(!islist(gear)) gear = list()
@@ -379,31 +316,31 @@ datum/preferences
 			var/datum/gear/G = gear_datums[gear[i]]
 			if(G)
 				total_cost += G.cost
-				dat += "[gear[i]] ([G.cost] [w33[lm]]) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[[w31[lm]]\]</a><br>"
+				dat += "[gear[i]] ([G.cost] [local("points")]) <a href='byond://?src=\ref[user];preference=loadout;task=remove;gear=[i]'>\[[local("remove")]\]</a><br>"
 
-		dat += "<b>[w32[lm]]:</b> [total_cost] [w33[lm]]."
+		dat += "<b>[local("Used")]:</b> [total_cost] [local("points")]."
 
 	if(total_cost < MAX_GEAR_COST)
-		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>\[[w35[lm]]\]</a>"
+		dat += " <a href='byond://?src=\ref[user];preference=loadout;task=input'>\[[local("add")]\]</a>"
 		if(gear && gear.len)
-			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>\[[w36[lm]]\]</a>"
+			dat += " <a href='byond://?src=\ref[user];preference=loadout;task=clear'>\[[local("clear")]\]</a>"
 
-	dat += "<br><br><b>[w37[lm]]</b><br>"
-	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>[w38[lm]]</b></a><br>"
+	dat += "<br><br><b>[local("Occupation Choices")]</b><br>"
+	dat += "\t<a href='?_src_=prefs;preference=job;task=menu'><b>[local("Set Preferences")]</b></a><br>"
 
-	dat += "<br><table><tr><td><b>[w39[lm]]</b> "
+	dat += "<br><table><tr><td><b>[local("Body")]</b> "
 	dat += "(<a href='?_src_=prefs;preference=all;task=random'>&reg;</A>)"
 	dat += "<br>"
-	dat += "[w41[lm]]: <a href='?src=\ref[user];preference=species;task=change'>[species]</a><br>"
+	dat += "[local("Species")]: <a href='?src=\ref[user];preference=species;task=change'>[species]</a><br>"
 	if(species == "Unicorn")
-		dat += "<b><a href=\"byond://?src=\ref[user];preference=spelloptions;active=0\">[w40[lm]]</b></a><br>"
-	dat += "[w42[lm]]: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
-	dat += "[w43[lm]]: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
+		dat += "<b><a href=\"byond://?src=\ref[user];preference=spelloptions;active=0\">[local("Set Spells")]</b></a><br>"
+	dat += "[local("Secondary Language")]: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a><br>"
+	dat += "[local("Blood Type")]: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a><br>"
 	//dat += "Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220<br></a>"//Пони не нужно
 	//dat += "Skin pattern: <a href='byond://?src=\ref[user];preference=skin_style;task=input'>Adjust</a><br>"
-	dat += "[w44[lm]]: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? w47[lm] : w46[lm]]</b></a><br>"
-	dat += "[w45[lm]]: <a href='byond://?src=\ref[user];preference=limbs;task=input'>[w49[lm]]</a><br>"
-	dat += "[w48[lm]]: <a href='byond://?src=\ref[user];preference=organs;task=input'>[w49[lm]]</a><br>"
+	dat += "[local("Glasses")]: <a href='?_src_=prefs;preference=disabilities'><b>[disabilities == 0 ? local("Not necessary") : local("Necessary")]</b></a><br>"
+	dat += "[local("Limbs")]: <a href='byond://?src=\ref[user];preference=limbs;task=input'>[local("Adjust")]</a><br>"
+	dat += "[local("Internal Organs")]: <a href='byond://?src=\ref[user];preference=organs;task=input'>[local("Adjust")]</a><br>"
 
 	//display limbs below
 	var/ind = 0
@@ -413,125 +350,125 @@ datum/preferences
 		var/organ_name = null
 		switch(name)
 			if("l_arm")
-				organ_name = w50[lm]
+				organ_name = "left foreleg"
 			if("r_arm")
-				organ_name = w51[lm]
+				organ_name = "right foreleg"
 			if("l_leg")
-				organ_name = w52[lm]
+				organ_name = "left back leg"
 			if("r_leg")
-				organ_name = w58[lm]
+				organ_name = "right back leg"
 			if("l_foot")
-				organ_name = w53[lm]
+				organ_name = "left back hoof"
 			if("r_foot")
-				organ_name = w54[lm]
+				organ_name = "right back hoof"
 			if("l_hand")
-				organ_name = w55[lm]
+				organ_name = "left forehoof"
 			if("r_hand")
-				organ_name = w56[lm]
+				organ_name = "right forehoof"
 			if("heart")
-				organ_name = w57[lm]
+				organ_name = "heart"
 			if("eyes")
-				organ_name = w59[lm]
+				organ_name = "eyes"
 
 
 		if(status == "cyborg")
 			++ind
 			if(ind > 1)
 				dat += ", "
-			dat += "\tMechanical [organ_name] prothesis"
+			dat += "\t[local("Mechanical [organ_name] prothesis")]"
 		else if(status == "amputated")
 			++ind
 			if(ind > 1)
 				dat += ", "
-			dat += "\tAmputated [organ_name]"
+			dat += "\t[local("Amputated [organ_name]")]"
 		else if(status == "mechanical")
 			++ind
 			if(ind > 1)
 				dat += ", "
-			dat += "\tMechanical [organ_name]"
+			dat += "\t[local("Mechanical [organ_name]")]"
 		else if(status == "assisted")
 			++ind
 			if(ind > 1)
 				dat += ", "
 			switch(organ_name)
 				if("heart")
-					dat += "\tPacemaker-assisted [organ_name]"
+					dat += "\t[local("Pacemaker-assisted [organ_name]")]"
 				if("voicebox") //on adding voiceboxes for speaking alicorn/similar replacements
-					dat += "\tSurgically altered [organ_name]"
+					dat += "\t[local("Surgically altered [organ_name]")]"
 				if("eyes")
-					dat += "\tRetinal overlayed [organ_name]"
+					dat += "\t[local("Retinal overlayed [organ_name]")]"
 				else
-					dat += "\tMechanically assisted [organ_name]"
+					dat += "\t[local("Mechanically assisted [organ_name]")]"
 	if(!ind)
 		dat += "\[...\]<br><br>"
 	else
 		dat += "<br><br>"
 
 
-	dat += "CutieMark:<br>"
+	dat += "[local("CutieMark")]:<br>"
 	if(custom_cutiemark)
-		dat += "<a href='?_src_=prefs;cutie_paint=draw;mod=1'><b>Draw Custom</b>"
+		dat += "<a href='?_src_=prefs;cutie_paint=draw;mod=1'><b>[local("Draw Custom")]</b>"
 	else
 		dat += "<a href='?_src_=prefs;preference=cutie_mark;task=input'>[cutie_mark]"
 	dat += "</a><br>(Custom: <a href='?_src_=prefs;cutie_paint=switch'>"
-	dat += (custom_cutiemark) ? "Yes" : "No"
+	dat += (custom_cutiemark) ? local("Yes") : local("No")
 	dat += "</a>)<br><br>"
 
 
-	dat += "Backpack Type:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
+	dat += "[local("Backpack Type")]:<br><a href ='?_src_=prefs;preference=bag;task=input'><b>[backbaglist[backbag]]</b></a><br>"
 
-	dat += "Nanotrasen Relation:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
+	dat += "[local("Nanotrasen Relation")]:<br><a href ='?_src_=prefs;preference=nt_relation;task=input'><b>[nanotrasen_relation]</b></a><br>"
 
-	dat += "<br><br><b>Background Information</b><br>"
-	dat += "<b>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
-	dat += "<b>Citizenship</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
-	dat += "<b>Faction</b>: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
-	dat += "<b>Religion</b>: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
+	dat += "<br><br><b>[local("Background Information")]</b><br>"
+	dat += "<b>[local("Home system")]</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a><br/>"
+	dat += "<b>[local("Citizenship")]</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a><br/>"
+	dat += "<b>[local("Faction")]</b>: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a><br/>"
+	dat += "<b>[local("Religion")]</b>: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a><br/>"
 
-	dat += "</td><td><b>Preview</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
+	dat += "</td><td><b>[local("Preview")]</b><br><img src=previewicon.png height=64 width=64><img src=previewicon2.png height=64 width=64></td></tr></table>"
 
 	dat += "</td><td width='300px' height='300px'>"
 
 	if(jobban_isbanned(user, "Records"))
-		dat += "<b>You are banned from using character records.</b><br>"
+		dat += "<b>[local("You are banned from using character records")].</b><br>"
 	else
-		dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">Character Records</a></b><br>"
+		dat += "<b><a href=\"byond://?src=\ref[user];preference=records;record=1\">[local("Character Records")]</a></b><br>"
 
-	dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">Set Antag Options</b></a><br>"
+	dat += "<b><a href=\"byond://?src=\ref[user];preference=antagoptions;active=0\">[local("Set Antag Options")]</b></a><br>"
 
-	dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>Set Skills</b> (<i>[GetSkillClass(used_skillpoints)] [used_skillpoints > 0 ? "[used_skillpoints]" : "0"]</i>)</a><br>"
+	dat += "\t<a href=\"byond://?src=\ref[user];preference=skills\"><b>[local("Set Skills")]</b> (<i>[GetSkillClass(used_skillpoints)] [used_skillpoints > 0 ? "[used_skillpoints]" : "0"]</i>)</a><br>"
 
-	dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=open'><b>Set Flavor Text</b></a><br>"
-	dat += "<a href='byond://?src=\ref[user];preference=flavour_text_robot;task=open'><b>Set Robot Flavour Text</b></a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=open'><b>[local("Set Flavor Text")]</b></a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=flavour_text_robot;task=open'><b>[local("Set Robot Flavour Text")]</b></a><br>"
 
-	dat += "<a href='byond://?src=\ref[user];preference=pAI'><b>pAI Configuration</b></a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=pAI'><b>[local("pAI Configuration")]</b></a><br>"
 	dat += "<br>"
 
-	dat += "<br><b>Mane</b><br>"
+	dat += "<br><b>[local("Mane")]</b><br>"
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td><a href='?_src_=prefs;preference=hair;task=input'>__</a></td></tr></table></font> "
-	dat += "  Style: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
+	dat += "  [local("Style")]: <a href='?_src_=prefs;preference=h_style;task=input'>[h_style]</a><br>"
 
-	dat += "<br><b>Facial</b><br>"
+	dat += "<br><b>[local("Facial")]</b><br>"
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_facial, 2)][num2hex(g_facial, 2)][num2hex(b_facial)]'><tr><td><a href='?_src_=prefs;preference=facial;task=input'>__</a></td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
+	dat += " [local("Style")]: <a href='?_src_=prefs;preference=f_style;task=input'>[f_style]</a><br>"
 
-	dat += "<br><b>Tail</b><br>"
+	dat += "<br><b>[local("Tail")]</b><br>"
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_tail, 2)][num2hex(g_tail, 2)][num2hex(b_tail)]'><tr><td><a href='?_src_=prefs;preference=pony_tail;task=input'>__</a></td></tr></table></font> "
-	dat += " Style: <a href='?_src_=prefs;preference=pony_tail_style;task=input'>[pony_tail_style]</a><br>"
+	dat += " [local("Style")]: <a href='?_src_=prefs;preference=pony_tail_style;task=input'>[pony_tail_style]</a><br>"
 
-	dat += "<br><b>Eyes: </b>"
+	dat += "<br><b>[local("Eyes")]: </b>"
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes, 2)]'><table  style='display:inline;' bgcolor='#[num2hex(r_eyes, 2)][num2hex(g_eyes, 2)][num2hex(b_eyes)]'><tr><td><a href='?_src_=prefs;preference=eyes;task=input'>__</a></td></tr></table></font> <br>"
 
-	dat += "<br><b>Body Color: </b>"
+	dat += "<br><b>[local("Body Color")]: </b>"
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td><a href='?_src_=prefs;preference=skin;task=input'>__</a></td></tr></table></font> <br>"
 
-	dat += "<br><b>Magic Aura Color:</b> "
+	dat += "<br><b>[local("Magic Aura Color")]:</b> "
 	dat += "<font face='fixedsys' size='3' color='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura, 2)]'><table style='display:inline;' bgcolor='#[num2hex(r_aura, 2)][num2hex(g_aura, 2)][num2hex(b_aura)]'><tr><td><a href='?_src_=prefs;preference=aura;task=input'>__</a></td></tr></table></font> <br>"
 
 	dat += "<br><br>"
 
 	if(jobban_isbanned(user, "Syndicate"))
-		dat += "<b>You are banned from antagonist roles.</b>"
+		dat += "<b>[local("You are banned from antagonist roles")].</b>"
 		src.be_special = 0
 	else
 		var/n = 0
@@ -540,15 +477,15 @@ datum/preferences
 				if(jobban_isbanned(user, i) || (i == "positronic brain" && jobban_isbanned(user, "AI") && jobban_isbanned(user, "Cyborg")) || (i == "pAI candidate" && jobban_isbanned(user, "pAI")))
 					dat += "<b>Be [i]:<b> <font color=red><b> \[BANNED]</b></font><br>"
 				else
-					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? "Yes" : "No"]</b></a><br>"
+					dat += "<b>Be [i]:</b> <a href='?_src_=prefs;preference=be_special;num=[n]'><b>[src.be_special&(1<<n) ? local("Yes") : local("No")]</b></a><br>"
 			n++
 	dat += "</td></tr></table><hr><center>"
 
 	if(!IsGuestKey(user.key))
-		dat += "<a href='?_src_=prefs;preference=load'>Undo</a> - "
-		dat += "<a href='?_src_=prefs;preference=save'>Save Setup</a> - "
+		dat += "<a href='?_src_=prefs;preference=load'>[local("Undo")]</a> - "
+		dat += "<a href='?_src_=prefs;preference=save'>[local("Save Setup")]</a> - "
 
-	dat += "<a href='?_src_=prefs;preference=reset_all'>Reset Setup</a>"
+	dat += "<a href='?_src_=prefs;preference=reset_all'>[local("Reset Setup")]</a>"
 	dat += "</center></body></html>"
 
 	user << browse(fix_html(dat), "window=preferences;size=650x736")
