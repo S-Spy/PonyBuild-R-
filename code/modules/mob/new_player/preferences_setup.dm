@@ -288,6 +288,8 @@
 		preview_icon = new /icon(icobase, "torso_[g]")
 		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
 		preview_icon.Blend(new /icon(icobase, "head_[g]"), ICON_OVERLAY)
+		preview_icon.Blend(new /icon(icobase, "l_ear"), ICON_OVERLAY)
+		preview_icon.Blend(new /icon(icobase, "r_ear"), ICON_OVERLAY)
 
 		for(var/name in list("r_leg","r_foot","l_leg","l_foot","r_arm","r_hand","l_arm","l_hand"))
 			if(organ_data[name] == "amputated") continue
