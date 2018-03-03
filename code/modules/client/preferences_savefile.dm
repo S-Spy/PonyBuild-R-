@@ -58,6 +58,7 @@
 	S["toggles"]			>> toggles
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
+	S["language"]			>> usr.client.language
 
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
@@ -86,6 +87,7 @@
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
+	S["language"]			<< usr.client.language
 
 	return 1
 

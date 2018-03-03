@@ -121,9 +121,6 @@
 	return O
 
 
-/obj/item/weapon/cell/New()
-	..()
-	world << "check"
 
 //pony -> robot
 /mob/living/carbon/pony/proc/Robotize()

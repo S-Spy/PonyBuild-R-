@@ -61,8 +61,9 @@
 
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)	return
+		msg = copytext(msg,1,MAX_MESSAGE_LEN)
+	msg = sanitize(msg)
+	if(!msg)	return
 
 	var/recieve_pm_type = "Player"
 	if(holder)
@@ -107,7 +108,7 @@
 		C << 'sound/effects/adminhelp.ogg'
 
 	log_admin("PM: [key_name(src)]->[key_name(C)]: [msg]")
-	send2adminirc("Reply: [key_name(src)]->[key_name(C)]: [html_decode(msg)]")
+	send2adminirc("Reply: [key_name(src)]->[key_name(C)]: [msg]")
 
 	//we don't use message_admins here because the sender/receiver might get it too
 	for(var/client/X in admins)

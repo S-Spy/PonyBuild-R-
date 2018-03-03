@@ -44,6 +44,8 @@
 	// how often wounds should be updated, a higher number means less often
 	var/wound_update_accuracy = 1
 
+	var/custom_name
+
 
 /datum/organ/external/New(var/datum/organ/external/P)
 	if(P)
@@ -865,6 +867,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 30
 	min_broken_damage = 15
 	body_part = HEAD
+	custom_name = "Body"
 
 /datum/organ/external/neck
 	name = "neck"

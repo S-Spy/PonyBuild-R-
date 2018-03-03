@@ -296,9 +296,10 @@ proc/get_damage_icon_part(damage_state, body_part)
 			if(part.status & ORGAN_DESTROYED)
 				continue
 
+			//Если это торс или голова, то тут берется по половым различиям
 			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head) || istype(part, /datum/organ/external/chest))
 				temp = part.get_icon(race_icon,deform_icon,g)
-			else
+			else //Иначе без половых
 				temp = part.get_icon(race_icon,deform_icon)
 
 			if(part.status & ORGAN_DEAD)
@@ -307,7 +308,7 @@ proc/get_damage_icon_part(damage_state, body_part)
 
 			//That part makes left and right legs drawn topmost and lowermost when pony looks WEST or EAST
 			//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
-			if(part.icon_position&(LEFT|RIGHT))
+			if(part.icon_position&(LEFT|RIGHT)) //Если это парная конечность, то всё тут
 
 				var/icon/temp2 = new('icons/mob/pony.dmi',"blank")
 

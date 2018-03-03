@@ -1,20 +1,35 @@
+/datum/preferences/New()
+	..()
+
+
 /datum/preferences
-	proc/CustomCutiemarkPaint(mob/user)
+	proc/CustomCutiemarkPaint(mob/user, mod=1)
 		if(!brush_color)	brush_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 		update_custom_cutiemark(user)
-
+		world << mod
+		var/list/bordercolor = list("gray", "black")
 		var/dat = {"
-<html>
-<body>
-<b>Brush color:<b> <table border=1><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>
-<table border=1 cellspacing=0>"}
+<html><head><script>
+	function paint_mod(mod)
+		{location.href='?_src_=prefs;cutie_paint=draw;mod='+mod;}
+</script></head>
 
+<body><table border=1><tr><td bordercolor=[bordercolor[mod]]>
+<input type="image" src="brush.jpg" onclick='paint_mod("1")'></td><td bordercolor=[bordercolor[3-mod]]>
+<input type="image" src="eraser.jpg" onclick='paint_mod("2")'>
+</td></tr></table>"}
+
+		if(mod==1)
+			dat += "<b>Brush color:<b> <table border=1><tr><td bgcolor='[brush_color]'><font face='fixedsys' size='3' color='[brush_color]'><a href='?_src_=prefs;cutie_paint=1;' style='color: [brush_color]'>__</a></font></td></tr></table>"
+
+		dat += "<br><table border=1 cellspacing=0>"
 		for(var/iy=5, iy>=1, iy--)
 			dat += "<tr>"
 			for(var/ix=1, ix<=5, ix++)
-				dat += "<td bgcolor='[colors5x5[ix][iy]]'>"
-				dat += "<a href='?_src_=prefs;cutie_paint=2;x=[ix];y=[iy]' style='color: [colors5x5[ix][iy]]'><font face='fixedsys' size='3' color='[colors5x5[ix][iy]]'>__</font></a>"
-				dat += "</td>"
+				dat += {"
+				<td bgcolor='[colors5x5[ix][iy]]'>
+				<a href='?_src_=prefs;cutie_paint=pixel;mod=[mod];x=[ix];y=[iy]' style='color: [colors5x5[ix][iy]]'><font face='fixedsys' size='3' color='[colors5x5[ix][iy]]'>__</font></a>
+				</td>"}
 			dat += "</tr>"
 
 		dat += {"</table>
@@ -25,7 +40,7 @@
 </body>
 </html>
 "}
-		user << browse(dat, "window=cutie_paint;size=300x350")
+		user << browse(dat, "window=cutie_paint;size=300x430;can_resize=0")
 
 	//The mob should have a gender you want before running this proc. Will run fine without H
 	proc/check_color()
@@ -273,6 +288,8 @@
 		preview_icon = new /icon(icobase, "torso_[g]")
 		preview_icon.Blend(new /icon(icobase, "groin_[g]"), ICON_OVERLAY)
 		preview_icon.Blend(new /icon(icobase, "head_[g]"), ICON_OVERLAY)
+		preview_icon.Blend(new /icon(icobase, "l_ear"), ICON_OVERLAY)
+		preview_icon.Blend(new /icon(icobase, "r_ear"), ICON_OVERLAY)
 
 		for(var/name in list("r_leg","r_foot","l_leg","l_foot","r_arm","r_hand","l_arm","l_hand"))
 			if(organ_data[name] == "amputated") continue
@@ -360,6 +377,7 @@
 					//clothes_s.Blend(new /icon('icons/mob/feet.dmi', "brown"), ICON_UNDERLAY)
 					if(prob(1))
 						clothes_s.Blend(new /icon('icons/mob/suit.dmi', "ianshirt"), ICON_OVERLAY)
+
 					switch(backbag)
 						if(2)
 							clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
@@ -406,6 +424,7 @@
 						if(2)	clothes_s.Blend(new /icon('icons/mob/back.dmi', "backpack"), ICON_OVERLAY)
 						if(3)	clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel-norm"), ICON_OVERLAY)
 						if(4)	clothes_s.Blend(new /icon('icons/mob/back.dmi', "satchel"), ICON_OVERLAY)
+
 				if(LIBRARIAN)
 					clothes_s = new /icon('icons/mob/uniform.dmi', mf_under("red_suit_s"))
 					//clothes_s.Blend(new /icon('icons/mob/feet.dmi', "black"), ICON_UNDERLAY)
